@@ -1,5 +1,8 @@
 
 
+升级node npm 的版本 
+升级webpack 
+
 
 # 2. 特性
 ## 基于webpack4构建
