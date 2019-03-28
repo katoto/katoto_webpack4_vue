@@ -11,8 +11,6 @@ require('../css/index.scss');
 
 // 通用组件，便于处理
 Vue.prototype.$x = Vue.$x = $x;
-
-// 常用组件在这注册。即可实现按需加载，又不必每个页面调用Vue.use。
 Vue.use(Button);
 
 initThemeColor()
