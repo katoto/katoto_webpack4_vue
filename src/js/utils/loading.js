@@ -1,4 +1,4 @@
-import { Loading } from 'element-ui';
+// import { Loading } from 'element-ui';
 
 //const MASK_DELAY = 5000;
 const DefaultMaskOptions = { customClass: 'global-mask', target: 'html > body' }

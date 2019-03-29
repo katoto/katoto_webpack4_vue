@@ -28,15 +28,15 @@ var webpackConfig = merge(baseWebpackConfig, {
     devtool: false, // see SourceMapDevToolPlugin,
     output: {
         path: config.build.assetsRoot,
-        filename: utils.assetsPath('js/[name].[contenthash:8].js'),
-        chunkFilename: utils.assetsPath('js/[name].[contenthash:8].js')
+        filename: utils.assetsPath('js/[name].[contenthash:5].js'),
+        chunkFilename: utils.assetsPath('js/[name].[contenthash:5].js')
     },
     plugins: [
         // extract css into its own file
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: 'css/[name].[contenthash:8].css',
+            filename: 'css/[name].[contenthash:5].css',
             //chunkFilename: 'css/[id].css'
         }),
         // Compress extracted CSS. We are using this plugin so that possible

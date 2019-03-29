@@ -9,7 +9,6 @@ maskOptions:  表示请求时显示遮罩层的选项。默认{body: true}
 */
 
 import axios from 'axios'
-import appConfig from '../../config/app-config'
 import CONST from './CONST'
 import tokenUtil from './utils/tokenUtil'
 import msgDlg from './utils/msgDialog'
@@ -77,7 +76,7 @@ function doLogin() {
                 //if (action == 'cancel')
                 //    reject()
                 //else {
-                var url = appConfig.LOGIN_PATH
+                var url = './'
                 var path = location.href.match(/https?:\/\/[^\/]+(\/.+)/i)[1]
                 if (path && path !== '/main.html#/') {
                     url += url.indexOf('?') > -1 ? '&' : '?'

@@ -1,9 +1,8 @@
-//遍历pages文件夹生成入口
+//遍历pages文件生成入口
 const path = require('path')
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 var config = require('../config')
-const appConfig = require('../config/app-config')
 
 var pageList = null;
 
@@ -51,21 +50,16 @@ exports.getEntryPages = function () {
 exports.htmlPlugins = function (webackConfig) {
     var exChunks = config.isBuild ? ['manifest', 'vendor'] : [];
     var list = readPages().map(page => {
-        // see https://github.com/ampedandwired/html-webpack-plugin
         var options = {
             filename: page.chunkName + '.html',
+            title: 'vue + webpack4 + element-ui脚手架项目',
+            description: 'vue + webpack4 + element-ui脚手架项目',
             template: page.template,
-            title: appConfig.title,
             chunks: [...exChunks, page.chunkName],
             inject: true,
-            // minify: {
-            //     removeComments: true,
-            //     collapseWhitespace: true,
-            //     removeAttributeQuotes: false
-            //     // more options:
-            //     // https://github.com/kangax/html-minifier#options-quick-reference
-            // },
-            appConfig: appConfig,
+            minify: {
+                collapseWhitespace: true,
+            }
         }
         return new HtmlWebpackPlugin(options);
     });

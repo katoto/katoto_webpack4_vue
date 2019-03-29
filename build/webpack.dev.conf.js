@@ -5,7 +5,6 @@ var config = require('../config')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const webpackIconfontPluginNodejs = require('./svg2font.js')
 
 process.title = 'ePortal-dev-server';
 
@@ -27,8 +26,7 @@ module.exports = merge(baseWebpackConfig, {
         new webpack.HotModuleReplacementPlugin(),
         // https://github.com/ampedandwired/html-webpack-plugin
         ...multiPage.htmlPlugins(baseWebpackConfig),
-        new FriendlyErrorsPlugin(),
-        webpackIconfontPluginNodejs
+        new FriendlyErrorsPlugin()
     ],
     optimization: {
         runtimeChunk: false,

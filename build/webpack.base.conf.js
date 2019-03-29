@@ -4,8 +4,6 @@ var multiPage = require('./multi-page')
 var config = require('../config')
 var webpack = require('webpack')
 const {VueLoaderPlugin} = require('vue-loader');
-var appConfig = require('../config/app-config')
-const ThemeColorReplacer = require('webpack-theme-color-replacer')
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -29,15 +27,6 @@ module.exports = {
     },
     module: {
         rules: [
-            /*{
-              test: /\.(js|vue)$/,
-              loader: 'eslint-loader',
-              enforce: 'pre',
-              include: [resolve('src'), resolve('test')],
-              options: {
-                formatter: require('eslint-friendly-formatter')
-              }
-            },*/
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
@@ -83,27 +72,10 @@ module.exports = {
                 ENV_CONFIG: JSON.stringify(process.env.ENV_CONFIG),
             }
         }),
-        //生成仅包含颜色的替换样式（主题色等）
-        new ThemeColorReplacer({
-            fileName: appConfig.themeFile,
-            matchColors: [
-                ...ThemeColorReplacer.getElementUISeries(appConfig.themeColor),  //element-ui主色系列
-                '#0cdd3a',  //自定义颜色
-                '#c655dd',
-            ],
-            cssPrefix: true,
-            // resolveCss(resultCss) { // optional. Resolve result css code as you wish.
-            //     return resultCss + youCssCode
-            // }
-        })
     ],
 
     node: {
-        // prevent webpack from injecting useless setImmediate polyfill because Vue
-        // source contains it (although only uses it if it's native).
         setImmediate: false,
-        // prevent webpack from injecting mocks to Node native modules
-        // that does not make sense for the client
         dgram: 'empty',
         fs: 'empty',
         net: 'empty',

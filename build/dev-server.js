@@ -1,6 +1,3 @@
-//生成主题颜色变量，供生成过程中使用
-require('./make-element-theme.js')();
-
 require('./check-versions')()
 
 var config = require('../config')
@@ -50,22 +47,6 @@ var hotMiddleware = require('webpack-hot-middleware')(compiler, {
     log: () => {
     }
 })
-/* webpack 4 reload everytime*/
-// force page reload when html-webpack-plugin template changes
-/*compiler.plugin('compilation', function (compilation) {
-    compilation.plugin('html-webpack-plugin-after-emit', function (data) {
-        hotMiddleware.publish({action: 'reload'})
-    })
-})//*/
-
-// proxy api requests
-// Object.keys(proxyTable).forEach(function (context) {
-//     var options = proxyTable[context]
-//     if (typeof options === 'string') {
-//         options = {target: options}
-//     }
-//     app.use(proxyMiddleware(options.filter || context, options))
-// })
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
@@ -106,7 +87,4 @@ module.exports = {
         server.close()
     }
 }
-
-if (process.argv.indexOf('--mock') > -1) // --mock
-    require('dynamic-mocker').checkStart('./mock/mock-config.js')
 
