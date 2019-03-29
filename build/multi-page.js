@@ -14,7 +14,7 @@ function readPages() {
             var fullPath = pagesPath + '/' + pageFile
             var isDir = fs.statSync(fullPath).isDirectory()
             if (!isDir) {
-                if (pageFile.slice(-3) == '.js') {
+                if (pageFile.slice(-3) === '.js') {
                     var baseName = pageFile.slice(0, pageFile.lastIndexOf('.'));
                     pageList.push({
                         entry: fullPath,
@@ -24,15 +24,23 @@ function readPages() {
                 }
             }
             else { //文件夹
+                let isTemplate = true
+                try{
+                    fs.accessSync(fullPath + '/template.html')
+                }catch(e){
+                    isTemplate = false
+                }
+                let templateName = 'html.tpl.html'
+                if(isTemplate) templateName = fullPath + '/template.html'
                 try {
                     pageList.push({
-                        entry: fullPath + '/entry.js',
+                        entry: fullPath + '/index.js',
                         chunkName: path.basename(pageFile),
-                        template: fullPath + '/template.html',
+                        template: templateName,
                     })
                 }
                 catch (e) {
-                    console.error(fullPath + '/index.js not found.\n', e)
+                    console.error(fullPath + ' not found at multi-page.\n', e)
                 }
             }
         })
@@ -41,6 +49,7 @@ function readPages() {
 }
 
 exports.getEntryPages = function () {
+    console.log(readPages())
     return readPages().reduce((r, page) => {
         r[page.chunkName] = page.entry;
         return r;
