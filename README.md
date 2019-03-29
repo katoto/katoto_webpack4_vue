@@ -43,3 +43,31 @@ npm run build
 npm run build-dev
 ```
 用于发布部署到开发环境服务器，适用于需要发布到服务器才能调试的情形。使用config/serverMap.js中的dev配置的接口服务地址。
+
+
+```
+/*
+使vue-router懒加载时可以显示一个加载提示，避免网速慢时无响应
+用法:
+const index = resolve => {
+    spinRoute.show();
+    require(['./setting.vue'], spinRoute.resolve(resolve))
+};
+*/
+
+// 'user strict';
+// import loading from '../js/utils/loading';
+
+// export default {
+//     show() {
+//         loading.show();
+//     },
+//     resolve(resolve) {
+//         return function (component) {
+//             loading.close()
+//             resolve(component)
+//         }
+//     }
+// }
+
+```

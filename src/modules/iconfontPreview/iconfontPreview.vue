@@ -59,7 +59,7 @@
 </template>
 <script>
     import fontList from '../../iconfont/fonts/fonts.js';
-    import footCode from '../../component/footCode'
+    import footCode from '../../components/footCode'
 
     export default {
         data() {

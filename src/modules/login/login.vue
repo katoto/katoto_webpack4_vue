@@ -1,5 +1,5 @@
 <script>
-    import footCode from '../../component/footCode'
+    import footCode from '../../components/footCode'
     export default {
         data() {
             return {

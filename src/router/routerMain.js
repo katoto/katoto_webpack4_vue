@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import spinRoute from './spinRoute';
 
 //同步加载，合并打包
 import stage1 from '../modules/stage1/stage1.vue';
@@ -12,8 +11,7 @@ const stage2 = resolve => require(['../modules/stage2/stage2.vue'], resolve);
 
 //组件懒加载，下载js时显示spin状态
 const stage3 = resolve => {
-    spinRoute.show();
-    require(['../modules/stage3/stage3.vue'], spinRoute.resolve(resolve))
+    require(['../modules/stage3/stage3.vue'], resolve)
 }
 
 const router = new Router({
