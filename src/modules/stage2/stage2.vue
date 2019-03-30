@@ -20,17 +20,13 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../css/defines.scss";
-
     .cart {
-        border: $--table-border;
+        border: 1px solid red;
     }
-
     .cart-item {
         line-height: 30px;
     }
-
     .main-color {
-        color: $--color-primary;
+        color: red;
     }
 </style>

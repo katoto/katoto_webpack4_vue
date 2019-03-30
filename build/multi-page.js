@@ -1,9 +1,8 @@
-//遍历pages文件夹生成入口
+//遍历pages文件生成入口
 const path = require('path')
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 var config = require('../config')
-const appConfig = require('../config/app-config')
 
 var pageList = null;
 
@@ -15,7 +14,7 @@ function readPages() {
             var fullPath = pagesPath + '/' + pageFile
             var isDir = fs.statSync(fullPath).isDirectory()
             if (!isDir) {
-                if (pageFile.slice(-3) == '.js') {
+                if (pageFile.slice(-3) === '.js') {
                     var baseName = pageFile.slice(0, pageFile.lastIndexOf('.'));
                     pageList.push({
                         entry: fullPath,
@@ -25,15 +24,23 @@ function readPages() {
                 }
             }
             else { //文件夹
+                let isTemplate = true
+                try{
+                    fs.accessSync(fullPath + '/template.html')
+                }catch(e){
+                    isTemplate = false
+                }
+                let templateName = 'html.tpl.html'
+                if(isTemplate) templateName = fullPath + '/template.html'
                 try {
                     pageList.push({
-                        entry: fullPath + '/entry.js',
+                        entry: fullPath + '/index.js',
                         chunkName: path.basename(pageFile),
-                        template: fullPath + '/template.html',
+                        template: templateName,
                     })
                 }
                 catch (e) {
-                    console.error(fullPath + '/index.js not found.\n', e)
+                    console.error(fullPath + ' not found at multi-page.\n', e)
                 }
             }
         })
@@ -42,6 +49,7 @@ function readPages() {
 }
 
 exports.getEntryPages = function () {
+    console.log(readPages())
     return readPages().reduce((r, page) => {
         r[page.chunkName] = page.entry;
         return r;
@@ -51,21 +59,16 @@ exports.getEntryPages = function () {
 exports.htmlPlugins = function (webackConfig) {
     var exChunks = config.isBuild ? ['manifest', 'vendor'] : [];
     var list = readPages().map(page => {
-        // see https://github.com/ampedandwired/html-webpack-plugin
         var options = {
             filename: page.chunkName + '.html',
+            title: 'vue + webpack4 + element-ui脚手架项目',
+            description: 'vue + webpack4 + element-ui脚手架项目',
             template: page.template,
-            title: appConfig.title,
             chunks: [...exChunks, page.chunkName],
             inject: true,
-            // minify: {
-            //     removeComments: true,
-            //     collapseWhitespace: true,
-            //     removeAttributeQuotes: false
-            //     // more options:
-            //     // https://github.com/kangax/html-minifier#options-quick-reference
-            // },
-            appConfig: appConfig,
+            minify: {
+                collapseWhitespace: true,
+            }
         }
         return new HtmlWebpackPlugin(options);
     });
