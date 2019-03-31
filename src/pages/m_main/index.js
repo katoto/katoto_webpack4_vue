@@ -1,17 +1,22 @@
 import Vue from 'vue'
-import $x from '@/assets/$x'
 import router from '../../router/routerMain.js'
 import main from './views/main.vue'
-// require('@/styles/index.scss');
+import storeFactory from './store/index'
 
-// window.Vue = Vue
+// 初始化与公共样式
+require('@/styles/lib-reset.css')
 
-// 通用组件，便于处理
-Vue.prototype.$x = Vue.$x = $x;
+const store = storeFactory()
 
-new Vue({
-    el: '#app',
+const app = new Vue(Object.assign({
     router,
-    render: h => h(main),
-});
+    store
+}, main))
 
+app.$mount('#app')
+
+export {
+    app,
+    router,
+    store
+}

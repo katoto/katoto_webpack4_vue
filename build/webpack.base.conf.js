@@ -3,7 +3,7 @@ var utils = require('./utils')
 var multiPage = require('./multi-page')
 var config = require('../config')
 var webpack = require('webpack')
-const {VueLoaderPlugin} = require('vue-loader');
+const { VueLoaderPlugin } = require('vue-loader');
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -55,7 +55,7 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
+                    limit: 60000,
                     name: utils.assetsPath('img/[name].[hash:7].[ext]')
                 }
             },

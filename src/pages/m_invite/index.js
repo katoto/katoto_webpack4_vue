@@ -1,12 +1,12 @@
+//Login page
 import Vue from 'vue';
-// require('@/styles/index.scss');
+import index from './views/index.vue'
+
+// 初始化与公共样式
+require('@/styles/lib-reset.css')
 
 new Vue({
     el: '#app',
-    template: `
-        <div>
-            <h3 style="padding:10px">invite</h3><hr/>
-            <iconfont-preview></iconfont-preview>
-        </div>`,
-    components: { iconfontPreview }
+    template: '<index></index>',
+    components: { index }
 })

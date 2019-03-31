@@ -26,12 +26,31 @@ export function mapActions(acts, ns) {
     }
 }
 
-
 export let platform = (function () {
     let isMobile = /applewebkit.*mobile.*/.test(window.navigator.userAgent.toLowerCase())
     return isMobile ? 'mobile' : 'pc'
 })()
-
+//将手机号中间变成****
+export function mdnHidden(mdn) {
+    return mdn.replace(/(\d{3})\d{4}(\d+)/, '$1****$2')
+}
+//检测是否为手机号码
+export function isMdn(str) {
+    return (str || '').match(/^1\d{10}$/)
+}
+export function checkCardNumber(rule, value, callback) {
+    var reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+    if (!value) {
+        return callback();
+    } else if (!(reg.test(value))) {
+        return callback(new Error('请输入正确的公民身份证号'));
+    } else {
+        return callback();
+    }
+}
+export function isValidEmail(value) {
+    return /^[\w\.\-]*\w@[\w\.\-]+\.[\w\.\-]+$/.test(value)
+}
 export function screenWidthFn() {
     let currWidth = document.body.offsetWidth
     if (currWidth) {

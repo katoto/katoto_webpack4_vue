@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 var config = require('../config')
 
 var pageList = null;
-function resolve (dir) {
-	return path.join(__dirname, '..', dir)
+function resolve(dir) {
+    return path.join(__dirname, '..', dir)
 }
 
 function readPages() {
@@ -28,13 +28,13 @@ function readPages() {
             }
             else { //文件夹
                 let isTemplate = true
-                try{
+                try {
                     fs.accessSync(fullPath + '/template.html')
-                }catch(e){
+                } catch (e) {
                     isTemplate = false
                 }
                 let templateName = 'html.tpl.html'
-                if(isTemplate) templateName = fullPath + '/template.html'
+                if (isTemplate) templateName = fullPath + '/template.html'
                 try {
                     pageList.push({
                         entry: fullPath + '/index.js',
@@ -52,7 +52,6 @@ function readPages() {
 }
 
 exports.getEntryPages = function () {
-    console.log(readPages())
     return readPages().reduce((r, page) => {
         r[page.chunkName] = page.entry;
         return r;
