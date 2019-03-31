@@ -86,30 +86,12 @@ var webpackConfig = merge(baseWebpackConfig, {
                     priority: 10,
                     test: /ali\-oss/,
                 },
-                // common: {
-                //     name: 'common',
-                //     priority: 11,
-                //     test: /js/,
-                // },
             }
         }
     },
 })
 
 if (config.build.productionSourceMap) {
-    // https://webpack.js.org/plugins/source-map-dev-tool-plugin/
-    /*filename can like these(in webpack/lib/TemplatedPathPlugin.js):
-        /\[hash(?::(\d+))?\]/gi,
-        /\[chunkhash(?::(\d+))?\]/gi,
-        /\[modulehash(?::(\d+))?\]/gi,
-        /\[contenthash(?::(\d+))?\]/gi,
-        /\[name\]/gi,               =main
-        /\[id\]/gi,
-        /\[moduleid\]/gi,
-        /\[file\]/gi,
-        /\[query\]/gi,              =js/main.59856ea7.js
-        /\[filebase\]/gi;           =main.59856ea7.js
-    */
     webpackConfig.plugins.push(
         new webpack.SourceMapDevToolPlugin({
             filename: `${getSourceMapPath()}/[filebase].map`,

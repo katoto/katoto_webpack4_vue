@@ -5,6 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 var config = require('../config')
 
 var pageList = null;
+function resolve (dir) {
+	return path.join(__dirname, '..', dir)
+}
 
 function readPages() {
     if (!pageList) {
@@ -64,6 +67,7 @@ exports.htmlPlugins = function (webackConfig) {
             title: 'vue + webpack4 + element-ui脚手架项目',
             description: 'vue + webpack4 + element-ui脚手架项目',
             template: page.template,
+            favicon: resolve('icon.ico'),
             chunks: [...exChunks, page.chunkName],
             inject: true,
             minify: {

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-require('@/styles/index.scss');
+// require('@/styles/index.scss');
 
 new Vue({
     el: '#app',

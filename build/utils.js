@@ -63,7 +63,7 @@ function getPostCssLoader(sourceMap) {
                 require('autoprefixer')({
                     browsers: ['iOS >= 7', 'Android >= 5']
                 }),
-                require('postcss-pxtorem')({rootValue: 100, propList: ['*']})
+                // require('postcss-pxtorem')({rootValue: 100, propList: ['*']})
             ]
         }
     }
