@@ -25,18 +25,27 @@ export default {
     methods:{
       fb_invite(){
         console.log('111111')
+      },
+      pageinit(FB){
+        FB.getLoginStatus(function(response) {
+            console.log(response);
+        });
       }
     },
     components: {
     },
     mounted() {
-        this.$nextTick(() => {
-            this.contentSrc = require('@/pages/index/img/contentbody.png')
-            if (isIOS) {
-                // 待修改
-                // this.contHref = '//www.baidu.com'
-            }
-        })
+        window.fbAsyncInit = () => {
+          FB.init({
+            appId      : '781965488850377',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v3.2'
+          });
+          FB.AppEvents.logPageView();
+          this.pageinit(FB)
+        };
+      
     }
 }
 </script>
