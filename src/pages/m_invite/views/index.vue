@@ -1,16 +1,13 @@
 <template>
   <div>
     <div class="head">
-      <img src="../img/contenthead.png">
+      <button @click="fb_invite">facebook 邀请</button>
       <div class="btn">
         <a
           :href="contHref"
           target="_blank"
         ></a>
       </div>
-    </div>
-    <div class="content">
-      <img :src="contentSrc">
     </div>
   </div>
 </template>
@@ -24,6 +21,11 @@ export default {
             contentSrc: '',
             contHref: '//play.google.com/store/apps/details?id=com.crazy500.cbet'
         };
+    },
+    methods:{
+      fb_invite(){
+        console.log('111111')
+      }
     },
     components: {
     },
@@ -44,7 +46,7 @@ img {
   border: 0;
 }
 body {
-  background-color: #140e2b;
+  background-color: #fff;
 }
 body .head img {
   display: block;
