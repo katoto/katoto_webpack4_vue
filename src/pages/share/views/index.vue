@@ -89,14 +89,17 @@ export default {
         //   console.log(res)
         // })
         
-
-        
       }
     },
     components: {
     },
-    mounted() {
-        this.$http.get('/message')
+    async mounted() {
+        this.$get({
+            url: 'http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck='
+        }).then((val)=>{
+            console.log(val)
+        })
+        let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
         console.log('start invite facebook')
         window.fbAsyncInit = () => {
           FB.init({

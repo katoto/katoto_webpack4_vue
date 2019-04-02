@@ -28,6 +28,7 @@ module.exports = {
             '@assets': path.resolve(__dirname, '../src/assets'),
             '@pages': path.resolve(__dirname, '../src/pages'),
             '@components': path.resolve(__dirname, '../src/components'),
+            '@plugins': path.resolve(__dirname, '../src/plugins'),
             '@language': path.resolve(__dirname, '../src/language'),
         }
     },
