@@ -14,15 +14,15 @@
 const MyPlugin = {}
 
 MyPlugin.install = function(Vue){
-    window.$http = function(options){
-        // 对象转get字符串
-        let obj2str = function(data){
-            let dataStr = ''
-            for(let key in data){
-                dataStr += key + '=' + data[key] + '&';
-            }
-            return dataStr && dataStr.slice(0, -1)
+    // 对象转get字符串
+    let obj2str = function(data){
+        let dataStr = ''
+        for(let key in data){
+            dataStr += key + '=' + data[key] + '&';
         }
+        return dataStr && dataStr.slice(0, -1)
+    }
+    window.$http = function(options){
         let createXHR = function(){
             let xhr;
             window.XMLHttpRequest ? xhr=new XMLHttpRequest() : xhr=new ActiveXObject("Microsoft.XMLHTTP")
@@ -37,12 +37,14 @@ MyPlugin.install = function(Vue){
                 reject(new Error('url 不能留空'));
                 return false 
             }
-            
             let type = options.type;
             let url = options.url;
             let data = options.data;
             let dataType = options.dataType;
             if (type == null) type = "get";
+            if(data && Object.prototype.toString.call(data) === '[object Object]' && type === 'get'){
+                url = url + '?' + obj2str(data)
+            }
             if (dataType == null) dataType = "json";
             let xhr = createXHR();
             xhr.open(type, url, true);
@@ -83,16 +85,19 @@ MyPlugin.install = function(Vue){
         options.type = 'post'
         return this.$http(options)
     }
-    Vue.prototype.$get = function(options={}){
-        if(!options || typeof options !== 'object'){
+    Vue.prototype.$get = function(options={}, data = ''){
+        if(!options) return new Error('option 参数有误')
+        if(Object.prototype.toString.call(options) === '[object String]'){
             options = {
                 url: options
+            }
+            if(Object.prototype.toString.call(data) === '[object Object]'){
+                options.url = options.url + '?' + obj2str(data)
             }
         }
         options.type = 'get'
         return this.$http(options)
     }
-    
 }
 
 export default MyPlugin
