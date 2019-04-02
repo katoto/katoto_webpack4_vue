@@ -1,7 +1,7 @@
 import { getURLParams, cookie } from '../common/util'
 import common from './common'
 const params = getURLParams()
-const isSupportLocalStorage = !!window.localStorage && false
+const isSupportLocalStorage = !!window.localStorage
 const storage = window.localStorage
 const _lang = (
     params.lang ||
@@ -31,8 +31,22 @@ function _format () {
     return this
 }
 
+function changeLanguage (thisLanguage)  {
+    isSupportLocalStorage ? storage.setItem('lang', thisLanguage) : cookie.set('lang', thisLanguage, 9999)
+    let newParams = {
+        ...params,
+        lang: thisLanguage
+    }
+    window.location.search = Object.keys(newParams).map((key, index) => {
+        return (
+            index === 0
+                ? `?${key}=${newParams[key]}`
+                : `&${key}=${newParams[key]}`
+        )
+    }).join('')
+}
+
 export function use (Vue, language) {
-    Vue.prototype._ = window._
     if (language && language.__proto__ === Array.prototype) {
         language.map(item => {
             lang = {
@@ -60,4 +74,6 @@ export function use (Vue, language) {
     }
     window._._lang = _lang
     window._.lang = lang
+    window._.changeLanguage = changeLanguage
+    Vue.prototype._ = window._
 }
