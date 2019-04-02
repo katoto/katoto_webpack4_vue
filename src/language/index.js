@@ -18,6 +18,7 @@ window._ = function (string) {
             _format.apply(india[string], arguments)
     )
 }
+window._.lang = lang
 
 function _format () {
     if (arguments.length > 1) {
@@ -28,4 +29,8 @@ function _format () {
         return thisString
     }
     return this
+}
+
+export function use (Vue) {
+    Vue.prototype._ = window._
 }

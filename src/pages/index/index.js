@@ -5,10 +5,11 @@ import index from './views/index.vue'
 // 初始化与公共样式
 require('@/styles/lib-reset.css')
 
-require('@/language')
+// 引入语言包
+require('@/language').use(Vue)
 
 new Vue({
     el: '#app',
-    template: '<index></index>',
+    template: '<index />',
     components: { index }
 })
