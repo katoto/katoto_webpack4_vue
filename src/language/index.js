@@ -1,25 +1,25 @@
-import { getURLParams } from '../common/util'
-import english from './english'
-import india from './india'
+import { getURLParams, cookie } from '../common/util'
+import common from './common'
 const params = getURLParams()
-
-let lang = (
+const isSupportLocalStorage = !!window.localStorage
+const storage = window.localStorage
+const _lang = (
     params.lang ||
-    (window.localStorage && window.localStorage.getItem('lang')) ||
+    (isSupportLocalStorage ? storage.getItem('lang') : cookie.get('lang')) ||
     'en'
 )
+let lang = {...common}
 
-window.localStorage && window.localStorage.setItem('lang', lang)
+window.cookie = cookie
+isSupportLocalStorage ? storage.setItem('lang', _lang) : cookie.set('lang', _lang, 9999)
 
 window._ = function (string) {
     return (
-        lang === 'en' ?
-            _format.apply(english[string], arguments) : 
-            _format.apply(india[string], arguments)
+        _lang === 'en' ?
+            _format.apply(lang.en[string], arguments) : 
+            _format.apply(lang.india[string], arguments)
     )
 }
-window._.lang = lang
-
 function _format () {
     if (arguments.length > 1) {
         let thisString = this
@@ -31,6 +31,49 @@ function _format () {
     return this
 }
 
-export function use (Vue) {
+function changeLanguage (thisLanguage)  {
+    isSupportLocalStorage ? storage.setItem('lang', thisLanguage) : cookie.set('lang', thisLanguage, 9999)
+    let newParams = {
+        ...params,
+        lang: thisLanguage
+    }
+    window.location.search = Object.keys(newParams).map((key, index) => {
+        return (
+            index === 0
+                ? `?${key}=${newParams[key]}`
+                : `&${key}=${newParams[key]}`
+        )
+    }).join('')
+}
+
+export function use (Vue, language) {
+    if (language && language.__proto__ === Array.prototype) {
+        language.map(item => {
+            lang = {
+                en: {
+                    ...lang.en,
+                    ...item.en
+                },
+                india: {
+                    ...lang.india,
+                    ...item.india
+                }
+            }
+        })
+    } else if (language && language.__proto__ === Object.prototype) {
+        lang = {
+            en: {
+                ...lang.en,
+                ...language.en
+            },
+            india: {
+                ...lang.india,
+                ...language.india
+            }
+        }
+    }
+    window._._lang = _lang
+    window._.lang = lang
+    window._.changeLanguage = changeLanguage
     Vue.prototype._ = window._
 }

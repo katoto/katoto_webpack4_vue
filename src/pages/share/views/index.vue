@@ -35,61 +35,61 @@ export default {
         };
     },
     methods:{
-      fb_morePeop(){
-        window.FB.ui({
-          appID,
-          method: 'apprequests',
-          message: '这是疯狂猜球应用测试',
-          title: 'Invite friends to play', 
-        }, function(response){
-          if(response && response.to.length>0){
-            console.log('Welcome!  Fetching your information....1111 ');
-          }
-          console.log(response);
-        });
-      },
-      fb_invite(){
-        console.log(this.baseFB)
-        this.baseFB.getLoginStatus(function(response) {
-          console.log(response)
-          this.accToken = response.accessToken
-          if(response && response.status === 'unknown'){
-            window.FB.login(function(response) {
-                if (response.authResponse) {
-                  console.log('Welcome!  Fetching your information.... ');
-                } else {
-                  console.log('User cancelled login or did not fully authorize.');
+        fb_morePeop(){
+            window.FB.ui({
+                appID,
+                method: 'apprequests',
+                message: '这是疯狂猜球应用测试',
+                title: 'Invite friends to play' 
+            }, function(response){
+                if(response && response.to.length>0){
+                    console.log('Welcome!  Fetching your information....1111 ');
+                }
+                console.log(response);
+            });
+        },
+        fb_invite(){
+            console.log(this.baseFB)
+            this.baseFB.getLoginStatus(function(response) {
+                console.log(response)
+                this.accToken = response.accessToken
+                if(response && response.status === 'unknown'){
+                    window.FB.login(function(response) {
+                        if (response.authResponse) {
+                            console.log('Welcome!  Fetching your information.... ');
+                        } else {
+                            console.log('User cancelled login or did not fully authorize.');
+                        }
+                    });
                 }
             });
-          }
-        });
-      },
-      pageinit(FB){
-        FB.getLoginStatus(function(response) {
-          if(response && response.status === 'unknown'){
-            FB.login(function(response) {
-                if (response.authResponse) {
-                  console.log('Welcome!  Fetching your information.... ');
-                  console.log(response)
-                  console.log('111111111')
-                } else {
-                console.log('User cancelled login or did not fully authorize.');
+        },
+        pageinit(FB){
+            FB.getLoginStatus(function(response) {
+                if(response && response.status === 'unknown'){
+                    FB.login(function(response) {
+                        if (response.authResponse) {
+                            console.log('Welcome!  Fetching your information.... ');
+                            console.log(response)
+                            console.log('111111111')
+                        } else {
+                            console.log('User cancelled login or did not fully authorize.');
+                        }
+                    });
                 }
+                console.log(response);
+                console.log('====')
             });
-          }
-            console.log(response);
-            console.log('====')
-        });
-        console.log(FB)
+            console.log(FB)
         
-        // FB.ui({
-        //   method: 'share',
-        //   herf: 'http://www.baidu.com'
-        // },function(res){
-        //   console.log(res)
-        // })
+            // FB.ui({
+            //   method: 'share',
+            //   herf: 'http://www.baidu.com'
+            // },function(res){
+            //   console.log(res)
+            // })
         
-      }
+        }
     },
     components: {
     },
@@ -102,15 +102,15 @@ export default {
         let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
         console.log('start invite facebook')
         window.fbAsyncInit = () => {
-          FB.init({
-            appId      : appID,
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v3.2'
-          });
-          FB.AppEvents.logPageView();
-          // this.pageinit(FB)
-          this.baseFB = FB
+            FB.init({
+                appId      : appID,
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v3.2'
+            });
+            FB.AppEvents.logPageView();
+            // this.pageinit(FB)
+            this.baseFB = FB
         };
       
     }

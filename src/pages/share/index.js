@@ -1,6 +1,7 @@
 //Login page
 import Vue from 'vue';
 import index from './views/index.vue'
+import shareLanguage from '@pack/share'
 
 import simpleAjax from '@plugins/simpleAjax'
 
@@ -8,7 +9,7 @@ import simpleAjax from '@plugins/simpleAjax'
 require('@/styles/lib-reset.css')
 
 // 引入语言包
-require('@/language').use(Vue)
+require('@language').use(Vue, [shareLanguage])
 
 Vue.use(simpleAjax)
 

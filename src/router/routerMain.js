@@ -22,10 +22,10 @@ const router = new Router({
             path: '/stage2',
             component: stage2, //async
             children: [
-                { path: '/stage2/stage3', component: stage3 }, //async + spin
+                { path: '/stage2/stage3', component: stage3 } //async + spin
             ]
-        },
-    ],
+        }
+    ]
 })
 
 export default router;

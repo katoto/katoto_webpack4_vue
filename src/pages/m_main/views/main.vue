@@ -24,7 +24,7 @@ export default {
     data() {
         return {
             data: null,
-            loading: false,
+            loading: false
         }
     },
     methods: {
@@ -66,7 +66,7 @@ export default {
         },
         getAndGo3() {
             this.$router.push('/stage2/stage3')
-        },
+        }
     // loadExternalRoutes() {
     //     window.addExternalRoutes = function (routes) {
     //         this.$router.addRoutes(routes)

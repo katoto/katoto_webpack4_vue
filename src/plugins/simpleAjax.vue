@@ -19,7 +19,7 @@ MyPlugin.install = function(Vue){
         let obj2str = function(data){
             let dataStr = ''
             for(let key in data){
-                 dataStr += key + '=' + data[key] + '&';
+                dataStr += key + '=' + data[key] + '&';
             }
             return dataStr && dataStr.slice(0, -1)
         }

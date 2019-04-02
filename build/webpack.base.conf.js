@@ -28,8 +28,9 @@ module.exports = {
             '@assets': path.resolve(__dirname, '../src/assets'),
             '@pages': path.resolve(__dirname, '../src/pages'),
             '@components': path.resolve(__dirname, '../src/components'),
-            '@plugins': path.resolve(__dirname, '../src/plugins'),
             '@language': path.resolve(__dirname, '../src/language'),
+            '@plugins': path.resolve(__dirname, '../src/plugins'),
+            '@pack': path.resolve(__dirname, '../src/language/pack'),
         }
     },
     module: {
@@ -78,7 +79,7 @@ module.exports = {
                 NODE_ENV: JSON.stringify(process.env.NODE_ENV),
                 ENV_CONFIG: JSON.stringify(process.env.ENV_CONFIG),
             }
-        })
+        }),
     ],
 
     node: {
