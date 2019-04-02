@@ -2,6 +2,8 @@
  *  相关的工具函数
  */
 
+ export const appID = '781965488850377'
+ 
 export const tipsTime = 2000
 
 export const isIOS = (function () {
