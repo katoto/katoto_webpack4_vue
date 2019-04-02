@@ -5,6 +5,7 @@ var config = require('../config')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+var vConsolePlugin = require('vconsole-webpack-plugin')
 
 process.title = 'ePortal-dev-server';
 
@@ -26,7 +27,10 @@ module.exports = merge(baseWebpackConfig, {
         new webpack.HotModuleReplacementPlugin(),
         // https://github.com/ampedandwired/html-webpack-plugin
         ...multiPage.htmlPlugins(baseWebpackConfig),
-        new FriendlyErrorsPlugin()
+        new FriendlyErrorsPlugin(),
+        new vConsolePlugin({
+            enable: process.env.ISconsole === 'true'
+        })
     ],
     optimization: {
         runtimeChunk: false,

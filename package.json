@@ -5,6 +5,7 @@
   "author": "",
   "scripts": {
     "dev": "cross-env NODE_ENV=development ENV_CONFIG=dev node build/dev-server.js",
+    "dev-console": "cross-env NODE_ENV=development ISconsole=true ENV_CONFIG=dev node build/dev-server.js",
     "build-dev": "cross-env NODE_ENV=development ENV_CONFIG=dev_build node build/build.js",
     "prebuild": "npm run clean",
     "build": "cross-env NODE_ENV=production ENV_CONFIG=prod node build/build.js",
@@ -71,6 +72,7 @@
     "shelljs": "^0.8.3",
     "update": "^0.7.4",
     "url-loader": "^1.1.2",
+    "vconsole-webpack-plugin": "^1.4.2",
     "vue-loader": "^15.4.2",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.5.18",

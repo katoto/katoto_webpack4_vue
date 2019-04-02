@@ -7,6 +7,11 @@
       <br>
       <button @click="fb_morePeop">facebook 邀请列表</button>
       <br>
+      <br>
+      <br>
+    <button>
+      <a href="whatsapp://send?text=HERE GOES THE URL ENCODED TEXT YOU WANT TO SHARE" target="_blank" data-action="share/whatsapp/share">Share via Whatsapp</a>
+    </button>
       
       <div class="fb-share-button" data-href="https://www.katoto.cn/" data-layout="button" data-size="small">
         <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.baidu.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">分享</a>
@@ -36,12 +41,9 @@ export default {
           method: 'apprequests',
           message: '这是疯狂猜球应用测试',
           title: 'Invite friends to play', 
-          new_style_message: true,
-          // to: '878230572526806',
-          // action_type:'turn'
         }, function(response){
           if(response && response.to.length>0){
-            console.log('Welcome!  Fetching your information.... ');
+            console.log('Welcome!  Fetching your information....1111 ');
           }
           console.log(response);
         });
@@ -67,10 +69,9 @@ export default {
           if(response && response.status === 'unknown'){
             FB.login(function(response) {
                 if (response.authResponse) {
-                console.log('Welcome!  Fetching your information.... ');
-                console.log(response)
-                console.log('111111111')
-
+                  console.log('Welcome!  Fetching your information.... ');
+                  console.log(response)
+                  console.log('111111111')
                 } else {
                 console.log('User cancelled login or did not fully authorize.');
                 }
@@ -95,6 +96,7 @@ export default {
     components: {
     },
     mounted() {
+        this.$http.get('/message')
         console.log('start invite facebook')
         window.fbAsyncInit = () => {
           FB.init({

@@ -76,7 +76,7 @@ module.exports = {
                 NODE_ENV: JSON.stringify(process.env.NODE_ENV),
                 ENV_CONFIG: JSON.stringify(process.env.ENV_CONFIG),
             }
-        }),
+        })
     ],
 
     node: {

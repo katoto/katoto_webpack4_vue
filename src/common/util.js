@@ -1,8 +1,8 @@
 /**
  *  相关的工具函数
  */
-
- export const appID = '781965488850377'
+// facebook 应用ID
+export const appID = '781965488850377'
  
 export const tipsTime = 2000
 
