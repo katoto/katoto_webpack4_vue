@@ -29,6 +29,7 @@ module.exports = {
             '@pages': path.resolve(__dirname, '../src/pages'),
             '@components': path.resolve(__dirname, '../src/components'),
             '@language': path.resolve(__dirname, '../src/language'),
+            '@pack': path.resolve(__dirname, '../src/language/pack'),
         }
     },
     module: {
