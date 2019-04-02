@@ -8,6 +8,9 @@ require('@/styles/lib-reset.css')
 
 const store = storeFactory()
 
+// 引入语言包
+require('@/language').use(Vue)
+
 const app = new Vue(Object.assign({
     router,
     store
