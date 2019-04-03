@@ -95,12 +95,19 @@ export default {
     },
     async mounted() {
         this.$get({
-            url: 'http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck='
+            url: 'http://api.coinslot.com/home/info',
+            data: {
+                src: '3123'
+            }
         }).then((val)=>{
-            console.log(val)
+            console.log(val + '1')
         })
         let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
-        console.log('start invite facebook')
+        console.log(bb + '2')
+        let cc = await this.$get('http://api.coinslot.com/home/info', {
+            platform: '123'
+        })
+        
         window.fbAsyncInit = () => {
             FB.init({
                 appId      : appID,

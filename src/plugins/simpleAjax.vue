@@ -1,16 +1,8 @@
 <script>
 //  simple ajax   return $http  $post $get  使用
-// eg 1、 let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
-// eg 2、         
-// this.$get({
-//     url: 'http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck='
-// }).then((val)=>{
-//     console.log(val)
-// })
-// this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=').then((val)=>{
-//     console.log(val)
-// })
-        
+// eg 1、 let bb = await this.$get('http://api.coinslot.com/home/info', data)
+// eg 2、 let cc = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8)
+
 const MyPlugin = {}
 
 MyPlugin.install = function(Vue){
@@ -18,7 +10,7 @@ MyPlugin.install = function(Vue){
     let obj2str = function(data){
         let dataStr = ''
         for(let key in data){
-            dataStr += key + '=' + data[key] + '&';
+            dataStr += encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) + '&';
         }
         return dataStr && dataStr.slice(0, -1)
     }
@@ -51,8 +43,13 @@ MyPlugin.install = function(Vue){
             if (type == "GET" || type == "get") {
                 xhr.send(null);
             } else if (type == "POST" || type == "post") {
-                xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-                xhr.send(data);
+                if(options.contentType){
+                    xhr.setRequestHeader("Content-Type", options.contentType);
+                    xhr.send(data);
+                } else {
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+                    xhr.send(obj2str(data));
+                }
             }
             xhr.onreadystatechange = function () {
                 let responseData = ''
@@ -76,13 +73,17 @@ MyPlugin.install = function(Vue){
         return window.$http.apply(this, arguments)
     }
     Vue.prototype.$post = function(options={}, data = ''){
-        if(!options || typeof options !== 'object'){
+        if(!options) return new Error('options 参数有误')
+        if(Object.prototype.toString.call(options) === '[object String]'){
             options = {
                 url: options,
                 data
             }
         }
         options.type = 'post'
+        console.log(options)
+        console.log(options)
+        console.log(options)
         return this.$http(options)
     }
     Vue.prototype.$get = function(options={}, data = ''){
