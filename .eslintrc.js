@@ -52,7 +52,7 @@ module.exports = {
         "generator-star-spacing": ["error", { "before": true, "after": true }],
         "object-curly-newline": ["error", "always"],
         "linebreak-style": ["error", "windows"],
-        "eol-last": ["error", "never"]
+        "eol-last": ["error", "windows"]
     },
     globals: {
         "_": true,
