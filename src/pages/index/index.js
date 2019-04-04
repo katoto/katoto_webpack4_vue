@@ -1,4 +1,3 @@
-//Login page
 import Vue from 'vue';
 import index from './views/index.vue'
 import indexLanguage from '@pack/index'

@@ -69,7 +69,11 @@ module.exports = {
                     limit: 10000,
                     name: utils.assetsPath('font/[name].[hash:7].[ext]')
                 }
-            }
+			},
+			{
+				test: /\.html$/,
+				use: ["html-withimg-loader"]
+			  },
         ]
     },
     plugins: [

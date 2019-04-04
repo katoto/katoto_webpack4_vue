@@ -27,22 +27,28 @@ function readPages() {
                 }
             }
             else { //文件夹
-                let isTemplate = true
-                try {
-                    fs.accessSync(fullPath + '/template.html')
-                } catch (e) {
-                    isTemplate = false
-                }
+				let isTemplate = fs.existsSync(fullPath + '/template.html')
                 let templateName = 'html.tpl.html'
-                if (isTemplate) templateName = fullPath + '/template.html'
-                try {
-                    pageList.push({
-                        entry: fullPath + '/index.js',
-                        chunkName: path.basename(pageFile),
-                        template: templateName,
-                    })
-                }
-                catch (e) {
+				if (isTemplate) templateName = fullPath + '/template.html'
+				try{
+					let isSimple = fs.existsSync(fullPath + '/simple.config')
+					if(isSimple){
+						let simpleConfig = fs.readFileSync(fullPath + '/simple.config', 'utf-8')
+						if(JSON.parse(simpleConfig).simple || JSON.parse(simpleConfig).simple === 'true'){
+							pageList.push({
+								entry: fullPath + '/main.html',
+								chunkName: path.basename(pageFile),
+								template: templateName,
+							})
+						}
+					} else {
+						pageList.push({
+							entry: fullPath + '/index.js',
+							chunkName: path.basename(pageFile),
+							template: templateName,
+						})
+					}
+				} catch (e) {
                     console.error(fullPath + ' not found at multi-page.\n', e)
                 }
             }
@@ -67,7 +73,8 @@ exports.htmlPlugins = function (webackConfig) {
             description: 'vue + webpack4 + element-ui脚手架项目',
             template: page.template,
             favicon: resolve('icon.ico'),
-            chunks: [...exChunks, page.chunkName],
+            // chunks: [...exChunks, page.chunkName],
+            chunks: [page.chunkName],
             inject: true,
             minify: {
                 collapseWhitespace: true,

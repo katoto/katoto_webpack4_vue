@@ -35,7 +35,7 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
     serverSideRender: false,
     watchOptions: {
         ignored: 'node_modules/**/*.js', //忽略不用监听变更的目录
-        aggregateTimeout: 500, //防止重复保存频繁重新编译,500毫秒内重复保存不打包
+        aggregateTimeout: 1000, //防止重复保存频繁重新编译,500毫秒内重复保存不打包
         poll: 1000 //每秒询问的文件变更的次数
     },
     writeToDisk: false,

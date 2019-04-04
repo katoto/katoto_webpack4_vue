@@ -5,6 +5,7 @@
   "author": "",
   "scripts": {
     "dev": "cross-env NODE_ENV=development ENV_CONFIG=dev node build/dev-server.js",
+    "dev-test": "webpack-dev-server --config build/dev-test.js",
     "dev-console": "cross-env NODE_ENV=development ISconsole=true ENV_CONFIG=dev node build/dev-server.js",
     "build-dev": "cross-env NODE_ENV=development ENV_CONFIG=dev_build node build/build.js",
     "prebuild": "npm run clean",
@@ -54,6 +55,7 @@
     "file-loader": "^2.0.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
+    "html-withimg-loader": "^0.1.16",
     "js-conditional-compile-loader": "^1.0.8",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",

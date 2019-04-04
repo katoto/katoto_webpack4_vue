@@ -10,7 +10,7 @@
       <br>
 
       <button @click="fb_whatsapp">WhatsApp原生 </button>
-    <br>
+        <br>
       <br>
       <button @click="fb_fackbook">Fackbook 原生</button>
 
@@ -40,13 +40,20 @@ export default {
         };
     },
     methods:{
+        shareCopy(){
+            cbetLocal({func:'copyToPasteboard', params:{
+                content:"复制msg内容222  ",
+            }})
+            // cbetLocal({func:'jumpToLocal',  params:{ content:"jp://RaceDetailScene?matchId=1243563"}
+            // })
+        },
         fb_whatsapp(){
-            console.log(11)
-            cbetLocal({func: "share_whatspp", params:{} })
+			// 内容
+            cbetLocal({func: "share", params:{ content: "321312132", plat: 'whatsapp' } })
         },
         fb_fackbook(){
             console.log(121)
-            cbetLocal({func: "share_fackbook", params:{} })
+            cbetLocal({func: "share", params:{ content: "12312321", plat: 'facebook' } })
         },
         fb_morePeop(){
             window.FB.ui({
@@ -93,13 +100,6 @@ export default {
                 console.log(response);
                 console.log('====')
             });
-            console.log(FB)
-            // FB.ui({
-            //   method: 'share',
-            //   herf: 'http://www.baidu.com'
-            // },function(res){
-            //   console.log(res)
-            // })
 
         }
     },
