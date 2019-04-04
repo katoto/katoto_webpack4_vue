@@ -8,7 +8,12 @@
       <button @click="fb_morePeop">facebook 邀请列表</button>
       <br>
       <br>
+
+      <button @click="fb_whatsapp">WhatsApp原生 </button>
+    <br>
       <br>
+      <button @click="fb_fackbook">Fackbook 原生</button>
+
     <button>
       <a href="whatsapp://send?text=HERE GOES THE URL ENCODED TEXT YOU WANT TO SHARE" target="_blank" data-action="share/whatsapp/share">Share via Whatsapp</a>
     </button>
@@ -22,7 +27,7 @@
 </template>
 
 <script>
-import { isIOS, appID } from '@common/util'
+import { isIOS, appID, cbetLocal } from '@common/util'
 import { setTimeout } from 'timers';
 
 export default {
@@ -35,6 +40,14 @@ export default {
         };
     },
     methods:{
+        fb_whatsapp(){
+            console.log(11)
+            cbetLocal({func: "share_whatspp", params:{} })
+        },
+        fb_fackbook(){
+            console.log(121)
+            cbetLocal({func: "share_fackbook", params:{} })
+        },
         fb_morePeop(){
             window.FB.ui({
                 appID,
