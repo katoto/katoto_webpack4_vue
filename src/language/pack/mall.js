@@ -1,5 +1,8 @@
 export default {
     en: {
+        "m_payment.goodno":"Tracking Number",
+        "m_payment.goodstatus":"Status",
+        "m_payment.shoptitle":"Get extra coins by first weekly Paypal top-up",
         "m_payment.ok":"OK",
         "m_payment.failed_tip":"You do not have enough exchange coupons. Rotate the wheel to try your luck now?",
         "m_payment.exchange_failed":"Exchange Failed",

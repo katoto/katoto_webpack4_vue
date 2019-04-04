@@ -17,7 +17,7 @@
     </div>
     <div class="news">
       <ul>
-        <li>Earn gold coins to redeem gifts!!!!!</li>
+        <li>{{_('m_payment.mall_title')}}</li>
         <li>Earn gold coins to redeem gifts!!!!!</li>
         <li>Earn gold coins to redeem gifts!!!!!</li>
       </ul>
@@ -26,18 +26,18 @@
       <div class="mall_tab">
         <ul>
           <li>
-            <a href="javascript:;">All</a>
+            <a href="javascript:;">{{_('m_payment.all')}}</a>
           </li>
           <li>
-            <a href="javascript:;">Gift Card</a>
+            <a href="javascript:;">{{_('m_payment.card')}}</a>
           </li>
           <li class="hot">
             <a href="javascript:;">
-              Electronics
+              {{_('m_payment.electronics')}}
             </a>
           </li>
           <li class="on">
-            <a href="javascript:;">Other</a>
+            <a href="javascript:;">{{_('m_payment.other')}}</a>
           </li>
         </ul>
       </div>
@@ -76,23 +76,42 @@
     <div class="pop pop_list_redemption_record hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">兑换记录</div>
+        <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
         <div class="redemption_record">
           <ul>
             <li>
               <div class="record_img">
                 <img src="@assets/img/10g.png" alt>
-                <p class="record_name">名称</p>
+                <p class="record_name">100 Amazon</p>
               </div>
               <div class="record_msg">
                 <div class="record_view">
                   <p>
-                    <span>卡号：</span>
+                    <span>{{_('m_payment.card_no')}}：</span>
                     <i>1325144654685asdas</i>
                   </p>
                   <p>
-                    <span>卡号：</span>
+                    <span>{{_('m_payment.password')}}：</span>
                     <i>1325144654asdasdasd</i>
+                  </p>
+                </div>
+                <span class="record_time">2018.08.10 18:52:32</span>
+              </div>
+            </li>
+            <li>
+              <div class="record_img">
+                <img src="@assets/img/10g.png" alt>
+                <p class="record_name">Iphone SE (16GB)</p>
+              </div>
+              <div class="record_msg">
+                <div class="record_view">
+                  <p>
+                    <span>{{_('m_payment.goodstatus')}}:</span>
+                    <i>1</i>
+                  </p>
+                  <p>
+                    <span>{{_('m_payment.goodno')}}:</span>
+                    <i>2</i>
                   </p>
                 </div>
                 <span class="record_time">2018.08.10 18:52:32</span>
@@ -107,59 +126,59 @@
     <div class="pop pop_rechange_many hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">兑换成功</div>
+        <div class="h3 pop_name">{{_('m_payment.exchange_success')}}</div>
         <img class="product_img" src="@assets/img/amazon.png" alt>
         <div class="product_msg">
           <p class="product_name">100 Amazon</p>
-          <p class="product_count">(共三张)</p>
+          <p class="product_count">({{_('m_payment.virtual_num', 3)}})</p>
         </div>
         <p class="product_use">1000 gift card for Amazon Mail</p>
         <!-- 批量兑换前 -->
         <div class="pop_rechange_many_before">
-          <p class="text_error">这是一个报错样式</p>
+          <p class="text_error"> </p>
           <div class="input_box">
             <a href="javascript:;" class="btn btn_delete">-</a>
             <input type="number">
             <a href="javascript:;" class="btn btn_add">+</a>
           </div>
-          <p class="text_tips">（可兑≤50张）</p>
+          <p class="text_tips">({{_('m_payment.exchange_tip', 50)}})</p>
         </div>
         <!-- 批量兑换成功后 -->
         <div class="pop_rechange_many_main hide">
           <ul>
             <li class="pop_rechange_many_list">
               <p>
-                <span class="card_num">卡号:</span>
+                <span class="card_num">{{_('m_payment.card_no')}}:</span>
                 <i class="card_psw">1256484359765815</i>
               </p>
               <p>
-                <span class="card_num">密码:</span>
+                <span class="card_num">{{_('m_payment.password')}}:</span>
                 <i class="card_psw">654235654235654235654</i>
               </p>
             </li>
             <li class="pop_rechange_many_list">
               <p>
-                <span class="card_num">卡号:</span>
+                <span class="card_num">{{_('m_payment.card_no')}}:</span>
                 <i class="card_psw">1256484359765815</i>
               </p>
               <p>
-                <span class="card_num">密码:</span>
+                <span class="card_num">{{_('m_payment.password')}}:</span>
                 <i class="card_psw">654235654235654235654235654235654235</i>
               </p>
             </li>
             <li class="pop_rechange_many_list">
               <p>
-                <span class="card_num">卡号:</span>
+                <span class="card_num">{{_('m_payment.card_no')}}:</span>
                 <i class="card_psw">1256484359765815</i>
               </p>
               <p>
-                <span class="card_num">密码:</span>
+                <span class="card_num">{{_('m_payment.password')}}:</span>
                 <i class="card_psw">654235654235654235654235654235654235</i>
               </p>
             </li>
           </ul>
         </div>
-        <a href="javascript:" class="btn_default">一键复制</a>
+        <a href="javascript:" class="btn_default">{{_('m_payment.copy_all')}}</a>
       </div>
     </div>
 
@@ -167,18 +186,11 @@
     <div class="pop pop_rule hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">兑换规则</div>
+        <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
         <div class="pop_rule_main">
-          <p>
-            1.话费充值
-            <br>中国移动请拨打10086或者13800138000根据语音提示选择充值卡充值。
-          </p>
-          <p>
-            2.平台充值
-            <br>可选择支付宝等平台进行话费卡转让操作。
-            <br>1.话费充值
-            <br>中国移动请拨打10086或者13800138000根据语音提示选择充值卡充值。
-          </p>
+          <p v-html="_('m_payment.rule1')"></p>
+          <p v-html="_('m_payment.rule2')"></p>
+          <p v-html="_('m_payment.rule3')"></p>
         </div>
       </div>
     </div>
@@ -216,12 +228,12 @@
     <div class="pop pop_product_detailed hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">商品详情</div>
+        <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
         <img class="product_img" src="@assets/img/amazon.png" alt>
         <p class="product_name">100 Amazon</p>
         <p class="product_use">1000 gift card for Amazon Mail</p>
         <p class="product_nedd">
-          <i class="icon_gold"></i>需要一百块
+          <i class="icon_gold"></i>10
         </p>
       </div>
     </div>
@@ -230,75 +242,75 @@
     <div class="pop pop_exchange_virtual hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">商品兑换</div>
+        <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
         <img class="product_img" src="@assets/img/amazon.png" alt>
         <p class="product_name">100 Amazon</p>
         <p class="product_use">1000 gift card for Amazon Mail</p>
         <!-- 兑换前 -->
         <div class="card_msg card_msg_before">
           <p>
-            <span>卡号:</span>
+            <span>{{_('m_payment.card_no')}}:</span>
             <i class="card_layer"></i>
           </p>
           <p>
-            <span>密码:</span>
+            <span>{{_('m_payment.password')}}:</span>
             <i class="card_layer"></i>
           </p>
         </div>
         <!-- 兑换后 -->
         <div class="card_msg card_msg_after hide">
           <p>
-            <span>卡号:</span>
+            <span>{{_('m_payment.card_no')}}:</span>
             <i class="card_psw">1256484359765815</i>
-            <a href="javascript:;" class="btn_copy">复制</a>
+            <a href="javascript:;" class="btn_copy">{{_('m_payment.copy')}}</a>
           </p>
           <p>
-            <span>密码:</span>
+            <span>{{_('m_payment.password')}}:</span>
             <i class="card_psw">654235654235654235654235654235654235</i>
-            <a href="javascript:;" class="btn_copy">复制</a>
+            <a href="javascript:;" class="btn_copy">{{_('m_payment.copy')}}</a>
           </p>
         </div>
-        <a href="javascript:" class="btn_default">Confirm</a>
+        <a href="javascript:" class="btn_default">{{_('m_payment.exchange_confirm')}}</a>
       </div>
     </div>
     <!-- 实物商品兑换弹层 -->
     <div class="pop pop_exchange_real hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">兑换记录</div>
+        <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
         <img class="product_img" src="@assets/img/10g.png" alt>
         <p class="product_name">100 Amazon</p>
         <p class="product_use">1000 gift card for Amazon Mail</p>
         <!-- 没填地址 -->
         <div class="address_input">
-          <input type="text" placeholder="输入收货人姓名">
-          <input type="text" placeholder="输入收货人手机号">
+          <input type="text" :placeholder="_('m_payment.name')">
+          <input type="text" :placeholder="_('m_payment.phone')">
           <!-- todo placeholder样式缩小 -->
-          <input type="text" placeholder="输入收货地址（填写省、市、区/县及街道门牌信息）">
-          <input type="text" placeholder="请输入邮政编码">
-          <a href="javascript:" class="btn_default">Confirm</a>
+          <input type="text" :placeholder="_('m_payment.address')">
+          <input type="text" :placeholder="_('m_payment.code')">
+          <a href="javascript:" class="btn_default">{{_('m_payment.exchange_confirm')}}</a>
         </div>
         <!-- 填好地址 -->
         <div class="address_check hide">
           <p class="user_msg">
-            <span class="user_t">收货人:</span>
+            <span class="user_t">{{_('m_payment.name1')}}:</span>
             <span class="user_c">吴阳阳</span>
           </p>
           <p class="user_msg">
-            <span class="user_t">收货地址:</span>
+            <span class="user_t">{{_('m_payment.address1')}}:</span>
             <span class="user_c">深圳市龙岗神仙岭500.com大大厦深圳市龙岗神仙岭500.com大大厦</span>
           </p>
           <p class="user_msg">
-            <span class="user_t">手机号:</span>
+            <span class="user_t">{{_('m_payment.phone1')}}:</span>
             <span class="user_c">12345678888</span>
           </p>
           <p class="user_msg">
-            <span class="user_t">邮政编码:</span>
+            <span class="user_t">{{_('m_payment.code1')}}:</span>
             <span class="user_c">1236546</span>
           </p>
           <div class="btn_choose">
-            <a href="javascript:;" class="btn_back">返回修改</a>
-            <a href="javascript:;" class="btn_default">立即兑换</a>
+            <a href="javascript:;" class="btn_back">{{_('m_payment.back_modify')}}</a>
+            <a href="javascript:;" class="btn_default">{{_('m_payment.exchange_now')}}</a>
           </div>
         </div>
         <!-- 兑换成功 -->
