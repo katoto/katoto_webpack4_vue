@@ -26,30 +26,24 @@ function readPages() {
                 }
             }
             else { //文件夹
-				let isTemplate = fs.existsSync(fullPath + '/template.html')
+                let isTemplate = fs.existsSync(fullPath + '/template.html')
                 let templateName = 'html.tpl.html'
-				if (isTemplate) templateName = fullPath + '/template.html'
-				try{
-					let isSimple = fs.existsSync(fullPath + '/simple.config')
-					if(isSimple){
-						let simpleConfig = fs.readFileSync(fullPath + '/simple.config', 'utf-8')
-						if(JSON.parse(simpleConfig).simple || JSON.parse(simpleConfig).simple === 'true'){
-							pageList.push({
-								entry: fullPath + '/main.html',
-								chunkName: path.basename(pageFile),
-                                template: templateName,
-                                isSimple: true
-							})
-						}
-					} else {
-						pageList.push({
-							entry: fullPath + '/index.js',
-							chunkName: path.basename(pageFile),
-                            template: templateName,
-                            isSimple: false
-						})
-					}
-				} catch (e) {
+                if (isTemplate) templateName = fullPath + '/template.html'
+                try{
+                    let isSimple = fs.existsSync(fullPath + '/simple.config')
+                    let basePush = {
+                        "isSimple" : false
+                    }
+                    if(isSimple){
+                        let simpleConfig = fs.readFileSync(fullPath + '/simple.config', 'utf-8')
+                        if(JSON.parse(simpleConfig).simple || JSON.parse(simpleConfig).simple === 'true') basePush.isSimple = true
+                    }
+                    pageList.push(Object.assign({
+                        entry: fullPath + '/index.js',
+                        chunkName: path.basename(pageFile),
+                        template: templateName
+                    },basePush))
+                } catch (e) {
                     console.error(fullPath + ' not found at multi-page.\n', e)
                 }
             }
@@ -82,7 +76,6 @@ exports.htmlPlugins = function (webackConfig) {
                 collapseWhitespace: true,
             }
         }
-        console.log(options)
         return new HtmlWebpackPlugin(options);
     });
     return list

@@ -5,7 +5,7 @@
       <br>
       <br>
       <br>
-      <button @click="fb_morePeop">facebook 邀请列表</button>
+      <button @click="fb_morePeop">facebook 邀请列表 </button>
       <br>
       <br>
 
