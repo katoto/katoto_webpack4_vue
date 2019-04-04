@@ -33,8 +33,7 @@
           </li>
           <li class="hot">
             <a href="javascript:;">
-              Electronic
-              <br>Product
+              Electronics
             </a>
           </li>
           <li class="on">
@@ -313,19 +312,22 @@
 </template>
 
 <script>
- export default {
-   data () {
-	 return {
+export default {
+    data () {
+        return {
+        }
+    },
+    components: {
 
-	 }
-   },
-   components: {
+    },
+    computed: {
 
-   },
-   computed: {},
-   methods: {},
-   mounted(){}
- }
+    },
+    methods: {
+
+    },
+    mounted () {}
+}
 </script>
 
 <style lang="less" scoped type="text/less">

@@ -28,14 +28,14 @@ module.exports = {
         "curly": ["error", "all"], //[2, "all"],//必须使用 if(){} 中的{}
         "no-new": "off",
         "no-return-assign": "warn",//return 语句中不能有赋值表达式
-        
+
         "handle-callback-err": 0,
         "padded-blocks": 0,
         "no-duplicate-imports": 0,
         "operator-linebreak": 0,
         "no-extend-native": 0,
         "no-sequences": 0,
-        
+
         "no-debugger": 0,
         "no-eval": 0,
         "comma-dangle": ["error", "never"],
@@ -52,7 +52,8 @@ module.exports = {
         "generator-star-spacing": ["error", { "before": true, "after": true }],
         "object-curly-newline": ["error", "always"],
         "linebreak-style": ["error", "windows"],
-        "eol-last": ["error", "windows"]
+		"eol-last": ["error", "windows"],
+		"object-property-newline": ["error", {}]
     },
     globals: {
         "_": true,
