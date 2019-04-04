@@ -7,8 +7,6 @@ var baseWebpackConfig = require('./webpack.base.conf')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 var vConsolePlugin = require('vconsole-webpack-plugin')
 
-process.title = 'ePortal-dev-server';
-
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
     baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
@@ -19,10 +17,10 @@ module.exports = merge(baseWebpackConfig, {
     module: {
         rules: utils.styleLoaders({sourceMap: config.dev.cssSourceMap, extract: false})
     },
-    devtool: false, // see SourceMapDevToolPlugin
+    // devtool: 'cheap-module-eval-source-map', // see SourceMapDevToolPlugin speed
     plugins: [
         // https://webpack.js.org/plugins/source-map-dev-tool-plugin/
-        new webpack.SourceMapDevToolPlugin(),
+        // new webpack.SourceMapDevToolPlugin(),
         // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
         new webpack.HotModuleReplacementPlugin(),
         // https://github.com/ampedandwired/html-webpack-plugin

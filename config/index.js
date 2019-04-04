@@ -24,7 +24,7 @@ var ret = {
         autoOpenBrowser: true,
         assetsSubDirectory: '',
         assetsPublicPath: '/',
-        cssSourceMap: true
+        cssSourceMap: false
     }
 }
 

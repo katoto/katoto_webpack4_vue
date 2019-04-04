@@ -6,9 +6,7 @@ var opn = require('opn')
 var path = require('path')
 var express = require('express')
 var webpack = require('webpack')
-var webpackConfig = process.env.NODE_ENV === 'testing'
-    ? require('./webpack.build.conf')
-    : require('./webpack.dev.conf')
+var webpackConfig = require('./webpack.dev.conf')
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -36,7 +34,7 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
     quiet: true,
     serverSideRender: false,
     watchOptions: {
-        //ignored: 'node_modules/**/*.js', //忽略不用监听变更的目录
+        ignored: 'node_modules/**/*.js', //忽略不用监听变更的目录
         aggregateTimeout: 500, //防止重复保存频繁重新编译,500毫秒内重复保存不打包
         poll: 1000 //每秒询问的文件变更的次数
     },
