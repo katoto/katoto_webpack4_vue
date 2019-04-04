@@ -3,30 +3,30 @@
  */
 
 export const appID = '781965488850377'
- 
-export const tipsTime = 2000
 
 export const isIOS = (function () {
     let ua = navigator.userAgent
     let isiOS = !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
     return isiOS
 })()
+export const isMobile = /applewebkit.*mobile.*/.test(window.navigator.userAgent.toLowerCase())
 
-/**
- *  相关的工具函数
- */
-export function mapActions(acts, ns) {
-    const aTypes = {}
-    const actions = {}
-    Object.keys(acts).forEach((key) => {
-        aTypes[key] = [ns, key].join('/')
-        actions[aTypes[key]] = acts[key]
-    })
-    return {
-        actions,
-        aTypes
+// 原生交互
+export function cbetLocal(param){
+    //绑定APP事件则调用APP函数  响应IOS事件
+    if(window && window.CbetLocal){
+        //老版ios
+        window.CbetLocal(param);
+    } else if(typeof(window.webkit) != "undefined" && typeof(window.webkit.messageHandlers) != "undefined" && typeof(window.webkit.messageHandlers.CbetLocal) != "undefined"){
+        //IOS-新版
+        window.webkit.messageHandlers.CbetLocal.postMessage(param);
+    }
+    //响应Android事件
+    if(typeof(AndroidLogin) != "undefined" && AndroidLogin.CbetLocal){
+        AndroidLogin.CbetLocal(JSON.stringify(param));
     }
 }
+
 
 export let platform = (function () {
     let isMobile = /applewebkit.*mobile.*/.test(window.navigator.userAgent.toLowerCase())
@@ -53,12 +53,7 @@ export function checkCardNumber(rule, value, callback) {
 export function isValidEmail(value) {
     return /^[\w\.\-]*\w@[\w\.\-]+\.[\w\.\-]+$/.test(value)
 }
-export function screenWidthFn() {
-    let currWidth = document.body.offsetWidth
-    if (currWidth) {
-        return currWidth >= 1200 ? 'lg' : 'xs'
-    }
-}
+
 //  <action> eventName是在 Google Analytics（分析）事件报告中显示为事件操作的字符串。 <category> eventCategory 是显示为事件类别的字符串。 <label> eventLabel 是显示为事件标签的字符串。
 export function viewEvent(eventName, eventCategory, eventLabel) {
     let eventPage = function () {
@@ -77,61 +72,12 @@ export function viewEvent(eventName, eventCategory, eventLabel) {
     eventPage()
 }
 
-export function isForbitPage() {
-    // 无需要刷接口 (禁止请求页面接口、websocket)
-    let forbitName = ['/supercoin']
-    let isForbit = false
-    for (let i = 0, len = forbitName.length; i < len; i++) {
-        if (window.location.href.indexOf(forbitName[i]) > -1) {
-            isForbit = true
-            break
-        }
-    }
-    return isForbit
-}
-
-export function mapMutations(muts, ns) {
-    const mTypes = {}
-    const mutations = {}
-    Object.keys(muts).forEach((key) => {
-        mTypes[key] = [ns, key].join('/')
-        mutations[mTypes[key]] = muts[key]
-    })
-    return {
-        mutations,
-        mTypes
-    }
-}
-
 export function wait(time) {
     return new Promise((resolve) => {
         setTimeout(() => resolve(true), time)
     })
 }
 
-export const isWeiX = (function () {
-    let ua = navigator.userAgent.toLowerCase()
-    return ~ua.indexOf('micromessenger')
-})()
-
-const CK = 'block_ck'
-export const isMobile = /applewebkit.*mobile.*/.test(window.navigator.userAgent.toLowerCase())
-
-export function getCK() {
-    return localStorage.getItem(CK)
-}
-
-export function setCK(ck) {
-    return localStorage.setItem(CK, ck)
-}
-
-export function removeCK() {
-    return localStorage.setItem(CK, '')
-}
-
-export function isLog() {
-    return !((getCK() === '0' || !getCK() || getCK() === 'null' || getCK() === ''))
-}
 
 /*
  *   formateMatchTime  比赛列表日期  星期是不变的
@@ -237,11 +183,6 @@ export function formateBalance(val = 0, bit = 6) {
     return num
 }
 
-export function formateCoinAddr(addr) {
-    addr = addr.toString()
-    return addr.slice(0, 4) + '***' + addr.slice(-4)
-}
-
 export function formateEmail(email, isFull) {
     var regEmail = /(\w+(?:[-+.]\w+)*)(@\w+([-.]\w+)*\.\w+([-.]\w+)*)/
     var regArr = null
@@ -272,48 +213,6 @@ export function formateEmail(email, isFull) {
     } else {
         return email
     }
-}
-
-/*
- *  11个数中 随机 选出 len 个
- *  @params  len
- *  shuffle()  洗牌算法
- * */
-export function randomNumber(len) {
-    var shuffleArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-    len = Number(len)
-    if (isNaN(len)) {
-        return false
-    }
-    if (!len) len = 5
-    return shuffle(shuffleArr).slice(0, len)
-
-    function shuffle(arr) {
-        var len = arr.length
-        for (var i = 0; i < len - 1; i++) {
-            var idx = Math.floor(Math.random() * (len - i))
-            var temp = arr[idx]
-            arr[idx] = arr[len - i - 1]
-            arr[len - i - 1] = temp
-        }
-        return arr
-    }
-}
-
-export function copySucc() {
-    Message({
-        message: _('Copied to clipboard'),
-        type: 'success',
-        duration: tipsTime
-    })
-}
-
-export function copyError() {
-    Message({
-        message: _('Failed to copy, please retry'),
-        type: 'error',
-        duration: tipsTime
-    })
 }
 
 export function getURLParams() {
@@ -640,7 +539,7 @@ export const cookie = {
         } else {
             document.cookie = `${name}=${value}`
         }
-        
+
     },
     get (name) {
         return (this.getAll())[name] || null
