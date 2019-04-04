@@ -12,11 +12,11 @@
     <button>
       <a href="whatsapp://send?text=HERE GOES THE URL ENCODED TEXT YOU WANT TO SHARE" target="_blank" data-action="share/whatsapp/share">Share via Whatsapp</a>
     </button>
-      
+
       <div class="fb-share-button" data-href="https://www.katoto.cn/" data-layout="button" data-size="small">
         <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.baidu.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">分享</a>
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -40,7 +40,7 @@ export default {
                 appID,
                 method: 'apprequests',
                 message: '这是疯狂猜球应用测试',
-                title: 'Invite friends to play' 
+                title: 'Invite friends to play'
             }, function(response){
                 if(response && response.to.length>0){
                     console.log('Welcome!  Fetching your information....1111 ');
@@ -81,33 +81,23 @@ export default {
                 console.log('====')
             });
             console.log(FB)
-        
             // FB.ui({
             //   method: 'share',
             //   herf: 'http://www.baidu.com'
             // },function(res){
             //   console.log(res)
             // })
-        
+
         }
     },
     components: {
     },
     async mounted() {
-        this.$get({
-            url: 'http://api.coinslot.com/home/info',
-            data: {
-                src: '3123'
-            }
-        }).then((val)=>{
-            console.log(val + '1')
-        })
-        let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
-        console.log(bb + '2')
-        let cc = await this.$get('http://api.coinslot.com/home/info', {
-            platform: '123'
-        })
-        
+        // let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
+        // console.log(bb + '2')
+        // let cc = await this.$get('http://api.coinslot.com/home/info', {
+        //     platform: '123'
+        // })
         window.fbAsyncInit = () => {
             FB.init({
                 appId      : appID,
@@ -119,7 +109,7 @@ export default {
             // this.pageinit(FB)
             this.baseFB = FB
         };
-      
+
     }
 }
 </script>
