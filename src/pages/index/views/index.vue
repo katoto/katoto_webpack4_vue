@@ -33,8 +33,7 @@ export default {
             if (isIOS) {
                 // 待修改
                 // this.contHref = '//www.baidu.com'
-			}
-			console.log(1113)
+            }
         })
     }
 }

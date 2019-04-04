@@ -1,447 +1,112 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "openSans";
+  }
+  html{
+	  color: #fff;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+	font-size: 100%;
+  }
+  b,
+  em,
+  i {
+	font-style: normal;
+  }
+  a {
+	display: block;
+	text-decoration: none;
+	outline: 0;
+	transition: all 0.2s;
+	color: #fff;
+	 -webkit-tap-highlight-color: rgba(0,0,0,0);
+  }
+  a:hover,a:active{
+	  filter: brightness(1.2);
+	  text-decoration: none;
+  }
+  img {
+	display: block;
+	max-width: 100%;
+	margin: 0 auto;
+	border: 0;
+  }
+  button,
+  input,
+  select,
+  textarea {
+	font-size: 100%;
+	outline: 0;
+	background: transparent;
+	border: none;
+	outline: none;
+  }
+  table {
+	border-collapse: collapse;
+	border-spacing: 0;
+  }
+  ol,
+  td,
+  th,
+  ul {
+	padding: 0;
+  }
+  dl,
+  ol,
+  ul {
+	list-style: none;
+  }
+  .clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+  }
+  .clearfix {
+	*zoom: 1;
+  }
+
+  .hide {
+	display: none !important;
+  }
+
+  .show {
+	display: block;
+  }
+
+  .fl {
+	float: left;
+  }
+
+  .fr {
+	float: right;
+  }
+
+  .is-center {
+	text-align: center;
+  }
+
+  .is-left {
+	text-align: left;
+  }
+
+  .is-right {
+	text-align: right;
+  }
+  .bold {
+	font-weight: bold;
+  }
+  body,html{
+	  height: 100%;
+	  min-height: 1px;
+  }
 
-body,
-div,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-code,
-form,
-fieldset,
-legend,
-input,
-textarea,
-p,
-blockquote,
-th,
-td {
-    margin: 0;
-    padding: 0
-}
-
-body {
-    -webkit-font-smoothing: antialiased;
-}
-
-th {
-    font-weight: normal;
-}
-
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-nav,
-section,
-summary {
-    display: block;
-}
-
-audio,
-canvas,
-progress,
-video {
-    display: inline-block;
-    /* 1 */
-    vertical-align: baseline;
-    /* 2 */
-}
-
-audio:not([controls]) {
-    display: none;
-    height: 0;
-}
-
-[hidden],
-template {
-    display: none;
-}
-
-a {
-    background: transparent;
-    text-decoration: none;
-}
-
-em {
-    font-style: normal;
-}
-
-::-ms-clear,
-::-ms-reveal {
-    display: none;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none !important;
-    margin: 0;
-}
-
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
-}
-
-input,
-textarea {
-    -moz-appearance: textfield;
-}
-
-textarea::-ms-clear {
-    display: none;
-}
-
-textarea::-ms-reveal {
-    display: none;
-}
-
-a:active,
-a:hover {
-    outline: 0;
-}
-
-abbr[title] {
-    border-bottom: 1px dotted;
-}
-
-b,
-strong {
-    font-weight: bold;
-}
-
-sub,
-sup {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-}
-
-sup {
-    top: -0.5em;
-}
-
-sub {
-    bottom: -0.25em;
-}
-
-img {
-    border: 0;
-}
-
-svg:not(:root) {
-    overflow: hidden;
-}
-
-figure {
-    margin: 1em 40px;
-}
-
-hr {
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    height: 0;
-}
-
-pre {
-    overflow: auto;
-}
-
-code,
-kbd,
-pre,
-samp {
-    font-family: monospace, monospace;
-    font-size: 1em;
-}
-
-button,
-input,
-optgroup,
-select,
-textarea {
-    color: inherit;
-    /* 1 */
-    font: inherit;
-    /* 2 */
-    margin: 0;
-    /* 3 */
-}
-
-button {
-    overflow: visible;
-    padding: 0;
-}
-
-button,
-select {
-    text-transform: none;
-    background: transparent;
-}
-
-button,
-html input[type="button"],
-/* 1 */
-input[type="reset"],
-input[type="submit"],
-option {
-    outline: none;
-    border: none;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    /* 2 */
-    cursor: pointer;
-    /* 3 */
-    background: none #fff;
-}
-
-
-
-html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
-
-button[disabled],
-html input[disabled] {
-    cursor: default;
-}
-
-/**
- * Remove inner padding and border in Firefox 4+.
- */
-
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-    border: 0;
-    padding: 0;
-}
-
-/**
- * Address Firefox 4+ setting `line-height` on `input` using `!important` in
- * the UA stylesheet.
- */
-
-input {
-    line-height: normal;
-}
-
-/**
- * It's recommended that you don't attempt to style these elements.
- * Firefox's implementation doesn't respect box-sizing, padding, or width.
- *
- * 1. Address box sizing set to `content-box` in IE 8/9/10.
- * 2. Remove excess padding in IE 8/9/10.
- */
-
-input[type="checkbox"],
-input[type="radio"] {
-    box-sizing: border-box;
-    /* 1 */
-    padding: 0;
-    /* 2 */
-}
-
-/**
- * Fix the cursor style for Chrome's increment/decrement buttons. For certain
- * `font-size` values of the `input`, it causes the cursor style of the
- * decrement button to change from `default` to `text`.
- */
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    height: auto;
-}
-
-/**
- * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
- * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
- *    (include `-moz` to future-proof).
- */
-
-input[type="search"] {
-    -webkit-appearance: textfield;
-    /* 1 */
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
-    /* 2 */
-    box-sizing: content-box;
-}
-
-/**
- * Remove inner padding and search cancel button in Safari and Chrome on OS X.
- * Safari (but not Chrome) clips the cancel button when the search input has
- * padding (and `textfield` appearance).
- */
-
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
-    -webkit-appearance: none;
-}
-
-div,
-a,
-img,
-p,
-span,
-i {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    /*-webkit-user-select: none;*/
-    -webkit-appearance: none;
-}
-
-/**
- * Define consistent border, margin, and padding.
- */
-
-fieldset {
-    border: 1px solid #c0c0c0;
-    margin: 0 2px;
-    padding: 0.35em 0.625em 0.75em;
-}
-
-/**
- * 1. Correct `color` not being inherited in IE 8/9.
- * 2. Remove padding so people aren't caught out if they zero out fieldsets.
- */
-
-legend {
-    border: 0;
-    /* 1 */
-    padding: 0;
-    /* 2 */
-}
-
-/**
- * Remove default vertical scrollbar in IE 8/9.
- */
-
-textarea {
-    overflow: auto;
-}
-
-/**
- * Don't inherit the `font-weight` (applied by a rule above).
- * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
- */
-
-optgroup {
-    font-weight: bold;
-}
-
-/* Tables
-   ========================================================================== */
-
-/**
- * Remove most spacing between table cells.
- */
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-textarea {
-    resize: none;
-}
-
-ol,
-ul,
-li {
-    list-style: none
-}
-
-i,
-b {
-    font-style: normal;
-}
-
-p {
-    -webkit-margin-before: 0em;
-    -webkit-margin-after: 0em
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-size: 100%;
-    font-weight: normal
-}
-
-.hide {
-    display: none !important;
-}
-
-.show {
-    display: block !important;
-}
-
-.fl {
-    float: left;
-}
-
-.fr {
-    float: right;
-}
-
-.is-center {
-    text-align: center !important;
-}
-
-.is-left {
-    text-align: left !important;
-}
-
-.is-right {
-    text-align: right !important;
-}
-
-.bold {
-    font-weight: bold;
-}
-
-.zIndex99 {
-    z-index: 99 !important;
-}
-
-.zIndex98 {
-    z-index: 98 !important;
-}
-
-/*移动端整屏*/
-html.flexhtml,
-.flexhtml body,
-.flexhtml #app {
-    min-height: 100%;
-    height: 100%;
-    overflow-y: auto;
-}
-
-/*新增补丁*/
-.flexhtml #app {
-    display: flex;
-    flex-direction: column;
-}
-
-.flex1 {
-    flex-grow: 1;
-}

@@ -1,71 +1,9 @@
-@import 'lib-mixins.less';
-@import 'lib-media.less';
-
-//弹窗
-.pop {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 99;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    text-align: center;
-    h3 {
-        line-height: 70px;
-        font-size: 20px;
-        color: #263648;
-        font-weight: bold;
-    }
+@import "lib-mixins.less";
+@font-face {
+	font-family: "openSans_bold";
+	src: url("../assets/font/openSans-ExtraBold.ttf");
 }
-
-//ipone5 320
-@media (max-width: 330px) {
-    .pop {
-        .pop-body {
-            transform-origin: top center;
-            transform: translate(-50%, -50%) scale(0.8);
-        }
-    }
-}
-
-@media (max-width: 768px) {
-    .cc-group.cc-luckycoin {
-        .btn-cc {
-            div {
-                left: -115px;
-                &::before {
-                    left: 115px;
-                }
-            }
-        }
-    }
-}
-//弹窗滚动穿透
-body.modal-open {
-    position: fixed;
-    width: 100%;
-}
-
-/*滚动条样式*/
-::-webkit-scrollbar {
-    border-radius: 8px;
-    width: 6px;
-    height: 6px;
-}
-
-::-webkit-scrollbar-track {
-    border-radius: 8px;
-    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(90deg, #efefef 0%, #fff 78%, #efefef 100%);
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, .3);
-    background: linear-gradient(0deg, rgb(227, 182, 143) 0%, rgb(255, 227, 166) 48%, rgb(227, 182, 143) 100%);
-}
-
-::-webkit-scrollbar-thumb:vertical {
-    background: linear-gradient(90deg, rgb(227, 182, 143) 0%, rgb(255, 227, 166) 48%, rgb(227, 182, 143) 100%);
+@font-face {
+	font-family: "openSans";
+	src: url("../assets/font/openSans-Regular.ttf");
 }
