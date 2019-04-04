@@ -3,7 +3,6 @@ const path = require('path')
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 var config = require('../config')
-
 var pageList = null;
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -38,14 +37,16 @@ function readPages() {
 							pageList.push({
 								entry: fullPath + '/main.html',
 								chunkName: path.basename(pageFile),
-								template: templateName,
+                                template: templateName,
+                                isSimple: true
 							})
 						}
 					} else {
 						pageList.push({
 							entry: fullPath + '/index.js',
 							chunkName: path.basename(pageFile),
-							template: templateName,
+                            template: templateName,
+                            isSimple: false
 						})
 					}
 				} catch (e) {
@@ -67,19 +68,21 @@ exports.getEntryPages = function () {
 exports.htmlPlugins = function (webackConfig) {
     var exChunks = config.isBuild ? ['manifest', 'vendor'] : [];
     var list = readPages().map(page => {
+        let chunks = []
+        chunks = page.isSimple ? [page.chunkName] : [...exChunks, page.chunkName];
         var options = {
+            chunks,
             filename: page.chunkName + '.html',
             title: 'vue + webpack4 + element-ui脚手架项目',
             description: 'vue + webpack4 + element-ui脚手架项目',
             template: page.template,
             favicon: resolve('icon.ico'),
-            // chunks: [...exChunks, page.chunkName],
-            chunks: [page.chunkName],
             inject: true,
             minify: {
                 collapseWhitespace: true,
             }
         }
+        console.log(options)
         return new HtmlWebpackPlugin(options);
     });
     return list
