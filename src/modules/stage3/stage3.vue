@@ -7,18 +7,22 @@
 </template>
 
 <script>
-    //import  from '';
+    // import  from '';
     export default {
-        created() {
+        created () {
         },
-        props: {},
-        data() {
-            return {};
-        },
+        props: {
+    },
+        data () {
+            return {
+            }
+    },
         methods: {
         },
-        computed: {},
-        components: {}
+        computed: {
+    },
+        components: {
+    }
     }
 </script>
 

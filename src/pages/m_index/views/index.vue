@@ -47,22 +47,24 @@
 </template>
 
 <script>
-import { isIOS } from '@common/util'
+import {
+    isIOS 
+} from "@common/util"
 
 export default {
-    data() {
+    data () {
         return {
-            contentSrc: '',
-            contHref: '//play.google.com/store/apps/details?id=com.crazy500.cbet'
-        };
+            contentSrc: "",
+            contHref: "//play.google.com/store/apps/details?id=com.crazy500.cbet"
+        }
     },
     components: {
     },
-    mounted() {
+    mounted () {
         this.$nextTick(() => {
             if (isIOS) {
                 // 待修改
-                this.contHref = '//play.google.com/store/apps/details?id=com.crazy500.cbet'
+                this.contHref = "//play.google.com/store/apps/details?id=com.crazy500.cbet"
             }
         })
     }

@@ -56,11 +56,21 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    limit: 60000,
-                    name: utils.assetsPath('img/[name].[hash:7].[ext]')
-                }
+                use:[{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        name: utils.assetsPath('img/[name].[hash:5].[ext]')
+                    }
+                },{
+                    loader: 'image-webpack-loader',
+                    options: {
+                        pngquant: {
+                          quality: "70-80",
+                          speed: 1
+                        }
+                    }
+                }]
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,

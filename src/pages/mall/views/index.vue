@@ -9,9 +9,9 @@
       </div>
       <div class="fr">
         <a href="javascript:;" class="my_balance">
-          <span>3568</span>
+          <span>{{formateBalance(avaliable_total)}}</span>
         </a>
-        <a href="javascript:;" class="btn btn_list_redemption_record"></a>
+        <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
         <a href="javascript:;" class="btn btn_question"></a>
       </div>
     </div>
@@ -25,53 +25,50 @@
     <div class="mall">
       <div class="mall_tab">
         <ul>
-          <li>
+          <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
             <a href="javascript:;">{{_('m_payment.all')}}</a>
           </li>
-          <li>
+          <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
             <a href="javascript:;">{{_('m_payment.card')}}</a>
           </li>
-          <li class="hot">
-            <a href="javascript:;">{{_('m_payment.electronics')}}</a>
+          <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
+            <a href="javascript:;">
+              {{_('m_payment.electronics')}}
+            </a>
           </li>
-          <li class="on">
+          <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
             <a href="javascript:;">{{_('m_payment.other')}}</a>
           </li>
         </ul>
       </div>
       <div class="mall_main">
-        <ul>
-          <li class="unlock">
+        <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
+          <li :class="{unlock: item[0].islock === '1'}">
             <div class="reward_box">
-              <img src="@/assets/img/10g.png" alt>
-              <p class="reward_name">50元京东购物卡</p>
+              <img :src="item[0].imgurl" alt>
+              <p class="reward_name">{{item[0].name}}</p>
             </div>
-            <a href="javascript:" class="btn_reward" @click="pop_list_redemption_record = true">10</a>
+            <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
           </li>
-          <li>
-            <div class="reward_box">
-              <img src="@/assets/img/10g.png" alt>
-              <p class="reward_name">iPad mini2 (16GB)</p>
-            </div>
-
-            <a href="javascript:" class="btn_reward">1000</a>
+          <li :class="{unlock: item[1] && item[1].islock === '1'}">
+              <template v-if="item[1]">
+                <div class="reward_box">
+                    <img :src="item[1].imgurl" alt>
+                    <p class="reward_name">{{item[1].name}}</p>
+                </div>
+                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
+              </template>
           </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="reward_box">
-              <img src="@/assets/img/10g.png" alt>
-              <p class="reward_name">50元京东购物卡</p>
-            </div>
-            <a href="javascript:" class="btn_reward">10</a>
-          </li>
-          <li></li>
         </ul>
       </div>
     </div>
 
+
+    <!-- 初始化全部的弹窗   -->
+    <popList></popList>
+
     <!-- 历史兑换记录 -->
-    <transition name="pop_animate">
+    <!-- <transition name="pop_animate">
       <div class="pop pop_list_redemption_record" v-if="pop_list_redemption_record">
         <div class="pop_main">
           <a href="javascript:" class="pop_close" @click="pop_list_redemption_record = false"></a>
@@ -117,13 +114,14 @@
                 </div>
               </li>
             </ul>
-            <!--todo empty -->
+            todo empty -
           </div>
         </div>
       </div>
-    </transition>
+    </transition> -->
+
     <!-- 批量兑换 -->
-    <div class="pop pop_rechange_many hide">
+    <!-- <div class="pop pop_rechange_many hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_success')}}</div>
@@ -133,7 +131,7 @@
           <p class="product_count">({{_('m_payment.virtual_num', 3)}})</p>
         </div>
         <p class="product_use">1000 gift card for Amazon Mail</p>
-        <!-- 批量兑换前 -->
+         批量兑换前
         <div class="pop_rechange_many_before">
           <p class="text_error"></p>
           <div class="input_box">
@@ -143,7 +141,7 @@
           </div>
           <p class="text_tips">({{_('m_payment.exchange_tip', 50)}})</p>
         </div>
-        <!-- 批量兑换成功后 -->
+        批量兑换成功后
         <div class="pop_rechange_many_main hide">
           <ul>
             <li class="pop_rechange_many_list">
@@ -180,10 +178,10 @@
         </div>
         <a href="javascript:" class="btn_default">{{_('m_payment.copy_all')}}</a>
       </div>
-    </div>
+    </div> -->
 
     <!-- 帮助弹层+ -->
-    <div class="pop pop_rule hide">
+    <!-- <div class="pop pop_rule hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
@@ -193,39 +191,32 @@
           <p v-html="_('m_payment.rule3')"></p>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 兑换提醒弹层 -->
-    <div class="pop pop_rule hide">
+    <!-- <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
       <div class="pop_main">
-        <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">兑换规则</div>
+        <a href="javascript:" class="pop_close" @click="showDeliverPop = false"></a>
+        <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
         <div class="pop_rule_main">
-          <p>
-            1.话费充值
-            <br>中国移动请拨打10086或者13800138000根据语音提示选择充值卡充值。
-          </p>
-          <p>
-            2.平台充值
-            <br>可选择支付宝等平台进行话费卡转让操作。
-            <br>1.话费充值
-            <br>中国移动请拨打10086或者13800138000根据语音提示选择充值卡充值。
-          </p>
+          <p v-html="_('m_payment.rule1')"></p>
+          <p v-html="_('m_payment.rule2')"></p>
+          <p v-html="_('m_payment.rule3')"></p>
         </div>
         <div class="rechange_tips">
-          <!-- disable 不可点击 -->
-          <a href="javascript:" class="btn_default">Confirm</a>
+           disable 不可点击
+          <a href="javascript:" class="btn_default" @click="confirmDeliverTip">{{_('m_payment.confirm')}}</a>
           <div class="tips_form">
-            <input type="checkbox" id="tips">
-            <i class="icon_checkbox"></i>
-            <label for="tips">下次不在提醒</label>
+            <input type="checkbox" v-model="deliverConfirm">
+            <i class="icon_checkbox" :class="{on: deliverConfirm}" @click="deliverConfirm = !deliverConfirm"></i>
+            <label for="tips">{{_('m_payment.rule_tip')}}</label>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 商品详情 -->
-    <div class="pop pop_product_detailed hide">
+    <!-- <div class="pop pop_product_detailed hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
@@ -236,18 +227,18 @@
           <i class="icon_gold"></i>10
         </p>
       </div>
-    </div>
+    </div> -->
 
     <!-- 虚拟商品兑换弹层 -->
-    <div class="pop pop_exchange_virtual hide">
+    <!-- <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
       <div class="pop_main">
-        <a href="javascript:" class="pop_close"></a>
+        <a href="javascript:" class="pop_close" @click="showVirtualPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
         <img class="product_img" src="@assets/img/amazon.png" alt>
         <p class="product_name">100 Amazon</p>
         <p class="product_use">1000 gift card for Amazon Mail</p>
-        <!-- 兑换前 -->
-        <div class="card_msg card_msg_before">
+
+        <div class="card_msg card_msg_before" :class="{hide: virtualCard !== '' && virtualPass !== ''}">
           <p>
             <span>{{_('m_payment.card_no')}}:</span>
             <i class="card_layer"></i>
@@ -257,66 +248,66 @@
             <i class="card_layer"></i>
           </p>
         </div>
-        <!-- 兑换后 -->
-        <div class="card_msg card_msg_after hide">
+
+        <div class="card_msg card_msg_after" :class="{hide: virtualCard === '' || virtualPass === ''}">
           <p>
             <span>{{_('m_payment.card_no')}}:</span>
-            <i class="card_psw">1256484359765815</i>
-            <a href="javascript:;" class="btn_copy">{{_('m_payment.copy')}}</a>
+            <i class="card_psw">{{virtualCard}}</i>
+            <a href="javascript:;" class="btn_copy" v-clipboard:copy="virtualCard" v-clipboard:success="copySucc" v-clipboard:error="copyError">{{_('m_payment.copy')}}</a>
           </p>
           <p>
             <span>{{_('m_payment.password')}}:</span>
-            <i class="card_psw">654235654235654235654235654235654235</i>
-            <a href="javascript:;" class="btn_copy">{{_('m_payment.copy')}}</a>
+            <i class="card_psw">{{virtualPass}}</i>
+            <a href="javascript:;" class="btn_copy" v-clipboard:copy="virtualPass" v-clipboard:success="copySucc" v-clipboard:error="copyError">{{_('m_payment.copy')}}</a>
           </p>
         </div>
-        <a href="javascript:" class="btn_default">{{_('m_payment.exchange_confirm')}}</a>
+        <a href="javascript:" class="btn_default" @click="confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
       </div>
-    </div>
+    </div> -->
+
     <!-- 实物商品兑换弹层 -->
-    <div class="pop pop_exchange_real hide">
+    <!-- <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
       <div class="pop_main">
-        <a href="javascript:" class="pop_close"></a>
+        <a href="javascript:" class="pop_close" @click="showRealPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
         <img class="product_img" src="@assets/img/10g.png" alt>
         <p class="product_name">100 Amazon</p>
         <p class="product_use">1000 gift card for Amazon Mail</p>
-        <!-- 没填地址 -->
-        <div class="address_input">
-          <input type="text" :placeholder="_('m_payment.name')">
-          <input type="text" :placeholder="_('m_payment.phone')">
-          <!-- todo placeholder样式缩小 -->
-          <input type="text" :placeholder="_('m_payment.address')">
-          <input type="text" :placeholder="_('m_payment.code')">
-          <a href="javascript:" class="btn_default">{{_('m_payment.exchange_confirm')}}</a>
+
+        <div class="address_input" v-if="isCheckReal">
+          <input type="text" :placeholder="_('m_payment.name')" v-model="realName">
+          <input type="text" :placeholder="_('m_payment.phone')" v-model="realTel">
+
+          <input type="text" :placeholder="_('m_payment.address')" v-model="realAddress">
+          <input type="text" :placeholder="_('m_payment.code')" v-model="realPostcode">
+          <a href="javascript:" class="btn_default" @click="checkRealInfo">{{_('m_payment.exchange_confirm')}}</a>
         </div>
-        <!-- 填好地址 -->
-        <div class="address_check hide">
+        <div class="address_check" v-else>
           <p class="user_msg">
             <span class="user_t">{{_('m_payment.name1')}}:</span>
-            <span class="user_c">吴阳阳</span>
+            <span class="user_c">{{realName}}</span>
           </p>
           <p class="user_msg">
             <span class="user_t">{{_('m_payment.address1')}}:</span>
-            <span class="user_c">深圳市龙岗神仙岭500.com大大厦深圳市龙岗神仙岭500.com大大厦</span>
+            <span class="user_c">{{realAddress}}</span>
           </p>
           <p class="user_msg">
             <span class="user_t">{{_('m_payment.phone1')}}:</span>
-            <span class="user_c">12345678888</span>
+            <span class="user_c">{{realTel}}</span>
           </p>
           <p class="user_msg">
             <span class="user_t">{{_('m_payment.code1')}}:</span>
-            <span class="user_c">1236546</span>
+            <span class="user_c">{{realPostcode}}</span>
           </p>
           <div class="btn_choose">
             <a href="javascript:;" class="btn_back">{{_('m_payment.back_modify')}}</a>
             <a href="javascript:;" class="btn_default">{{_('m_payment.exchange_now')}}</a>
           </div>
         </div>
-        <!-- 兑换成功 -->
+        兑换成功
         <div class="icon_success"></div>
       </div>
-    </div>
+    </div> -->
 
     <!-- toast -->
     <div class="toast hide">toast</div>
@@ -324,26 +315,236 @@
 </template>
 
 <script>
+import {
+    copySucc, copyError, formateBalance
+} from "@/common/util"
+// 弹窗
+import popList from "../components/Pop_list"
+// 弹窗data
+import mixins_pop from "../mixins/pop.js"
 export default {
+    mixins: [mixins_pop],
+    provide () {
+        return {
+            app: this
+        }
+    },
     data () {
         return {
-            pop_list_redemption_record:false
+            acitveClass: "all",
+            deliverConfirm: false,
+            showDeliverPop: false,
+            showRealPop: false,
+            showVirtualPop: false,
+            exchangeList: [],
+            pop_list_redemption_record:false,
+            virtualCard: "",
+            virtualPass: "",
+            realName: "",
+            realAddress: "",
+            realTel: "",
+            realPostcode: "",
+            isCheckReal: false,
+            avaliable_total: "0",
+            aid: "",
+            activeItem: {
+            }
         }
     },
     components: {
-
+        popList
     },
     computed: {
-
+        checkRealInfo () {
+            if (this.realName && this.realAddress && this.realTel && this.realPostcode) {
+                return true
+            }
+            return false
+        }
     },
     methods: {
+        copySucc,
+        copyError,
+        formateBalance,
+        recordListFn () {
+            this.setPopStore("setRecordList", true)
+        },
+        showDetail (item) {
+            this.activeItem = item
+            if (item.goodstype === "2") {
+                let deliverTip = window.localStorage && localStorage.getItem("noDeliverTip")
+                if (!deliverTip) {
+                    this.setPopStore("setRuleHelp", true)
+                    return
+                }
+                this.setPopStore("setExchangeReal", true)
+            } else {
+                this.virtualCard = ""
+                this.virtualPass = ""
+                this.setPopStore("setExchangeVirtual", true)
+            }
+        },
+        confirmDeliverTip () {
+            if (this.deliverConfirm) {
+                window.localStorage && localStorage.setItem("noDeliverTip", "true")
+            }
+            this.setPopStore("setRuleHelp", false)
+            this.setPopStore("setExchangeReal", true)
+        },
+        confirmVirtual () {
+            this.exchange(this.activeItem)
+                .then(res => {
+                    console.log(res)
+                    this.virtualCard = "123456789"
+                    this.virtualPass = "987654321"
+                })
+        },
+        exchangeReal () {
+            this.exchange(this.activeItem, this.aid)
+                .then(() => {
+                    this.setPopStore("setExchangeReal", false)
+                })
+        },
+        getList () {
+            let arr = []
+            let displayArr = []
+            if (this.acitveClass === "all") {
+                arr = [...this.exchangeList]
+            } else if (this.acitveClass === "card") {
+                arr = this.exchangeList.filter(item => item.goodstype === "1")
+            } else if (this.acitveClass === "electronics") {
+                arr = this.exchangeList.filter(item => item.goodstype === "2")
+            } else {
+                arr = this.exchangeList.filter(item => item.goodstype !== "1" && item.goodstype !== "2")
+            }
 
+            arr.forEach((item, index) => {
+                if (index % 2 === 0) {
+                    displayArr.push([item])
+                } else {
+                    displayArr[displayArr.length - 1].push(item)
+                }
+            })
+            return displayArr
+        },
+        getExchangeList () {
+            this.$get("/shops/goods/list")
+                .catch(err => {
+                    return {
+                        "status":"100",
+                        "message":"ok",
+                        "data":[{
+                            "islock":"0",
+                            "weight":"1",
+                            "needgolds":"12521512",
+                            "goodsdesc":"1",
+                            "id":"50004",
+                            "imgurl":"http:\/\/home.500.com\/main\/style\/5lin\/images\/5lin_link.png",
+                            "updatetime":"0",
+                            "name":"1",
+                            "top_status":"0",
+                            "activity_imgurl":"",
+                            "usage":"",
+                            "goodstype":"2"
+                        },{
+                            "islock":"0",
+                            "weight":"10",
+                            "needgolds":"100",
+                            "goodsdesc":"100元亚马逊换购卡",
+                            "id":"50002",
+                            "imgurl":"http:\/\/149.129.138.180\/static\/amazon.png",
+                            "updatetime":"0",
+                            "name":"100元亚马逊卡",
+                            "top_status":"0",
+                            "activity_imgurl":"",
+                            "usage":"",
+                            "goodstype":"1"
+                        },{
+                            "islock":"0",
+                            "weight":"50",
+                            "needgolds":"1000",
+                            "goodsdesc":"小米8s",
+                            "id":"50003",
+                            "imgurl":"http:\/\/149.129.138.180\/static\/mobile.png",
+                            "updatetime":"0",
+                            "name":"小米8s",
+                            "top_status":"0",
+                            "activity_imgurl":"",
+                            "usage":"",
+                            "goodstype":"2"
+                        }]
+                    }
+                })
+                .then(res => {
+                    res.data.sort((a, b) => Number(a.weigth) > Number(b.weight) ? 1 : -1)
+                    this.exchangeList = res.data
+                    console.log(this.exchangeList)
+                })
+        },
+        getUserInfo () {
+            this.$get("/simple/user/info").then(res => {
+                console.log(res)
+                this.avaliable_total = Number(res.data.avaliable_total)
+            })
+        },
+        addAddress () {
+            this.$post("/shipping/address/add", {
+                consignee: this.realName,
+                mobile: this.realTel,
+                address: this.realAddress,
+                postcode: this.realPostcode
+            })
+                .then(res => {
+                    console.log(res)
+                    this.isCheckReal = true
+                    this.aid = res.data.aid
+                })
+        },
+        getUserAddress () {
+            this.$post("/shipping/address/get")
+                .then(res => {
+                    this.realName = res.data.f_consignee || ""
+                    this.realTel = res.data.f_mobile || ""
+                    this.realAddress = res.data.f_address || ""
+                    this.realPostcode = res.data.f_postcode || ""
+                    this.aid = res.data.f_aid
+                })
+        },
+        exchange (item, aid, amount = 1) {
+            let data = {
+                goodsid: item.id,
+                amount
+            }
+            if (aid) {
+                data.aid = aid
+            }
+            return this.$post("/shops/goods/exchange", data)
+                .then(res => {
+                    console.log(res)
+                    return res
+                })
+        }
     },
-    mounted () {}
+    mounted () {
+        this.getExchangeList()
+        this.getUserInfo()
+        this.getUserAddress()
+        window._this = this
+        // setTimeout(() => {
+        //     // 设置值
+        //     this.pop.showRecordList = true
+        //     this.setPopStore("setRechangeMany", true)
+        //     this.setPopStore("setRuleHelp", true)
+        //     this.setPopStore("setExchangeTips", true)
+        //     this.setPopStore("setProductDetail", true)
+        //     this.setPopStore("setExchangeVirtual", true)
+        //     this.setPopStore("setExchangeReal", true)
+        // },5000)
+    }
 }
 </script>
 
-<style lang="less" scoped type="text/less">
+<style lang="less" type="text/less">
 @import "../../../styles/lib-mixins.less";
 .page_mall {
   width: 750/75rem;

@@ -92,17 +92,17 @@ import { isIOS, appID, cbetLocal, preloadImage } from '@common/util'
 import { setTimeout } from 'timers';
 
 export default {
-    data() {
+    data () {
         return {
-            contentSrc: '',
-            contHref: '//play.google.com/store/apps/details?id=com.crazy500.cbet',
+            contentSrc: "",
+            contHref: "//play.google.com/store/apps/details?id=com.crazy500.cbet",
             baseFB: null,
             accToken: null,
             fadeIn:false,
             scrollTop: 0,
             isOnPop: true,
             show_pop_invite_frient:false,
-            friend_code:''
+            friend_code:'',
         };
     },
     watch:{
@@ -119,79 +119,90 @@ export default {
         },
     },
     methods:{
-        shareCopy(){
-            cbetLocal({func:'copyToPasteboard', params:{
-                content:"复制msg内容222  ",
-            }})
+        shareCopy () {
+            cbetLocal({
+                func:"copyToPasteboard",
+                params:{
+                    content:"复制msg内容222  "
+                }
+            })
             // cbetLocal({func:'jumpToLocal',  params:{ content:"jp://RaceDetailScene?matchId=1243563"}
             // })
         },
-        fb_whatsapp(){
-			// 内容
-            cbetLocal({func: "share", params:{ content: "321312132", plat: 'whatsapp' } })
+        fb_whatsapp () {
+            // 内容
+            cbetLocal({
+                func: "share",
+                params:{
+                    content: "321312132",
+                    plat: "whatsapp"
+                }
+            })
         },
-        fb_fackbook(){
+        fb_fackbook () {
             console.log(121)
-            cbetLocal({func: "share", params:{ content: "12312321", plat: 'facebook' } })
+            cbetLocal({
+                func: "share",
+                params:{
+                    content: "12312321",
+                    plat: "facebook"
+                }
+            })
         },
-        fb_morePeop(){
+        fb_morePeop () {
             window.FB.ui({
                 appID,
-                method: 'apprequests',
-                message: '这是疯狂猜球应用测试',
-                title: 'Invite friends to play'
-            }, function(response){
-                if(response && response.to.length>0){
-                    console.log('Welcome!  Fetching your information....1111 ');
+                method: "apprequests",
+                message: "这是疯狂猜球应用测试",
+                title: "Invite friends to play"
+            }, function (response) {
+                if (response && response.to.length>0) {
+                    console.log("Welcome!  Fetching your information....1111 ")
                 }
-                console.log(response);
-            });
+                console.log(response)
+            })
         },
-        fb_invite(){
+        fb_invite () {
             console.log(this.baseFB)
-            this.baseFB.getLoginStatus(function(response) {
+            this.baseFB.getLoginStatus(function (response) {
                 console.log(response)
                 this.accToken = response.accessToken
-                if(response && response.status === 'unknown'){
-                    window.FB.login(function(response) {
+                if (response && response.status === "unknown") {
+                    window.FB.login(function (response) {
                         if (response.authResponse) {
-                            console.log('Welcome!  Fetching your information.... ');
+                            console.log("Welcome!  Fetching your information.... ")
                         } else {
-                            console.log('User cancelled login or did not fully authorize.');
+                            console.log("User cancelled login or did not fully authorize.")
                         }
-                    });
+                    })
                 }
-            });
+            })
         },
-        pageinit(FB){
-            FB.getLoginStatus(function(response) {
-                if(response && response.status === 'unknown'){
-                    FB.login(function(response) {
+        pageinit (FB) {
+            FB.getLoginStatus(function (response) {
+                if (response && response.status === "unknown") {
+                    FB.login(function (response) {
                         if (response.authResponse) {
-                            console.log('Welcome!  Fetching your information.... ');
+                            console.log("Welcome!  Fetching your information.... ")
                             console.log(response)
-                            console.log('111111111')
+                            console.log("111111111")
                         } else {
-                            console.log('User cancelled login or did not fully authorize.');
+                            console.log("User cancelled login or did not fully authorize.")
                         }
-                    });
+                    })
                 }
-                console.log(response);
-                console.log('====')
-            });
+                console.log(response)
+                console.log("====")
+            })
 
         }
     },
     components: {
     },
-    async mounted() {
-        preloadImage(['bg.99c8a5e.jpg','title.460998d.png','bg_light.44261ed.png','bg_particle1.0abdacd.png','bg_particle2.4dd077d.png','bg_particle3.84b3966.png'], ()=>{
+    async mounted () {
+          preloadImage(['bg.99c8a5e.jpg','title.460998d.png','bg_light.44261ed.png','bg_particle1.0abdacd.png','bg_particle2.4dd077d.png','bg_particle3.84b3966.png'], ()=>{
             this.fadeIn = true
         }, './img/');
-
-
-
-
         // let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
         // console.log(bb + '2')
         // let cc = await this.$get('http://api.coinslot.com/home/info', {
@@ -202,12 +213,13 @@ export default {
                 appId      : appID,
                 cookie     : true,
                 xfbml      : true,
-                version    : 'v3.2'
-            });
-            FB.AppEvents.logPageView();
+                version    : "v3.2"
+            })
+            FB.AppEvents.logPageView()
             // this.pageinit(FB)
             this.baseFB = FB
-        };
+        }
+
     }
 }
 </script>
