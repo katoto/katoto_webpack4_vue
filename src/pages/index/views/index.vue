@@ -16,20 +16,22 @@
 </template>
 
 <script>
-import { isIOS } from '@common/util'
+import {
+    isIOS 
+} from "@common/util"
 
 export default {
-    data() {
+    data () {
         return {
-            contentSrc: '',
-            contHref: '//play.google.com/store/apps/details?id=com.crazy500.cbet'
-        };
+            contentSrc: "",
+            contHref: "//play.google.com/store/apps/details?id=com.crazy500.cbet"
+        }
     },
     components: {
     },
-    mounted() {
+    mounted () {
         this.$nextTick(() => {
-            this.contentSrc = require('@/pages/index/img/contentbody.png')
+            this.contentSrc = require("@/pages/index/img/contentbody.png")
             if (isIOS) {
                 // 待修改
                 // this.contHref = '//www.baidu.com'

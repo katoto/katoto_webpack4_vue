@@ -63,8 +63,12 @@
       </div>
     </div>
 
+
+    <!-- 初始化全部的弹窗   -->
+    <popList></popList>
+
     <!-- 历史兑换记录 -->
-    <transition name="pop_animate">
+    <!-- <transition name="pop_animate">
       <div class="pop pop_list_redemption_record" v-if="pop_list_redemption_record">
         <div class="pop_main">
           <a href="javascript:" class="pop_close" @click="pop_list_redemption_record = false"></a>
@@ -110,13 +114,14 @@
                 </div>
               </li>
             </ul>
-            <!--todo empty -->
+            todo empty -
           </div>
         </div>
       </div>
-    </transition>
+    </transition> -->
+
     <!-- 批量兑换 -->
-    <div class="pop pop_rechange_many hide">
+    <!-- <div class="pop pop_rechange_many hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_success')}}</div>
@@ -126,7 +131,7 @@
           <p class="product_count">({{_('m_payment.virtual_num', 3)}})</p>
         </div>
         <p class="product_use">1000 gift card for Amazon Mail</p>
-        <!-- 批量兑换前 -->
+         批量兑换前
         <div class="pop_rechange_many_before">
           <p class="text_error"></p>
           <div class="input_box">
@@ -136,7 +141,7 @@
           </div>
           <p class="text_tips">({{_('m_payment.exchange_tip', 50)}})</p>
         </div>
-        <!-- 批量兑换成功后 -->
+        批量兑换成功后
         <div class="pop_rechange_many_main hide">
           <ul>
             <li class="pop_rechange_many_list">
@@ -173,10 +178,10 @@
         </div>
         <a href="javascript:" class="btn_default">{{_('m_payment.copy_all')}}</a>
       </div>
-    </div>
+    </div> -->
 
     <!-- 帮助弹层+ -->
-    <div class="pop pop_rule hide">
+    <!-- <div class="pop pop_rule hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
@@ -186,10 +191,10 @@
           <p v-html="_('m_payment.rule3')"></p>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 兑换提醒弹层 -->
-    <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
+    <!-- <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
       <div class="pop_main">
         <a href="javascript:" class="pop_close" @click="showDeliverPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
@@ -199,7 +204,7 @@
           <p v-html="_('m_payment.rule3')"></p>
         </div>
         <div class="rechange_tips">
-          <!-- disable 不可点击 -->
+           disable 不可点击
           <a href="javascript:" class="btn_default" @click="confirmDeliverTip">{{_('m_payment.confirm')}}</a>
           <div class="tips_form">
             <input type="checkbox" v-model="deliverConfirm">
@@ -208,10 +213,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 商品详情 -->
-    <div class="pop pop_product_detailed hide">
+    <!-- <div class="pop pop_product_detailed hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
@@ -222,17 +227,17 @@
           <i class="icon_gold"></i>10
         </p>
       </div>
-    </div>
+    </div> -->
 
     <!-- 虚拟商品兑换弹层 -->
-    <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
+    <!-- <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
       <div class="pop_main">
         <a href="javascript:" class="pop_close" @click="showVirtualPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
         <img class="product_img" src="@assets/img/amazon.png" alt>
         <p class="product_name">100 Amazon</p>
         <p class="product_use">1000 gift card for Amazon Mail</p>
-        <!-- 兑换前 -->
+
         <div class="card_msg card_msg_before" :class="{hide: virtualCard !== '' && virtualPass !== ''}">
           <p>
             <span>{{_('m_payment.card_no')}}:</span>
@@ -243,7 +248,7 @@
             <i class="card_layer"></i>
           </p>
         </div>
-        <!-- 兑换后 -->
+
         <div class="card_msg card_msg_after" :class="{hide: virtualCard === '' || virtualPass === ''}">
           <p>
             <span>{{_('m_payment.card_no')}}:</span>
@@ -258,25 +263,25 @@
         </div>
         <a href="javascript:" class="btn_default" @click="confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
       </div>
-    </div>
+    </div> -->
+
     <!-- 实物商品兑换弹层 -->
-    <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
+    <!-- <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
       <div class="pop_main">
         <a href="javascript:" class="pop_close" @click="showRealPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
         <img class="product_img" src="@assets/img/10g.png" alt>
         <p class="product_name">100 Amazon</p>
         <p class="product_use">1000 gift card for Amazon Mail</p>
-        <!-- 没填地址 -->
+
         <div class="address_input" v-if="isCheckReal">
           <input type="text" :placeholder="_('m_payment.name')" v-model="realName">
           <input type="text" :placeholder="_('m_payment.phone')" v-model="realTel">
-          <!-- todo placeholder样式缩小 -->
+
           <input type="text" :placeholder="_('m_payment.address')" v-model="realAddress">
           <input type="text" :placeholder="_('m_payment.code')" v-model="realPostcode">
           <a href="javascript:" class="btn_default" @click="checkRealInfo">{{_('m_payment.exchange_confirm')}}</a>
         </div>
-        <!-- 填好地址 -->
         <div class="address_check" v-else>
           <p class="user_msg">
             <span class="user_t">{{_('m_payment.name1')}}:</span>
@@ -299,10 +304,10 @@
             <a href="javascript:;" class="btn_default">{{_('m_payment.exchange_now')}}</a>
           </div>
         </div>
-        <!-- 兑换成功 -->
+        兑换成功
         <div class="icon_success"></div>
       </div>
-    </div>
+    </div> -->
 
     <!-- toast -->
     <div class="toast hide">toast</div>
@@ -313,7 +318,17 @@
 import {
     copySucc, copyError
 } from "@/common/util"
+// 弹窗
+import popList from "../components/Pop_list"
+// 弹窗data
+import mixins_pop from "../mixins/pop.js"
 export default {
+    mixins: [mixins_pop],
+    provide () {
+        return {
+            app: this
+        }
+    },
     data () {
         return {
             acitveClass: "all",
@@ -325,18 +340,23 @@ export default {
             pop_list_redemption_record:false,
             virtualCard: "",
             virtualPass: "",
-            realName: "",
-            realAddress: "",
-            realTel: "",
-            realPostcode: "",
+            realName: window.localStorage ? (localStorage.getItem("realName") || "") : "",
+            realAddress: window.localStorage ? (localStorage.getItem("realAddress") || "") : "",
+            realTel: window.localStorage ? (localStorage.getItem("realTel") || "") : "",
+            realPostcode: window.localStorage ? (localStorage.getItem("realPostcode") || "") : "",
             isCheckReal: false
         }
     },
     components: {
-
+        popList
     },
     computed: {
-
+        checkRealInfo () {
+            if (this.realName && this.realAddress && this.realTel && this.realPostcode) {
+                return true
+            }
+            return false
+        }
     },
     methods: {
         copySucc,
@@ -345,26 +365,34 @@ export default {
             if (item.goodstype === "2") {
                 let deliverTip = window.localStorage && localStorage.getItem("noDeliverTip")
                 if (!deliverTip) {
-                    this.showDeliverPop = true
+                    this.setPopStore("setRuleHelp", true)
                     return
                 }
-                this.showRealPop = true
+                this.setPopStore("setExchangeReal", true)
             } else {
                 this.virtualCard = ""
                 this.virtualPass = ""
-                this.showVirtualPop = true
+                this.setPopStore("setExchangeVirtual", true)
             }
         },
         confirmDeliverTip () {
             if (this.deliverConfirm) {
                 window.localStorage && localStorage.setItem("noDeliverTip", "true")
             }
-            this.showDeliverPop = false
-            this.showRealPop = true
+            this.setPopStore("setRuleHelp", false)
+            this.setPopStore("setExchangeReal", true)
         },
         confirmVirtual () {
             this.virtualCard = "123456789"
             this.virtualPass = "987654321"
+        },
+        exchangeReal () {
+            console.log("exchange")
+            window.localStorage && localStorage.setItem("realName", this.realName)
+            window.localStorage && localStorage.setItem("realAddress", this.realAddress)
+            window.localStorage && localStorage.setItem("realTel", this.realTel)
+            window.localStorage && localStorage.setItem("realPostcode", this.realPostcode)
+            this.setPopStore("setExchangeReal", false)
         },
         getList () {
             let arr = []
@@ -446,11 +474,21 @@ export default {
     mounted () {
         this.getExchangeList()
         window._this = this
+        // setTimeout(() => {
+        //     // 设置值
+        //     this.pop.showRecordList = true
+        //     this.setPopStore("setRechangeMany", true)
+        //     this.setPopStore("setRuleHelp", true)
+        //     this.setPopStore("setExchangeTips", true)
+        //     this.setPopStore("setProductDetail", true)
+        //     this.setPopStore("setExchangeVirtual", true)
+        //     this.setPopStore("setExchangeReal", true)
+        // },5000)
     }
 }
 </script>
 
-<style lang="less" scoped type="text/less">
+<style lang="less" type="text/less">
 @import "../../../styles/lib-mixins.less";
 .page_mall {
   width: 750/75rem;

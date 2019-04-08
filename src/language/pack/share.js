@@ -1,8 +1,8 @@
 export default {
     en: {
-        'share': 'share-en'
+        "share": "share-en"
     },
     india: {
-        'share': 'share-india'
+        "share": "share-india"
     }
 }

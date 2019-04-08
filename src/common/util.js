@@ -216,7 +216,6 @@ export function formateEmail (email, isFull) {
 export function getURLParams () {
     let string = window.location.search
     let obj = {
-
     }
     string.slice(1).split("&").map(item => {
         if (item !== "") {
@@ -546,7 +545,6 @@ export const cookie = {
     getAll () {
         let cookiesArr = document.cookie.split(";")
         let cookies = {
-
         }
         cookiesArr.map(item => {
             if (item) {

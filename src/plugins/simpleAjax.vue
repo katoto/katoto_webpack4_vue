@@ -75,7 +75,6 @@ MyPlugin.install = function (Vue) {
         return window.$http.apply(this, arguments)
     }
     Vue.prototype.$post = function (options={
-
     }, data = "") {
         if (!options) {return new Error("options 参数有误")}
         if (Object.prototype.toString.call(options) === "[object String]") {
@@ -91,7 +90,6 @@ MyPlugin.install = function (Vue) {
         return this.$http(options)
     }
     Vue.prototype.$get = function (options={
-
     }, data = "") {
         if (!options) {return new Error("option 参数有误")}
         if (Object.prototype.toString.call(options) === "[object String]") {

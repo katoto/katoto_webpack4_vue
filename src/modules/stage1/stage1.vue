@@ -7,13 +7,18 @@
 
 <script>
     export default {
-        props: {},
-        data() {
-            return {};
-        },
-        methods: {},
-        computed: {},
-        components: {}
+        props: {
+    },
+        data () {
+            return {
+            }
+    },
+        methods: {
+    },
+        computed: {
+    },
+        components: {
+    }
     }
 </script>
 
