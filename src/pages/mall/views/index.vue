@@ -233,7 +233,7 @@
         <p class="product_name">100 Amazon</p>
         <p class="product_use">1000 gift card for Amazon Mail</p>
         <!-- 兑换前 -->
-        <div class="card_msg card_msg_before">
+        <div class="card_msg card_msg_before" :class="{hide: virtualCard !== '' && virtualPass !== ''}">
           <p>
             <span>{{_('m_payment.card_no')}}:</span>
             <i class="card_layer"></i>
@@ -244,19 +244,19 @@
           </p>
         </div>
         <!-- 兑换后 -->
-        <div class="card_msg card_msg_after hide">
+        <div class="card_msg card_msg_after" :class="{hide: virtualCard === '' || virtualPass === ''}">
           <p>
             <span>{{_('m_payment.card_no')}}:</span>
-            <i class="card_psw">1256484359765815</i>
-            <a href="javascript:;" class="btn_copy">{{_('m_payment.copy')}}</a>
+            <i class="card_psw">{{virtualCard}}</i>
+            <a href="javascript:;" class="btn_copy" v-clipboard:copy="virtualCard" v-clipboard:success="copySucc" v-clipboard:error="copyError">{{_('m_payment.copy')}}</a>
           </p>
           <p>
             <span>{{_('m_payment.password')}}:</span>
-            <i class="card_psw">654235654235654235654235654235654235</i>
-            <a href="javascript:;" class="btn_copy">{{_('m_payment.copy')}}</a>
+            <i class="card_psw">{{virtualPass}}</i>
+            <a href="javascript:;" class="btn_copy" v-clipboard:copy="virtualPass" v-clipboard:success="copySucc" v-clipboard:error="copyError">{{_('m_payment.copy')}}</a>
           </p>
         </div>
-        <a href="javascript:" class="btn_default">{{_('m_payment.exchange_confirm')}}</a>
+        <a href="javascript:" class="btn_default" @click="confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
       </div>
     </div>
     <!-- 实物商品兑换弹层 -->
@@ -268,31 +268,31 @@
         <p class="product_name">100 Amazon</p>
         <p class="product_use">1000 gift card for Amazon Mail</p>
         <!-- 没填地址 -->
-        <div class="address_input">
-          <input type="text" :placeholder="_('m_payment.name')">
-          <input type="text" :placeholder="_('m_payment.phone')">
+        <div class="address_input" v-if="isCheckReal">
+          <input type="text" :placeholder="_('m_payment.name')" v-model="realName">
+          <input type="text" :placeholder="_('m_payment.phone')" v-model="realTel">
           <!-- todo placeholder样式缩小 -->
-          <input type="text" :placeholder="_('m_payment.address')">
-          <input type="text" :placeholder="_('m_payment.code')">
-          <a href="javascript:" class="btn_default">{{_('m_payment.exchange_confirm')}}</a>
+          <input type="text" :placeholder="_('m_payment.address')" v-model="realAddress">
+          <input type="text" :placeholder="_('m_payment.code')" v-model="realPostcode">
+          <a href="javascript:" class="btn_default" @click="checkRealInfo">{{_('m_payment.exchange_confirm')}}</a>
         </div>
         <!-- 填好地址 -->
-        <div class="address_check hide">
+        <div class="address_check" v-else>
           <p class="user_msg">
             <span class="user_t">{{_('m_payment.name1')}}:</span>
-            <span class="user_c">吴阳阳</span>
+            <span class="user_c">{{realName}}</span>
           </p>
           <p class="user_msg">
             <span class="user_t">{{_('m_payment.address1')}}:</span>
-            <span class="user_c">深圳市龙岗神仙岭500.com大大厦深圳市龙岗神仙岭500.com大大厦</span>
+            <span class="user_c">{{realAddress}}</span>
           </p>
           <p class="user_msg">
             <span class="user_t">{{_('m_payment.phone1')}}:</span>
-            <span class="user_c">12345678888</span>
+            <span class="user_c">{{realTel}}</span>
           </p>
           <p class="user_msg">
             <span class="user_t">{{_('m_payment.code1')}}:</span>
-            <span class="user_c">1236546</span>
+            <span class="user_c">{{realPostcode}}</span>
           </p>
           <div class="btn_choose">
             <a href="javascript:;" class="btn_back">{{_('m_payment.back_modify')}}</a>
@@ -310,6 +310,9 @@
 </template>
 
 <script>
+import {
+    copySucc, copyError
+} from "@/common/util"
 export default {
     data () {
         return {
@@ -319,7 +322,14 @@ export default {
             showRealPop: false,
             showVirtualPop: false,
             exchangeList: [],
-            pop_list_redemption_record:false
+            pop_list_redemption_record:false,
+            virtualCard: "",
+            virtualPass: "",
+            realName: "",
+            realAddress: "",
+            realTel: "",
+            realPostcode: "",
+            isCheckReal: false
         }
     },
     components: {
@@ -329,6 +339,8 @@ export default {
 
     },
     methods: {
+        copySucc,
+        copyError,
         showDetail (item) {
             if (item.goodstype === "2") {
                 let deliverTip = window.localStorage && localStorage.getItem("noDeliverTip")
@@ -338,6 +350,8 @@ export default {
                 }
                 this.showRealPop = true
             } else {
+                this.virtualCard = ""
+                this.virtualPass = ""
                 this.showVirtualPop = true
             }
         },
@@ -347,6 +361,10 @@ export default {
             }
             this.showDeliverPop = false
             this.showRealPop = true
+        },
+        confirmVirtual () {
+            this.virtualCard = "123456789"
+            this.virtualPass = "987654321"
         },
         getList () {
             let arr = []
@@ -421,6 +439,7 @@ export default {
                 .then(res => {
                     res.data.sort((a, b) => Number(a.weigth) > Number(b.weight) ? 1 : -1)
                     this.exchangeList = res.data
+                    console.log(this.exchangeList)
                 })
         }
     },
