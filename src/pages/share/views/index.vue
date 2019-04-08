@@ -200,7 +200,7 @@ export default {
     components: {
     },
     async mounted () {
-          preloadImage(['bg.99c8a5e.jpg','title.460998d.png','bg_light.44261ed.png','bg_particle1.0abdacd.png','bg_particle2.4dd077d.png','bg_particle3.84b3966.png'], ()=>{
+          preloadImage(['bg.jpg','title.png','bg_light.png','bg_particle1.png','bg_particle2.png','bg_particle3.png'], ()=>{
             this.fadeIn = true
         }, './img/');
         // let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
