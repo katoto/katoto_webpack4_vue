@@ -420,7 +420,7 @@ export default {
             return displayArr
         },
         getExchangeList () {
-            this.$get("http://192.168.14.19:8888/shops/goods/list?ck=MTAwMDE2OWFjZTNhMTM3ZDJmZDEyYzk3NTdhNzY1MmEyYWE3MGU4&platform=1&version=2&channel=3")
+            this.$get("/shops/goods/list")
                 .catch(err => {
                     return {
                         "status":"100",

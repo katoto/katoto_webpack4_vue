@@ -6,6 +6,21 @@
 const MyPlugin = {
 
 }
+let BASEURL = ""
+if (process.env.NODE_ENV === "production") {
+    BASEURL = ""
+} else if (process.env.NODE_ENV === "test") {
+    BASEURL = ""
+} else if (process.env.NODE_ENV === "development") {
+    BASEURL = "http://10.0.1.41:8001"
+}
+
+let commonParams = {
+    platform: "1",
+    version: "2",
+    channel: "3",
+    ck: "MTAwMTUxMDM3ZWFhYjgyNGM1MGM3OWVhYjMzNWM2M2E2MWI1NTlmOA=="
+}
 
 MyPlugin.install = function (Vue) {
     // 对象转get字符串
@@ -74,31 +89,36 @@ MyPlugin.install = function (Vue) {
     Vue.prototype.$http = function () {
         return window.$http.apply(this, arguments)
     }
-    Vue.prototype.$post = function (options={
-    }, data = "") {
-        if (!options) {return new Error("options 参数有误")}
-        if (Object.prototype.toString.call(options) === "[object String]") {
-            options = {
-                url: options,
-                data
-            }
+    Vue.prototype.$post = function (url = "", data = {
+    }) {
+        if (!url) {
+            return new Error("url 参数有误")
         }
-        options.type = "post"
-        return this.$http(options)
+        url = `${BASEURL}${url}`
+        return this.$http({
+            url,
+            type: "post",
+            data: {
+                ...commonParams,
+                ...data
+            }
+        })
     }
-    Vue.prototype.$get = function (options={
-    }, data = "") {
-        if (!options) {return new Error("option 参数有误")}
-        if (Object.prototype.toString.call(options) === "[object String]") {
-            options = {
-                url: options
-            }
-            if (Object.prototype.toString.call(data) === "[object Object]") {
-                options.url = options.url + "?" + obj2str(data)
-            }
+    Vue.prototype.$get = function (url = "", data = {
+    }) {
+        if (!url) {
+            return new Error("option 参数有误")
         }
-        options.type = "get"
-        return this.$http(options)
+        data = {
+            ...commonParams,
+            ...data
+        }
+        url = `${BASEURL}${url}`
+        url = url.indexOf("?") > -1 ? `${url}&${obj2str(data)}` : `${url}?${obj2str(data)}`
+        return this.$http({
+            type: "get",
+            url
+        })
     }
 }
 
