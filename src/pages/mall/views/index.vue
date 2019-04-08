@@ -11,7 +11,7 @@
         <a href="javascript:;" class="my_balance">
           <span>3568</span>
         </a>
-        <a href="javascript:;" class="btn btn_list_redemption_record"></a>
+        <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
         <a href="javascript:;" class="btn btn_question"></a>
       </div>
     </div>
@@ -348,6 +348,9 @@ export default {
 
     },
     methods: {
+        recordListFn(){
+            this.setPopStore("setRecordList", true)
+        },
         showDetail (item) {
             if (item.goodstype === "2") {
                 let deliverTip = window.localStorage && localStorage.getItem("noDeliverTip")
@@ -449,13 +452,13 @@ export default {
         setTimeout(() => {
             this.acitveClass = "1111111"
             // 设置值
-            this.pop.showRecordList = true
-            this.setPopStore("setRechangeMany", true)
-            this.setPopStore("setRuleHelp", true)
-            this.setPopStore("setExchangeTips", true)
-            this.setPopStore("setProductDetail", true)
-            this.setPopStore("setExchangeVirtual", true)
-            this.setPopStore("setExchangeReal", true)
+            // this.setPopStore("setRecordList", true)
+            // this.setPopStore("setRechangeMany", true)
+            // this.setPopStore("setRuleHelp", true)
+            // this.setPopStore("setExchangeTips", true)
+            // this.setPopStore("setProductDetail", true)
+            // this.setPopStore("setExchangeVirtual", true)
+            // this.setPopStore("setExchangeReal", true)
         },5000)
     }
 }

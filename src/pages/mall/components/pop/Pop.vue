@@ -1,7 +1,7 @@
 <!-- 公共弹窗 -->
 <template>
     <transition name="pop_animate">
-        <div class="pop" :class="{ hide: !show}">
+        <div class="pop" v-if="show">
             <div class="pop_main">
                 <a href="javascript:" class="pop_close" v-if="hideClose" @click="onClose"></a>
                 <slot></slot>
