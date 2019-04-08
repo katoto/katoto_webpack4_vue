@@ -1,9 +1,40 @@
 @import "lib-mixins.less";
 @font-face {
-	font-family: "openSans_bold";
-	src: url("../assets/font/openSans-ExtraBold.ttf");
+    font-family: "openSans_bold";
+    src: url("../assets/font/openSans-ExtraBold.ttf");
 }
 @font-face {
-	font-family: "openSans";
-	src: url("../assets/font/openSans-Regular.ttf");
+    font-family: "openSans";
+    src: url("../assets/font/openSans-Regular.ttf");
+}
+.pop_animate-enter-active {
+    animation: popEnter 0.4s;
+}
+.pop_animate-leave-active {
+    animation: popLeave 0.2s;
+}
+@keyframes popEnter {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    75% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+@keyframes popLeave {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(0.2);
+    }
 }

@@ -64,55 +64,57 @@
     </div>
 
     <!-- 历史兑换记录 -->
-    <div class="pop pop_list_redemption_record hide">
-      <div class="pop_main">
-        <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
-        <div class="redemption_record">
-          <ul>
-            <li>
-              <div class="record_img">
-                <img src="@assets/img/10g.png" alt>
-                <p class="record_name">100 Amazon</p>
-              </div>
-              <div class="record_msg">
-                <div class="record_view">
-                  <p>
-                    <span>{{_('m_payment.card_no')}}：</span>
-                    <i>1325144654685asdas</i>
-                  </p>
-                  <p>
-                    <span>{{_('m_payment.password')}}：</span>
-                    <i>1325144654asdasdasd</i>
-                  </p>
+    <transition name="pop_animate">
+      <div class="pop pop_list_redemption_record" v-if="pop_list_redemption_record">
+        <div class="pop_main">
+          <a href="javascript:" class="pop_close" @click="pop_list_redemption_record = false"></a>
+          <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
+          <div class="redemption_record">
+            <ul>
+              <li>
+                <div class="record_img">
+                  <img src="@assets/img/10g.png" alt>
+                  <p class="record_name">100 Amazon</p>
                 </div>
-                <span class="record_time">2018.08.10 18:52:32</span>
-              </div>
-            </li>
-            <li>
-              <div class="record_img">
-                <img src="@assets/img/10g.png" alt>
-                <p class="record_name">Iphone SE (16GB)</p>
-              </div>
-              <div class="record_msg">
-                <div class="record_view">
-                  <p>
-                    <span>{{_('m_payment.goodstatus')}}:</span>
-                    <i>1</i>
-                  </p>
-                  <p>
-                    <span>{{_('m_payment.goodno')}}:</span>
-                    <i>2</i>
-                  </p>
+                <div class="record_msg">
+                  <div class="record_view">
+                    <p>
+                      <span>{{_('m_payment.card_no')}}：</span>
+                      <i>1325144654685asdas</i>
+                    </p>
+                    <p>
+                      <span>{{_('m_payment.password')}}：</span>
+                      <i>1325144654asdasdasd</i>
+                    </p>
+                  </div>
+                  <span class="record_time">2018.08.10 18:52:32</span>
                 </div>
-                <span class="record_time">2018.08.10 18:52:32</span>
-              </div>
-            </li>
-          </ul>
-          <!--todo empty -->
+              </li>
+              <li>
+                <div class="record_img">
+                  <img src="@assets/img/10g.png" alt>
+                  <p class="record_name">Iphone SE (16GB)</p>
+                </div>
+                <div class="record_msg">
+                  <div class="record_view">
+                    <p>
+                      <span>{{_('m_payment.goodstatus')}}:</span>
+                      <i>1</i>
+                    </p>
+                    <p>
+                      <span>{{_('m_payment.goodno')}}:</span>
+                      <i>2</i>
+                    </p>
+                  </div>
+                  <span class="record_time">2018.08.10 18:52:32</span>
+                </div>
+              </li>
+            </ul>
+            <!--todo empty -->
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
     <!-- 批量兑换 -->
     <div class="pop pop_rechange_many hide">
       <div class="pop_main">
@@ -126,7 +128,7 @@
         <p class="product_use">1000 gift card for Amazon Mail</p>
         <!-- 批量兑换前 -->
         <div class="pop_rechange_many_before">
-          <p class="text_error"> </p>
+          <p class="text_error"></p>
           <div class="input_box">
             <a href="javascript:;" class="btn btn_delete">-</a>
             <input type="number">
@@ -316,7 +318,8 @@ export default {
             showDeliverPop: false,
             showRealPop: false,
             showVirtualPop: false,
-            exchangeList: []
+            exchangeList: [],
+            pop_list_redemption_record:false
         }
     },
     components: {
@@ -429,7 +432,7 @@ export default {
 </script>
 
 <style lang="less" scoped type="text/less">
-@import '../../../styles/lib-mixins.less';
+@import "../../../styles/lib-mixins.less";
 .page_mall {
   width: 750/75rem;
   height: 100%;
@@ -676,7 +679,6 @@ export default {
   }
 }
 
-
 .pop {
   position: absolute;
   top: 0;
@@ -691,7 +693,8 @@ export default {
     transform: translate(-50%, -50%);
     width: 674/75rem;
     //   height: 500px;
-    background: #2d2a38 url(../../../assets/img/pop_gradient_bg.jpg) no-repeat top center;
+    background: #2d2a38 url(../../../assets/img/pop_gradient_bg.jpg) no-repeat
+      top center;
     background-size: 668/75rem;
     border: 8/75rem solid rgba(147, 130, 99, 0.749);
     border-image-source: url(../../../assets/img/pop_border.png);
@@ -861,7 +864,8 @@ export default {
       background-size: cover;
       white-space: nowrap;
       &.on {
-        background: url(../../../assets/img/checkbox_green_on.png) no-repeat center;
+        background: url(../../../assets/img/checkbox_green_on.png) no-repeat
+          center;
         background-size: cover;
       }
     }
@@ -999,7 +1003,8 @@ export default {
     padding: 0 66/75rem;
     overflow: hidden;
     margin: 0 auto 0;
-    background: url(../../../assets/img/icon_pop_line.png) no-repeat center bottom;
+    background: url(../../../assets/img/icon_pop_line.png) no-repeat center
+      bottom;
     background-size: 100%;
     white-space: nowrap;
     p {
@@ -1040,11 +1045,13 @@ export default {
       text-indent: 999999px;
       font-size: 0;
       &.btn_delete {
-        background: #38324e url(../../../assets/img/icon_delete.png) no-repeat center;
+        background: #38324e url(../../../assets/img/icon_delete.png) no-repeat
+          center;
         background-size: 21/75rem;
       }
       &.btn_add {
-        background: #38324e url(../../../assets/img/icon_add.png) no-repeat center;
+        background: #38324e url(../../../assets/img/icon_add.png) no-repeat
+          center;
         background-size: 21/75rem;
       }
     }
@@ -1140,7 +1147,8 @@ export default {
     width: 74/75rem;
     height: 74/75rem;
     overflow: hidden;
-    background: #39b607 url(../../../assets/img/pop_confirm.png) no-repeat center;
+    background: #39b607 url(../../../assets/img/pop_confirm.png) no-repeat
+      center;
     background-size: 55/75rem;
     border-radius: 50%;
   }
@@ -1166,5 +1174,4 @@ export default {
     margin: 50/75rem auto 70/75rem;
   }
 }
-
 </style>
