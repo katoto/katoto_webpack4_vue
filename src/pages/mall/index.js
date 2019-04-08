@@ -12,7 +12,14 @@ require("@/styles/lib-public.less")
 // 引入语言包
 require("@language").use(Vue, [mallLanguage])
 Vue.use(VueClipboard)
-Vue.use(simpleAjax)
+Vue.use(simpleAjax, {
+    commonParams: {
+        platform: "1",
+        version: "2",
+        channel: "3",
+        ck: "MTAwMTUxMDM3ZWFhYjgyNGM1MGM3OWVhYjMzNWM2M2E2MWI1NTlmOA=="
+    }
+})
 
 new Vue({
     el: "#app",

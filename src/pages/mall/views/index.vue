@@ -9,7 +9,7 @@
       </div>
       <div class="fr">
         <a href="javascript:;" class="my_balance">
-          <span>3568</span>
+          <span>{{avaliable_total}}</span>
         </a>
         <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
         <a href="javascript:;" class="btn btn_question"></a>
@@ -340,11 +340,15 @@ export default {
             pop_list_redemption_record:false,
             virtualCard: "",
             virtualPass: "",
-            realName: window.localStorage ? (localStorage.getItem("realName") || "") : "",
-            realAddress: window.localStorage ? (localStorage.getItem("realAddress") || "") : "",
-            realTel: window.localStorage ? (localStorage.getItem("realTel") || "") : "",
-            realPostcode: window.localStorage ? (localStorage.getItem("realPostcode") || "") : "",
-            isCheckReal: false
+            realName: "",
+            realAddress: "",
+            realTel: "",
+            realPostcode: "",
+            isCheckReal: false,
+            avaliable_total: "0",
+            aid: "",
+            activeItem: {
+            }
         }
     },
     components: {
@@ -365,6 +369,7 @@ export default {
             this.setPopStore("setRecordList", true)
         },
         showDetail (item) {
+            this.activeItem = item
             if (item.goodstype === "2") {
                 let deliverTip = window.localStorage && localStorage.getItem("noDeliverTip")
                 if (!deliverTip) {
@@ -386,16 +391,18 @@ export default {
             this.setPopStore("setExchangeReal", true)
         },
         confirmVirtual () {
-            this.virtualCard = "123456789"
-            this.virtualPass = "987654321"
+            this.exchange(this.activeItem)
+                .then(res => {
+                    console.log(res)
+                    this.virtualCard = "123456789"
+                    this.virtualPass = "987654321"
+                })
         },
         exchangeReal () {
-            console.log("exchange")
-            window.localStorage && localStorage.setItem("realName", this.realName)
-            window.localStorage && localStorage.setItem("realAddress", this.realAddress)
-            window.localStorage && localStorage.setItem("realTel", this.realTel)
-            window.localStorage && localStorage.setItem("realPostcode", this.realPostcode)
-            this.setPopStore("setExchangeReal", false)
+            this.exchange(this.activeItem, this.aid)
+                .then(() => {
+                    this.setPopStore("setExchangeReal", false)
+                })
         },
         getList () {
             let arr = []
@@ -472,10 +479,55 @@ export default {
                     this.exchangeList = res.data
                     console.log(this.exchangeList)
                 })
+        },
+        getUserInfo () {
+            this.$get("/simple/user/info").then(res => {
+                console.log(res)
+                this.avaliable_total = Number(res.data.avaliable_total)
+            })
+        },
+        addAddress () {
+            this.$post("/shipping/address/add", {
+                consignee: this.realName,
+                mobile: this.realTel,
+                address: this.realAddress,
+                postcode: this.realPostcode
+            })
+                .then(res => {
+                    console.log(res)
+                    this.isCheckReal = true
+                    this.aid = res.data.aid
+                })
+        },
+        getUserAddress () {
+            this.$post("/shipping/address/get")
+                .then(res => {
+                    this.realName = res.data.f_consignee || ""
+                    this.realTel = res.data.f_mobile || ""
+                    this.realAddress = res.data.f_address || ""
+                    this.realPostcode = res.data.f_postcode || ""
+                    this.aid = res.data.f_aid
+                })
+        },
+        exchange (item, aid, amount = 1) {
+            let data = {
+                goodsid: item.id,
+                amount
+            }
+            if (aid) {
+                data.aid = aid
+            }
+            return this.$post("/shops/goods/exchange", data)
+                .then(res => {
+                    console.log(res)
+                    return res
+                })
         }
     },
     mounted () {
         this.getExchangeList()
+        this.getUserInfo()
+        this.getUserAddress()
         window._this = this
         // setTimeout(() => {
         //     // 设置值

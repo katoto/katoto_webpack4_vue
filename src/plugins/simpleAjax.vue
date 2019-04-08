@@ -4,7 +4,6 @@
 // eg 2、 let cc = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8)
 
 const MyPlugin = {
-
 }
 let BASEURL = ""
 if (process.env.NODE_ENV === "production") {
@@ -15,14 +14,7 @@ if (process.env.NODE_ENV === "production") {
     BASEURL = "http://10.0.1.41:8001"
 }
 
-let commonParams = {
-    platform: "1",
-    version: "2",
-    channel: "3",
-    ck: "MTAwMTUxMDM3ZWFhYjgyNGM1MGM3OWVhYjMzNWM2M2E2MWI1NTlmOA=="
-}
-
-MyPlugin.install = function (Vue) {
+MyPlugin.install = function (Vue, config) {
     // 对象转get字符串
     let obj2str = function (data) {
         let dataStr = ""
@@ -31,6 +23,12 @@ MyPlugin.install = function (Vue) {
         }
         return dataStr && dataStr.slice(0, -1)
     }
+    let commonHandler = res => {
+        res.status !== "100" && alert(res.message)
+        return res.status !== "100" ? Promise.reject(res) : res
+    }
+    let commonParams = config.commonParams
+
     window.$http = function (options) {
         let createXHR = function () {
             let xhr
@@ -102,7 +100,7 @@ MyPlugin.install = function (Vue) {
                 ...commonParams,
                 ...data
             }
-        })
+        }).then(commonHandler)
     }
     Vue.prototype.$get = function (url = "", data = {
     }) {
@@ -118,7 +116,7 @@ MyPlugin.install = function (Vue) {
         return this.$http({
             type: "get",
             url
-        })
+        }).then(commonHandler)
     }
 }
 

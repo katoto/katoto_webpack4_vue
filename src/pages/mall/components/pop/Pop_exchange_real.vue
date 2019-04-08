@@ -11,7 +11,7 @@
 
           <input type="text" :placeholder="_('m_payment.address')" v-model="app.realAddress">
           <input type="text" :placeholder="_('m_payment.code')" v-model="app.realPostcode">
-          <a href="javascript:" class="btn_default" @click="app.isCheckReal = app.checkRealInfo" :class="{disable: !app.checkRealInfo}">{{_('m_payment.exchange_confirm')}}</a>
+          <a href="javascript:" class="btn_default" @click="app.addAddress" :class="{disable: !app.checkRealInfo}">{{_('m_payment.exchange_confirm')}}</a>
         </div>
         <div class="address_check" v-else>
           <p class="user_msg">
