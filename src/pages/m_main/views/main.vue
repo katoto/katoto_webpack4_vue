@@ -21,51 +21,66 @@
 
 <script>
 export default {
-    data() {
+    data () {
         return {
             data: null,
             loading: false
         }
     },
     methods: {
-        callMockApi() {
-            var pars = { id: +new Date(), a: 1, b: 2 }
-            this.$x.post('/api/test_api', pars)
+        callMockApi () {
+            var pars = {
+                id: +new Date(),
+                a: 1,
+                b: 2 
+            }
+            this.$x.post("/api/test_api", pars)
                 .then(res => {
-                    this.data = res.data;
+                    this.data = res.data
                 })
         },
-        callLoading() {
+        callLoading () {
             this.loading = true
-            this.$x.post('/api/test_promise', null, { maskOptions: false })
+            this.$x.post("/api/test_promise", null, {
+                maskOptions: false 
+            })
                 .then(res => {
-                    this.data = res.data;
+                    this.data = res.data
                 })
                 .finally(t => {
                     this.loading = false
                 })
         },
-        callUnmockedApi() {
-            this.$x.post('/api/get_data', {}, { showError: false, maskOptions: { target: '.main-page' } })
+        callUnmockedApi () {
+            this.$x.post("/api/get_data", {
+            }, {
+                showError: false,
+                maskOptions: {
+                    target: ".main-page" 
+                } 
+            })
                 .then(res => {
                 })
                 .catch(e => {
-                    this.$x.toast.error('接口 http://aaa.bbb.com/api/get_data 访问失败，且未设置mock数据')
+                    this.$x.toast.error("接口 http://aaa.bbb.com/api/get_data 访问失败，且未设置mock数据")
                 })
         },
-        callOtherApi() {
-            this.$x.post('{node_api}/api/get_xxx', {}, { showError: 'alert' })
+        callOtherApi () {
+            this.$x.post("{node_api}/api/get_xxx", {
+            }, {
+                showError: "alert" 
+            })
                 .then(res => {
                 })
         },
-        getAndGo() {
-            this.$router.push('/stage1')
+        getAndGo () {
+            this.$router.push("/stage1")
         },
-        getAndGo2() {
-            this.$router.push('/stage2')
+        getAndGo2 () {
+            this.$router.push("/stage2")
         },
-        getAndGo3() {
-            this.$router.push('/stage2/stage3')
+        getAndGo3 () {
+            this.$router.push("/stage2/stage3")
         }
     // loadExternalRoutes() {
     //     window.addExternalRoutes = function (routes) {
@@ -75,7 +90,8 @@ export default {
     //     require('../js/utils/loadScripts')('http://localhost:63342/vue-element-ui-scaffold-webpack4/dist/js/../../dist/js/zrest-route.bee65ae7.js')
     // }
     },
-    components: {}
+    components: {
+    }
 }
 </script>
 

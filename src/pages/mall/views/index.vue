@@ -70,6 +70,10 @@
       </div>
     </div>
 
+
+    <!-- 初始化全部的弹窗   -->
+    <popList></popList>
+
     <!-- 历史兑换记录 -->
     <transition name="pop_animate">
       <div class="pop pop_list_redemption_record" v-if="pop_list_redemption_record">
@@ -324,6 +328,7 @@
 </template>
 
 <script>
+import popList from '../components/Pop_list'
 export default {
     data () {
         return {
@@ -331,7 +336,7 @@ export default {
         }
     },
     components: {
-
+        popList
     },
     computed: {
 
@@ -343,7 +348,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped type="text/less">
+<style lang="less" type="text/less">
 @import "../../../styles/lib-mixins.less";
 .page_mall {
   width: 750/75rem;

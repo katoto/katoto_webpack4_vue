@@ -6,17 +6,19 @@
 
 <script>
  export default {
-   data () {
+     data () {
 	 return {
 
 	 }
-   },
-   components: {
+     },
+     components: {
 
-   },
-   computed: {},
-   methods: {},
-   mounted(){}
+     },
+     computed: {
+     },
+     methods: {
+     },
+     mounted () {}
  }
 </script>
 

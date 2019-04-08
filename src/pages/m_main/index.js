@@ -1,23 +1,23 @@
-import Vue from 'vue'
-import router from '../../router/routerMain.js'
-import main from './views/main.vue'
-import storeFactory from './store/index'
-import mMainLanguage from '@pack/m_main'
+import Vue from "vue"
+import router from "../../router/routerMain.js"
+import main from "./views/main.vue"
+import storeFactory from "./store/index"
+import mMainLanguage from "@pack/m_main"
 
 // 初始化与公共样式
-require('@/styles/lib-reset.css')
+require("@/styles/lib-reset.css")
 
 const store = storeFactory()
 
 // 引入语言包
-require('@language').use(Vue, [mMainLanguage])
+require("@language").use(Vue, [mMainLanguage])
 
 const app = new Vue(Object.assign({
     router,
     store
 }, main))
 
-app.$mount('#app')
+app.$mount("#app")
 
 export {
     app,
