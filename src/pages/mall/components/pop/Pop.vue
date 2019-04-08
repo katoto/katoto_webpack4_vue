@@ -10,11 +10,14 @@
     </transition>
 </template>
 <script>
+import {
+    setTimeout
+} from "timers"
 export default {
     props:{
         show: {
             type: Boolean,
-            default:true
+            default:false
         },
         hideClose: {
             type: Boolean,
@@ -22,10 +25,12 @@ export default {
         }
     },
     methods:{
-        onClose(){
-            this.$emit('update:show', false)
-            tgus.$emit('onClose')
+        onClose () {
+            this.$emit("update:show", false)
+            this.$emit("onClose")
         }
+    },
+    mounted () {
     }
 
 }
