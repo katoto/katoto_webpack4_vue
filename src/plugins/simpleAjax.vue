@@ -84,9 +84,6 @@ MyPlugin.install = function (Vue) {
             }
         }
         options.type = "post"
-        console.log(options)
-        console.log(options)
-        console.log(options)
         return this.$http(options)
     }
     Vue.prototype.$get = function (options={

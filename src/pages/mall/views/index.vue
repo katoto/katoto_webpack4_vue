@@ -11,7 +11,7 @@
         <a href="javascript:;" class="my_balance">
           <span>3568</span>
         </a>
-        <a href="javascript:;" class="btn btn_list_redemption_record"></a>
+        <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
         <a href="javascript:;" class="btn btn_question"></a>
       </div>
     </div>
@@ -361,6 +361,9 @@ export default {
     methods: {
         copySucc,
         copyError,
+        recordListFn () {
+            this.setPopStore("setRecordList", true)
+        },
         showDetail (item) {
             if (item.goodstype === "2") {
                 let deliverTip = window.localStorage && localStorage.getItem("noDeliverTip")

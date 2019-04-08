@@ -52,6 +52,11 @@
 import Pop from "./Pop.vue"
 export default {
     inject: ["app"],
+    data(){
+        return {
+            recordList: null
+        }
+    },
     computed:{
         show:{
             get: function () {
@@ -72,7 +77,28 @@ export default {
     components:{
         Pop
     },
+    created(){
+        this.getRecordList()
+    },
+    methods:{
+        // todo
+        getRecordList(){
+            console.log('====recordList===')
+            this.$post('http://192.168.14.19:8888/shops/goods/exchange/record/list',{
+                ck: '123',
+                platform: '1',
+                version: '1',
+                pageno: '1',
+                pagesize: '12'
+            }).then(()=>{
+
+            }).catch(e =>{
+                console.log(e)
+            })
+        }
+    },
     mounted () {
+
     }
 }
 </script>
