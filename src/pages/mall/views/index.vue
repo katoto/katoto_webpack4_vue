@@ -9,7 +9,7 @@
       </div>
       <div class="fr">
         <a href="javascript:;" class="my_balance">
-          <span>{{avaliable_total}}</span>
+          <span>{{formateBalance(avaliable_total)}}</span>
         </a>
         <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
         <a href="javascript:;" class="btn btn_question"></a>
@@ -316,7 +316,7 @@
 
 <script>
 import {
-    copySucc, copyError
+    copySucc, copyError, formateBalance
 } from "@/common/util"
 // 弹窗
 import popList from "../components/Pop_list"
@@ -365,6 +365,7 @@ export default {
     methods: {
         copySucc,
         copyError,
+        formateBalance,
         recordListFn () {
             this.setPopStore("setRecordList", true)
         },

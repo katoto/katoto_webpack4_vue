@@ -169,16 +169,14 @@ export function formatTime (time, format = "MM-dd HH:mm:ss") {
     })
 }
 
-export function formateBalance (val = 0, bit = 6) {
-    let num = Number(val)
-    if (num >= 100000) {
-        return num
+export function formateBalance (val = 0) {
+    val = Number(val)
+    if (val >= 1000000) {
+        return `${(val / 1000000).toFixed(2)}m`
+    } else if (val > 1000) {
+        return `${(val / 1000).toFixed(2)}k`
     }
-    num = num.toFixed(9).substr(0, num > 0 ? bit + 1 : bit + 2)
-    if (num.charAt(num.length - 1) === ".") {
-        return num.substr(0, num.length - 1)
-    }
-    return num
+    return val
 }
 
 export function formateEmail (email, isFull) {
