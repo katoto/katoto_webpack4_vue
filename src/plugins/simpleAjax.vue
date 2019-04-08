@@ -4,6 +4,7 @@
 // eg 2、 let cc = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8)
 
 const MyPlugin = {
+
 }
 
 MyPlugin.install = function (Vue) {
@@ -65,7 +66,7 @@ MyPlugin.install = function (Vue) {
                     resolve(responseData)
                 } else if (xhr.readyState == 4 && xhr.status != 200) {
                     console.warn("请求有误")
-                    resolve(false)
+                    reject(xhr.status)
                 }
             }
         })

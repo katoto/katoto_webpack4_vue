@@ -25,47 +25,40 @@
     <div class="mall">
       <div class="mall_tab">
         <ul>
-          <li>
+          <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
             <a href="javascript:;">{{_('m_payment.all')}}</a>
           </li>
-          <li>
+          <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
             <a href="javascript:;">{{_('m_payment.card')}}</a>
           </li>
-          <li class="hot">
-            <a href="javascript:;">{{_('m_payment.electronics')}}</a>
+          <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
+            <a href="javascript:;">
+              {{_('m_payment.electronics')}}
+            </a>
           </li>
-          <li class="on">
+          <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
             <a href="javascript:;">{{_('m_payment.other')}}</a>
           </li>
         </ul>
       </div>
       <div class="mall_main">
-        <ul>
-          <li class="unlock">
+        <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
+          <li :class="{unlock: item[0].islock === '1'}">
             <div class="reward_box">
-              <img src="@/assets/img/10g.png" alt>
-              <p class="reward_name">50元京东购物卡</p>
+              <img :src="item[0].imgurl" alt>
+              <p class="reward_name">{{item[0].name}}</p>
             </div>
-            <a href="javascript:" class="btn_reward" @click="pop_list_redemption_record = true">10</a>
+            <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
           </li>
-          <li>
-            <div class="reward_box">
-              <img src="@/assets/img/10g.png" alt>
-              <p class="reward_name">iPad mini2 (16GB)</p>
-            </div>
-
-            <a href="javascript:" class="btn_reward">1000</a>
+          <li :class="{unlock: item[1] && item[1].islock === '1'}">
+              <template v-if="item[1]">
+                <div class="reward_box">
+                    <img :src="item[1].imgurl" alt>
+                    <p class="reward_name">{{item[1].name}}</p>
+                </div>
+                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
+              </template>
           </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="reward_box">
-              <img src="@/assets/img/10g.png" alt>
-              <p class="reward_name">50元京东购物卡</p>
-            </div>
-            <a href="javascript:" class="btn_reward">10</a>
-          </li>
-          <li></li>
         </ul>
       </div>
     </div>
@@ -200,29 +193,22 @@
     </div>
 
     <!-- 兑换提醒弹层 -->
-    <div class="pop pop_rule hide">
+    <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
       <div class="pop_main">
-        <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">兑换规则</div>
+        <a href="javascript:" class="pop_close" @click="showDeliverPop = false"></a>
+        <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
         <div class="pop_rule_main">
-          <p>
-            1.话费充值
-            <br>中国移动请拨打10086或者13800138000根据语音提示选择充值卡充值。
-          </p>
-          <p>
-            2.平台充值
-            <br>可选择支付宝等平台进行话费卡转让操作。
-            <br>1.话费充值
-            <br>中国移动请拨打10086或者13800138000根据语音提示选择充值卡充值。
-          </p>
+          <p v-html="_('m_payment.rule1')"></p>
+          <p v-html="_('m_payment.rule2')"></p>
+          <p v-html="_('m_payment.rule3')"></p>
         </div>
         <div class="rechange_tips">
           <!-- disable 不可点击 -->
-          <a href="javascript:" class="btn_default">Confirm</a>
+          <a href="javascript:" class="btn_default" @click="confirmDeliverTip">{{_('m_payment.confirm')}}</a>
           <div class="tips_form">
-            <input type="checkbox" id="tips">
-            <i class="icon_checkbox"></i>
-            <label for="tips">下次不在提醒</label>
+            <input type="checkbox" v-model="deliverConfirm">
+            <i class="icon_checkbox" :class="{on: deliverConfirm}" @click="deliverConfirm = !deliverConfirm"></i>
+            <label for="tips">{{_('m_payment.rule_tip')}}</label>
           </div>
         </div>
       </div>
@@ -243,9 +229,9 @@
     </div>
 
     <!-- 虚拟商品兑换弹层 -->
-    <div class="pop pop_exchange_virtual hide">
+    <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
       <div class="pop_main">
-        <a href="javascript:" class="pop_close"></a>
+        <a href="javascript:" class="pop_close" @click="showVirtualPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
         <img class="product_img" src="@assets/img/amazon.png" alt>
         <p class="product_name">100 Amazon</p>
@@ -278,9 +264,9 @@
       </div>
     </div>
     <!-- 实物商品兑换弹层 -->
-    <div class="pop pop_exchange_real hide">
+    <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
       <div class="pop_main">
-        <a href="javascript:" class="pop_close"></a>
+        <a href="javascript:" class="pop_close" @click="showRealPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
         <img class="product_img" src="@assets/img/10g.png" alt>
         <p class="product_name">100 Amazon</p>
@@ -332,6 +318,12 @@ import popList from '../components/Pop_list'
 export default {
     data () {
         return {
+            acitveClass: "all",
+            deliverConfirm: false,
+            showDeliverPop: false,
+            showRealPop: false,
+            showVirtualPop: false,
+            exchangeList: [],
             pop_list_redemption_record:false
         }
     },
@@ -342,9 +334,105 @@ export default {
 
     },
     methods: {
+        showDetail (item) {
+            if (item.goodstype === "2") {
+                let deliverTip = window.localStorage && localStorage.getItem("noDeliverTip")
+                if (!deliverTip) {
+                    this.showDeliverPop = true
+                    return
+                }
+                this.showRealPop = true
+            } else {
+                this.showVirtualPop = true
+            }
+        },
+        confirmDeliverTip () {
+            if (this.deliverConfirm) {
+                window.localStorage && localStorage.setItem("noDeliverTip", "true")
+            }
+            this.showDeliverPop = false
+            this.showRealPop = true
+        },
+        getList () {
+            let arr = []
+            let displayArr = []
+            if (this.acitveClass === "all") {
+                arr = [...this.exchangeList]
+            } else if (this.acitveClass === "card") {
+                arr = this.exchangeList.filter(item => item.goodstype === "1")
+            } else if (this.acitveClass === "electronics") {
+                arr = this.exchangeList.filter(item => item.goodstype === "2")
+            } else {
+                arr = this.exchangeList.filter(item => item.goodstype !== "1" && item.goodstype !== "2")
+            }
 
+            arr.forEach((item, index) => {
+                if (index % 2 === 0) {
+                    displayArr.push([item])
+                } else {
+                    displayArr[displayArr.length - 1].push(item)
+                }
+            })
+            return displayArr
+        },
+        getExchangeList () {
+            this.$get("http://192.168.14.19:8888/shops/goods/list?ck=MTAwMDE2OWFjZTNhMTM3ZDJmZDEyYzk3NTdhNzY1MmEyYWE3MGU4&platform=1&version=2&channel=3")
+                .catch(err => {
+                    return {
+                        "status":"100",
+                        "message":"ok",
+                        "data":[{
+                            "islock":"0",
+                            "weight":"1",
+                            "needgolds":"12521512",
+                            "goodsdesc":"1",
+                            "id":"50004",
+                            "imgurl":"http:\/\/home.500.com\/main\/style\/5lin\/images\/5lin_link.png",
+                            "updatetime":"0",
+                            "name":"1",
+                            "top_status":"0",
+                            "activity_imgurl":"",
+                            "usage":"",
+                            "goodstype":"2"
+                        },{
+                            "islock":"0",
+                            "weight":"10",
+                            "needgolds":"100",
+                            "goodsdesc":"100元亚马逊换购卡",
+                            "id":"50002",
+                            "imgurl":"http:\/\/149.129.138.180\/static\/amazon.png",
+                            "updatetime":"0",
+                            "name":"100元亚马逊卡",
+                            "top_status":"0",
+                            "activity_imgurl":"",
+                            "usage":"",
+                            "goodstype":"1"
+                        },{
+                            "islock":"0",
+                            "weight":"50",
+                            "needgolds":"1000",
+                            "goodsdesc":"小米8s",
+                            "id":"50003",
+                            "imgurl":"http:\/\/149.129.138.180\/static\/mobile.png",
+                            "updatetime":"0",
+                            "name":"小米8s",
+                            "top_status":"0",
+                            "activity_imgurl":"",
+                            "usage":"",
+                            "goodstype":"2"
+                        }]
+                    }
+                })
+                .then(res => {
+                    res.data.sort((a, b) => Number(a.weigth) > Number(b.weight) ? 1 : -1)
+                    this.exchangeList = res.data
+                })
+        }
     },
-    mounted () {}
+    mounted () {
+        this.getExchangeList()
+        window._this = this
+    }
 }
 </script>
 
