@@ -559,3 +559,22 @@ export const cookie = {
         this.set(name, '', 'Thu, 01 Jan 1970 00:00:00 GMT')
     }
 }
+
+
+
+// 预加载图片
+export function preloadImage(names, cb, prefix) {
+    window.gkaCache = window.gkaCache || [];
+    var n = 0, img, imgs = {};
+    names.forEach(function(name) {
+        img = new Image();
+        window.gkaCache.push(img);
+        img.onload = (function(name, img) {
+            return function() {
+                imgs[name] = img;
+                (++n === names.length) && cb && cb(imgs);
+            };
+        })(name, img);
+        img.src = (prefix || '') + name;
+    })
+};

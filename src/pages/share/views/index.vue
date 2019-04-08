@@ -1,33 +1,94 @@
 <template>
-  <div>
-    <div class="head">
-      <button @click="fb_invite">facebook 邀请 222222</button>
-      <br>
-      <br>
-      <br>
-      <button @click="fb_morePeop">facebook 邀请列表 </button>
-      <br>
-      <br>
-
-      <button @click="fb_whatsapp">WhatsApp原生 </button>
+  <div class="page_share">
+    <div class="hide">
+      <div class="head">
+        <button @click="fb_invite">facebook 邀请 222222</button>
         <br>
-      <br>
-      <button @click="fb_fackbook">Fackbook 原生</button>
+        <br>
+        <br>
+        <button @click="fb_morePeop">facebook 邀请列表</button>
+        <br>
+        <br>
 
-    <button>
-      <a href="whatsapp://send?text=HERE GOES THE URL ENCODED TEXT YOU WANT TO SHARE" target="_blank" data-action="share/whatsapp/share">Share via Whatsapp</a>
-    </button>
+        <button @click="fb_whatsapp">WhatsApp原生</button>
+        <br>
+        <br>
+        <button @click="fb_fackbook">Fackbook 原生</button>
 
-      <div class="fb-share-button" data-href="https://www.katoto.cn/" data-layout="button" data-size="small">
-        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.baidu.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">分享</a>
+        <button>
+          <a href="whatsapp://send?text=HERE GOES THE URL ENCODED TEXT YOU WANT TO SHARE" target="_blank" data-action="share/whatsapp/share">Share via Whatsapp</a>
+        </button>
+
+        <div class="fb-share-button" data-href="https://www.katoto.cn/" data-layout="button" data-size="small">
+          <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.baidu.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">分享</a>
+        </div>
       </div>
-
+    </div>
+    <div class="bg_page">
+      <div class="bg_particle">
+        <div class="bg bg_p1" :class="{bounceIn:fadeIn}"></div>
+        <div class="bg bg_p2" :class="{bounceIn:fadeIn}"></div>
+        <div class="bg bg_p3" :class="{bounceIn:fadeIn}"></div>
+      </div>
+      <div class="bg_light"></div>
+    </div>
+    <div class="page_share_main">
+      <h1 class="title" :class="{fadeIn:fadeIn}">Invite Friends Both Get 5,000</h1>
+      <div class="total" :class="{fadeIn:fadeIn}">
+        <p class="total_title">Invited:</p>
+        <div class="total_person" @click="show_pop_invite_frient = true">0</div>
+        <div class="total_money">5000</div>
+      </div>
+      <div class="btn_box">
+        <a href="javascript:;" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
+        <a href="javascript:;" class="btn btn_whatsApp" :class="{fadeIn:fadeIn}">WhatsApp</a>
+      </div>
+      <div class="share_code" :class="{fadeIn:fadeIn}">
+        <p>
+          Referral code:
+          <i class="bold">HJGBJ</i>
+        </p>
+        <a href="javascript:;" class="btn_copy">COPY</a>
+      </div>
+      <div class="tips" :class="{fadeIn:fadeIn}">*You can get reward in Notifications once the friend accepts your invitation</div>
+      <div class="page_share_bottom" :class="{fadeIn:fadeIn}">
+        <div class="share_byfriend">
+          <p class="msg">Invited by friend</p>
+          <div class="input_box">
+            <input type="text" placeholder="Enter code, get reward" v-model="friend_code" :class="{isput:friend_code}">
+            <a href="javascript:;" class="btn" v-if="friend_code">Confirm</a>
+          </div>
+          <p class="time">19 days 23:59</p>
+        </div>
+        <div class="share_tips">
+          <p class="share_tips_t">Countdown</p>
+          <p>*You can get reward in Notifications once the friend accepts yo</p>
+          <p>*You can get reward in Notifications once the friend accepts your invitation*You can get reward in Notifications once the friend accepts your invitation*You can get reward in Notifications once the friend accepts your invitation*You can get reward in Notifications once the friend accepts your invitation</p>
+        </div>
+      </div>
+    </div>
+    <div class="pop_invite_frient" :class="{hide:!show_pop_invite_frient}">
+      <transition name="pop_animate">
+        <div class="pop_invite_frient_layer" v-if="show_pop_invite_frient">
+          <div class="pop_main">
+            <a href="javascript:" class="pop_close" @click="show_pop_invite_frient = false"></a>
+            <div class="header">Invited Friend</div>
+            <ul class="pop_invite_frient_list hide">
+              <li class="hide">
+                <p class="list_rank">No.1</p>
+                <p class="list_name">Joeeeeee</p>
+              </li>
+            </ul>
+            <p class="nomsg">no data</p>
+          </div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
-import { isIOS, appID, cbetLocal } from '@common/util'
+import { isIOS, appID, cbetLocal, preloadImage } from '@common/util'
 import { setTimeout } from 'timers';
 
 export default {
@@ -36,8 +97,26 @@ export default {
             contentSrc: '',
             contHref: '//play.google.com/store/apps/details?id=com.crazy500.cbet',
             baseFB: null,
-            accToken: null
+            accToken: null,
+            fadeIn:false,
+            scrollTop: 0,
+            isOnPop: true,
+            show_pop_invite_frient:false,
+            friend_code:''
         };
+    },
+    watch:{
+        show_pop_invite_frient (val) {
+            if (val) {
+                this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+                document.body.classList.add('isOnPop')
+                document.body.style.top = -this.scrollTop + 'px'
+            } else {
+                document.body.classList.remove('isOnPop')
+                window.scrollTo(0, this.scrollTop)
+                document.body.style.top = 0
+            }
+        },
     },
     methods:{
         shareCopy(){
@@ -106,6 +185,13 @@ export default {
     components: {
     },
     async mounted() {
+        preloadImage(['bg.99c8a5e.jpg','title.460998d.png','bg_light.44261ed.png','bg_particle1.0abdacd.png','bg_particle2.4dd077d.png','bg_particle3.84b3966.png'], ()=>{
+            this.fadeIn = true
+        }, './img/');
+
+
+
+
         // let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
         // console.log(bb + '2')
         // let cc = await this.$get('http://api.coinslot.com/home/info', {
@@ -122,81 +208,429 @@ export default {
             // this.pageinit(FB)
             this.baseFB = FB
         };
-
     }
 }
 </script>
-<style>
-img {
-  display: block;
-  border: 0;
+
+<style lang="less" scoped type="text/less">
+.page_share {
+  min-height: 1500/75rem;
+  overflow: hidden;
+  background: #752120 url(~@static/img/bg.jpg) no-repeat center top;
+  background-size: 750/75rem;
 }
-body {
-  background-color: #fff;
+
+.bg_page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  .bg_particle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 707/75rem;
+    height: 658/75rem;
+    overflow: hidden;
+    .bg {
+      position: absolute;
+      opacity: 0;
+    }
+    .bg_p1 {
+      left: 275/75rem;
+      top: 0;
+      width: 411/75rem;
+      height: 356/75rem;
+      &.bounceIn {
+        background: url(~@static/img/bg_particle1.png) no-repeat center;
+        background-size: cover;
+        animation: bounceIn 1.2s ease-in-out forwards;
+      }
+    }
+    .bg_p2 {
+      left: 0;
+      top: 304/75rem;
+      width: 357/75rem;
+      height: 354/75rem;
+      &.bounceIn {
+        background: url(~@static/img/bg_particle2.png) no-repeat center;
+        background-size: cover;
+        animation: bounceIn 1.2s 0.4s ease-in-out forwards;
+      }
+    }
+    .bg_p3 {
+      right: 0;
+      top: 303/75rem;
+      width: 224/75rem;
+      height: 257/75rem;
+      &.bounceIn {
+        background: url(~@static/img/bg_particle3.png) no-repeat center;
+        background-size: cover;
+        animation: bounceIn 1.2s 0.8s ease-in-out forwards;
+      }
+    }
+  }
+  .bg_light {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 750/75rem;
+    height: 813/75rem;
+    overflow: hidden;
+    background: url(~@static/img/bg_light.png) no-repeat center;
+    background-size: cover;
+  }
 }
-body .head img {
-  display: block;
-  width: 100%;
-  min-height: 743px;
-}
-body .content {
-  width: 100%;
-  padding-top: 160px;
-}
-body .content img {
-  display: block;
-  margin: 0 auto;
-  width: 1139px;
-  height: 1578px;
-}
-body .head .btn a {
-  margin: -120px auto;
-  display: block;
-  width: 300px;
-  height: 94px;
-  background: url(../img/btndown.png) no-repeat left center;
-  background-size: cover;
+.page_share_main {
   position: relative;
   z-index: 2;
-  transition: all 0.2s;
-  transform: scale(0.7);
-  cursor: pointer;
 }
-body .head .btn a:active,
-body .head .btn a:hover {
-  filter: brightness(0.8);
+.title {
+  width: 682/75rem;
+  height: 234/75rem;
+  overflow: hidden;
+  margin: 176/75rem auto 0;
+  background: url(../img/title.png) no-repeat center;
+  background-size: cover;
+  font-size: 0;
+  text-indent: -9999/75rem;
+  opacity: 0;
+  &.fadeIn {
+    animation-delay: 1.4s;
+  }
 }
+.total {
+  display: flex;
+  align-items: center;
+  width: 390/75rem;
+  height: 46/75rem;
+  overflow: hidden;
+  margin: 48/75rem auto 0;
+  border-radius: 20/75rem;
+  background: #c24632;
+  box-shadow: 0/75rem 3/75rem 5/75rem 0/75rem rgba(0, 0, 0, 0.19);
+  font-size: 30/75rem;
+  color: #ffe22e;
+  opacity: 0;
+  &.fadeIn {
+    animation-delay: 1.6s;
+  }
+  .total_title {
+    color: #ffbd82;
+    margin-left: 15/75rem;
+  }
+  .total_person {
+    margin-left: 20/75rem;
+    padding-left: 45/75rem;
+    background: url(../img/img_invide_info_icon_friend.png) no-repeat left
+      center;
+    background-size: 38/75rem;
+    text-decoration: underline;
+  }
+  .total_money {
+    margin-left: 52/75rem;
+    padding-left: 34/75rem;
+    background: url(../img/img_invide_info_icon_coins.png) no-repeat left center;
+    background-size: 27/75rem;
+  }
+}
+.btn_box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 75/75rem;
+  .btn {
+    width: 445/75rem;
+    height: 94/75rem;
+    overflow: hidden;
+    border-radius: 10/75rem;
+    box-shadow: 1/75rem 2/75rem 8/75rem 0.72/75rem rgba(0, 0, 0, 0.5);
+    text-align: center;
+    line-height: 94/75rem;
+    font-size: 38/75rem;
+    font-weight: bold;
+    text-shadow: 1/75rem 2/75rem 3/75rem rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    opacity: 0;
+  }
+  .btn_facebook {
+    background: url(../img/btn_facebook.png) no-repeat center;
+    background-size: cover;
+    &.fadeIn {
+      animation-delay: 1.8s;
+    }
+  }
+  .btn_whatsApp {
+    margin-top: 40/75rem;
+    background: url(../img/btn_whatsApp.png) no-repeat center;
+    background-size: cover;
+    &.fadeIn {
+      animation-delay: 2s;
+    }
+  }
+}
+.share_code {
+  display: flex;
+  justify-content: space-between;
+  width: 454/75rem;
+  margin: 48/75rem auto 0;
+  line-height: 1.2;
+  font-size: 30/75rem;
+  color: #fff6c0;
+  white-space: nowrap;
+  opacity: 0;
+  &.fadeIn {
+    animation-delay: 2.2s;
+  }
+  .bold {
+    margin-left: 8/75rem;
+  }
+  .btn_copy {
+    margin-right: 6/75rem;
+    color: #ffbd82;
+    text-decoration: underline;
+  }
+}
+.tips {
+  width: 680/75rem;
+  margin: 92/75rem auto 0;
+  line-height: 31/75rem;
+  font-size: 26/75rem;
+  color: #ffbd82;
+  opacity: 0;
+  &.fadeIn {
+    animation-delay: 2.4s;
+  }
+}
+.page_share_bottom {
+  // opacity: 0.2;
+  padding: 50/75rem 35/75rem 260/75rem;
+  margin-top: 40/75rem;
+  background: #8a2826;
+  color: #ffbd82;
+  opacity: 0;
+  &.fadeIn {
+    animation-delay: 2.6s;
+  }
+  .msg {
+    line-height: 97/75rem;
+    font-size: 34/75rem;
+    font-weight: bold;
+  }
+  .input_box {
+    display: flex;
+    width: 567/75rem;
+    height: 80/75rem;
+    overflow: hidden;
+    line-height: 80/75rem;
+    margin: 0 auto;
+    background: #752120;
+    border-radius: 10/75rem;
+  }
+  input {
+    flex: 1;
+    text-align: center;
+    font-size: 30/75rem;
+    &::placeholder {
+      color: #c38d5d;
+    }
+    &.isput {
+      text-align: left;
+      text-indent: 56/75rem;
+      color: #fff6c0;
+      font-weight: bold;
+    }
+  }
+  .btn {
+    width: 148/75rem;
+    height: 80/75rem;
+    overflow: hidden;
+    background: #ffbd0a;
+    border-radius: 10/75rem;
+    text-align: center;
+    font-size: 30/75rem;
+    font-weight: bold;
+    color: #733310;
+  }
+  .time {
+    line-height: 66/75rem;
+    text-align: center;
+    font-size: 26/75rem;
+  }
+}
+.share_tips {
+  margin-top: 24/75rem;
+  line-height: 36/75rem;
+  font-size: 26/75rem;
+  .share_tips_t {
+    line-height: 76/75rem;
+    font-size: 30/75rem;
+    font-weight: bold;
+  }
+}
+.pop_invite_frient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.6);
+  font-size: 30/75rem;
+  .pop_invite_frient_layer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .pop_main {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 660/75rem;
+    height: 660/75rem;
+    overflow: hidden;
+    border-radius: 10/75rem;
+    background: #8a2826;
+  }
+  .pop_close {
+    position: absolute;
+    top: 15/75rem;
+    right: 11/75rem;
+    width: 47/75rem;
+    height: 47/75rem;
+    overflow: hidden;
+    background: url(../img/btn_close.png) no-repeat center;
+    background-size: cover;
+  }
+  .header {
+    width: 356/75rem;
+    height: 64/75rem;
+    overflow: hidden;
+    text-align: center;
+    line-height: 64/75rem;
+    border-bottom-left-radius: 20/75rem;
+    border-bottom-right-radius: 20/75rem;
+    background: #a53734;
+    font-weight: bold;
+    color: #fff6c0;
+    margin: 0 auto;
+  }
+  .pop_invite_frient_list,
+  .nomsg {
+    position: relative;
+    flex: 1;
+    overflow: auto;
+    margin-top: 53/75rem;
+    background: #7f2725;
+    line-height: 74/75rem;
+    ul {
+      overflow: auto;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      width: 546/75rem;
+      margin: 0 auto;
+    }
+    .list_rank {
+      color: #ffbd82;
+    }
+    .list_name {
+      color: #fff6c0;
+    }
+    .nomsg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+  }
+  .nomsg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30/75rem;
+    color: #fff6c0;
+    white-space: nowrap;
+  }
+}
+.fadeIn {
+  //   animation: fadeIn 1s 1.5s forwards;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeIn {
+  0%,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
 
-/*滚动条样式*/
-::-webkit-scrollbar {
-  border-radius: 8px;
-  width: 6px;
-  height: 6px;
-}
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(0.26666667rem);
+    transform: translateY(0.26666667rem);
+  }
 
-::-webkit-scrollbar-track {
-  border-radius: 8px;
-  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(90deg, #efefef 0%, #fff 78%, #efefef 100%);
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
 }
+@keyframes bounceIn {
+  0%,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
 
-::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(
-    0deg,
-    rgb(227, 182, 143) 0%,
-    rgb(255, 227, 166) 48%,
-    rgb(227, 182, 143) 100%
-  );
-}
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
 
-::-webkit-scrollbar-thumb:vertical {
-  background: linear-gradient(
-    90deg,
-    rgb(227, 182, 143) 0%,
-    rgb(255, 227, 166) 48%,
-    rgb(227, 182, 143) 100%
-  );
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9);
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    -webkit-transform: scale3d(0.97, 0.97, 0.97);
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
 }
 </style>
+

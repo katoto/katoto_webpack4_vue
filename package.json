@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=development ENV_CONFIG=dev node build/dev-server.js",
     "dev-test": "webpack-dev-server --config build/dev-test.js",
     "dev-console": "cross-env NODE_ENV=development ISconsole=true ENV_CONFIG=dev node build/dev-server.js",
-    "build-dev": "cross-env NODE_ENV=development ENV_CONFIG=dev_build node build/build.js",
+    "build-dev": "rimraf dist/* && cross-env NODE_ENV=development ENV_CONFIG=dev_build node build/build.js",
     "prebuild": "npm run clean",
     "build": "cross-env NODE_ENV=production ENV_CONFIG=prod node build/build.js",
     "clean": "rimraf dist/*",

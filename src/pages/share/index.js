@@ -7,6 +7,7 @@ import simpleAjax from '@plugins/simpleAjax'
 
 // 初始化与公共样式
 require('@/styles/lib-reset.css')
+require('@/styles/lib-public.less')
 
 // 引入语言包
 require('@language').use(Vue, [shareLanguage])
