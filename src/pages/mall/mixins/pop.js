@@ -13,7 +13,7 @@ export default {
         }
     },
     methods: {
-        setPopStore (func="setRecordList", data=false) {
+        setPopStore (func = "setRecordList", data = false) {
             switch (func) {
             case "setRecordList": this.pop.showRecordList = data; break
             case "setRechangeMany": this.pop.showRechangeMany = data; break

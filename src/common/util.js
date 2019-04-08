@@ -558,3 +558,11 @@ export const cookie = {
         this.set(name, "", "Thu, 01 Jan 1970 00:00:00 GMT")
     }
 }
+
+export function copySucc () {
+    console.log("Copied to clipboard")
+}
+
+export function copyError () {
+    console.log("Failed to copy, please retry")
+}

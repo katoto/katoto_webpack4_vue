@@ -7,7 +7,6 @@
         <ProductDetail></ProductDetail>
         <ExchangeVirtual></ExchangeVirtual>
         <ExchangeReal></ExchangeReal>
-
     </div>
 
 </template>

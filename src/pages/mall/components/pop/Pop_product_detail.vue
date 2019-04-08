@@ -17,13 +17,13 @@ export default {
     computed:{
         show:{
             get: function () {
-                return this.app.pop.showRuleHelp
+                return this.app.pop.showProductDetail
             },
             set: function (isShow) {
                 if (isShow) {
-                    this.app.setPopStore("setRuleHelp", true)
+                    this.app.setPopStore("setProductDetail", true)
                 } else {
-                    this.app.setPopStore("setRuleHelp", false)
+                    this.app.setPopStore("setProductDetail", false)
                 }
             }
         }
