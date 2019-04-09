@@ -1,74 +1,73 @@
 <template>
-  <div class="fullscreen page_mall">
-    <div class="bg">
-      <div class="bg_header"></div>
-    </div>
-    <div class="header">
-      <div class="fl">
-        <a href="javascript:;" class="btn btn_back"></a>
-      </div>
-      <div class="fr">
-        <a href="javascript:;" class="my_balance">
-          <span>{{formateBalance(avaliable_total)}}</span>
-        </a>
-        <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
-        <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
-      </div>
-    </div>
-    <div class="news">
-      <ul>
-        <li>{{_('m_payment.mall_title')}}</li>
-        <li>Earn gold coins to redeem gifts!!!!!</li>
-        <li>Earn gold coins to redeem gifts!!!!!</li>
-      </ul>
-    </div>
-    <div class="mall">
-      <div class="mall_tab">
-        <ul>
-          <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
-            <a href="javascript:;">{{_('m_payment.all')}}</a>
-          </li>
-          <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
-            <a href="javascript:;">{{_('m_payment.card')}}</a>
-          </li>
-          <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
-            <a href="javascript:;">
-              {{_('m_payment.electronics')}}
-            </a>
-          </li>
-          <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
-            <a href="javascript:;">{{_('m_payment.other')}}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="mall_main">
-        <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
-          <li :class="{unlock: item[0].islock === '1'}">
-            <div class="reward_box">
-              <img :src="item[0].imgurl" alt>
-              <p class="reward_name">{{item[0].name}}</p>
+    <div class="fullscreen page_mall">
+        <div class="bg">
+            <div class="bg_header"></div>
+        </div>
+        <div class="header">
+            <div class="fl">
+                <a href="javascript:;" class="btn btn_back"></a>
             </div>
-            <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
-          </li>
-          <li :class="{unlock: item[1] && item[1].islock === '1'}">
-              <template v-if="item[1]">
-                <div class="reward_box">
-                    <img :src="item[1].imgurl" alt>
-                    <p class="reward_name">{{item[1].name}}</p>
-                </div>
-                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
-              </template>
-          </li>
-        </ul>
-      </div>
-    </div>
+            <div class="fr">
+                <a href="javascript:;" class="my_balance">
+                    <span>{{formateBalance(avaliable_total)}}</span>
+                </a>
+                <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
+                <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
+            </div>
+        </div>
+        <div class="news">
+            <ul>
+                <li>{{_('m_payment.mall_title')}}</li>
+                <li>Earn gold coins to redeem gifts!!!!!</li>
+                <li>Earn gold coins to redeem gifts!!!!!</li>
+            </ul>
+        </div>
+        <div class="mall">
+            <div class="mall_tab">
+                <ul>
+                    <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
+                        <a href="javascript:;">{{_('m_payment.all')}}</a>
+                    </li>
+                    <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
+                        <a href="javascript:;">{{_('m_payment.card')}}</a>
+                    </li>
+                    <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
+                        <a href="javascript:;">
+                            {{_('m_payment.electronics')}}
+                        </a>
+                    </li>
+                    <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
+                        <a href="javascript:;">{{_('m_payment.other')}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mall_main">
+                <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
+                    <li :class="{unlock: item[0].islock === '1'}">
+                        <div class="reward_box">
+                            <img :src="item[0].imgurl" alt>
+                            <p class="reward_name">{{item[0].name}}</p>
+                        </div>
+                        <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
+                    </li>
+                    <li :class="{unlock: item[1] && item[1].islock === '1'}">
+                        <template v-if="item[1]">
+                            <div class="reward_box">
+                                <img :src="item[1].imgurl" alt>
+                                <p class="reward_name">{{item[1].name}}</p>
+                            </div>
+                            <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
+                        </template>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
+        <!-- 初始化全部的弹窗   -->
+        <popList></popList>
 
-    <!-- 初始化全部的弹窗   -->
-    <popList></popList>
-
-    <!-- 历史兑换记录 -->
-    <!-- <transition name="pop_animate">
+        <!-- 历史兑换记录 -->
+        <!-- <transition name="pop_animate">
       <div class="pop pop_list_redemption_record" v-if="pop_list_redemption_record">
         <div class="pop_main">
           <a href="javascript:" class="pop_close" @click="pop_list_redemption_record = false"></a>
@@ -120,8 +119,8 @@
       </div>
     </transition> -->
 
-    <!-- 批量兑换 -->
-    <!-- <div class="pop pop_rechange_many hide">
+        <!-- 批量兑换 -->
+        <!-- <div class="pop pop_rechange_many hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_success')}}</div>
@@ -180,8 +179,8 @@
       </div>
     </div> -->
 
-    <!-- 帮助弹层+ -->
-    <!-- <div class="pop pop_rule hide">
+        <!-- 帮助弹层+ -->
+        <!-- <div class="pop pop_rule hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
@@ -193,8 +192,8 @@
       </div>
     </div> -->
 
-    <!-- 兑换提醒弹层 -->
-    <!-- <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
+        <!-- 兑换提醒弹层 -->
+        <!-- <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
       <div class="pop_main">
         <a href="javascript:" class="pop_close" @click="showDeliverPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
@@ -215,8 +214,8 @@
       </div>
     </div> -->
 
-    <!-- 商品详情 -->
-    <!-- <div class="pop pop_product_detailed hide">
+        <!-- 商品详情 -->
+        <!-- <div class="pop pop_product_detailed hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
@@ -229,8 +228,8 @@
       </div>
     </div> -->
 
-    <!-- 虚拟商品兑换弹层 -->
-    <!-- <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
+        <!-- 虚拟商品兑换弹层 -->
+        <!-- <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
       <div class="pop_main">
         <a href="javascript:" class="pop_close" @click="showVirtualPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
@@ -265,8 +264,8 @@
       </div>
     </div> -->
 
-    <!-- 实物商品兑换弹层 -->
-    <!-- <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
+        <!-- 实物商品兑换弹层 -->
+        <!-- <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
       <div class="pop_main">
         <a href="javascript:" class="pop_close" @click="showRealPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
@@ -309,9 +308,9 @@
       </div>
     </div> -->
 
-    <!-- toast -->
-    <div class="toast hide">toast</div>
-  </div>
+        <!-- toast -->
+        <div class="toast hide">toast</div>
+    </div>
 </template>
 
 <script>
@@ -791,7 +790,6 @@ export default {
     text-indent: 30/75rem;
   }
 }
-
 
 .pop_list_redemption_record {
   .pop_main {
