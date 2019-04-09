@@ -12,7 +12,7 @@
           <span>{{formateBalance(avaliable_total)}}</span>
         </a>
         <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
-        <a href="javascript:;" class="btn btn_question"></a>
+        <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
       </div>
     </div>
     <div class="news">
@@ -32,9 +32,7 @@
             <a href="javascript:;">{{_('m_payment.card')}}</a>
           </li>
           <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
-            <a href="javascript:;">
-              {{_('m_payment.electronics')}}
-            </a>
+            <a href="javascript:;">{{_('m_payment.electronics')}}</a>
           </li>
           <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
             <a href="javascript:;">{{_('m_payment.other')}}</a>
@@ -51,18 +49,17 @@
             <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
           </li>
           <li :class="{unlock: item[1] && item[1].islock === '1'}">
-              <template v-if="item[1]">
-                <div class="reward_box">
-                    <img :src="item[1].imgurl" alt>
-                    <p class="reward_name">{{item[1].name}}</p>
-                </div>
-                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
-              </template>
+            <template v-if="item[1]">
+              <div class="reward_box">
+                <img :src="item[1].imgurl" alt>
+                <p class="reward_name">{{item[1].name}}</p>
+              </div>
+              <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
+            </template>
           </li>
         </ul>
       </div>
     </div>
-
 
     <!-- 初始化全部的弹窗   -->
     <popList></popList>
@@ -118,7 +115,7 @@
           </div>
         </div>
       </div>
-    </transition> -->
+    </transition>-->
 
     <!-- 批量兑换 -->
     <!-- <div class="pop pop_rechange_many hide">
@@ -178,7 +175,7 @@
         </div>
         <a href="javascript:" class="btn_default">{{_('m_payment.copy_all')}}</a>
       </div>
-    </div> -->
+    </div>-->
 
     <!-- 帮助弹层+ -->
     <!-- <div class="pop pop_rule hide">
@@ -191,7 +188,7 @@
           <p v-html="_('m_payment.rule3')"></p>
         </div>
       </div>
-    </div> -->
+    </div>-->
 
     <!-- 兑换提醒弹层 -->
     <!-- <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
@@ -213,7 +210,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>-->
 
     <!-- 商品详情 -->
     <!-- <div class="pop pop_product_detailed hide">
@@ -227,7 +224,7 @@
           <i class="icon_gold"></i>10
         </p>
       </div>
-    </div> -->
+    </div>-->
 
     <!-- 虚拟商品兑换弹层 -->
     <!-- <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
@@ -263,7 +260,7 @@
         </div>
         <a href="javascript:" class="btn_default" @click="confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
       </div>
-    </div> -->
+    </div>-->
 
     <!-- 实物商品兑换弹层 -->
     <!-- <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
@@ -307,14 +304,28 @@
         兑换成功
         <div class="icon_success"></div>
       </div>
+    </div>-->
+
+    <!-- pop_common -->
+    <!-- <div class="pop pop_common ">
+      <div class="pop_main">
+        <a href="javascript:;" class="pop_close"></a>
+        <div class="pop_common_title"></div>
+        <p class="is-center">
+          因为获得充值送优惠，
+          <br>您还需要使用
+          <i class="color_white bold">5000猜球币</i> ，才可进行兑换哦~
+        </p>
+        <a href="javascript:;" class="btn_default">知道了</a>
+      </div>
     </div> -->
 
-    <!-- toast -->
-    <div class="toast hide">toast</div>
+    <Toast v-if="toast"></Toast>
   </div>
 </template>
 
 <script>
+import Toast from "@components/Toast.vue"
 import {
     copySucc, copyError, formateBalance
 } from "@/common/util"
@@ -348,11 +359,12 @@ export default {
             avaliable_total: "0",
             aid: "",
             activeItem: {
-            }
+            },
+            toast: false
         }
     },
     components: {
-        popList
+        popList,Toast
     },
     computed: {
         checkRealInfo () {
@@ -530,6 +542,7 @@ export default {
         this.getUserInfo()
         this.getUserAddress()
         window._this = this
+
         // setTimeout(() => {
         //     // 设置值
         //     this.pop.showRecordList = true
@@ -544,7 +557,7 @@ export default {
 }
 </script>
 
-<style lang="less" type="text/less">
+<style lang="less" type="text/less" scope>
 @import "../../../styles/lib-mixins.less";
 .page_mall {
   width: 750/75rem;
@@ -793,421 +806,4 @@ export default {
 }
 
 
-.pop_list_redemption_record {
-  .pop_main {
-    display: flex;
-    flex-direction: column;
-    height: 1020/75rem;
-  }
-  .redemption_record {
-    flex: 1;
-    margin: 18/75rem 0;
-    overflow: auto;
-  }
-  ul {
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-  }
-  li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(52, 53, 82, 0.3);
-    border: 2/75rem solid #443e6d;
-    width: 594/75rem;
-    height: 217/75rem;
-    overflow: hidden;
-    margin: 0 auto;
-    border-radius: 8/75rem;
-    & + li {
-      margin-top: 14/75rem;
-    }
-  }
-  .record_img {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 230/75rem;
-    img {
-    }
-    .record_name {
-    }
-  }
-  .record_msg {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 330/75rem;
-    height: 157/75rem;
-    overflow: hidden;
-    font-size: 22/75rem;
-  }
-  .record_view {
-    p {
-      display: flex;
-      align-items: flex-start;
-      line-height: 1.2;
-      min-height: 40/75rem;
-    }
-    span {
-      white-space: nowrap;
-    }
-    i {
-      word-break: break-all;
-    }
-  }
-  .record_time {
-    line-height: 40/75rem;
-  }
-}
-.pop_rule {
-  .pop_rule_main {
-    width: 616/75rem;
-    max-height: 1000/75rem;
-    overflow: auto;
-    padding: 12/75rem 16/75rem 20/75rem 40/75rem;
-    line-height: 44/75rem;
-    font-size: 26/75rem;
-    margin: 54/75rem auto 25/75rem;
-    background-color: rgba(20, 18, 30, 0.302);
-    box-shadow: inset 0/75rem 1/75rem 2/75rem 0/75rem rgba(9, 8, 14, 0.75);
-    border-radius: 10/75rem;
-  }
-  p + p {
-    margin-top: 44/75rem;
-  }
-  .rechange_tips {
-    margin-top: 37/75rem;
-
-    .tips_form {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 86/75rem;
-    }
-    input {
-      display: none;
-    }
-    .icon_checkbox {
-      display: block;
-      width: 43/75rem;
-      height: 35/75rem;
-      overflow: hidden;
-      margin-right: 8/75rem;
-      background: url(../../../assets/img/checkbox_green.png) no-repeat center;
-      background-size: cover;
-      white-space: nowrap;
-      &.on {
-        background: url(../../../assets/img/checkbox_green_on.png) no-repeat
-          center;
-        background-size: cover;
-      }
-    }
-  }
-  .btn_default {
-    margin-bottom: 4/75rem;
-  }
-}
-.pop_exchange_virtual {
-  text-align: center;
-  .product_img {
-    width: percentage(223/674);
-    margin: 30/75rem auto 26/75rem;
-  }
-  .product_name {
-    line-height: 58/75rem;
-    font-size: 30/75rem;
-  }
-  .product_use {
-    height: 120/75rem;
-    line-height: 52/75rem;
-    font-size: 20/75rem;
-    opacity: 0.3;
-  }
-  .card_msg {
-    padding-left: 60/75rem;
-    text-align: left;
-    font-size: 28/75rem;
-    white-space: nowrap;
-    p {
-      display: flex;
-      align-items: center;
-      height: 51/75rem;
-    }
-    p + p {
-      margin-top: 22/75rem;
-    }
-  }
-  .card_layer {
-    display: block;
-    width: 363/75rem;
-    height: 51/75rem;
-    overflow: hidden;
-    margin-left: 10/75rem;
-    background: url(../img/card_layer.png) no-repeat center;
-    background-size: cover;
-  }
-  .card_psw {
-    display: block;
-    padding-right: 10/75rem;
-    width: 360/75rem;
-    overflow: hidden;
-    margin-left: 24/75rem;
-    .text-overflow();
-  }
-  .btn_copy {
-    position: relative;
-    width: 81/75rem;
-    height: 35/75rem;
-    //   overflow: hidden;
-    border-radius: 18/75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20/75rem;
-    &::after {
-      content: "";
-      display: block;
-      box-sizing: border-box;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 200%;
-      height: 200%;
-      border: 1px solid #fff;
-      transform-origin: left top;
-      transform: scale(0.5);
-      border-radius: 14/75rem;
-    }
-  }
-  .btn_default {
-    margin: 80/75rem auto 92/75rem;
-  }
-}
-
-.pop_rechange_many {
-  .product_img {
-    width: percentage(223/674);
-    margin: 30/75rem auto 26/75rem;
-  }
-  .product_msg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .product_name {
-    line-height: 57/75rem;
-    padding: 0 12/75rem;
-    font-size: 36/75rem;
-    background: #322e3e;
-    font-weight: bold;
-  }
-  .product_count {
-    font-size: 32/75rem;
-    color: #febb2c;
-  }
-  .product_use {
-    display: table;
-    margin: 10/75rem auto;
-    padding: 0 22/75rem;
-    line-height: 57/75rem;
-    font-size: 20/75rem;
-    background: #322e3e;
-    color: #807e86;
-  }
-  .pop_rechange_many_main {
-    width: 616/75rem;
-    max-height: 290/75rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 12/75rem 0 20/75rem 0;
-    line-height: 50/75rem;
-    font-size: 28/75rem;
-    margin: 0 auto;
-    background-color: rgba(20, 18, 30, 0.302);
-    box-shadow: inset 0/75rem 1/75rem 2/75rem 0/75rem rgba(9, 8, 14, 0.75);
-    border-radius: 10/75rem;
-  }
-  .pop_rechange_many_list {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 620/75rem;
-    height: 127/75rem;
-    padding: 0 66/75rem;
-    overflow: hidden;
-    margin: 0 auto 0;
-    background: url(../../../assets/img/icon_pop_line.png) no-repeat center
-      bottom;
-    background-size: 100%;
-    white-space: nowrap;
-    p {
-      display: flex;
-      overflow: hidden;
-    }
-  }
-  .card_num {
-    opacity: 0.3;
-  }
-  .card_psw {
-    margin-left: 24/75rem;
-    .text-overflow();
-  }
-
-  .pop_rechange_many_before {
-    text-align: center;
-  }
-  .text_error {
-    margin: 27/75rem 0 0;
-    line-height: 62/75rem;
-    font-size: 30/75rem;
-    color: #ff3a2b;
-  }
-  .input_box {
-    display: flex;
-    align-items: center;
-    width: 304/75rem;
-    height: 78/75rem;
-    overflow: hidden;
-    margin: 0 auto 0;
-    border: 3/75rem solid #534c78;
-    background: #534c6f;
-    border-radius: 10/75rem;
-    .btn {
-      height: 100%;
-      flex: 1;
-      text-indent: 999999px;
-      font-size: 0;
-      &.btn_delete {
-        background: #38324e url(../../../assets/img/icon_delete.png) no-repeat
-          center;
-        background-size: 21/75rem;
-      }
-      &.btn_add {
-        background: #38324e url(../../../assets/img/icon_add.png) no-repeat
-          center;
-        background-size: 21/75rem;
-      }
-    }
-    input {
-      border-left: 2/75rem solid #534c78;
-      border-right: 2/75rem solid #534c78;
-      width: 206/75rem;
-      height: 100%;
-      background: #23202e;
-      color: #fff;
-      font-size: 36/75rem;
-      text-align: center;
-    }
-  }
-  .text_tips {
-    height: 95/75rem;
-    line-height: 66/75rem;
-    font-size: 28/75rem;
-    opacity: 0.3;
-  }
-  .btn_default {
-    margin: 40/75rem auto 30/75rem;
-  }
-}
-
-.pop_exchange_real {
-  text-align: center;
-  .product_img {
-    width: percentage(223/674);
-    margin: 30/75rem auto 26/75rem;
-  }
-  .product_name {
-    line-height: 58/75rem;
-    font-size: 30/75rem;
-  }
-  .product_use {
-    line-height: 52/75rem;
-    font-size: 20/75rem;
-    opacity: 0.3;
-  }
-  input {
-    display: block;
-    width: 605/75rem;
-    height: 90/75rem;
-    overflow: hidden;
-    margin: 0 auto;
-    border-radius: 10/75rem;
-    line-height: 90/75rem;
-    background: rgba(31, 28, 41, 0.75);
-    border: 2/75rem solid rgba(113, 102, 175, 0.75);
-    font-size: 30/75rem;
-    color: #fff;
-    text-indent: 28/75rem;
-    &::-webkit-input-placeholder {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 30/75rem;
-      //   font-size: 20/75rem;
-    }
-    & + input {
-      margin-top: 12/75rem;
-    }
-  }
-  .user_msg {
-    display: flex;
-    text-align: left;
-    line-height: 50/75rem;
-    font-size: 28/75rem;
-    .user_t {
-      width: 190/75rem;
-      text-indent: 54/75rem;
-      white-space: nowrap;
-      opacity: 0.3;
-    }
-    .user_c {
-      width: 420/75rem;
-    }
-    & + .user_msg {
-      margin-top: 15/75rem;
-    }
-  }
-  .address_input {
-    .btn_default {
-      margin: 47/75rem auto 53/75rem;
-    }
-  }
-  .btn_choose {
-    margin: 74/75rem auto 53/75rem;
-  }
-  .icon_success {
-    position: absolute;
-    top: 170/75rem;
-    right: 200/75rem;
-    width: 74/75rem;
-    height: 74/75rem;
-    overflow: hidden;
-    background: #39b607 url(../../../assets/img/pop_confirm.png) no-repeat
-      center;
-    background-size: 55/75rem;
-    border-radius: 50%;
-  }
-}
-.pop_product_detailed {
-  text-align: center;
-  .product_img {
-    width: percentage(223/674);
-    margin: 30/75rem auto 26/75rem;
-  }
-  .product_name {
-    line-height: 58/75rem;
-    font-size: 30/75rem;
-  }
-  .product_use {
-    line-height: 52/75rem;
-    font-size: 20/75rem;
-    opacity: 0.3;
-  }
-  .product_nedd {
-    display: flex;
-    justify-content: center;
-    margin: 50/75rem auto 70/75rem;
-  }
-}
 </style>

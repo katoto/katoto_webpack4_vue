@@ -6,15 +6,14 @@
             <p v-html="_('m_payment.rule2')"></p>
             <p v-html="_('m_payment.rule3')"></p>
         </div>
-        <div class="rechange_tips">
-            <!-- disable 不可点击 -->
+        <!-- <div class="rechange_tips">
             <a href="javascript:" class="btn_default" @click="app.confirmDeliverTip">{{_('m_payment.confirm')}}</a>
             <div class="tips_form">
                 <input type="checkbox" v-model="app.deliverConfirm">
                 <i class="icon_checkbox" :class="{on: app.deliverConfirm}" @click="app.deliverConfirm = !app.deliverConfirm"></i>
                 <label for="tips">{{_('m_payment.rule_tip')}}</label>
             </div>
-        </div>
+        </div> -->
     </Pop>
 
 </template>
@@ -25,13 +24,13 @@ export default {
     computed:{
         show:{
             get: function () {
-                return this.app.pop.showProductDetail
+                return this.app.pop.showExchangeTips
             },
             set: function (isShow) {
                 if (isShow) {
-                    this.app.setPopStore("setProductDetail", true)
+                    this.app.setPopStore("setExchangeTips", true)
                 } else {
-                    this.app.setPopStore("setProductDetail", false)
+                    this.app.setPopStore("setExchangeTips", false)
                 }
             }
         }
