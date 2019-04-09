@@ -11,7 +11,8 @@ if (process.env.NODE_ENV === "production") {
 } else if (process.env.NODE_ENV === "test") {
     BASEURL = ""
 } else if (process.env.NODE_ENV === "development") {
-    BASEURL = "http://10.0.1.41:8001"
+    // BASEURL = "http://10.0.1.41:8001"
+    BASEURL = "http://192.168.12.117:8899"  // xiaob
 }
 
 MyPlugin.install = function (Vue, config={

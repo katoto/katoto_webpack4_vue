@@ -10,6 +10,14 @@ const _lang = (
     (isSupportLocalStorage ? storage.getItem("lang") : cookie.get("lang")) ||
     "en"
 )
+
+const _appck = (
+    params.appck ||
+    (cookie.get("appck") ? cookie.get("appck") : storage.getItem("appck")) ||
+    ""
+)
+
+
 let lang = {
     ...common
 }
@@ -76,6 +84,9 @@ export function use (Vue, language) {
             }
         }
     }
+
+    window._.appck = _appck
+
     window._._lang = _lang
     window._.lang = lang
     window._.changeLanguage = changeLanguage

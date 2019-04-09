@@ -9,11 +9,11 @@
       <div class="bg_light"></div>
     </div>
     <div class="page_share_main">
-      <h1 class="title" :class="{fadeIn:fadeIn}">{{ _('m_share.sh_bigTitle', '5000') }}</h1>
+      <h1 class="title" :class="{fadeIn:fadeIn}">{{ _('m_share.sh_bigTitle', this.inviteCodeNum) }}</h1>
       <div class="total" :class="{fadeIn:fadeIn}">
         <p class="total_title">{{ _('m_share.sh_invited_friends') }}</p>
         <div class="total_person" @click="popInviteFrient()"><span v-if="invitemsg">{{ invitemsg.invited_num }}</span></div>
-        <div class="total_money">{{ invitemsg.have_earn }}</div>
+        <div class="total_money">{{ formateBalance(invitemsg.have_earn) }}</div>
       </div>
       <div class="btn_box">
         <a href="javascript:;" @click="fb_fackbook()" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
@@ -38,8 +38,7 @@
         </div>
         <div class="share_tips">
           <p class="share_tips_t">{{ _('m_share.sh_rule_title') }}</p>
-          <p>{{ _('m_share.sh_rule_1') }}</p>
-          <p>{{ _('m_share.sh_rule_2') }}</p>
+          <p v-html="_('m_share.sh_rule_1')"></p>
         </div>
       </div>
     </div>
@@ -69,13 +68,13 @@
 
 <script>
 import {
-    isIOS, appID, cbetLocal, preloadImage, formateBalance 
+    isIOS, appID, cbetLocal, preloadImage, formateBalance
 } from "@common/util"
 import {
-    setTimeout 
+    setTimeout
 } from "timers"
 import {
-    log 
+    log
 } from "util"
 
 export default {
@@ -109,6 +108,7 @@ export default {
         }
     },
     methods:{
+        formateBalance,
         testFriendCode () {
             if (this.friend_code && this.friend_code.length > 10) {
                 this.friend_code = this.friend_code.slice(0,10)
@@ -231,29 +231,19 @@ export default {
             }
         },
         getInviteInfo () {
-            this.$post("/invite/info").then(() => {
-            }).catch(e => {
-                return {
-                    "status":"100",
-                    "message":"ok",
-                    "data":{
-                        info:{
-                            invite_code:"11qwedf",
-                            invited_num:"1",
-                            have_earn:"3333",
-                            used_code:"0"
-                        },
-                        config:{
-                        }
-                    }
-                }
-            }).then((res) => {
+            this.$post("/invite/info").then((res) => {
                 if (res && res.status === "100") {
+                    let resData = res.data
                     console.log(res)
-                    this.invitemsg = res.data.info
+                    this.invitemsg = resData.info
+                    if(resData.config && resData.config.prize && resData.config.prize.inviter){
+                        this.inviteCodeNum = '1111'
+                    }
                 } else {
                     console.warn("49")
                 }
+            }).catch(e => {
+                console.log('error invite info')
             })
         }
     },
@@ -263,9 +253,7 @@ export default {
         this.getInviteInfo()
     },
     async mounted () {
-
         console.log(formateBalance(100000))
-
         // todo
         this.fadeIn = true
         //   preloadImage(['nobase.bg.jpg','nobase.title.png','nobase.bg_light.png','nobase.bg_particle1.png','nobase.bg_particle2.png','nobase.bg_particle3.png'], ()=>{

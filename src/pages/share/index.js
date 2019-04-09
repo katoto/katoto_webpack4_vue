@@ -16,11 +16,10 @@ localStorage.setItem("lang", "en")
 
 // 引入语言包
 require("@language").use(Vue, [shareLanguage])
-
-cookie.set("appck", "MTAwMTUxMDM3ZWFhYjgyNGM1MGM3OWVhYjMzNWM2M2E2MWI1NTlmOA==")
-
-let ck = decodeURIComponent(cookie.get("appck"))
-let language = cookie.get("language")
+let ck = decodeURIComponent(window._.appck)
+let language = decodeURIComponent(window._._lang)
+console.log(ck)
+console.log(language)
 
 Vue.use(simpleAjax, {
     commonParams: {
