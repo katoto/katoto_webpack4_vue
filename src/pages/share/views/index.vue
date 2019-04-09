@@ -9,14 +9,20 @@
       <div class="bg_light"></div>
     </div>
     <div class="page_share_main">
+<<<<<<< HEAD
       <h1
         class="title"
         :class="{fadeIn:fadeIn}"
         v-html="_('m_share.sh_bigTitle', this.inviteCodeNum)"
       >
         <!-- Invite Friends
+=======
+      <h1 class="title" :class="{fadeIn:fadeIn}">
+        <!-- {{ _('m_share.sh_bigTitle', '5000') }} -->
+        Invite Friends
+>>>>>>> a8229494a0de14d37419ac0563a03b77df599059
         <br>Both Get
-        <i>5,000</i>-->
+        <i>5,000</i>
       </h1>
       <div class="total" :class="{fadeIn:fadeIn}" @click="show_pop_invite_frient = true">
         <p class="total_title">{{ _('m_share.sh_invited_friends') }}</p>
@@ -307,18 +313,21 @@ export default {
         this.getInviteInfo()
     },
     async mounted () {
+<<<<<<< HEAD
         console.log(formateBalance(100000))
 
         // April 1, 2019
         // July 1, 2019
 
+=======
+>>>>>>> a8229494a0de14d37419ac0563a03b77df599059
         // todo
-        this.fadeIn = true
-        //   preloadImage(['nobase.bg.jpg','nobase.title.png','nobase.bg_light.png','nobase.bg_particle1.png','nobase.bg_particle2.png','nobase.bg_particle3.png'], ()=>{
-        //       console.log('img is ready');
-        //     this.fadeIn = true
-        // }, './img/');
-
+        // this.fadeIn = true
+        // ,'nobase.bg_particle1.png','nobase.bg_particle2.png','nobase.bg_particle3.png'
+          preloadImage(['nobase.bg.45950.jpg','nobase.bg_light.76a39.png'], ()=>{
+              console.log('img is ready');
+            this.fadeIn = true
+        }, './img/');
         this.$nextTick(() => {
             this.popInviteFrient(true)
         })

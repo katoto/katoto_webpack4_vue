@@ -2,18 +2,20 @@
 
 module.exports = {
     root: true,
-    parser: "babel-eslint",
-    parserOptions: {
-        sourceType: "module"
+    // parser: "babel-eslint",
+    "parserOptions": {
+        "parser": "babel-eslint",
+        "ecmaVersion": 2017,
+        "sourceType": "module"
     },
     env: {
         browser: true,
     },
     // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
-    extends: ["standard", "eslint:recommended"],
+    extends: ["standard", "eslint:recommended", "plugin:vue/essential"],
     // required to lint *.vue files
     plugins: [
-        "html"
+        "vue"
     ],
     // add your custom rules here
     "rules": {
@@ -53,7 +55,24 @@ module.exports = {
         "object-curly-newline": ["error", "always"],
         "linebreak-style": ["error", "windows"],
 		"eol-last": ["error", "windows"],
-		"object-property-newline": ["error", {}]
+        "object-property-newline": ["error", {}],
+        "vue/html-indent": ["error", 4, {
+            "attribute": 1,
+            "baseIndent": 1,
+            "closeBracket": 0,
+            "alignAttributesVertically": true,
+            "ignores": []
+        }],
+        // "vue/html-closing-bracket-newline": ["error", {
+        //     "multiline": "always"
+        // }],
+        // "vue/max-attributes-per-line": ["error", {
+        //     "singleline": 100,
+        //     "multiline": {
+        //       "max": 1,
+        //       "allowFirstLine": true
+        //     }
+        // }]
     },
     globals: {
         "_": true,

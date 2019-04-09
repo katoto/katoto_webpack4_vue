@@ -55,11 +55,11 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                test: /\.(png|jpe?g|gif|svg)?$/,
                 use:[{
                     loader: 'url-loader',
                     options: {
-                        limit: 1,
+                        limit: 10000,
                         name: utils.assetsPath('img/[name].[contenthash:5].[ext]')
                     }
                 },{
@@ -73,12 +73,12 @@ module.exports = {
                 }]
             },
             // {
-            //     test: /^[nobase.].*\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            //     test: /\nobase\.(png|jpe?g|gif|svg)?$/,
             //     use:[{
             //         loader: 'url-loader',
             //         options: {
-            //             limit: 0,
-            //             name: utils.assetsPath('img/[name].[contenthash:2].[ext]')
+            //             limit: 10000,
+            //             name: utils.assetsPath('img/[name].[contenthash:5].[ext]')
             //         }
             //     },{
             //         loader: 'image-webpack-loader',
@@ -92,16 +92,19 @@ module.exports = {
             // },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    limit: 10000,
-                    name: utils.assetsPath('font/[name].[contenthash:7].[ext]')
-                }
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        name: utils.assetsPath('font/[name].[hash:7].[ext]')
+                    }
+                }]
+
 			},
 			{
 				test: /\.html$/,
 				use: ["html-withimg-loader"]
-			  },
+			},
         ]
     },
     plugins: [
