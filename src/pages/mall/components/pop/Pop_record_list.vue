@@ -2,46 +2,46 @@
     <Pop class="pop_list_redemption_record" :show.sync="show">
         <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
         <div class="redemption_record">
-        <ul>
-            <li>
-            <div class="record_img">
-                <img src="@assets/img/10g.png" alt>
-                <p class="record_name">100 Amazon</p>
-            </div>
-            <div class="record_msg">
-                <div class="record_view">
-                <p>
-                    <span>{{_('m_payment.card_no')}}：</span>
-                    <i>1325144654685asdas</i>
-                </p>
-                <p>
-                    <span>{{_('m_payment.password')}}：</span>
-                    <i>1325144654asdasdasd</i>
-                </p>
-                </div>
-                <span class="record_time">2018.08.10 18:52:32</span>
-            </div>
-            </li>
-            <li>
-            <div class="record_img">
-                <img src="@assets/img/10g.png" alt>
-                <p class="record_name">Iphone SE (16GB)</p>
-            </div>
-            <div class="record_msg">
-                <div class="record_view">
-                <p>
-                    <span>{{_('m_payment.goodstatus')}}:</span>
-                    <i>1</i>
-                </p>
-                <p>
-                    <span>{{_('m_payment.goodno')}}:</span>
-                    <i>2</i>
-                </p>
-                </div>
-                <span class="record_time">2018.08.10 18:52:32</span>
-            </div>
-            </li>
-        </ul>
+            <ul>
+                <li>
+                    <div class="record_img">
+                        <img src="@assets/img/10g.png" alt>
+                        <p class="record_name">100 Amazon</p>
+                    </div>
+                    <div class="record_msg">
+                        <div class="record_view">
+                            <p>
+                                <span>{{_('m_payment.card_no')}}：</span>
+                                <i>1325144654685asdas</i>
+                            </p>
+                            <p>
+                                <span>{{_('m_payment.password')}}：</span>
+                                <i>1325144654asdasdasd</i>
+                            </p>
+                        </div>
+                        <span class="record_time">2018.08.10 18:52:32</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="record_img">
+                        <img src="@assets/img/10g.png" alt>
+                        <p class="record_name">Iphone SE (16GB)</p>
+                    </div>
+                    <div class="record_msg">
+                        <div class="record_view">
+                            <p>
+                                <span>{{_('m_payment.goodstatus')}}:</span>
+                                <i>1</i>
+                            </p>
+                            <p>
+                                <span>{{_('m_payment.goodno')}}:</span>
+                                <i>2</i>
+                            </p>
+                        </div>
+                        <span class="record_time">2018.08.10 18:52:32</span>
+                    </div>
+                </li>
+            </ul>
         <!--todo empty -->
         </div>
         <p>11111123{{ test }}12332</p>
@@ -83,8 +83,7 @@ export default {
     methods:{
         // todo
         getRecordList () {
-            console.log("====recordList===")
-            this.$post("http://192.168.14.19:8888/shops/goods/exchange/record/list",{
+            this.$post("/shops/goods/exchange/record/list",{
                 ck: "123",
                 platform: "1",
                 version: "1",
