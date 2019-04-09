@@ -7,6 +7,7 @@
         <ProductDetail></ProductDetail>
         <ExchangeVirtual></ExchangeVirtual>
         <ExchangeReal></ExchangeReal>
+        <common></common>
     </div>
 
 </template>
@@ -18,6 +19,7 @@ import ExchangeTips from "./pop/Pop_exchange_tips.vue"
 import ProductDetail from "./pop/Pop_product_detail.vue"
 import ExchangeVirtual from "./pop/Pop_exchange_virtual.vue"
 import ExchangeReal from "./pop/Pop_exchange_real.vue"
+import common from "./pop/Pop_common.vue"
 export default {
     components:{
         RecordList,
@@ -26,7 +28,8 @@ export default {
         ExchangeTips,
         ProductDetail,
         ExchangeVirtual,
-        ExchangeReal
+        ExchangeReal,
+        common
     }
 }
 </script>

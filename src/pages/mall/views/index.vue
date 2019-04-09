@@ -32,9 +32,7 @@
             <a href="javascript:;">{{_('m_payment.card')}}</a>
           </li>
           <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
-            <a href="javascript:;">
-              {{_('m_payment.electronics')}}
-            </a>
+            <a href="javascript:;">{{_('m_payment.electronics')}}</a>
           </li>
           <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
             <a href="javascript:;">{{_('m_payment.other')}}</a>
@@ -51,18 +49,17 @@
             <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
           </li>
           <li :class="{unlock: item[1] && item[1].islock === '1'}">
-              <template v-if="item[1]">
-                <div class="reward_box">
-                    <img :src="item[1].imgurl" alt>
-                    <p class="reward_name">{{item[1].name}}</p>
-                </div>
-                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
-              </template>
+            <template v-if="item[1]">
+              <div class="reward_box">
+                <img :src="item[1].imgurl" alt>
+                <p class="reward_name">{{item[1].name}}</p>
+              </div>
+              <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
+            </template>
           </li>
         </ul>
       </div>
     </div>
-
 
     <!-- 初始化全部的弹窗   -->
     <popList></popList>
@@ -118,7 +115,7 @@
           </div>
         </div>
       </div>
-    </transition> -->
+    </transition>-->
 
     <!-- 批量兑换 -->
     <!-- <div class="pop pop_rechange_many hide">
@@ -178,7 +175,7 @@
         </div>
         <a href="javascript:" class="btn_default">{{_('m_payment.copy_all')}}</a>
       </div>
-    </div> -->
+    </div>-->
 
     <!-- 帮助弹层+ -->
     <!-- <div class="pop pop_rule hide">
@@ -191,7 +188,7 @@
           <p v-html="_('m_payment.rule3')"></p>
         </div>
       </div>
-    </div> -->
+    </div>-->
 
     <!-- 兑换提醒弹层 -->
     <!-- <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
@@ -213,7 +210,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>-->
 
     <!-- 商品详情 -->
     <!-- <div class="pop pop_product_detailed hide">
@@ -227,7 +224,7 @@
           <i class="icon_gold"></i>10
         </p>
       </div>
-    </div> -->
+    </div>-->
 
     <!-- 虚拟商品兑换弹层 -->
     <!-- <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
@@ -263,7 +260,7 @@
         </div>
         <a href="javascript:" class="btn_default" @click="confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
       </div>
-    </div> -->
+    </div>-->
 
     <!-- 实物商品兑换弹层 -->
     <!-- <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
@@ -307,14 +304,28 @@
         兑换成功
         <div class="icon_success"></div>
       </div>
+    </div>-->
+
+    <!-- pop_common -->
+    <!-- <div class="pop pop_common ">
+      <div class="pop_main">
+        <a href="javascript:;" class="pop_close"></a>
+        <div class="pop_common_title"></div>
+        <p class="is-center">
+          因为获得充值送优惠，
+          <br>您还需要使用
+          <i class="color_white bold">5000猜球币</i> ，才可进行兑换哦~
+        </p>
+        <a href="javascript:;" class="btn_default">知道了</a>
+      </div>
     </div> -->
 
-    <!-- toast -->
-    <div class="toast hide">toast</div>
+    <Toast></Toast>
   </div>
 </template>
 
 <script>
+import Toast from "@components/Toast.vue"
 import {
     copySucc, copyError, formateBalance
 } from "@/common/util"
@@ -348,11 +359,12 @@ export default {
             avaliable_total: "0",
             aid: "",
             activeItem: {
-            }
+            },
+            toast: false
         }
     },
     components: {
-        popList
+        popList,Toast
     },
     computed: {
         checkRealInfo () {
@@ -530,6 +542,7 @@ export default {
         this.getUserInfo()
         this.getUserAddress()
         window._this = this
+
         // setTimeout(() => {
         //     // 设置值
         //     this.pop.showRecordList = true
@@ -792,7 +805,6 @@ export default {
   }
 }
 
-
 .pop_list_redemption_record {
   .pop_main {
     display: flex;
@@ -887,7 +899,7 @@ export default {
       align-items: center;
       height: 86/75rem;
       label {
-          white-space: nowrap;
+        white-space: nowrap;
       }
     }
     input {
