@@ -123,6 +123,20 @@ export function formatUSTime (time) {
     return getUSTIme(startDate)
 }
 
+export function formatIndiaTime (time, language="en") {
+    let getUSTIme = date => {
+        var monthArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Spt", "Oct", "Nov", "Dec"]
+        var indiaArr = ["जनवरी", "फरवरी", " मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"]
+        if (language === "en") {
+            return `${monthArr[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+        }
+        return `${indiaArr[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+    }
+    let startDate = new Date()
+    startDate.setTime(Number(time) * 1000)
+    return getUSTIme(startDate)
+}
+
 export function formatTime (time, format = "MM-dd HH:mm:ss") {
     time = Number(time)
     if (isNaN(time)) {return false}
@@ -167,6 +181,16 @@ export function formatTime (time, format = "MM-dd HH:mm:ss") {
             return val > 0 ? "GMT+" + val : "GMT" + val
         }
     })
+}
+
+export function formatMoney (s) {
+    s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(0) + ""
+    var l = s.split(".")[0].split("").reverse(),
+        t = ""
+    for (let i = 0; i < l.length; i++) {
+        t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "")
+    }
+    return t.split("").reverse().join("")
 }
 
 export function formateBalance (val = 0) {

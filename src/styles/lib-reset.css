@@ -2,7 +2,8 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: "openSans";
+    font-family: "openSans";
+    user-select:none;
   }
   html{
 	  color: #fff;
@@ -28,7 +29,7 @@
 	color: #fff;
 	 -webkit-tap-highlight-color: rgba(0,0,0,0);
   }
-  a:hover,a:active{
+  a:active{
 	  filter: brightness(1.2);
 	  text-decoration: none;
   }

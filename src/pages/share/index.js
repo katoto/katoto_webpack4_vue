@@ -11,15 +11,25 @@ import {
 require("@/styles/lib-reset.css")
 require("@/styles/lib-public.less")
 
-// localStorage.setItem("lang", "india")
-localStorage.setItem("lang", "en")
+// test  注入的是www.madcrickets.com/
+cookie.set("appck", encodeURIComponent("MTAwMTU1MjNiNGU5M2QyNTY5MzNlNTMyMTUxYWU5ZDViZTBhNDUyNA==") )
+cookie.set("language", "india" )
+
+let appLanguage = cookie.get("language") || "en"
+if (appLanguage === "en" || appLanguage === "english") {
+    localStorage.setItem("lang", "en")
+} else {
+    localStorage.setItem("lang", "india")
+}
 
 // 引入语言包
 require("@language").use(Vue, [shareLanguage])
 let ck = decodeURIComponent(window._.appck)
 let language = decodeURIComponent(window._._lang)
+console.log("==========")
 console.log(ck)
 console.log(language)
+console.log("==========")
 
 Vue.use(simpleAjax, {
     commonParams: {

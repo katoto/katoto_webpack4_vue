@@ -17,7 +17,6 @@ const _appck = (
     ""
 )
 
-
 let lang = {
     ...common
 }
