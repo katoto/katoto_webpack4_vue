@@ -34,9 +34,9 @@
     </div>
     <div class="page_share_main">
       <h1 class="title" :class="{fadeIn:fadeIn}">Invite Friends Both Get 5,000</h1>
-      <div class="total" :class="{fadeIn:fadeIn}">
+      <div class="total" :class="{fadeIn:fadeIn}" @click="show_pop_invite_frient = true">
         <p class="total_title">Invited:</p>
-        <div class="total_person" @click="show_pop_invite_frient = true">0</div>
+        <div class="total_person">0</div>
         <div class="total_money">5000</div>
       </div>
       <div class="btn_box">
@@ -67,6 +67,7 @@
         </div>
       </div>
     </div>
+    <!-- 邀请好友列表 -->
     <div class="pop_invite_frient" :class="{hide:!show_pop_invite_frient}">
       <transition name="pop_animate">
         <div class="pop_invite_frient_layer" v-if="show_pop_invite_frient">
@@ -83,6 +84,15 @@
           </div>
         </div>
       </transition>
+    </div>
+    <!-- 收获金币 -->
+    <div class="pop_congratulation">
+      <div class="pop_con_main">
+        <div class="c_title"></div>
+        <p class="c_count">+5,000</p>
+        <p class="c_msg">Both you and your friend received 5,000 coins</p>
+        <a href="javascript:;" class="btn_default">OK</a>
+      </div>
     </div>
   </div>
 </template>
@@ -648,6 +658,91 @@ export default {
     opacity: 1;
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
+  }
+}
+
+.pop_congratulation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .pop_con_main {
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 506/75rem;
+      position: absolute;
+      z-index: 1;
+      top: 115/75rem;
+      left: 0;
+      background: url(../img/pop_congratulation_light.png) no-repeat center;
+      background-size: 512/75rem;
+    //   animation: pop_congratulation_light 10s linear infinite;
+    }
+  }
+  .c_title,
+  .c_count,
+  .c_msg {
+    position: relative;
+    z-index: 2;
+  }
+  .c_title {
+    width: 486/75rem;
+    height: 231/75rem;
+    overflow: hidden;
+    margin: 72/75rem auto 42/75rem;
+    background: url(../img/pop_congratulation_title.png) no-repeat center;
+    background-size: cover;
+  }
+  .c_count {
+    padding-top: 139/75rem;
+    line-height: 66/75rem;
+    font-size: 50/75rem;
+    color: #febb2b;
+    font-weight: bold;
+    font-family: sans-eb;
+    background: url(../img/pop_congratulation_box.png) no-repeat center top;
+    background-size: 216/75rem;
+  }
+  .c_msg {
+    max-width: 94%;
+    margin: 0 auto;
+    line-height: 50/75rem;
+    font-size: 24/75rem;
+    opacity: 0.6;
+  }
+  .btn_default {
+    width: 213/75rem;
+    height: 76/75rem;
+    overflow: hidden;
+    margin: 90/75rem auto 0;
+    text-align: center;
+    line-height: 76/75rem;
+    font-size: 34/75rem;
+    font-weight: bold;
+    background: url(~@assets/img/btn_default.png) no-repeat center;
+    background-size: cover;
+    &.disable {
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+}
+
+@keyframes pop_congratulation_light {
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(360deg);
   }
 }
 </style>
