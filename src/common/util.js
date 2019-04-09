@@ -218,7 +218,7 @@ export function getURLParams () {
     string.slice(1).split("&").map(item => {
         if (item !== "") {
             let arr = item.split("=")
-            obj[arr[0]] = arr[1]
+            obj[arr[0]] = decodeURIComponent(arr[1])
         }
     })
     return obj
@@ -565,20 +565,20 @@ export function copyError () {
     console.log("Failed to copy, please retry")
 }
 
-
 // 预加载图片
-export function preloadImage(names, cb, prefix) {
-    window.gkaCache = window.gkaCache || [];
-    var n = 0, img, imgs = {};
-    names.forEach(function(name) {
-        img = new Image();
-        window.gkaCache.push(img);
-        img.onload = (function(name, img) {
-            return function() {
+export function preloadImage (names, cb, prefix) {
+    window.gkaCache = window.gkaCache || []
+    var n = 0, img, imgs = {
+    }
+    names.forEach(function (name) {
+        img = new Image()
+        window.gkaCache.push(img)
+        img.onload = (function (name, img) {
+            return function () {
                 imgs[name] = img;
-                (++n === names.length) && cb && cb(imgs);
-            };
-        })(name, img);
-        img.src = (prefix || '') + name;
+                (++n === names.length) && cb && cb(imgs)
+            }
+        })(name, img)
+        img.src = (prefix || "") + name
     })
-};
+}
