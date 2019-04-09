@@ -19,7 +19,7 @@ export default {
     },
     india: {
         "m_share.sh_bigTitle": "\"मित्रों को आमंत्रित करें\r\nदोनों {0} पाएं ”",
-        "m_share.sh_refer_code": "तुम्हारा कोड",
+        "m_share.sh_refer_code": "तुम्हारा कोड:",
         "m_share.sh_btc_copy": "प्रतिलिपि",
         "m_share.sh_invited_friends": "मित्रों को आमंत्रित किया",
         "m_share.sh_invitemsg": "* जैसे ही आपका दोस्त  निमंत्रण को स्वीकार करता है, आपको इनाम मिल  मिल जायेगा",

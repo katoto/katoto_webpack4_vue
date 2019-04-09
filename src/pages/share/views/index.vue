@@ -9,10 +9,17 @@
       <div class="bg_light"></div>
     </div>
     <div class="page_share_main">
-      <h1 class="title" :class="{fadeIn:fadeIn}">{{ _('m_share.sh_bigTitle', '5000') }}</h1>
-      <div class="total" :class="{fadeIn:fadeIn}">
+      <h1 class="title" :class="{fadeIn:fadeIn}">
+        {{ _('m_share.sh_bigTitle', '5000') }}
+        <!-- Invite Friends
+        <br>Both Get
+        <i>5,000</i>-->
+      </h1>
+      <div class="total" :class="{fadeIn:fadeIn}" @click="show_pop_invite_frient = true">
         <p class="total_title">{{ _('m_share.sh_invited_friends') }}</p>
-        <div class="total_person" @click="popInviteFrient()"><span v-if="invitemsg">{{ invitemsg.invited_num }}</span></div>
+        <div class="total_person" @click="popInviteFrient()">
+          <span v-if="invitemsg">{{ invitemsg.invited_num }}</span>
+        </div>
         <div class="total_money">{{ invitemsg.have_earn }}</div>
       </div>
       <div class="btn_box">
@@ -43,6 +50,7 @@
         </div>
       </div>
     </div>
+    <!-- 邀请好友列表 -->
     <div class="pop_invite_frient" :class="{hide:!show_pop_invite_frient}">
       <transition name="pop_animate">
         <div class="pop_invite_frient_layer" v-if="show_pop_invite_frient">
@@ -50,10 +58,10 @@
             <a href="javascript:" class="pop_close" @click="show_pop_invite_frient = false"></a>
             <div class="header">{{ _('m_share.sh_invited_friends') }}</div>
             <ul class="pop_invite_frient_list" v-if="friendList">
-            <li>
+              <li>
                 <p class="list_rank">{{ _('m_share.sh_no_list') }}</p>
                 <p class="list_name">{{ _('m_share.sh_name') }}</p>
-            </li>
+              </li>
               <li v-for="(item, index) in friendList" :key="index">
                 <p class="list_rank">{{ _('m_share.sh_no_list') }}{{ index + 1 }}</p>
                 <p class="list_name">{{ item.name }}</p>
@@ -64,18 +72,29 @@
         </div>
       </transition>
     </div>
+    <!-- 收获金币 -->
+    <transition name="pop_animate">
+      <div class="pop_congratulation" :class="{hide:!show_pop_congratulation}">
+        <div class="pop_con_main" v-if="show_pop_congratulation">
+          <div class="c_title" data-msg="Congratulations"></div>
+          <p class="c_count">+5,000</p>
+          <p class="c_msg">Both you and your friend received 5,000 coins</p>
+          <a href="javascript:;" class="btn_default">OK</a>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import {
-    isIOS, appID, cbetLocal, preloadImage, formateBalance 
+    isIOS, appID, cbetLocal, preloadImage, formateBalance
 } from "@common/util"
 import {
-    setTimeout 
+    setTimeout
 } from "timers"
 import {
-    log 
+    log
 } from "util"
 
 export default {
@@ -89,6 +108,7 @@ export default {
             scrollTop: 0,
             isOnPop: true,
             show_pop_invite_frient:false,
+            show_pop_congratulation:false,
             friend_code: null,
             invitemsg: "",
             friendList: null, // 好友列表
@@ -357,15 +377,48 @@ export default {
   z-index: 2;
 }
 .title {
-  width: 682/75rem;
+  //   width: 682/75rem;
   height: 234/75rem;
-  overflow: hidden;
+  //   overflow: hidden;
   margin: 176/75rem auto 0;
-//   background: url(../img/title.png) no-repeat center;
-//   background-size: cover;
-//   font-size: 0;
-//   text-indent: -9999/75rem;
+  //   background: url(../img/nobase.title.png) no-repeat center;
+  //   background-size: cover;
+  //   font-size: 0;
+  //   text-indent: -9999/75rem;
   opacity: 0;
+  font-style: italic;
+  line-height: 1.2;
+  font-size: 80/75rem;
+  color: #f3eab8;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 -2/75rem 0 #fff, 0 4/75rem 0 #b37c14,
+    0px 8/75rem 13/75rem rgba(31, 11, 11, 0.81);
+  transform: translateZ(5px);
+  i {
+    position: relative;
+    font-style: italic;
+    font-family: sans-eb;
+    display: inline-block;
+    font-size: 114/75rem;
+    color: #ffe533;
+    text-shadow: 0 4/75rem 0 #ed7912,
+      0px 8/75rem 13/75rem rgba(31, 11, 11, 0.81);
+    // background-image: linear-gradient(to bottom, #fff087, #ffe533);
+    // -webkit-background-clip: text;
+    // -webkit-text-fill-color: transparent;
+    &::after {
+      height: 65/75rem;
+      overflow-y: hidden;
+      overflow-x: visible;
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "5,000";
+      color: #fff087;
+      text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+  }
   &.fadeIn {
     animation-delay: 1.4s;
   }
@@ -502,6 +555,7 @@ export default {
     flex: 1;
     text-align: center;
     font-size: 30/75rem;
+    color: #fff6c0;
     &::placeholder {
       color: #c38d5d;
     }
@@ -699,6 +753,98 @@ export default {
     opacity: 1;
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
+  }
+}
+
+.pop_congratulation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .pop_con_main {
+    position: relative;
+    width: 100%;
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 506/75rem;
+      position: absolute;
+      z-index: 1;
+      top: 115/75rem;
+      left: 0;
+      background: url(../img/pop_congratulation_light.png) no-repeat center;
+      background-size: 512/75rem;
+    }
+  }
+  .c_title,
+  .c_count,
+  .c_msg {
+    position: relative;
+    z-index: 2;
+  }
+  .c_title {
+    width: 486/75rem;
+    height: 231/75rem;
+    overflow: hidden;
+    margin: 72/75rem auto 42/75rem;
+    background: url(../img/pop_congratulation_title.png) no-repeat center;
+    background-size: cover;
+    // line-height: 80/75rem;
+    // font-size: 48/75rem;
+    // font-weight: bold;
+    // color: #f4d82a;
+    // &::before {
+    //   content: attr(data-msg);
+    //   background-image: linear-gradient(to bottom, #f4b632, #f4e228);
+    //   -webkit-background-clip: text;
+    //   -webkit-text-fill-color: transparent;
+    //   text-shadow: 0 0 10/75rem rgba(50, 46, 82, 0.75),
+    //     0 0 4/75rem rgba(124, 115, 163, 0.75);
+    //   line-height: 80/75rem;
+    //   font-size: 48/75rem;
+    //   font-weight: bold;
+    //   color: #f4d82a;
+    // }
+  }
+  .c_count {
+    padding-top: 139/75rem;
+    line-height: 66/75rem;
+    font-size: 50/75rem;
+    color: #febb2b;
+    font-weight: bold;
+    font-family: sans-eb;
+    background: url(../img/pop_congratulation_box.png) no-repeat center top;
+    background-size: 216/75rem;
+  }
+  .c_msg {
+    max-width: 94%;
+    margin: 0 auto;
+    line-height: 50/75rem;
+    font-size: 24/75rem;
+    opacity: 0.6;
+  }
+  .btn_default {
+    width: 213/75rem;
+    height: 76/75rem;
+    overflow: hidden;
+    margin: 90/75rem auto 0;
+    text-align: center;
+    line-height: 76/75rem;
+    font-size: 34/75rem;
+    font-weight: bold;
+    background: url(~@assets/img/btn_default.png) no-repeat center;
+    background-size: cover;
+    &.disable {
+      color: rgba(255, 255, 255, 0.4);
+    }
   }
 }
 </style>
