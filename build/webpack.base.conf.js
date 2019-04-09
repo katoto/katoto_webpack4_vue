@@ -59,8 +59,8 @@ module.exports = {
                 use:[{
                     loader: 'url-loader',
                     options: {
-                        limit: 1,
-                        name: utils.assetsPath('img/[name].[contenthash:5].[ext]')
+                        limit: 10000,
+                        name: utils.assetsPath('img/[name].[hash:7].[ext]')
                     }
                 },{
                     loader: 'image-webpack-loader',
@@ -78,7 +78,7 @@ module.exports = {
             //         loader: 'url-loader',
             //         options: {
             //             limit: 0,
-            //             name: utils.assetsPath('img/[name].[contenthash:2].[ext]')
+            //             name: utils.assetsPath('img/[name].[hash:2].[ext]')
             //         }
             //     },{
             //         loader: 'image-webpack-loader',
@@ -92,16 +92,19 @@ module.exports = {
             // },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    limit: 10000,
-                    name: utils.assetsPath('font/[name].[contenthash:7].[ext]')
-                }
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        name: utils.assetsPath('font/[name].[hash:7].[ext]')
+                    }
+                }]
+
 			},
 			{
 				test: /\.html$/,
 				use: ["html-withimg-loader"]
-			  },
+			},
         ]
     },
     plugins: [

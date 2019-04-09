@@ -444,61 +444,13 @@ export default {
         },
         getExchangeList () {
             this.$get("/shops/goods/list")
-                .catch(err => {
-                    return {
-                        "status":"100",
-                        "message":"ok",
-                        "data":[{
-                            "islock":"0",
-                            "weight":"1",
-                            "needgolds":"12521512",
-                            "goodsdesc":"1",
-                            "id":"50004",
-                            "imgurl":"http:\/\/home.500.com\/main\/style\/5lin\/images\/5lin_link.png",
-                            "updatetime":"0",
-                            "name":"1",
-                            "top_status":"0",
-                            "activity_imgurl":"",
-                            "usage":"",
-                            "goodstype":"2"
-                        },{
-                            "islock":"0",
-                            "weight":"10",
-                            "needgolds":"100",
-                            "goodsdesc":"100元亚马逊换购卡",
-                            "id":"50002",
-                            "imgurl":"http:\/\/149.129.138.180\/static\/amazon.png",
-                            "updatetime":"0",
-                            "name":"100元亚马逊卡",
-                            "top_status":"0",
-                            "activity_imgurl":"",
-                            "usage":"",
-                            "goodstype":"1"
-                        },{
-                            "islock":"0",
-                            "weight":"50",
-                            "needgolds":"1000",
-                            "goodsdesc":"小米8s",
-                            "id":"50003",
-                            "imgurl":"http:\/\/149.129.138.180\/static\/mobile.png",
-                            "updatetime":"0",
-                            "name":"小米8s",
-                            "top_status":"0",
-                            "activity_imgurl":"",
-                            "usage":"",
-                            "goodstype":"2"
-                        }]
-                    }
-                })
                 .then(res => {
                     res.data.sort((a, b) => Number(a.weigth) > Number(b.weight) ? 1 : -1)
                     this.exchangeList = res.data
-                    console.log(this.exchangeList)
                 })
         },
         getUserInfo () {
             this.$get("/simple/user/info").then(res => {
-                console.log(res)
                 this.avaliable_total = Number(res.data.avaliable_total)
             })
         },
@@ -510,7 +462,6 @@ export default {
                 postcode: this.realPostcode
             })
                 .then(res => {
-                    console.log(res)
                     this.isCheckReal = true
                     this.aid = res.data.aid
                 })
@@ -545,17 +496,6 @@ export default {
         this.getUserInfo()
         this.getUserAddress()
         window._this = this
-
-        // setTimeout(() => {
-        //     // 设置值
-        //     this.pop.showRecordList = true
-        //     this.setPopStore("setRechangeMany", true)
-        //     this.setPopStore("setRuleHelp", true)
-        //     this.setPopStore("setExchangeTips", true)
-        //     this.setPopStore("setProductDetail", true)
-        //     this.setPopStore("setExchangeVirtual", true)
-        //     this.setPopStore("setExchangeReal", true)
-        // },5000)
     }
 }
 </script>
