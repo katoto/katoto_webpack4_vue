@@ -90,6 +90,7 @@
 <script>
 import { isIOS, appID, cbetLocal, preloadImage } from '@common/util'
 import { setTimeout } from 'timers';
+import { log } from 'util';
 
 export default {
     data () {
@@ -200,9 +201,12 @@ export default {
     components: {
     },
     async mounted () {
-          preloadImage(['bg.jpg','title.png','bg_light.png','bg_particle1.png','bg_particle2.png','bg_particle3.png'], ()=>{
-            this.fadeIn = true
-        }, './img/');
+        //todo
+        this.fadeIn = true
+        //   preloadImage(['nobase.bg.jpg','nobase.title.png','nobase.bg_light.png','nobase.bg_particle1.png','nobase.bg_particle2.png','nobase.bg_particle3.png'], ()=>{
+        //       console.log('img is ready');
+        //     this.fadeIn = true
+        // }, './img/');
 
 
         // let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
@@ -230,7 +234,7 @@ export default {
 .page_share {
   min-height: 1500/75rem;
   overflow: hidden;
-//   background: #752120 url(~@static/img/bg.jpg) no-repeat center top;
+  background: #752120 url(../img/nobase.bg.jpg) no-repeat center top;
   background-size: 750/75rem;
 }
 
@@ -257,7 +261,7 @@ export default {
       width: 411/75rem;
       height: 356/75rem;
       &.bounceIn {
-        background: url(~@static/img/bg_particle1.png) no-repeat center;
+        background: url(../img/nobase.bg_particle1.png) no-repeat center;
         background-size: cover;
         animation: bounceIn 1.2s ease-in-out forwards;
       }
@@ -268,7 +272,7 @@ export default {
       width: 357/75rem;
       height: 354/75rem;
       &.bounceIn {
-        background: url(~@static/img/bg_particle2.png) no-repeat center;
+        background: url(../img/nobase.bg_particle2.png) no-repeat center;
         background-size: cover;
         animation: bounceIn 1.2s 0.4s ease-in-out forwards;
       }
@@ -279,7 +283,7 @@ export default {
       width: 224/75rem;
       height: 257/75rem;
       &.bounceIn {
-        background: url(~@static/img/bg_particle3.png) no-repeat center;
+        background: url(../img/nobase.bg_particle3.png) no-repeat center;
         background-size: cover;
         animation: bounceIn 1.2s 0.8s ease-in-out forwards;
       }
@@ -293,7 +297,7 @@ export default {
     width: 750/75rem;
     height: 813/75rem;
     overflow: hidden;
-    background: url(~@static/img/bg_light.png) no-repeat center;
+    background: url(../img/nobase.bg_light.png) no-repeat center;
     background-size: cover;
   }
 }
@@ -306,7 +310,7 @@ export default {
   height: 234/75rem;
   overflow: hidden;
   margin: 176/75rem auto 0;
-  background: url(../img/title.png) no-repeat center;
+  background: url(../img/nobase.title.png) no-repeat center;
   background-size: cover;
   font-size: 0;
   text-indent: -9999/75rem;
