@@ -12,7 +12,7 @@
           <span>{{formateBalance(avaliable_total)}}</span>
         </a>
         <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
-        <a href="javascript:;" class="btn btn_question"></a>
+        <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
       </div>
     </div>
     <div class="news">
@@ -886,6 +886,9 @@ export default {
       justify-content: center;
       align-items: center;
       height: 86/75rem;
+      label {
+          white-space: nowrap;
+      }
     }
     input {
       display: none;
