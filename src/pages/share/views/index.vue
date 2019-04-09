@@ -1,29 +1,5 @@
 <template>
   <div class="page_share">
-    <div class="hide">
-      <div class="head">
-        <button @click="fb_invite">facebook 邀请 222222</button>
-        <br>
-        <br>
-        <br>
-        <button @click="fb_morePeop">facebook 邀请列表</button>
-        <br>
-        <br>
-
-        <button @click="fb_whatsapp">WhatsApp原生</button>
-        <br>
-        <br>
-        <button @click="fb_fackbook">Fackbook 原生</button>
-
-        <button>
-          <a href="whatsapp://send?text=HERE GOES THE URL ENCODED TEXT YOU WANT TO SHARE" target="_blank" data-action="share/whatsapp/share">Share via Whatsapp</a>
-        </button>
-
-        <div class="fb-share-button" data-href="https://www.katoto.cn/" data-layout="button" data-size="small">
-          <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.baidu.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">分享</a>
-        </div>
-      </div>
-    </div>
     <div class="bg_page">
       <div class="bg_particle">
         <div class="bg bg_p1" :class="{bounceIn:fadeIn}"></div>
@@ -33,37 +9,37 @@
       <div class="bg_light"></div>
     </div>
     <div class="page_share_main">
-      <h1 class="title" :class="{fadeIn:fadeIn}">Invite Friends Both Get 5,000</h1>
+      <h1 class="title" :class="{fadeIn:fadeIn}">{{ _('m_share.sh_bigTitle', '5000') }}</h1>
       <div class="total" :class="{fadeIn:fadeIn}">
-        <p class="total_title">Invited:</p>
-        <div class="total_person" @click="show_pop_invite_frient = true">0</div>
-        <div class="total_money">5000</div>
+        <p class="total_title">{{ _('m_share.sh_invited_friends') }}</p>
+        <div class="total_person" @click="popInviteFrient()"><span v-if="invitemsg">{{ invitemsg.invited_num }}</span></div>
+        <div class="total_money">{{ invitemsg.have_earn }}</div>
       </div>
       <div class="btn_box">
-        <a href="javascript:;" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
-        <a href="javascript:;" class="btn btn_whatsApp" :class="{fadeIn:fadeIn}">WhatsApp</a>
+        <a href="javascript:;" @click="fb_fackbook()" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
+        <a href="javascript:;" @click="fb_whatsapp()" class="btn btn_whatsApp" :class="{fadeIn:fadeIn}">WhatsApp</a>
       </div>
       <div class="share_code" :class="{fadeIn:fadeIn}">
         <p>
-          Referral code:
-          <i class="bold">HJGBJ</i>
+          {{ _('m_share.sh_refer_code') }}
+          <i class="bold" v-if="invitemsg">{{ invitemsg.invite_code }}</i>
         </p>
-        <a href="javascript:;" class="btn_copy">COPY</a>
+        <a href="javascript:;" class="btn_copy" @click="shareCopy(invitemsg.invite_code)">{{ _('m_share.sh_btc_copy') }}</a>
       </div>
-      <div class="tips" :class="{fadeIn:fadeIn}">*You can get reward in Notifications once the friend accepts your invitation</div>
+      <div class="tips" :class="{fadeIn:fadeIn}">{{ _('m_share.sh_invitemsg') }}</div>
       <div class="page_share_bottom" :class="{fadeIn:fadeIn}">
         <div class="share_byfriend">
-          <p class="msg">Invited by friend</p>
+          <p class="msg">{{ _('m_share.sh_invited_byfriends') }}</p>
           <div class="input_box">
-            <input type="text" placeholder="Enter code, get reward" v-model="friend_code" :class="{isput:friend_code}">
-            <a href="javascript:;" class="btn" v-if="friend_code">Confirm</a>
+            <input type="text" :placeholder="_('m_share.sh_enter_code')" @input="testFriendCode" v-model="friend_code" :class="{isput:friend_code}">
+            <a href="javascript:;" class="btn" v-if="friend_code" @click="sendInviteCode">{{ _('m_share.sh_btn_confirm') }}</a>
           </div>
-          <p class="time">19 days 23:59</p>
+          <p class="time">{{ _('m_share.sh_validtime') }}19 days 23:59</p>
         </div>
         <div class="share_tips">
-          <p class="share_tips_t">Countdown</p>
-          <p>*You can get reward in Notifications once the friend accepts yo</p>
-          <p>*You can get reward in Notifications once the friend accepts your invitation*You can get reward in Notifications once the friend accepts your invitation*You can get reward in Notifications once the friend accepts your invitation*You can get reward in Notifications once the friend accepts your invitation</p>
+          <p class="share_tips_t">{{ _('m_share.sh_rule_title') }}</p>
+          <p>{{ _('m_share.sh_rule_1') }}</p>
+          <p>{{ _('m_share.sh_rule_2') }}</p>
         </div>
       </div>
     </div>
@@ -72,14 +48,18 @@
         <div class="pop_invite_frient_layer" v-if="show_pop_invite_frient">
           <div class="pop_main">
             <a href="javascript:" class="pop_close" @click="show_pop_invite_frient = false"></a>
-            <div class="header">Invited Friend</div>
-            <ul class="pop_invite_frient_list hide">
-              <li class="hide">
-                <p class="list_rank">No.1</p>
-                <p class="list_name">Joeeeeee</p>
+            <div class="header">{{ _('m_share.sh_invited_friends') }}</div>
+            <ul class="pop_invite_frient_list" v-if="friendList">
+            <li>
+                <p class="list_rank">{{ _('m_share.sh_no_list') }}</p>
+                <p class="list_name">{{ _('m_share.sh_name') }}</p>
+            </li>
+              <li v-for="(item, index) in friendList" :key="index">
+                <p class="list_rank">{{ _('m_share.sh_no_list') }}{{ index + 1 }}</p>
+                <p class="list_name">{{ item.name }}</p>
               </li>
             </ul>
-            <p class="nomsg">no data</p>
+            <p class="nomsg" v-else>{{ _('m_share.sh_invite_nodata') }}</p>
           </div>
         </div>
       </transition>
@@ -88,8 +68,15 @@
 </template>
 
 <script>
-import { isIOS, appID, cbetLocal, preloadImage } from '@common/util'
-import { setTimeout } from 'timers';
+import {
+    isIOS, appID, cbetLocal, preloadImage, formateBalance 
+} from "@common/util"
+import {
+    setTimeout 
+} from "timers"
+import {
+    log 
+} from "util"
 
 export default {
     data () {
@@ -102,123 +89,193 @@ export default {
             scrollTop: 0,
             isOnPop: true,
             show_pop_invite_frient:false,
-            friend_code:'',
-        };
+            friend_code: null,
+            invitemsg: "",
+            friendList: null, // 好友列表
+            inviteCodeNum: 5000
+        }
     },
     watch:{
         show_pop_invite_frient (val) {
             if (val) {
                 this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-                document.body.classList.add('isOnPop')
-                document.body.style.top = -this.scrollTop + 'px'
+                document.body.classList.add("isOnPop")
+                document.body.style.top = -this.scrollTop + "px"
             } else {
-                document.body.classList.remove('isOnPop')
+                document.body.classList.remove("isOnPop")
                 window.scrollTo(0, this.scrollTop)
                 document.body.style.top = 0
             }
-        },
+        }
     },
     methods:{
-        shareCopy () {
-            cbetLocal({
-                func:"copyToPasteboard",
-                params:{
-                    content:"复制msg内容222  "
+        testFriendCode () {
+            if (this.friend_code && this.friend_code.length > 10) {
+                this.friend_code = this.friend_code.slice(0,10)
+            }
+        },
+        sendInviteCode () {
+            // 发送邀请码
+            let codeReg = /[0-9a-zA-Z]{10}/
+            if (codeReg.test(this.friend_code)) {
+                // 发起请求
+                this.$post("/invite/use_code",{
+                    code: this.friend_code
+                }).catch(() => {
+                    return {
+                        "status":"100",
+                        "message":"ok",
+                        "data":[{
+                        }]
+                    }
+                }).then((res) => {
+                    if (res && res.status === "100") {
+                        this.getInviteInfo()
+                    } else {
+                        // 邀请出错
+                    }
+                })
+            } else {
+                console.warn("code 有误")
+            }
+        },
+        popInviteFrient (noneTip=false) {
+            if (!noneTip) {this.show_pop_invite_frient = true}
+            this.$post("/invite/get_firends").catch( e => {
+                return {
+                    "status":"100",
+                    "message":"ok",
+                    "data":[{
+                        name: "哈哈哈",
+                        userid: "1111"
+                    },{
+                        name: "哈哈哈2",
+                        userid: "3334412"
+                    },{
+                        name: "哈哈哈3",
+                        userid: "6666"
+                    },{
+                        name: "哈哈哈4",
+                        userid: "333434535412"
+                    },{
+                        name: "哈哈哈2",
+                        userid: "3334412"
+                    },{
+                        name: "哈哈哈3",
+                        userid: "6666"
+                    },{
+                        name: "哈哈哈4",
+                        userid: "333434535412"
+                    },{
+                        name: "哈哈哈2",
+                        userid: "3334412"
+                    },{
+                        name: "哈哈哈3",
+                        userid: "6666"
+                    },{
+                        name: "哈哈哈4",
+                        userid: "333434535412"
+                    },{
+                        name: "哈哈哈2",
+                        userid: "3334412"
+                    },{
+                        name: "哈哈哈3",
+                        userid: "6666"
+                    },{
+                        name: "哈哈哈4",
+                        userid: "333434535412"
+                    }]
+                }
+            }).then((res) => {
+                if (res && res.status === "100") {
+                    this.friendList = res.data
                 }
             })
-            // cbetLocal({func:'jumpToLocal',  params:{ content:"jp://RaceDetailScene?matchId=1243563"}
-            // })
+        },
+        shareCopy (code="") {
+            // 多语言
+            console.log("copy")
+            if (this.invitemsg && this.invitemsg.invite_code) {
+                cbetLocal({
+                    func:"copyToPasteboard",
+                    params:{
+                        content: this.invitemsg.invite_code
+                    }
+                })
+            }
         },
         fb_whatsapp () {
-            // 内容
-            cbetLocal({
-                func: "share",
-                params:{
-                    content: "321312132",
-                    plat: "whatsapp"
-                }
-            })
+            // 分享的内容
+            if (this.invitemsg && this.invitemsg.invite_code) {
+                let cont = this._("m_share.sh_invite_copy_msg", this.invitemsg.invite_code, this.inviteCodeNum)
+                cbetLocal({
+                    func: "share",
+                    params:{
+                        content: cont,
+                        plat: "whatsapp"
+                    }
+                })
+            }
         },
         fb_fackbook () {
-            console.log(121)
-            cbetLocal({
-                func: "share",
-                params:{
-                    content: "12312321",
-                    plat: "facebook"
-                }
-            })
+            // 分享的内容
+            if (this.invitemsg && this.invitemsg.invite_code) {
+                let cont = this._("m_share.sh_bigTitle", this.invitemsg.invite_code, this.inviteCodeNum)
+                cbetLocal({
+                    func: "share",
+                    params:{
+                        content: cont,
+                        plat: "facebook"
+                    }
+                })
+            }
         },
-        fb_morePeop () {
-            window.FB.ui({
-                appID,
-                method: "apprequests",
-                message: "这是疯狂猜球应用测试",
-                title: "Invite friends to play"
-            }, function (response) {
-                if (response && response.to.length>0) {
-                    console.log("Welcome!  Fetching your information....1111 ")
-                }
-                console.log(response)
-            })
-        },
-        fb_invite () {
-            console.log(this.baseFB)
-            this.baseFB.getLoginStatus(function (response) {
-                console.log(response)
-                this.accToken = response.accessToken
-                if (response && response.status === "unknown") {
-                    window.FB.login(function (response) {
-                        if (response.authResponse) {
-                            console.log("Welcome!  Fetching your information.... ")
-                        } else {
-                            console.log("User cancelled login or did not fully authorize.")
+        getInviteInfo () {
+            this.$post("/invite/info").then(() => {
+            }).catch(e => {
+                return {
+                    "status":"100",
+                    "message":"ok",
+                    "data":{
+                        info:{
+                            invite_code:"11qwedf",
+                            invited_num:"1",
+                            have_earn:"3333",
+                            used_code:"0"
+                        },
+                        config:{
                         }
-                    })
+                    }
+                }
+            }).then((res) => {
+                if (res && res.status === "100") {
+                    console.log(res)
+                    this.invitemsg = res.data.info
+                } else {
+                    console.warn("49")
                 }
             })
-        },
-        pageinit (FB) {
-            FB.getLoginStatus(function (response) {
-                if (response && response.status === "unknown") {
-                    FB.login(function (response) {
-                        if (response.authResponse) {
-                            console.log("Welcome!  Fetching your information.... ")
-                            console.log(response)
-                            console.log("111111111")
-                        } else {
-                            console.log("User cancelled login or did not fully authorize.")
-                        }
-                    })
-                }
-                console.log(response)
-                console.log("====")
-            })
-
         }
     },
     components: {
     },
+    created () {
+        this.getInviteInfo()
+    },
     async mounted () {
-          preloadImage(['bg.jpg','title.png','bg_light.png','bg_particle1.png','bg_particle2.png','bg_particle3.png'], ()=>{
-            this.fadeIn = true
-        }, './img/');
-        // let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
-        // console.log(bb + '2')
-        // let cc = await this.$get('http://api.coinslot.com/home/info', {
-        //     platform: '123'
-        // })
-        window.fbAsyncInit = () => {
-            FB.init({
-                appId      : appID,
-                cookie     : true,
-                xfbml      : true,
-                version    : "v3.2"
-            })
-            FB.AppEvents.logPageView()
-            // this.pageinit(FB)
-            this.baseFB = FB
-        }
+
+        console.log(formateBalance(100000))
+
+        // todo
+        this.fadeIn = true
+        //   preloadImage(['nobase.bg.jpg','nobase.title.png','nobase.bg_light.png','nobase.bg_particle1.png','nobase.bg_particle2.png','nobase.bg_particle3.png'], ()=>{
+        //       console.log('img is ready');
+        //     this.fadeIn = true
+        // }, './img/');
+
+        this.$nextTick(() => {
+            this.popInviteFrient(true)
+        })
 
     }
 }
@@ -228,7 +285,7 @@ export default {
 .page_share {
   min-height: 1500/75rem;
   overflow: hidden;
-  background: #752120 url(~@static/img/bg.jpg) no-repeat center top;
+  background: #752120 url(../img/nobase.bg.jpg) no-repeat center top;
   background-size: 750/75rem;
 }
 
@@ -255,7 +312,7 @@ export default {
       width: 411/75rem;
       height: 356/75rem;
       &.bounceIn {
-        background: url(~@static/img/bg_particle1.png) no-repeat center;
+        background: url(../img/nobase.bg_particle1.png) no-repeat center;
         background-size: cover;
         animation: bounceIn 1.2s ease-in-out forwards;
       }
@@ -266,7 +323,7 @@ export default {
       width: 357/75rem;
       height: 354/75rem;
       &.bounceIn {
-        background: url(~@static/img/bg_particle2.png) no-repeat center;
+        background: url(../img/nobase.bg_particle2.png) no-repeat center;
         background-size: cover;
         animation: bounceIn 1.2s 0.4s ease-in-out forwards;
       }
@@ -277,7 +334,7 @@ export default {
       width: 224/75rem;
       height: 257/75rem;
       &.bounceIn {
-        background: url(~@static/img/bg_particle3.png) no-repeat center;
+        background: url(../img/nobase.bg_particle3.png) no-repeat center;
         background-size: cover;
         animation: bounceIn 1.2s 0.8s ease-in-out forwards;
       }
@@ -291,7 +348,7 @@ export default {
     width: 750/75rem;
     height: 813/75rem;
     overflow: hidden;
-    background: url(~@static/img/bg_light.png) no-repeat center;
+    background: url(../img/nobase.bg_light.png) no-repeat center;
     background-size: cover;
   }
 }
@@ -304,10 +361,10 @@ export default {
   height: 234/75rem;
   overflow: hidden;
   margin: 176/75rem auto 0;
-  background: url(../img/title.png) no-repeat center;
-  background-size: cover;
-  font-size: 0;
-  text-indent: -9999/75rem;
+//   background: url(../img/title.png) no-repeat center;
+//   background-size: cover;
+//   font-size: 0;
+//   text-indent: -9999/75rem;
   opacity: 0;
   &.fadeIn {
     animation-delay: 1.4s;

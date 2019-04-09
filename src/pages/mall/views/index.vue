@@ -117,7 +117,7 @@
           </div>
         </div>
       </div>
-    </transition> -->
+    </transition>-->
 
         <!-- 批量兑换 -->
         <!-- <div class="pop pop_rechange_many hide">
@@ -177,7 +177,7 @@
         </div>
         <a href="javascript:" class="btn_default">{{_('m_payment.copy_all')}}</a>
       </div>
-    </div> -->
+    </div>-->
 
         <!-- 帮助弹层+ -->
         <!-- <div class="pop pop_rule hide">
@@ -190,7 +190,7 @@
           <p v-html="_('m_payment.rule3')"></p>
         </div>
       </div>
-    </div> -->
+    </div>-->
 
         <!-- 兑换提醒弹层 -->
         <!-- <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
@@ -212,7 +212,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>-->
 
         <!-- 商品详情 -->
         <!-- <div class="pop pop_product_detailed hide">
@@ -226,7 +226,7 @@
           <i class="icon_gold"></i>10
         </p>
       </div>
-    </div> -->
+    </div>-->
 
         <!-- 虚拟商品兑换弹层 -->
         <!-- <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
@@ -262,7 +262,7 @@
         </div>
         <a href="javascript:" class="btn_default" @click="confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
       </div>
-    </div> -->
+    </div>-->
 
         <!-- 实物商品兑换弹层 -->
         <!-- <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
@@ -306,14 +306,28 @@
         兑换成功
         <div class="icon_success"></div>
       </div>
+    </div>-->
+
+        <!-- pop_common -->
+        <!-- <div class="pop pop_common ">
+      <div class="pop_main">
+        <a href="javascript:;" class="pop_close"></a>
+        <div class="pop_common_title"></div>
+        <p class="is-center">
+          因为获得充值送优惠，
+          <br>您还需要使用
+          <i class="color_white bold">5000猜球币</i> ，才可进行兑换哦~
+        </p>
+        <a href="javascript:;" class="btn_default">知道了</a>
+      </div>
     </div> -->
 
-        <!-- toast -->
-        <div class="toast hide">toast</div>
+        <Toast v-if="toast"></Toast>
     </div>
 </template>
 
 <script>
+import Toast from "@components/Toast.vue"
 import {
     copySucc, copyError, formateBalance
 } from "@/common/util"
@@ -347,11 +361,13 @@ export default {
             avaliable_total: "0",
             aid: "",
             activeItem: {
-            }
+            },
+            toast: false
         }
     },
     components: {
-        popList
+        popList,
+        Toast
     },
     computed: {
         checkRealInfo () {
@@ -529,6 +545,7 @@ export default {
         this.getUserInfo()
         this.getUserAddress()
         window._this = this
+
         // setTimeout(() => {
         //     // 设置值
         //     this.pop.showRecordList = true
@@ -543,7 +560,7 @@ export default {
 }
 </script>
 
-<style lang="less" type="text/less">
+<style lang="less" type="text/less" scope>
 @import "../../../styles/lib-mixins.less";
 .page_mall {
   width: 750/75rem;
