@@ -364,7 +364,8 @@ export default {
         }
     },
     components: {
-        popList,Toast
+        popList,
+        Toast
     },
     computed: {
         checkRealInfo () {
