@@ -20,7 +20,7 @@ var ret = {
         bundleAnalyzerReport: process.env.npm_config_report
     },
     dev: {
-        port: 8090,
+        port: 80,
         autoOpenBrowser: true,
         assetsSubDirectory: '',
         assetsPublicPath: '/',

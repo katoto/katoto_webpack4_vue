@@ -14,7 +14,10 @@ if (process.env.NODE_ENV === "production") {
     BASEURL = "http://10.0.1.41:8001"
 }
 
-MyPlugin.install = function (Vue, config={commonParams:{}}) {
+MyPlugin.install = function (Vue, config={
+    commonParams:{
+    }
+}) {
     // 对象转get字符串
     let obj2str = function (data) {
         let dataStr = ""
