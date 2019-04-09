@@ -1,29 +1,5 @@
 <template>
   <div class="page_share">
-    <div class="hide">
-      <div class="head">
-        <button @click="fb_invite">facebook 邀请 222222</button>
-        <br>
-        <br>
-        <br>
-        <button @click="fb_morePeop">facebook 邀请列表</button>
-        <br>
-        <br>
-
-        <button @click="fb_whatsapp">WhatsApp原生</button>
-        <br>
-        <br>
-        <button @click="fb_fackbook">Fackbook 原生</button>
-
-        <button>
-          <a href="whatsapp://send?text=HERE GOES THE URL ENCODED TEXT YOU WANT TO SHARE" target="_blank" data-action="share/whatsapp/share">Share via Whatsapp</a>
-        </button>
-
-        <div class="fb-share-button" data-href="https://www.katoto.cn/" data-layout="button" data-size="small">
-          <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.baidu.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">分享</a>
-        </div>
-      </div>
-    </div>
     <div class="bg_page">
       <div class="bg_particle">
         <div class="bg bg_p1" :class="{bounceIn:fadeIn}"></div>
@@ -92,9 +68,15 @@
 </template>
 
 <script>
-import { isIOS, appID, cbetLocal, preloadImage, formateBalance } from '@common/util'
-import { setTimeout } from 'timers';
-import { log } from 'util';
+import {
+    isIOS, appID, cbetLocal, preloadImage, formateBalance 
+} from "@common/util"
+import {
+    setTimeout 
+} from "timers"
+import {
+    log 
+} from "util"
 
 export default {
     data () {
@@ -107,9 +89,10 @@ export default {
             scrollTop: 0,
             isOnPop: true,
             show_pop_invite_frient:false,
-            friend_code:"",
+            friend_code: null,
             invitemsg: "",
-            friendList: null // 好友列表
+            friendList: null, // 好友列表
+            inviteCodeNum: 5000
         }
     },
     watch:{
@@ -211,81 +194,41 @@ export default {
         },
         shareCopy (code="") {
             // 多语言
-            let cont = "todo"
-            cbetLocal({
-                func:"copyToPasteboard",
-                params:{
-                    content: cont
-                }
-            })
+            console.log("copy")
+            if (this.invitemsg && this.invitemsg.invite_code) {
+                cbetLocal({
+                    func:"copyToPasteboard",
+                    params:{
+                        content: this.invitemsg.invite_code
+                    }
+                })
+            }
         },
         fb_whatsapp () {
             // 分享的内容
-            cbetLocal({
-                func: "share",
-                params:{
-                    content: "321312132",
-                    plat: "whatsapp"
-                }
-            })
+            if (this.invitemsg && this.invitemsg.invite_code) {
+                let cont = this._("m_share.sh_invite_copy_msg", this.invitemsg.invite_code, this.inviteCodeNum)
+                cbetLocal({
+                    func: "share",
+                    params:{
+                        content: cont,
+                        plat: "whatsapp"
+                    }
+                })
+            }
         },
         fb_fackbook () {
             // 分享的内容
-            console.log(121)
-            cbetLocal({
-                func: "share",
-                params:{
-                    content: "12312321",
-                    plat: "facebook"
-                }
-            })
-        },
-        fb_morePeop () {
-            window.FB.ui({
-                appID,
-                method: "apprequests",
-                message: "这是疯狂猜球应用测试",
-                title: "Invite friends to play"
-            }, function (response) {
-                if (response && response.to.length>0) {
-                    console.log("Welcome!  Fetching your information....1111 ")
-                }
-                console.log(response)
-            })
-        },
-        fb_invite () {
-            console.log(this.baseFB)
-            this.baseFB.getLoginStatus(function (response) {
-                console.log(response)
-                this.accToken = response.accessToken
-                if (response && response.status === "unknown") {
-                    window.FB.login(function (response) {
-                        if (response.authResponse) {
-                            console.log("Welcome!  Fetching your information.... ")
-                        } else {
-                            console.log("User cancelled login or did not fully authorize.")
-                        }
-                    })
-                }
-            })
-        },
-        pageinit (FB) {
-            FB.getLoginStatus(function (response) {
-                if (response && response.status === "unknown") {
-                    FB.login(function (response) {
-                        if (response.authResponse) {
-                            console.log("Welcome!  Fetching your information.... ")
-                            console.log(response)
-                            console.log("111111111")
-                        } else {
-                            console.log("User cancelled login or did not fully authorize.")
-                        }
-                    })
-                }
-                console.log(response)
-                console.log("====")
-            })
-
+            if (this.invitemsg && this.invitemsg.invite_code) {
+                let cont = this._("m_share.sh_bigTitle", this.invitemsg.invite_code, this.inviteCodeNum)
+                cbetLocal({
+                    func: "share",
+                    params:{
+                        content: cont,
+                        plat: "facebook"
+                    }
+                })
+            }
         },
         getInviteInfo () {
             this.$post("/invite/info").then(() => {
@@ -320,7 +263,10 @@ export default {
         this.getInviteInfo()
     },
     async mounted () {
-        //todo
+
+        console.log(formateBalance(100000))
+
+        // todo
         this.fadeIn = true
         //   preloadImage(['nobase.bg.jpg','nobase.title.png','nobase.bg_light.png','nobase.bg_particle1.png','nobase.bg_particle2.png','nobase.bg_particle3.png'], ()=>{
         //       console.log('img is ready');
@@ -330,24 +276,6 @@ export default {
         this.$nextTick(() => {
             this.popInviteFrient(true)
         })
-
-
-        // let bb = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8&ck=')
-        // console.log(bb + '2')
-        // let cc = await this.$get('http://api.coinslot.com/home/info', {
-        //     platform: '123'
-        // })
-        window.fbAsyncInit = () => {
-            FB.init({
-                appId      : appID,
-                cookie     : true,
-                xfbml      : true,
-                version    : "v3.2"
-            })
-            FB.AppEvents.logPageView()
-            // this.pageinit(FB)
-            this.baseFB = FB
-        }
 
     }
 }

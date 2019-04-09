@@ -9,17 +9,19 @@
 
 <script>
  export default {
-   data () {
-     return {
+     data () {
+         return {
 
-     }
-   },
-   components: {
+         }
+     },
+     components: {
 
-   },
-   computed: {},
-   methods: {},
-   mounted(){}
+     },
+     computed: {
+     },
+     methods: {
+     },
+     mounted () {}
  }
 </script>
 

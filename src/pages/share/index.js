@@ -11,7 +11,8 @@ import {
 require("@/styles/lib-reset.css")
 require("@/styles/lib-public.less")
 
-localStorage.setItem("lang", "india")
+// localStorage.setItem("lang", "india")
+localStorage.setItem("lang", "en")
 
 // 引入语言包
 require("@language").use(Vue, [shareLanguage])
