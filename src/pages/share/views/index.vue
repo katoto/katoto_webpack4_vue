@@ -14,8 +14,6 @@
                 :class="{fadeIn:fadeIn}"
                 v-html="_('m_share.sh_bigTitle', formatMoney(this.inviteCodeNum))"
             >
-                <!-- <br>Both Get
-        <i>5,000</i> -->
             </h1>
             <div class="total" :class="{fadeIn:fadeIn}" @click="show_pop_invite_frient = true">
                 <p class="total_title">{{ _('m_share.sh_invited_friends') }}</p>
@@ -117,6 +115,25 @@
 </template>
 
 <script>
+
+/*
+    *  客户端回调
+    * */
+window.cbetLocalCallback = function(param){
+    if(param.func==='copyToPasteboard'){
+        console.log('---------')
+        if(param.result){
+            window.$toast({
+                content: 'copy success'
+            })
+        }else{
+            window.$toast({
+                content: 'copy error'
+            })
+        }
+    }
+}
+
 import {
     isIOS,
     appID,
@@ -229,8 +246,6 @@ export default {
                 })
         },
         shareCopy (code = "") {
-            // 多语言
-            console.log("copy")
             if (this.invitemsg && this.invitemsg.invite_code) {
                 cbetLocal({
                     func: "copyToPasteboard",
@@ -255,6 +270,10 @@ export default {
                         plat: "whatsapp"
                     }
                 })
+            } else {
+                this.$toast({
+                    content: 'page error please reload ~'
+                })
             }
         },
         fb_fackbook () {
@@ -271,6 +290,10 @@ export default {
                         content: cont,
                         plat: "facebook"
                     }
+                })
+            } else {
+                this.$toast({
+                    content: 'page error please reload ~'
                 })
             }
         },
@@ -324,6 +347,9 @@ export default {
     },
     async mounted () {
         console.log(formateBalance(100000))
+        // window.$toast({
+        //     content:'123123qweewq'
+        // })
         // April 1, 2019
         // July 1, 2019
         // todo
