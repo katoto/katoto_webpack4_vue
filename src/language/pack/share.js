@@ -16,7 +16,7 @@ export default {
         "m_share.sh_invited_friends": "Invited: ",
         "m_share.sh_btc_copy": "Copy",
         "m_share.sh_refer_code": "Your code : ",
-        "m_share.sh_bigTitle": "Invite Friends  Both Get <i>{0}</i>",
+        "m_share.sh_bigTitle": "Invite Friends  Both Get <i data-msg='{0}'>{0}</i>",
         "m_payment.goodno": "Tracking Number",
         "m_payment.goodstatus": "Status",
         "m_payment.shoptitle": "Get extra coins by first weekly Paypal top-up",
@@ -66,7 +66,7 @@ export default {
     india: {
         "m_share.sh_win_inviteNum": "Both you and your friend received {0} coins",
         "m_share.sh_validday_time": "dd दिन, HH घंटे, mm मिनट",
-        "m_share.sh_bigTitle": "मित्रों को आमंत्रित करेंदोनों <i>{0}</i> पाएं",
+        "m_share.sh_bigTitle": "मित्रों को आमंत्रित करेंदोनों <i data-msg='{0}'>{0}</i> पाएं",
         "m_share.sh_refer_code": "तुम्हारा कोड",
         "m_share.sh_btc_copy": "प्रतिलिपि",
         "m_share.sh_invited_friends": "मित्रों को आमंत्रित किया",
