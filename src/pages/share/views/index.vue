@@ -12,7 +12,7 @@
             <h1
                 class="title"
                 :class="{fadeIn:fadeIn}"
-                v-html="_('m_share.sh_bigTitle', this.inviteCodeNum)"
+                v-html="_('m_share.sh_bigTitle', formatMoney(this.inviteCodeNum))"
             >
                 <!-- <br>Both Get
         <i>5,000</i> -->
@@ -113,14 +113,10 @@
                 </div>
             </div>
         </transition>
-
-        <Toast v-if="toast" :message="toastMsg"></Toast>
-
     </div>
 </template>
 
 <script>
-import Toast from "@components/Toast.vue"
 import {
     isIOS,
     appID,
@@ -133,10 +129,10 @@ import {
     calSecond
 } from "@common/util"
 import {
-    setTimeout
+    setTimeout, clearInterval, setInterval
 } from "timers"
 import {
-    log
+    log, isNull
 } from "util"
 
 export default {
@@ -159,8 +155,7 @@ export default {
             expireTime: 0,
             beginTime: 0,
             endTime: 0,
-            toast: false,
-            toastMsg: "Toast"
+            expireTimerInter: null,
         }
     },
     watch: {
@@ -280,7 +275,7 @@ export default {
             }
         },
         getInviteInfo () {
-            this.$post("/invite/info")
+            this.$get("/invite/info")
                 .then(res => {
                     if (res && res.status === "100") {
                         let resData = res.data
@@ -291,6 +286,11 @@ export default {
                                 this.inviteCodeNum = resData.config.prize.inviter
                             }
                             this.expireTime = resData.config.prize.expire
+                            if(parseFloat(this.expireTime) <= 0 ){
+                                // 过期隐藏入口
+                                this.invitemsg.used_code = '1'
+                            }
+                            this.startExpireTime(this.expireTime)
                         }
                         this.beginTime = resData.config.begin_time
                         this.endTime = resData.config.end_time
@@ -302,10 +302,22 @@ export default {
                 .catch(e => {
                     console.log("error invite info")
                 })
+        },
+        startExpireTime(time){
+            time = Number(time)
+            if(isNaN(time)) return false
+            clearInterval(this.expireTimerInter)
+            this.expireTimerInter = setInterval(()=>{
+                this.expireTime = this.expireTime - 30
+                if(this.expireTime <= 0 ){
+                    clearInterval(this.expireTimerInter)
+                    this.invitemsg.used_code = '1'
+                }
+            },30000)
+
         }
     },
     components: {
-        Toast
     },
     created () {
         this.getInviteInfo()

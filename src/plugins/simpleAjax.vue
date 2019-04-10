@@ -1,12 +1,11 @@
 <script>
 //  simple ajax   return $http  $post $get  使用
-// eg 1、 let bb = await this.$get('http://api.coinslot.com/home/info', data)
-// eg 2、 let cc = await this.$get('http://api.coinslot.com/home/info?platform=pc&src=pc&lotid=1&timezone=8)
 
 const MyPlugin = {
 }
 let BASEURL = ""
 if (process.env.NODE_ENV === "production") {
+
     BASEURL = ""
 } else if (process.env.NODE_ENV === "test") {
     BASEURL = ""
