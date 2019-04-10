@@ -8,20 +8,20 @@
 </template>
 
 <script>
-    export default {
-        props: {
+export default {
+    props: {
     },
-        data () {
-            return {
-            }
+    data () {
+        return {
+        }
     },
-        methods: {
+    methods: {
     },
-        computed: {
+    computed: {
     },
-        components: {
+    components: {
     }
-    }
+}
 </script>
 
 <style scoped lang="scss">

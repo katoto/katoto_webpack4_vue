@@ -11,6 +11,15 @@ export const isIOS = (function () {
 })()
 export const isMobile = /applewebkit.*mobile.*/.test(window.navigator.userAgent.toLowerCase())
 
+export function calSecond (second = 100) {
+    second = Number(second)
+    if (isNaN(second)) {return false}
+    let daysRound = Math.floor(second / 60 / 60 /24)
+    let hourRound = Math.floor( second/60/60 - (24*daysRound) )
+    let minutesRound = Math.floor( second/60 - (24*60*daysRound) -(60 * hourRound) )
+    return `${daysRound} d ${hourRound} h ${minutesRound} m`
+}
+
 // 原生交互
 export function cbetLocal (param) {
     // 绑定APP事件则调用APP函数  响应IOS事件
@@ -53,74 +62,10 @@ export function isValidEmail (value) {
     return /^[\w\.\-]*\w@[\w\.\-]+\.[\w\.\-]+$/.test(value)
 }
 
-//  <action> eventName是在 Google Analytics（分析）事件报告中显示为事件操作的字符串。 <category> eventCategory 是显示为事件类别的字符串。 <label> eventLabel 是显示为事件标签的字符串。
-export function viewEvent (eventName, eventCategory, eventLabel) {
-    let eventPage = function () {
-        try {
-            window.gtag("event", eventName, {
-                "event_category": eventCategory,
-                "event_label": eventLabel,
-                "value": 1
-            })
-        } catch (e) {
-            setTimeout(() => {
-                eventPage()
-            }, 5000)
-        }
-    }
-    eventPage()
-}
-
 export function wait (time) {
     return new Promise((resolve) => {
         setTimeout(() => resolve(true), time)
     })
-}
-
-/*
- *   formateMatchTime  比赛列表日期  星期是不变的
- * */
-export function formateMatchTime (time, language = "en", format = "enWeek　　enMon. dd") {
-    let weekArr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    let monArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"] // 1-12
-    if (isNaN(time)) {return false}
-    let t = new Date(+time * 1000)
-    let tf = function (i) {
-        return (i < 10 ? "0" : "") + i
-    }
-    if (language !== "en") {
-        return formatTime(time, "MM月dd日 week")
-    }
-    let getenWeek = function (day) {
-        return weekArr[day]
-    }
-    let getenMon = function (day) {
-        return monArr[day]
-    }
-    return format.replace(/MM|dd|mm|enWeek|enMon/g, function (a) {
-        switch (a) {
-        case "MM":
-            return tf(t.getMonth() + 1)
-        case "mm":
-            return tf(t.getMinutes())
-        case "dd":
-            return tf(t.getDate())
-        case "enWeek":
-            return getenWeek(t.getDay())
-        case "enMon":
-            return getenMon(t.getMonth())
-        }
-    })
-}
-
-export function formatUSTime (time) {
-    let getUSTIme = date => {
-        var monthArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Spt", "Oct", "Nov", "Dec"]
-        return `${monthArr[date.getMonth()]}, ${date.getDate()} ${date.getFullYear()}`
-    }
-    let startDate = new Date()
-    startDate.setTime(Number(time) * 1000)
-    return getUSTIme(startDate)
 }
 
 export function formatIndiaTime (time, language="en") {

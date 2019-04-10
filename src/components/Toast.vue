@@ -1,28 +1,36 @@
 <template>
-  <!-- toast -->
-  <transition name="toast">
-    <div class="toast">
-      <div class="toast_main">toast</div>
-    </div>
-  </transition>
+    <!-- toast -->
+    <transition name="toast">
+        <div class="toast">
+            <div class="toast_main">
+                {{ message }}
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
- export default {
-     data () {
-         return {
+export default {
+    data () {
+        return {
+        }
+    },
+    props: {
+        message:{
+            type:String,
+            default: "Toast"
+        }
+    },
+    components: {
 
-         }
-     },
-     components: {
-
-     },
-     computed: {
-     },
-     methods: {
-     },
-     mounted () {}
- }
+    },
+    computed: {
+    },
+    methods: {
+    },
+    mounted () {
+    }
+}
 </script>
 
 <style lang="less" scoped type="text/less">

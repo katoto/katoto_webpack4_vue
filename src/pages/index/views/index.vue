@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <div class="head">
-      <img src="../img/contenthead.png">
-      <div class="btn">
-        <a
-          :href="contHref"
-          target="_blank"
-        ></a>
-      </div>
+    <div>
+        <div class="head">
+            <img src="../img/contenthead.png">
+            <div class="btn">
+                <a
+                    :href="contHref"
+                    target="_blank"
+                ></a>
+            </div>
+        </div>
+        <div class="content">
+            <img :src="contentSrc">
+        </div>
     </div>
-    <div class="content">
-      <img :src="contentSrc">
-    </div>
-  </div>
 </template>
 
 <script>

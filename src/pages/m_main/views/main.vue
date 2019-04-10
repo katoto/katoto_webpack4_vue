@@ -1,22 +1,22 @@
 <template>
-  <div class="pd-10 main-page">
-    <h3><i class="primay-color my-icon-success"></i> Home Page</h3>
-    <header>Ajax Result: {{data}}</header>
-    <hr>
-    <button @click="getAndGo">stage1</button>
-    <button @click="getAndGo2">stage2</button>
-    <button @click="getAndGo3">stage3</button>
+    <div class="pd-10 main-page">
+        <h3><i class="primay-color my-icon-success"></i> Home Page</h3>
+        <header>Ajax Result: {{data}}</header>
+        <hr>
+        <button @click="getAndGo">stage1</button>
+        <button @click="getAndGo2">stage2</button>
+        <button @click="getAndGo3">stage3</button>
 
-    <a
-      href="./"
-      class="right"
-    >
-      <button>Logout</button>
-    </a>
+        <a
+            href="./"
+            class="right"
+        >
+            <button>Logout</button>
+        </a>
 
-    <hr>
-    <router-view></router-view>
-  </div>
+        <hr>
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>

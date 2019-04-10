@@ -7,23 +7,23 @@
 </template>
 
 <script>
-    // import  from '';
-    export default {
-        created () {
-        },
-        props: {
+// import  from '';
+export default {
+    created () {
     },
-        data () {
-            return {
-            }
+    props: {
     },
-        methods: {
-        },
-        computed: {
+    data () {
+        return {
+        }
     },
-        components: {
+    methods: {
+    },
+    computed: {
+    },
+    components: {
     }
-    }
+}
 </script>
 
 <style scoped lang="scss">

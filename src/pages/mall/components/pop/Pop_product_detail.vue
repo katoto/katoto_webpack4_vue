@@ -5,7 +5,7 @@
         <p class="product_name">100 Amazon</p>
         <p class="product_use">1000 gift card for Amazon Mail</p>
         <p class="product_nedd">
-          <i class="icon_gold"></i>10
+            <i class="icon_gold"></i>10
         </p>
     </Pop>
 
