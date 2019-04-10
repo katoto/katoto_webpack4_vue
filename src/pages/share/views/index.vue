@@ -311,10 +311,6 @@ export default {
         this.getInviteInfo()
     },
     async mounted () {
-        this.$toast({
-            content: 'qw12321er',
-            duration: 3000
-        })
         console.log(formateBalance(100000))
         // April 1, 2019
         // July 1, 2019

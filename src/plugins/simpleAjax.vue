@@ -28,7 +28,7 @@ MyPlugin.install = function (Vue, config={
         return dataStr && dataStr.slice(0, -1)
     }
     let commonHandler = res => {
-        res.status !== "100" && alert(res.message)
+        res.status !== "100" && Vue.prototype.$toast({content: res.message})
         return res.status !== "100" ? Promise.reject(res) : res
     }
     let commonParams = config.commonParams

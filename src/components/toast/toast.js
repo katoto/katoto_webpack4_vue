@@ -8,7 +8,7 @@ function getMessageInstance () {
 }
 
 function notice ({
-    duration = 1500, content = ""
+    duration = 2000, content = ""
 }) {
 
     let instance = getMessageInstance()
