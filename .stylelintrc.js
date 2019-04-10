@@ -1,5 +1,5 @@
 module.exports = {
     rules: {
-        indentation: 4
+        indentation: 2
     }
 }
