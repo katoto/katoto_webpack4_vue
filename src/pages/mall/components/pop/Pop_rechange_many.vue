@@ -76,8 +76,6 @@ export default {
     },
     components:{
         Pop
-    },
-    mounted () {
     }
 }
 </script>
