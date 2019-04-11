@@ -1,7 +1,7 @@
 export default {
-    data () {
+    data() {
         return {
-            pop:{
+            pop: {
                 showRecordList: false,
                 showRechangeMany: false,
                 showRuleHelp: false,
@@ -12,22 +12,53 @@ export default {
                 showCommon: false,
                 showReal2card: false
             },
-            covert_message: null
-        }
+            covert_message: {
+                goodsname: "",
+                imgurl: "",
+                goodstype: "",
+                goodsdesc: "",
+                goodsid: "",
+                cards: [
+                    {
+                        cardno: "",
+                        goodsid: "",
+                        password: ""
+                    }
+                ]
+            }
+        };
     },
     methods: {
-        setPopStore (func = "setRecordList", data = false) {
+        setPopStore(func = "setRecordList", data = false) {
             switch (func) {
-            case "setRecordList": this.pop.showRecordList = data; break
-            case "setRechangeMany": this.pop.showRechangeMany = data; break
-            case "setRuleHelp": this.pop.showRuleHelp = data; break
-            case "setExchangeTips": this.pop.showExchangeTips = data; break
-            case "setProductDetail": this.pop.showProductDetail = data; break
-            case "setExchangeVirtual": this.pop.showExchangeVirtual = data; break
-            case "setExchangeReal": this.pop.showExchangeReal = data; break
-            case "setCommon": this.pop.showCommon = data; break
-            case "setReal2card": this.pop.showReal2card = data; break
+                case "setRecordList":
+                    this.pop.showRecordList = data;
+                    break;
+                case "setRechangeMany":
+                    this.pop.showRechangeMany = data;
+                    break;
+                case "setRuleHelp":
+                    this.pop.showRuleHelp = data;
+                    break;
+                case "setExchangeTips":
+                    this.pop.showExchangeTips = data;
+                    break;
+                case "setProductDetail":
+                    this.pop.showProductDetail = data;
+                    break;
+                case "setExchangeVirtual":
+                    this.pop.showExchangeVirtual = data;
+                    break;
+                case "setExchangeReal":
+                    this.pop.showExchangeReal = data;
+                    break;
+                case "setCommon":
+                    this.pop.showCommon = data;
+                    break;
+                case "setReal2card":
+                    this.pop.showReal2card = data;
+                    break;
             }
         }
     }
-}
+};
