@@ -1,8 +1,8 @@
 <template>
   <Pop class="pop_list_redemption_record" :show.sync="show">
     <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
-    <div class="redemption_record">
-      <template v-if="1">
+    <div class="redemption_record" id="redemption_record">
+      <template v-if="recordList&&recordList.length>0">
         <ul>
           <!-- <li>
             <div class="record_img">
@@ -32,22 +32,30 @@
               <div class="record_view">
                 <p>
                   <span>{{_('m_payment.card_no')}}：</span>
-                  <i>1325144654685asdas</i>
+                  <i>{{item.cardno}}</i>
                 </p>
                 <p>
                   <span>{{_('m_payment.password')}}：</span>
-                  <i>1325144654asdasdasd</i>
+                  <i>{{item.password}}</i>
                 </p>
               </div>
-              <span class="record_time">2018.08.10 18:52:32</span>
+              <span class="record_time">{{item.crtime}}</span>
             </div>
           </li>
         </ul>
+        <div class="loading" id="loader">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </template>
-      <p class="nomsg" v-else>no data</p>
+      <div class="pop_record_nomsg" v-else>No data yet</div>
     </div>
   </Pop>
 </template>
+
 <script>
 import Pop from "./Pop.vue"
 export default {
@@ -87,12 +95,15 @@ export default {
         getRecordList () {
             this.$post("/shops/goods/exchange/record/list",{
                 pageno: "1",
-                pagesize: "12"
+                pagesize: "4"
             }).then(res => {
-                this.recordList = res.data
-                // this.allnum = res.data.allnum
+                this.recordList = res.data.list
+                this.allnum = res.data.allnum
             })
         }
+    },
+    mounted () {
+
     }
 }
 </script>

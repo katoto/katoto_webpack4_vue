@@ -41,24 +41,24 @@
       </div>
       <div class="mall_main">
         <template v-if="getList().length>0">
-            <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
-              <li :class="{unlock: item[0].islock === '1'}">
+          <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
+            <li :class="{unlock: item[0].islock === '1'}">
+              <div class="reward_box">
+                <img :src="item[0].imgurl" alt>
+                <p class="reward_name">{{item[0].name}}</p>
+              </div>
+              <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
+            </li>
+            <li :class="{unlock: item[1] && item[1].islock === '1'}">
+              <template v-if="item[1]">
                 <div class="reward_box">
-                  <img :src="item[0].imgurl" alt>
-                  <p class="reward_name">{{item[0].name}}</p>
+                  <img :src="item[1].imgurl" alt>
+                  <p class="reward_name">{{item[1].name}}</p>
                 </div>
-                <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
-              </li>
-              <li :class="{unlock: item[1] && item[1].islock === '1'}">
-                <template v-if="item[1]">
-                  <div class="reward_box">
-                    <img :src="item[1].imgurl" alt>
-                    <p class="reward_name">{{item[1].name}}</p>
-                  </div>
-                  <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
-                </template>
-              </li>
-            </ul>
+                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
+              </template>
+            </li>
+          </ul>
         </template>
         <p class="nomsg" v-else>no data</p>
       </div>
@@ -753,7 +753,7 @@ export default {
   margin-top: 40/75rem;
   text-align: center;
   font-size: 30/75rem;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.6);
   white-space: nowrap;
 }
 .pop_list_redemption_record {
@@ -763,6 +763,7 @@ export default {
     height: 1020/75rem;
   }
   .redemption_record {
+    position: relative;
     flex: 1;
     margin: 18/75rem 0;
     overflow: auto;
@@ -823,6 +824,20 @@ export default {
   }
   .record_time {
     line-height: 40/75rem;
+  }
+  .pop_record_nomsg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-top: 200/75rem;
+    width: 100%;
+    background: url(../img/pop_record_nodata.png) no-repeat center top;
+    background-size: 265/75rem;
+    text-align: center;
+    font-size: 30/75rem;
+    color: rgba(255, 255, 255, 0.6);
+    white-space: nowrap;
   }
 }
 .pop_rule {
