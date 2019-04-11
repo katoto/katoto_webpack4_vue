@@ -113,7 +113,8 @@ export default {
             })
         },
         ShowPopReal2Card(e){
-            this.app.record_currlist = e
+            this.app.covert_message = e
+            console.log(e);
             this.app.setPopStore("setReal2card", true)
         }
     }

@@ -12,7 +12,7 @@ export default {
                 showCommon: false,
                 showReal2card: false
             },
-            record_currlist: null
+            covert_message: null
         }
     },
     methods: {

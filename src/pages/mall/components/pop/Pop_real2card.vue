@@ -61,10 +61,9 @@ export default {
                 }
             }
         },
-        list:{
+        message:{
             get:function(){
-                console.log(this.app.record_currlist)
-                return this.app.record_currlist
+                return this.app.covert_message
             }
         }
     },
