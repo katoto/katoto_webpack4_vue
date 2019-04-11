@@ -101,16 +101,16 @@
             </transition>
         </div>
         <!-- 收获金币 -->
-        <transition name="pop_animate">
-            <div class="pop_congratulation" :class="{hide:!show_pop_congratulation}">
+          <div class="pop_congratulation" :class="{hide:!show_pop_congratulation}">
+            <transition name="pop_animate">
                 <div class="pop_con_main" v-if="show_pop_congratulation">
                     <div class="c_title" data-msg="Congratulations"></div>
                     <p class="c_count">+{{ winInviteNum }}</p>
                     <p class="c_msg">{{ _('m_share.sh_win_inviteNum', winInviteNum) }}</p>
                     <a href="javascript:;" class="btn_default" @click="show_pop_congratulation=false">OK</a>
                 </div>
-            </div>
-        </transition>
+            </transition>
+          </div>
     </div>
 </template>
 
@@ -355,10 +355,11 @@ export default {
         // todo
         // this.fadeIn = true
         // ,'nobase.bg_particle1.png','nobase.bg_particle2.png','nobase.bg_particle3.png'
-        preloadImage(["nobase.bg.45950.jpg","nobase.bg_light.76a39.png"], () => {
-            console.log("img is ready")
-            this.fadeIn = true
-        }, "./img/")
+        // preloadImage(["nobase.bg.45950.jpg","nobase.bg_light.76a39.png"], () => {
+        //     console.log("img is ready")
+        //     this.fadeIn = true
+        // }, "./img/")
+        this.fadeIn = true
         this.$nextTick(() => {
             this.popInviteFrient(true)
         })
