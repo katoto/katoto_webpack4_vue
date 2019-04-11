@@ -33,7 +33,7 @@ window._ = function (string) {
 }
 function _format () {
     if (arguments.length > 1) {
-        let thisString = this
+        let thisString = this || ""
         for (let index = 1; index < arguments.length; index++) {
             thisString = thisString.replace(new RegExp(`\\{${index - 1}\\}`, "g"), arguments[index])
         }
