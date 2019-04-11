@@ -146,7 +146,7 @@ body {
         margin: 150/75rem auto;
         width: 733/75rem;
         height: 262/75rem;
-        padding-bottom: 200/75rem;
+        // padding-bottom: 200/75rem;
       }
     }
   }
