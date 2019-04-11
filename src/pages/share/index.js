@@ -19,7 +19,7 @@ require("@/styles/lib-public.less")
 
 // test  注入的是www.madcrickets.com/
 // cookie.set("appck", encodeURIComponent("MTAwMTU1MjNiNGU5M2QyNTY5MzNlNTMyMTUxYWU5ZDViZTBhNDUyNA==") )
-// cookie.set("language", "en" )
+cookie.set("language", "hi" )
 
 let appLanguage = cookie.get("language") || "en"
 if (appLanguage === "en" || appLanguage === "english") {

@@ -64,7 +64,7 @@ export default {
         "m_payment.all": "All"
     },
     india: {
-        "m_share.sh_win_inviteNum": "Both you and your friend received {0} coins",
+        "m_share.sh_win_inviteNum": "आपको और आपके मित्र दोनों को {0} सिक्के मिले",
         "m_share.sh_validday_time": "dd दिन, HH घंटे, mm मिनट",
         "m_share.sh_bigTitle": "मित्रों को आमंत्रित करेंदोनों <i data-msg='{0}'>{0}</i> पाएं",
         "m_share.sh_refer_code": "तुम्हारा कोड",
