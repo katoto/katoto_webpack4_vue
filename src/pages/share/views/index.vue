@@ -52,7 +52,7 @@
             </div>
             <div class="tips" :class="{fadeIn:fadeIn}">{{ _('m_share.sh_invitemsg') }}</div>
             <div class="page_share_bottom" :class="{fadeIn:fadeIn}">
-                <div class="share_byfriend" v-if="invitemsg && invitemsg.used_code === '0'">
+                <div class="share_byfriend" v-if="invitemsg && invitemsg.used_code === '0'||1">
                     <p class="msg">{{ _('m_share.sh_invited_byfriends') }}</p>
                     <div class="input_box">
                         <input
@@ -628,6 +628,7 @@ export default {
     text-align: center;
     font-size: 30/75rem;
     color: #fff6c0;
+    -webkit-user-select:text !important;
     &::placeholder {
       color: #c38d5d;
     }

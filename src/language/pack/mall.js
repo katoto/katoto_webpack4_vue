@@ -23,7 +23,7 @@ export default {
         "m_payment.address1":"Address",
         "m_payment.name1":"Name",
         "m_payment.code":"Postcode",
-        "m_payment.address":"Shipping address (accurate to street and number)",
+        "m_payment.address":"Shipping address<i class='sm_add'>(accurate to street and number)</i>",
         "m_payment.phone":"Phone number",
         "m_payment.name":"Your name",
         "m_payment.rule_tip":"Remind me next century",
