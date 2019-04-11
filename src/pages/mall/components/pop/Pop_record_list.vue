@@ -43,8 +43,8 @@
                 </template>
                 <template v-else>
                   <p>
-                    <span>logistics_company：</span>
-                    <i>{{item.cardno}}</i>
+                    <span>订单状态：</span>
+                    <i>{{item.orderstatus}}</i>
                   </p>
                   <p>
                     <span>快递单号：</span>
