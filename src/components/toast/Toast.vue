@@ -13,9 +13,9 @@
 </template>
 
 <script>
-let seed = 0;
-function getuid(){
-    return 'toast_' + (seed ++)
+let seed = 0
+function getuid () {
+    return "toast_" + (seed ++)
 }
 
 export default {
@@ -24,16 +24,12 @@ export default {
             messageArr: []
         }
     },
-    components: {
-    },
-    computed: {
-    },
     methods: {
-        addNotice(notice){
+        addNotice (notice) {
             const name = getuid()
-            if(!notice.duration){
+            if (!notice.duration) {
                 notice = Object.assign({
-                    duration: 3000
+                    duration: 30000
                 }, notice)
             }
             notice = Object.assign({
@@ -41,16 +37,16 @@ export default {
             }, notice)
             let duration = notice.duration
             this.messageArr.push(notice)
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.remove(name)
             }, parseFloat(duration))
         },
-        remove(name){
+        remove (name) {
             const messageArr = this.messageArr
             for (let i = 0; i < messageArr.length; i++) {
                 if (messageArr[i].name === name) {
-                    this.messageArr.splice(i, 1);
-                    break;
+                    this.messageArr.splice(i, 1)
+                    break
                 }
             }
         }

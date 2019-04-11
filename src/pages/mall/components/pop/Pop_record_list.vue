@@ -42,9 +42,7 @@
                     </div>
                 </li>
             </ul>
-        <!--todo empty -->
         </div>
-        <p>11111123{{ test }}12332</p>
     </Pop>
 
 </template>
@@ -54,7 +52,8 @@ export default {
     inject: ["app"],
     data () {
         return {
-            recordList: null
+            recordList: null,
+            allnum: 0
         }
     },
     computed:{
@@ -77,27 +76,21 @@ export default {
     components:{
         Pop
     },
-    created () {
-        this.getRecordList()
-    },
-    methods:{
-        // todo
-        getRecordList () {
-            this.$post("/shops/goods/exchange/record/list",{
-                ck: "123",
-                platform: "1",
-                version: "1",
-                pageno: "1",
-                pagesize: "12"
-            }).then(() => {
-
-            }).catch(e => {
-                console.log(e)
-            })
+    watch: {
+        show (val) {
+            val && this.getRecordList()
         }
     },
-    mounted () {
-
+    methods: {
+        getRecordList () {
+            this.$post("/shops/goods/exchange/record/list",{
+                pageno: "1",
+                pagesize: "12"
+            }).then(res => {
+                this.recordList = res.data.list
+                this.allnum = res.data.allnum
+            })
+        }
     }
 }
 </script>
