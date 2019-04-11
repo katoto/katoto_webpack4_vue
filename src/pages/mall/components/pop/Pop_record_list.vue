@@ -1,7 +1,7 @@
 <template>
   <Pop class="pop_list_redemption_record" :show.sync="show">
     <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
-    <div class="redemption_record" id="redemption_record">
+    <div class="redemption_record">
       <template v-if="recordList&&recordList.length>0">
         <ul>
           <!-- <li>
@@ -24,38 +24,43 @@
             </div>
           </li>-->
           <li v-for="item in recordList" :key="item.id">
+            <!-- todo 只做了虚拟卡 实物等ui -->
             <div class="record_img">
               <img :src="item.imgurl" :alt="item.goodsdesc">
               <p class="record_name">{{item.name}}</p>
             </div>
             <div class="record_msg">
               <div class="record_view">
-                <p>
-                  <span>{{_('m_payment.card_no')}}：</span>
-                  <i>{{item.cardno}}</i>
-                </p>
-                <p>
-                  <span>{{_('m_payment.password')}}：</span>
-                  <i>{{item.password}}</i>
-                </p>
+                <template v-if="item.goodstype">
+                  <p>
+                    <span>{{_('m_payment.card_no')}}：</span>
+                    <i>{{item.cardno}}</i>
+                  </p>
+                  <p>
+                    <span>{{_('m_payment.password')}}：</span>
+                    <i>{{item.password}}</i>
+                  </p>
+                </template>
+                <template v-else>
+                  <p>
+                    <span>logistics_company：</span>
+                    <i>{{item.cardno}}</i>
+                  </p>
+                  <p>
+                    <span>快递单号：</span>
+                    <i>{{item.sid}}</i>
+                  </p>
+                </template>
               </div>
               <span class="record_time">{{item.crtime}}</span>
             </div>
           </li>
         </ul>
-        <div class="loading" id="loader">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
       </template>
       <div class="pop_record_nomsg" v-else>No data yet</div>
     </div>
   </Pop>
 </template>
-
 <script>
 import Pop from "./Pop.vue"
 export default {
@@ -95,15 +100,12 @@ export default {
         getRecordList () {
             this.$post("/shops/goods/exchange/record/list",{
                 pageno: "1",
-                pagesize: "4"
+                pagesize: "999"
             }).then(res => {
                 this.recordList = res.data.list
                 this.allnum = res.data.allnum
             })
         }
-    },
-    mounted () {
-
     }
 }
 </script>

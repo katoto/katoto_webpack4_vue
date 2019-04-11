@@ -60,7 +60,7 @@ module.exports = {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
-                        name: utils.assetsPath('img/[name].[contenthash:5].[ext]')
+                        name: utils.assetsPath('img/[name].[ext]')
                     }
                 },{
                     loader: 'image-webpack-loader',
