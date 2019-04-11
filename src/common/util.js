@@ -140,6 +140,7 @@ export function formatMoney (s) {
 
 export function formateBalance (val = 0) {
     val = Number(val)
+    if (isNaN(val)) {return false}
     if (val >= 1000000) {
         return `${(val / 1000000).toFixed(2)}m`
     } else if (val > 1000) {

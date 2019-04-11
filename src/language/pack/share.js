@@ -31,7 +31,7 @@ export default {
         "m_share.sh_btn_confirm": "Confirm",
         "m_share.sh_no_list": "नहीं।",
         "m_share.sh_name": "नाम",
-        "m_share.sh_invite_copy_msg": "MadSports की जैसा एक मजेदार खेल अबतक  नहीं देखा! रेफरल कोड: **** के साथ मेरे निमंत्रण को स्वीकार करें, आपको 5,000 मुफ्त सिक्के मिलेगें ! यहां डाउनलोड करें www.madcrickets.com",
+        "m_share.sh_invite_copy_msg": "MadSports की जैसा एक मजेदार खेल अबतक  नहीं देखा! रेफरल कोड: {0} के साथ मेरे निमंत्रण को स्वीकार करें, आपको {1} मुफ्त सिक्के मिलेगें ! यहां डाउनलोड करें www.madcrickets.com",
         "m_share.sh_invite_err": "रेफ़रल कोड की समय सीमा समाप्त",
         "m_share.sh_invite_nodata": "no data",
         "m_share.sh_pop_invited_friends": "मित्रों को आमंत्रित किया",

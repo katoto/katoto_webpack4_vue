@@ -20,7 +20,7 @@
                 <div class="total_person" @click="popInviteFrient()">
                     <span v-if="invitemsg">{{ invitemsg.invited_num }}</span>
                 </div>
-                <div class="total_money">{{ invitemsg.have_earn }}</div>
+                <div class="total_money">{{ formateBalance(invitemsg.have_earn) }}</div>
             </div>
             <div class="btn_box">
                 <a
