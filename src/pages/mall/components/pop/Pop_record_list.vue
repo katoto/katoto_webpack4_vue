@@ -92,7 +92,7 @@ export default {
         },
         test () {
             return this.app.acitveClass
-        }
+        },
     },
     components:{
         Pop
@@ -113,6 +113,7 @@ export default {
             })
         },
         ShowPopReal2Card(e){
+            this.app.record_currlist = e
             this.app.setPopStore("setReal2card", true)
         }
     }

@@ -12,7 +12,7 @@
                 <li class="pop_rechange_many_list">
                     <p>
                         <span class="card_num">{{_('m_payment.card_no')}}:</span>
-                        <i class="card_psw">1256484359765815</i>
+                        <i class="card_psw">12{{ list }}56484359765815</i>
                     </p>
                     <p>
                         <span class="card_num">{{_('m_payment.password')}}:</span>
@@ -32,11 +32,11 @@
                 <li class="pop_rechange_many_list">
                     <p>
                         <span class="card_num">{{_('m_payment.card_no')}}:</span>
-                        <i class="card_psw">1256484359765815</i>
+                        <i class="card_psw">{{ list }}12{{ list }}56484359765815</i>
                     </p>
                     <p>
                         <span class="card_num">{{_('m_payment.password')}}:</span>
-                        <i class="card_psw">654235654235654235654235654235654235</i>
+                        <i class="card_psw">65423565423565{}4235654235654235654235</i>
                     </p>
                 </li>
             </ul>
@@ -60,6 +60,11 @@ export default {
                 } else {
                     this.app.setPopStore("setReal2card", false)
                 }
+            }
+        },
+        list:{
+            get:function(){
+                return this.app.record_currlist
             }
         }
     },

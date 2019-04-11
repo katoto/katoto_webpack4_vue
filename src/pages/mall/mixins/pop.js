@@ -11,7 +11,8 @@ export default {
                 showExchangeReal: false,
                 showCommon: false,
                 showReal2card: false
-            }
+            },
+            record_currlist: null
         }
     },
     methods: {
