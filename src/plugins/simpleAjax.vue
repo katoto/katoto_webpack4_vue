@@ -5,21 +5,12 @@ const MyPlugin = {
 }
 let BASEURL = ""
 if (process.env.NODE_ENV === "production") {
-<<<<<<< HEAD
     BASEURL = window.location.protocol + `//149.129.138.180/api`
-=======
-    BASEURL = window.location.protocol + "//149.129.138.180"
->>>>>>> 1b2a5e38b5fc9fd35db74db1a585c4345a99893d
 } else if (process.env.NODE_ENV === "test") {
     BASEURL = ""
 } else if (process.env.NODE_ENV === "development") {
     // BASEURL = "http://10.0.1.41:8001"
-<<<<<<< HEAD
     BASEURL = "http://149.129.138.180/api"  // xiaob
-=======
-    BASEURL = "http://10.0.0.171:8001" // chengge
-    // BASEURL = "http://149.129.138.180"  // xiaob
->>>>>>> 1b2a5e38b5fc9fd35db74db1a585c4345a99893d
 }
 
 MyPlugin.install = function (Vue, config={
