@@ -9,7 +9,8 @@ export default {
                 showProductDetail: false,
                 showExchangeVirtual: false,
                 showExchangeReal: false,
-                showCommon: false
+                showCommon: false,
+                showReal2card: false
             }
         }
     },
@@ -24,6 +25,7 @@ export default {
             case "setExchangeVirtual": this.pop.showExchangeVirtual = data; break
             case "setExchangeReal": this.pop.showExchangeReal = data; break
             case "setCommon": this.pop.showCommon = data; break
+            case "setReal2card": this.pop.showReal2card = data; break
             }
         }
     }

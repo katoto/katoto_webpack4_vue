@@ -2,6 +2,7 @@
     <div class="pop-list">
         <RecordList></RecordList>
         <RechangeMany></RechangeMany>
+        <Real2card></Real2card>
         <RuleHelp></RuleHelp>
         <ExchangeTips></ExchangeTips>
         <ProductDetail></ProductDetail>
@@ -13,6 +14,7 @@
 <script>
 import RecordList from "./pop/Pop_record_list.vue"
 import RechangeMany from "./pop/Pop_rechange_many.vue"
+import Real2card from "./pop/Pop_real2card.vue"
 import RuleHelp from "./pop/Pop_rule_help.vue"
 import ExchangeTips from "./pop/Pop_exchange_tips.vue"
 import ProductDetail from "./pop/Pop_product_detail.vue"
@@ -23,6 +25,7 @@ export default {
     components:{
         RecordList,
         RechangeMany,
+        Real2card,
         RuleHelp,
         ExchangeTips,
         ProductDetail,
@@ -102,6 +105,15 @@ export default {
     }
     .record_time {
       line-height: 40/75rem;
+    }
+
+    .record_view{
+        flex: 1;
+    }
+    .goods_unusual{
+        display: flex;
+        align-items: center;
+        height: 100%;
     }
   }
   &.pop_rule {

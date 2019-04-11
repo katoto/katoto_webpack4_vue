@@ -30,8 +30,8 @@
             </div>
             <div class="record_msg">
               <div class="record_view">
-                  <!-- goodstype  1虚拟卡 2实物 -->
-                <template v-if="item.goodstype==1">
+                  <!-- goodstype  1虚拟卡 -->
+                <template v-if="item.goodstype=='1'">
                   <p>
                     <span>{{_('m_payment.card_no')}}：</span>
                     <i>{{item.cardno}}</i>
@@ -41,6 +41,11 @@
                     <i>{{item.password}}</i>
                   </p>
                 </template>
+                <!--  实物转换成虚拟卡  -->
+                <div class="goods_unusual" v-else-if="item.goodstype=='2'&&item.orderstatus=='7'" @click="ShowPopReal2Card(item)">
+                    <p>因邮寄问题，已更换为礼品卡奖励,点击该条兑换信息查看卡号</p>
+                </div>
+                <!-- 实物正常派送中  -->
                 <template v-else>
                   <p>
                     <span>订单状态：</span>
@@ -51,6 +56,7 @@
                     <i>{{item.sid}}</i>
                   </p>
                 </template>
+
               </div>
               <span class="record_time">{{item.crtime}}</span>
             </div>
@@ -105,6 +111,9 @@ export default {
                 this.recordList = res.data.list
                 this.allnum = res.data.allnum
             })
+        },
+        ShowPopReal2Card(e){
+            this.app.setPopStore("setReal2card", true)
         }
     }
 }
