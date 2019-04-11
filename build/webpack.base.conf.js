@@ -60,7 +60,7 @@ module.exports = {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
-                        name: utils.assetsPath('img/[name].[contenthash:5].[ext]')
+                        name: utils.assetsPath('img/[name].[ext]')
                     }
                 },{
                     loader: 'image-webpack-loader',
@@ -72,31 +72,13 @@ module.exports = {
                     }
                 }]
             },
-            // {
-            //     test: /\nobase\.(png|jpe?g|gif|svg)?$/,
-            //     use:[{
-            //         loader: 'url-loader',
-            //         options: {
-            //             limit: 10000,
-            //             name: utils.assetsPath('img/[name].[contenthash:5].[ext]')
-            //         }
-            //     },{
-            //         loader: 'image-webpack-loader',
-            //         options: {
-            //             pngquant: {
-            //               quality: "70-80",
-            //               speed: 1
-            //             }
-            //         }
-            //     }]
-            // },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 use: [{
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
-                        name: utils.assetsPath('font/[name].[hash:7].[ext]')
+                        name: utils.assetsPath('font/[name].[ext]')
                     }
                 }]
 

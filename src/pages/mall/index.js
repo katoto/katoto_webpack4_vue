@@ -19,7 +19,7 @@ Vue.use(simpleAjax, {
         platform: "1",
         version: "2",
         channel: "3",
-        ck: "MTAwMTUwMjBhMjJmMzQ1NWNmOWFkM2FlOWY1ZTQ1MDhmYThmMWY1Ng=="
+        ck: "OTk5OTM1NmVkMWUyMjczOTNiMmZkNTNiNzBiZjU1M2RjYzMyMjEw"
         // ck: "MTAwMTUxMDM3ZWFhYjgyNGM1MGM3OWVhYjMzNWM2M2E2MWI1NTlmOA=="
     }
 })

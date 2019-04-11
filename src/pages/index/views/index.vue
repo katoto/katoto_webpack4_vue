@@ -1,23 +1,21 @@
 <template>
-    <div>
-        <div class="head">
-            <img src="../img/contenthead.png">
-            <div class="btn">
-                <a
-                    :href="contHref"
-                    target="_blank"
-                ></a>
-            </div>
-        </div>
-        <div class="content">
-            <img :src="contentSrc">
-        </div>
+  <div>
+    <div class="head">
+      <img src="../img/contenthead.png">
+      <div class="btn">
+        <a href="//play.google.com/store/apps/details?id=com.crazy500.cbet" target="_blank" class="down_and"></a>
+        <a href="https://itunes.apple.com/app/id1453136833" target="_blank" class="down_ios"></a>
+      </div>
     </div>
+    <div class="content">
+      <img :src="contentSrc">
+    </div>
+  </div>
 </template>
 
 <script>
 import {
-    isIOS 
+    isIOS
 } from "@common/util"
 
 export default {
@@ -63,7 +61,38 @@ body .content img {
   width: 1139px;
   height: 1578px;
 }
+.btn {
+    margin: -120px auto;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center
+}
 body .head .btn a {
+    display: block;
+    width: 212px;
+    height: 45px;
+    margin: 0 10px;
+    background-image: url(../img/down.png);
+    position: relative;
+    z-index: 2;
+    transition: all .2s;
+    cursor: pointer;
+}
+
+.down_and {
+    background-position: 0 0
+}
+
+.down_ios {
+    background-position: 0 bottom
+}
+
+body .head .btn a:active,body .head .btn a:hover {
+    -webkit-filter: brightness(.8);
+    filter: brightness(.8)
+}
+/* body .head .btn a {
   margin: -120px auto;
   display: block;
   width: 300px;
@@ -75,42 +104,10 @@ body .head .btn a {
   transition: all 0.2s;
   transform: scale(0.7);
   cursor: pointer;
-}
+} */
 body .head .btn a:active,
 body .head .btn a:hover {
   filter: brightness(0.8);
 }
 
-/*滚动条样式*/
-::-webkit-scrollbar {
-  border-radius: 8px;
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 8px;
-  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(90deg, #efefef 0%, #fff 78%, #efefef 100%);
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(
-    0deg,
-    rgb(227, 182, 143) 0%,
-    rgb(255, 227, 166) 48%,
-    rgb(227, 182, 143) 100%
-  );
-}
-
-::-webkit-scrollbar-thumb:vertical {
-  background: linear-gradient(
-    90deg,
-    rgb(227, 182, 143) 0%,
-    rgb(255, 227, 166) 48%,
-    rgb(227, 182, 143) 100%
-  );
-}
 </style>
