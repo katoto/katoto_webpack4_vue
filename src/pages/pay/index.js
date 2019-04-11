@@ -5,6 +5,7 @@ import {
 
 let params = getURLParams()
 let isProduction = (params.env === "live")
+let isProps = (!!params.propsid)
 let sandboxForm = document.getElementById("sandbox_form")
 let liveForm = document.getElementById("live_form")
 
@@ -22,10 +23,24 @@ function submitForm (data) {
     isProduction ? liveForm.submit() : sandboxForm.submit()
 }
 
+function buyProps () {
+    return axios.post("/shops/props/buy", params)
+}
+
+function buyPrivileges () {
+    return axios.post("/shops/privileges/buy", params)
+}
+
+function deal () {
+    return (isProps ? buyProps() : buyPrivileges())
+        .then(res => {
+            console.log(res)
+            return res
+        })
+}
+
 window.addEventListener("load", () => {
-    axios.post("/getTransaction", {
-        goodid: params.goodid || "123"
-    })
+    deal()
         .then(res => {
             console.log(res)
             submitForm({
