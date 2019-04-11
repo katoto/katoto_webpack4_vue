@@ -48,7 +48,7 @@
 
 <script>
 import {
-    isIOS 
+    isIOS
 } from "@common/util"
 
 export default {
@@ -64,7 +64,7 @@ export default {
         this.$nextTick(() => {
             if (isIOS) {
                 // 待修改
-                this.contHref = "//play.google.com/store/apps/details?id=com.crazy500.cbet"
+                this.contHref = "https://itunes.apple.com/app/id1453136833"
             }
         })
     }
