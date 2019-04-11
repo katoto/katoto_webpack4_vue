@@ -1,6 +1,7 @@
 import axios from "axios"
 import {
-    getURLParams
+    getURLParams,
+    cookie
 } from "@/common/util"
 
 let params = getURLParams()
@@ -24,6 +25,8 @@ function submitForm (data) {
 }
 
 function buyProps () {
+    alert(JSON.stringify(cookie.getAll()))
+    alert(JSON.stringify(params))
     return axios.post("/shops/props/buy", params)
 }
 
