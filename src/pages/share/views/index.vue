@@ -614,8 +614,7 @@ export default {
     font-weight: bold;
   }
   .input_box {
-    // display: flex;
-    display: inline-block;
+    display: flex;
     width: 567/75rem;
     height: 80/75rem;
     overflow: hidden;
