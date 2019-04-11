@@ -47,7 +47,9 @@
 	outline: 0;
 	background: transparent;
 	border: none;
-	outline: none;
+    outline: none;
+    /* 不加这个可能导致ios不能输入 */
+    -webkit-user-select:text !important;
   }
   table {
 	border-collapse: collapse;

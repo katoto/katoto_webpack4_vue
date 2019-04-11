@@ -628,7 +628,6 @@ export default {
     text-align: center;
     font-size: 30/75rem;
     color: #fff6c0;
-    -webkit-user-select:text !important;
     &::placeholder {
       color: #c38d5d;
     }
