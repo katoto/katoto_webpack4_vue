@@ -60,7 +60,7 @@
             </li>
           </ul>
         </template>
-        <p class="nomsg" v-else>no data</p>
+        <div class="nomsg" v-else>No data yet</div>
       </div>
     </div>
 
@@ -825,20 +825,6 @@ export default {
   .record_time {
     line-height: 40/75rem;
   }
-  .pop_record_nomsg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding-top: 200/75rem;
-    width: 100%;
-    background: url(../img/pop_record_nodata.png) no-repeat center top;
-    background-size: 265/75rem;
-    text-align: center;
-    font-size: 30/75rem;
-    color: rgba(255, 255, 255, 0.6);
-    white-space: nowrap;
-  }
 }
 .pop_rule {
   .pop_rule_main {
@@ -1190,5 +1176,19 @@ export default {
     justify-content: center;
     margin: 50/75rem auto 70/75rem;
   }
+}
+.nomsg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-top: 200/75rem;
+  width: 100%;
+  background: url(../img/pop_record_nodata.png) no-repeat center top;
+  background-size: 265/75rem;
+  text-align: center;
+  font-size: 30/75rem;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
 }
 </style>

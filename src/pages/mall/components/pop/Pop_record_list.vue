@@ -24,14 +24,14 @@
             </div>
           </li>-->
           <li v-for="item in recordList" :key="item.id">
-            <!-- todo 只做了虚拟卡 实物等ui -->
             <div class="record_img">
               <img :src="item.imgurl" :alt="item.goodsdesc">
               <p class="record_name">{{item.name}}</p>
             </div>
             <div class="record_msg">
               <div class="record_view">
-                <template v-if="item.goodstype">
+                  <!-- goodstype  1虚拟卡 2实物 -->
+                <template v-if="item.goodstype==1">
                   <p>
                     <span>{{_('m_payment.card_no')}}：</span>
                     <i>{{item.cardno}}</i>
@@ -57,7 +57,7 @@
           </li>
         </ul>
       </template>
-      <div class="pop_record_nomsg" v-else>No data yet</div>
+      <div class="nomsg" v-else>No data yet</div>
     </div>
   </Pop>
 </template>
