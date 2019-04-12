@@ -1,78 +1,78 @@
 <template>
-  <div class="fullscreen page_mall">
-    <div class="bg">
-      <div class="bg_header"></div>
-    </div>
-    <div class="header">
-      <div class="fl">
-        <a href="javascript:;" class="btn btn_back"></a>
-      </div>
-      <div class="fr">
-        <a href="javascript:;" class="my_balance">
-          <span>{{formateBalance(avaliable_total)}}</span>
-        </a>
-        <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
-        <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
-      </div>
-    </div>
-    <!-- todo 提成公共组件轮询新闻 -->
-    <div class="news">
-      <!-- <ul>
+    <div class="fullscreen page_mall">
+        <div class="bg">
+            <div class="bg_header"></div>
+        </div>
+        <div class="header">
+            <div class="fl">
+                <a href="javascript:;" class="btn btn_back"></a>
+            </div>
+            <div class="fr">
+                <a href="javascript:;" class="my_balance" @click="jumpToWithdraw">
+                    <span>{{formateBalance(avaliable_total)}}</span>
+                </a>
+                <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
+                <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
+            </div>
+        </div>
+        <!-- todo 提成公共组件轮询新闻 -->
+        <div class="news">
+            <!-- <ul>
             <li :style="{width:newsWidth}" ref="newsWidth">
                 {{_('m_payment.mall_title')}}
             </li>
       </ul>-->
-      <div class="news_main">
-        <p :style="{width:newsWidth}" ref="newsWidth">{{_('m_payment.mall_title')}}</p>
-      </div>
-    </div>
-    <div class="mall">
-      <div class="mall_tab">
-        <ul>
-          <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
-            <a href="javascript:;">{{_('m_payment.all')}}</a>
-          </li>
-          <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
-            <a href="javascript:;">{{_('m_payment.card')}}</a>
-          </li>
-          <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
-            <a href="javascript:;">{{_('m_payment.electronics')}}</a>
-          </li>
-          <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
-            <a href="javascript:;">{{_('m_payment.other')}}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="mall_main">
-        <template v-if="getList().length>0">
-          <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
-            <li :class="{unlock: item[0].islock === '1'}">
-              <div class="reward_box" @click="showProductDetail(item[0])">
-                <img :src="item[0].imgurl" alt>
-                <p class="reward_name">{{item[0].name}}</p>
-              </div>
-              <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
-            </li>
-            <li :class="{unlock: item[1] && item[1].islock === '1'}">
-              <template v-if="item[1]">
-                <div class="reward_box" @click="showProductDetail(item[1])">
-                  <img :src="item[1].imgurl" alt>
-                  <p class="reward_name">{{item[1].name}}</p>
-                </div>
-                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
-              </template>
-            </li>
-          </ul>
-        </template>
-        <div class="nomsg" v-else>No data yet</div>
-      </div>
-    </div>
+            <div class="news_main">
+                <p :style="{width:newsWidth}" ref="newsWidth">{{_('m_payment.mall_title')}}</p>
+            </div>
+        </div>
+        <div class="mall">
+            <div class="mall_tab">
+                <ul>
+                    <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
+                        <a href="javascript:;">{{_('m_payment.all')}}</a>
+                    </li>
+                    <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
+                        <a href="javascript:;">{{_('m_payment.card')}}</a>
+                    </li>
+                    <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
+                        <a href="javascript:;">{{_('m_payment.electronics')}}</a>
+                    </li>
+                    <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
+                        <a href="javascript:;">{{_('m_payment.other')}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mall_main">
+                <template v-if="getList().length>0">
+                    <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
+                        <li :class="{unlock: item[0].islock === '1'}">
+                            <div class="reward_box" @click="showProductDetail(item[0])">
+                                <img :src="item[0].imgurl" alt>
+                                <p class="reward_name">{{item[0].name}}</p>
+                            </div>
+                            <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
+                        </li>
+                        <li :class="{unlock: item[1] && item[1].islock === '1'}">
+                            <template v-if="item[1]">
+                                <div class="reward_box" @click="showProductDetail(item[1])">
+                                    <img :src="item[1].imgurl" alt>
+                                    <p class="reward_name">{{item[1].name}}</p>
+                                </div>
+                                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
+                            </template>
+                        </li>
+                    </ul>
+                </template>
+                <div class="nomsg" v-else>No data yet</div>
+            </div>
+        </div>
 
-    <!-- 初始化全部的弹窗   -->
-    <popList></popList>
+        <!-- 初始化全部的弹窗   -->
+        <popList></popList>
 
-    <!-- 历史兑换记录 -->
-    <!-- <transition name="pop_animate">
+        <!-- 历史兑换记录 -->
+        <!-- <transition name="pop_animate">
       <div class="pop pop_list_redemption_record" v-if="pop_list_redemption_record">
         <div class="pop_main">
           <a href="javascript:" class="pop_close" @click="pop_list_redemption_record = false"></a>
@@ -124,8 +124,8 @@
       </div>
     </transition>-->
 
-    <!-- 批量兑换 -->
-    <!-- <div class="pop pop_rechange_many hide">
+        <!-- 批量兑换 -->
+        <!-- <div class="pop pop_rechange_many hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_success')}}</div>
@@ -184,8 +184,8 @@
       </div>
     </div>-->
 
-    <!-- 帮助弹层+ -->
-    <!-- <div class="pop pop_rule hide">
+        <!-- 帮助弹层+ -->
+        <!-- <div class="pop pop_rule hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
@@ -197,8 +197,8 @@
       </div>
     </div>-->
 
-    <!-- 兑换提醒弹层 -->
-    <!-- <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
+        <!-- 兑换提醒弹层 -->
+        <!-- <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
       <div class="pop_main">
         <a href="javascript:" class="pop_close" @click="showDeliverPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
@@ -219,8 +219,8 @@
       </div>
     </div>-->
 
-    <!-- 商品详情 -->
-    <!-- <div class="pop pop_product_detailed hide">
+        <!-- 商品详情 -->
+        <!-- <div class="pop pop_product_detailed hide">
       <div class="pop_main">
         <a href="javascript:" class="pop_close"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
@@ -233,8 +233,8 @@
       </div>
     </div>-->
 
-    <!-- 虚拟商品兑换弹层 -->
-    <!-- <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
+        <!-- 虚拟商品兑换弹层 -->
+        <!-- <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
       <div class="pop_main">
         <a href="javascript:" class="pop_close" @click="showVirtualPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
@@ -269,8 +269,8 @@
       </div>
     </div>-->
 
-    <!-- 实物商品兑换弹层 -->
-    <!-- <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
+        <!-- 实物商品兑换弹层 -->
+        <!-- <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
       <div class="pop_main">
         <a href="javascript:" class="pop_close" @click="showRealPop = false"></a>
         <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
@@ -313,8 +313,8 @@
       </div>
     </div>-->
 
-    <!-- pop_common -->
-    <!-- <div class="pop pop_common ">
+        <!-- pop_common -->
+        <!-- <div class="pop pop_common ">
       <div class="pop_main">
         <a href="javascript:;" class="pop_close"></a>
         <div class="pop_common_title"></div>
@@ -327,14 +327,14 @@
       </div>
     </div>-->
 
-    <Toast v-if="toast"></Toast>
-  </div>
+        <Toast v-if="toast"></Toast>
+    </div>
 </template>
 
 <script>
 import Toast from "@components/Toast.vue"
 import {
-    copySucc, copyError, formateBalance
+    copySucc, copyError, formateBalance, cbetLocal
 } from "@/common/util"
 // 弹窗
 import popList from "../components/Pop_list"
@@ -369,7 +369,7 @@ export default {
             },
             toast: false,
             showNews:false,
-            newsWidth:''
+            newsWidth:""
         }
     },
     components: {
@@ -391,7 +391,7 @@ export default {
         recordListFn () {
             this.setPopStore("setRecordList", true)
         },
-        showProductDetail(e){
+        showProductDetail (e) {
             this.product_detail = e
             this.setPopStore("setProductDetail", true)
         },
@@ -500,11 +500,19 @@ export default {
                     console.log(res)
                     return res
                 })
+        },
+        jumpToWithdraw () {
+            cbetLocal({
+                func: "jumpToLocal",
+                params: {
+                    content: "jp://ShopScene"
+                }
+            })
         }
     },
     mounted () {
-        this.$nextTick(()=>{
-            this.newsWidth = this.$refs.newsWidth.clientWidth + 'px'
+        this.$nextTick(() => {
+            this.newsWidth = this.$refs.newsWidth.clientWidth + "px"
         })
         this.getExchangeList()
         this.getUserInfo()
@@ -517,282 +525,282 @@ export default {
 <style lang="less" type="text/less" scope>
 @import "../../../styles/lib-mixins.less";
 .page_mall {
-  width: 750/75rem;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background-size: 750/75rem;
-  font-size: 24/75rem;
-  .bg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    width: 100%;
+    width: 750/75rem;
     height: 100%;
-    background: url(../img/bg_line.jpg) repeat-y;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     background-size: 750/75rem;
-    .bg_header {
-      width: 750/75rem;
-      height: 600/75rem;
-      background: url(../img/bg_mall.jpg) no-repeat center top;
-      background-size: cover;
+    font-size: 24/75rem;
+    .bg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        background: url(../img/bg_line.jpg) repeat-y;
+        background-size: 750/75rem;
+        .bg_header {
+            width: 750/75rem;
+            height: 600/75rem;
+            background: url(../img/bg_mall.jpg) no-repeat center top;
+            background-size: cover;
+        }
     }
-  }
 }
 .header {
-  width: 730/75rem;
-  margin: 2/75rem auto 0;
-  overflow: hidden;
-  .btn {
-    width: 72/75rem;
-    height: 72/75rem;
-    &.btn_back {
-      background: url(../../../assets/img/icon_back.png) no-repeat center;
-      background-size: cover;
-    }
-    &.btn_question {
-      background: url(../../../assets/img/icon_question.png) no-repeat center;
-      background-size: cover;
-    }
-    &.btn_list_redemption_record {
-      margin: 0 23/75rem;
-      background: url(../../../assets/img/icon_list_redemption_record.png)
-        no-repeat center;
-      background-size: cover;
-    }
-  }
-  .my_balance {
-    width: 197/75rem;
-    height: 55/75rem;
+    width: 730/75rem;
+    margin: 2/75rem auto 0;
     overflow: hidden;
-    white-space: nowrap;
-    background: url(../../../assets/img/my_balance.png) no-repeat center;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    span {
-      opacity: 0.6;
+    .btn {
+        width: 72/75rem;
+        height: 72/75rem;
+        &.btn_back {
+            background: url(../../../assets/img/icon_back.png) no-repeat center;
+            background-size: cover;
+        }
+        &.btn_question {
+            background: url(../../../assets/img/icon_question.png) no-repeat center;
+            background-size: cover;
+        }
+        &.btn_list_redemption_record {
+            margin: 0 23/75rem;
+            background: url(../../../assets/img/icon_list_redemption_record.png)
+                no-repeat center;
+            background-size: cover;
+        }
     }
-  }
-  .fr {
-    display: flex;
-    align-items: center;
-  }
+    .my_balance {
+        width: 197/75rem;
+        height: 55/75rem;
+        overflow: hidden;
+        white-space: nowrap;
+        background: url(../../../assets/img/my_balance.png) no-repeat center;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        span {
+            opacity: 0.6;
+        }
+    }
+    .fr {
+        display: flex;
+        align-items: center;
+    }
 }
 .news {
-  width: 739/75rem;
-  height: 49/75rem;
-  overflow: hidden;
-  padding: 0 5%;
-  line-height: 49/75rem;
-  margin: 146/75rem auto 0;
-  font-size: 0;
-  color: #979ae1;
-  transition: all 0.2s;
-  background: url(../img/bg_new.png) no-repeat center;
+    width: 739/75rem;
+    height: 49/75rem;
+    overflow: hidden;
+    padding: 0 5%;
+    line-height: 49/75rem;
+    margin: 146/75rem auto 0;
+    font-size: 0;
+    color: #979ae1;
+    transition: all 0.2s;
+    background: url(../img/bg_new.png) no-repeat center;
     background-size: cover;
     font-size: 28/75rem;
-  //   ul {
-  //     display: flex;
-  //     overflow: hidden;
-  //     width: 9999999999px;
-  //   }
-  //   li {
-  //     width: 739/75rem;
-  //     text-align: center;
-  //   }
-  .news_main {
-    overflow: hidden;
-  }
-  p {
-    display: inline-block;
-    white-space: nowrap;
-     animation: scrollNew 10s linear infinite;
-  }
+    //   ul {
+    //     display: flex;
+    //     overflow: hidden;
+    //     width: 9999999999px;
+    //   }
+    //   li {
+    //     width: 739/75rem;
+    //     text-align: center;
+    //   }
+    .news_main {
+        overflow: hidden;
+    }
+    p {
+        display: inline-block;
+        white-space: nowrap;
+        animation: scrollNew 10s linear infinite;
+    }
 }
 .mall {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin: 52/75rem 0 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 52/75rem 0 0;
 }
 .mall_tab {
-  width: 686/75rem;
-  height: 58/75rem;
-  overflow: hidden;
-  margin: 0 auto;
-  border: 2/75rem solid #7952af;
-  border-radius: 10/75rem;
-  background: #5f4a82;
-  box-shadow: 0 2/75rem 8/75rem 0 rgba(45, 44, 63, 0.75);
-  ul {
-    display: flex;
-    height: 100%;
-    line-height: 20/75rem;
-  }
-  li {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25%;
-    height: 100%;
-    text-align: center;
-    white-space: nowrap;
-    & + li {
-      border-left: 2/75rem solid #7952af;
+    width: 686/75rem;
+    height: 58/75rem;
+    overflow: hidden;
+    margin: 0 auto;
+    border: 2/75rem solid #7952af;
+    border-radius: 10/75rem;
+    background: #5f4a82;
+    box-shadow: 0 2/75rem 8/75rem 0 rgba(45, 44, 63, 0.75);
+    ul {
+        display: flex;
+        height: 100%;
+        line-height: 20/75rem;
     }
-    &.on {
-      background: #7952af;
+    li {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 25%;
+        height: 100%;
+        text-align: center;
+        white-space: nowrap;
+        & + li {
+            border-left: 2/75rem solid #7952af;
+        }
+        &.on {
+            background: #7952af;
+        }
+        &.hot {
+            &::after {
+                content: "";
+                position: absolute;
+                left: -2px;
+                top: -1px;
+                display: block;
+                width: 33/75rem;
+                height: 33/75rem;
+                overflow: hidden;
+                background: url(../../../assets/img/icon_hot.png) no-repeat center;
+                background-size: cover;
+            }
+        }
     }
-    &.hot {
-      &::after {
-        content: "";
-        position: absolute;
-        left: -2px;
-        top: -1px;
-        display: block;
-        width: 33/75rem;
-        height: 33/75rem;
-        overflow: hidden;
-        background: url(../../../assets/img/icon_hot.png) no-repeat center;
-        background-size: cover;
-      }
-    }
-  }
 }
 .mall_main {
-  position: relative;
-  width: 740/75rem;
-  flex: 1;
-  overflow: auto;
-  margin: 30/75rem auto 0;
-  ul {
     position: relative;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    padding-bottom: 12/75rem;
-    &::after {
-      position: absolute;
-      z-index: 1;
-      left: 0;
-      bottom: -25/75rem;
-      content: "";
-      display: block;
-      background: url(../img/light.png) no-repeat bottom;
-      background-size: 100%;
-      width: 740/75rem;
-      height: 117/75rem;
+    width: 740/75rem;
+    flex: 1;
+    overflow: auto;
+    margin: 30/75rem auto 0;
+    ul {
+        position: relative;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        padding-bottom: 12/75rem;
+        &::after {
+            position: absolute;
+            z-index: 1;
+            left: 0;
+            bottom: -25/75rem;
+            content: "";
+            display: block;
+            background: url(../img/light.png) no-repeat bottom;
+            background-size: 100%;
+            width: 740/75rem;
+            height: 117/75rem;
+        }
     }
-  }
-  li {
-    position: relative;
-    z-index: 2;
-    width: 308/75rem;
-    margin: 0 2/75rem;
-    overflow: hidden;
-    &:nth-child(2n + 1) {
-      .reward_box {
-        background: url(../img/bg_reward_right.png) no-repeat;
+    li {
+        position: relative;
+        z-index: 2;
+        width: 308/75rem;
+        margin: 0 2/75rem;
+        overflow: hidden;
+        &:nth-child(2n + 1) {
+            .reward_box {
+                background: url(../img/bg_reward_right.png) no-repeat;
+                background-size: cover;
+            }
+        }
+        &:nth-child(2n) {
+            .reward_box {
+                background: url(../img/bg_reward_left.png) no-repeat;
+                background-size: cover;
+            }
+        }
+    }
+    li.unlock {
+        img {
+            opacity: 0.4;
+        }
+        &::before {
+            position: absolute;
+            box-sizing: border-box;
+            z-index: 2;
+            top: 10/75rem;
+            left: 40/75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            content: "Top up to unlock it";
+            width: 215/75rem;
+            height: 49/75rem;
+            overflow: hidden;
+            padding: 22/75rem 0 0 37/75rem;
+            background: url(../img/icon_unlock.png) no-repeat center;
+            background-size: cover;
+            //   font-family: "openSans_bold";
+            font-weight: bold;
+            font-size: 16/75rem;
+            white-space: nowrap;
+        }
+    }
+    .reward_box {
+        position: relative;
+        width: 308/75rem;
+        height: 243/75rem;
+        padding-top: 15/75rem;
+        img {
+            width: 223/75rem;
+            height: 163/75rem;
+        }
+    }
+    .reward_name {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        line-height: 70/75rem;
+        text-align: center;
+        white-space: nowrap;
+        opacity: 0.6;
+    }
+    .btn_reward {
+        position: relative;
+        top: -4/75rem;
+        width: 214/75rem;
+        height: 76/75rem;
+        overflow: hidden;
+        margin: 0 auto;
+        background: url(../img/btn_reward.png) no-repeat center;
         background-size: cover;
-      }
+        font-weight: bold;
+        font-size: 36/75rem;
+        text-align: center;
+        line-height: 76/75rem;
+        white-space: normal;
+        text-indent: 30/75rem;
     }
-    &:nth-child(2n) {
-      .reward_box {
-        background: url(../img/bg_reward_left.png) no-repeat;
-        background-size: cover;
-      }
-    }
-  }
-  li.unlock {
-    img {
-      opacity: 0.4;
-    }
-    &::before {
-      position: absolute;
-      box-sizing: border-box;
-      z-index: 2;
-      top: 10/75rem;
-      left: 40/75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      content: "Top up to unlock it";
-      width: 215/75rem;
-      height: 49/75rem;
-      overflow: hidden;
-      padding: 22/75rem 0 0 37/75rem;
-      background: url(../img/icon_unlock.png) no-repeat center;
-      background-size: cover;
-      //   font-family: "openSans_bold";
-      font-weight: bold;
-      font-size: 16/75rem;
-      white-space: nowrap;
-    }
-  }
-  .reward_box {
-    position: relative;
-    width: 308/75rem;
-    height: 243/75rem;
-    padding-top: 15/75rem;
-    img {
-      width: 223/75rem;
-      height: 163/75rem;
-    }
-  }
-  .reward_name {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    line-height: 70/75rem;
-    text-align: center;
-    white-space: nowrap;
-    opacity: 0.6;
-  }
-  .btn_reward {
-    position: relative;
-    top: -4/75rem;
-    width: 214/75rem;
-    height: 76/75rem;
-    overflow: hidden;
-    margin: 0 auto;
-    background: url(../img/btn_reward.png) no-repeat center;
-    background-size: cover;
-    font-weight: bold;
-    font-size: 36/75rem;
-    text-align: center;
-    line-height: 76/75rem;
-    white-space: normal;
-    text-indent: 30/75rem;
-  }
 }
 .nomsg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding-top: 200/75rem;
-  width: 100%;
-  background: url(../img/pop_record_nodata.png) no-repeat center top;
-  background-size: 265/75rem;
-  text-align: center;
-  font-size: 30/75rem;
-  color: rgba(255, 255, 255, 0.6);
-  white-space: nowrap;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-top: 200/75rem;
+    width: 100%;
+    background: url(../img/pop_record_nodata.png) no-repeat center top;
+    background-size: 265/75rem;
+    text-align: center;
+    font-size: 30/75rem;
+    color: rgba(255, 255, 255, 0.6);
+    white-space: nowrap;
 }
 
 @keyframes scrollNew {
-  0% {
-    transform: translate(100%);
-  }
-  100% {
-    transform: translate(-100%);
-  }
+    0% {
+        transform: translate(100%);
+    }
+    100% {
+        transform: translate(-100%);
+    }
 }
 </style>
