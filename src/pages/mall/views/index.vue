@@ -18,8 +18,6 @@
     <div class="news">
       <ul>
         <li>{{_('m_payment.mall_title')}}</li>
-        <li>Earn gold coins to redeem gifts!!!!!</li>
-        <li>Earn gold coins to redeem gifts!!!!!</li>
       </ul>
     </div>
     <div class="mall">
@@ -580,14 +578,14 @@ export default {
   font-size: 28/75rem;
   color: #979ae1;
   ul {
-    display: flex;
-    overflow: hidden;
+    // display: flex;
+    // overflow: hidden;
     width: 9999999999px;
   }
   li {
-    width: 739/75rem;
-    float: left;
-    text-align: center;
+    // width: 739/75rem;
+    // float: left;
+    // text-align: center;
   }
 }
 .mall {

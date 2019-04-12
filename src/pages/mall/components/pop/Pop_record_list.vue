@@ -89,10 +89,7 @@ export default {
                     this.app.setPopStore("setRecordList", false)
                 }
             }
-        },
-        test () {
-            return this.app.acitveClass
-        },
+        }
     },
     components:{
         Pop
@@ -113,7 +110,6 @@ export default {
             })
         },
         ShowPopReal2Card(e){
-            console.log(e);
             this.app.covert_message = e
             this.app.setPopStore("setReal2card", true)
         }
