@@ -315,7 +315,6 @@ export default {
         this.getInviteInfo()
     },
     async mounted () {
-        console.log(formateBalance(100000))
         // window.$toast({
         //     content:'123123qweewq'
         // })
@@ -344,7 +343,7 @@ export default {
       font-style: italic;
       font-family: sans-eb;
       display: inline-block;
-      font-size: 114/75rem;
+      font-size: 108/75rem;
       color: #ffe533;
       text-shadow: 0 4/75rem 0 #ed7912,
         0px 8/75rem 13/75rem rgba(31, 11, 11, 0.81);

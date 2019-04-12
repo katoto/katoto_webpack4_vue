@@ -28,7 +28,7 @@ export default {
             }
         },
         message:{
-            get:function(){
+            get:function () {
                 return this.app.product_detail
             }
         }

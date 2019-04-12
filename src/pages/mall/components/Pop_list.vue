@@ -1,15 +1,15 @@
 <template>
-  <div class="pop-list">
-    <RecordList></RecordList>
-    <RechangeMany></RechangeMany>
-    <Real2card></Real2card>
-    <RuleHelp></RuleHelp>
-    <ExchangeTips></ExchangeTips>
-    <ProductDetail></ProductDetail>
-    <ExchangeVirtual></ExchangeVirtual>
-    <ExchangeReal></ExchangeReal>
-    <common></common>
-  </div>
+    <div class="pop-list">
+        <RecordList></RecordList>
+        <RechangeMany></RechangeMany>
+        <Real2card></Real2card>
+        <RuleHelp></RuleHelp>
+        <ExchangeTips></ExchangeTips>
+        <ProductDetail></ProductDetail>
+        <ExchangeVirtual></ExchangeVirtual>
+        <ExchangeReal></ExchangeReal>
+        <common></common>
+    </div>
 </template>
 <script>
 import RecordList from "./pop/Pop_record_list.vue"
