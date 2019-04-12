@@ -13,6 +13,7 @@ require("@/styles/lib-public.less")
 // 引入语言包
 require("@language").use(Vue, [mallLanguage])
 Vue.prototype.$toast = Toast
+
 Vue.use(VueClipboard)
 Vue.use(simpleAjax, {
     commonParams: {

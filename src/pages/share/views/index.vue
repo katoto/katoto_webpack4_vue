@@ -346,6 +346,9 @@ export default {
         this.getInviteInfo()
     },
     async mounted () {
+
+
+
         console.log(formateBalance(100000))
         // window.$toast({
         //     content:'123123qweewq'
