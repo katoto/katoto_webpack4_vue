@@ -10,8 +10,8 @@ if (process.env.NODE_ENV === "production") {
     BASEURL = ""
 } else if (process.env.NODE_ENV === "development") {
     // BASEURL = "http://10.0.1.41:8001"
-    BASEURL = "http://10.0.0.171:8001"
-    // BASEURL = "http://149.129.138.180/api"  // xiaob
+    // BASEURL = "http://10.0.0.171:8001"
+    BASEURL = "http://149.129.138.180/api"  // xiaob
 }
 
 MyPlugin.install = function (Vue, config={
@@ -63,6 +63,11 @@ MyPlugin.install = function (Vue, config={
             if (type == "GET" || type == "get") {
                 xhr.send(null)
             } else if (type == "POST" || type == "post") {
+                if(data.language){
+                    xhr.setRequestHeader("language", data.language)
+                } else {
+                    xhr.setRequestHeader("language", 'en')
+                }
                 if (options.contentType) {
                     xhr.setRequestHeader("Content-Type", options.contentType)
                     xhr.send(data)
