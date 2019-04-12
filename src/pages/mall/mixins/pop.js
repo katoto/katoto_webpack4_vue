@@ -12,6 +12,20 @@ export default {
                 showCommon: false,
                 showReal2card: false
             },
+            product_detail:{
+                activity_imgurl: "",
+                goodsdesc: "",
+                goodstype: "",
+                id: "",
+                imgurl: "",
+                islock: "",
+                name: "",
+                needgolds: "",
+                top_status: "",
+                updatetime: "",
+                usage: "",
+                weight: ""
+            },
             covert_message: {
                 goodsname: "123",
                 imgurl: "12",

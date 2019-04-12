@@ -63,10 +63,10 @@ MyPlugin.install = function (Vue, config={
             if (type == "GET" || type == "get") {
                 xhr.send(null)
             } else if (type == "POST" || type == "post") {
-                if(data.language){
+                if (data.language) {
                     xhr.setRequestHeader("language", data.language)
                 } else {
-                    xhr.setRequestHeader("language", 'en')
+                    xhr.setRequestHeader("language", "en")
                 }
                 if (options.contentType) {
                     xhr.setRequestHeader("Content-Type", options.contentType)

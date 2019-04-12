@@ -1,11 +1,11 @@
 <template>
-    <Pop class="pop_rule" :show.sync="show">
+    <Pop class="pop_product_detailed" :show.sync="show">
         <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
-        <img class="product_img" src="@assets/img/amazon.png" alt>
-        <p class="product_name">100 Amazon</p>
-        <p class="product_use">1000 gift card for Amazon Mail</p>
+        <img class="product_img" :src="message.imgurl" alt>
+        <p class="product_name">{{message.name}}</p>
+        <p class="product_use">{{message.goodsdesc}}</p>
         <p class="product_nedd">
-            <i class="icon_gold"></i>10
+            <i class="icon_gold"></i>{{message.needgolds}}
         </p>
     </Pop>
 
@@ -25,6 +25,11 @@ export default {
                 } else {
                     this.app.setPopStore("setProductDetail", false)
                 }
+            }
+        },
+        message:{
+            get:function () {
+                return this.app.product_detail
             }
         }
     },

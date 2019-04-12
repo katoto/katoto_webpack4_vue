@@ -8,9 +8,12 @@
         <div class="address_input" v-if="!app.isCheckReal">
             <input type="text" :placeholder="_('m_payment.name')" v-model="app.realName">
             <input type="text" :placeholder="_('m_payment.phone')" v-model="app.realTel">
-
-            <input type="text" :placeholder="_('m_payment.address')" v-model="app.realAddress">
+            <input type="text" v-model="app.realAddress">
             <input type="text" :placeholder="_('m_payment.code')" v-model="app.realPostcode">
+            <p class="address_detail" v-html="_('m_payment.address')" v-if="!app.realAddress">
+                <!-- Shipping address
+        <i class="sm_add">(accurate to street and number)</i> -->
+            </p>
             <a href="javascript:" class="btn_default" @click="app.addAddress" :class="{disable: !app.checkRealInfo}">{{_('m_payment.exchange_confirm')}}</a>
         </div>
         <div class="address_check" v-else>
@@ -37,7 +40,6 @@
         </div>
         <div class="icon_success"></div>
     </Pop>
-
 </template>
 <script>
 import Pop from "./Pop.vue"
