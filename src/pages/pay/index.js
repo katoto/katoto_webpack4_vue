@@ -5,11 +5,18 @@ import {
 } from "@/common/util"
 
 let params = getURLParams()
+
 let isProduction = (params.env === "live")
 let isProps = (!!params.propsid)
 let sandboxForm = document.getElementById("sandbox_form")
 let liveForm = document.getElementById("live_form")
-
+let data = {
+    appck: "",
+    ...params,
+    ...cookie.getAll()
+}
+data.ck = decodeURIComponent(data.appck)
+data.appck = data.ck
 function setValue (name, value) {
     Array.prototype.slice.call(document.querySelectorAll(`.${name}`), 0).map(item => {
         item.setAttribute("value", value)
@@ -21,45 +28,36 @@ function submitForm (data) {
     setValue("amount", data.amount)
     setValue("invoice", data.invoice)
     setValue("item_name", data.item_name)
-    isProduction ? liveForm.submit() : sandboxForm.submit()
 }
 
 function buyProps () {
-    alert(JSON.stringify(cookie.getAll()))
-    alert(JSON.stringify(params))
-    return axios.post("/shops/props/buy", params)
+    return axios.post("http://149.129.138.180/api/shops/props/buy", data)
 }
 
 function buyPrivileges () {
-    return axios.post("/shops/privileges/buy", params)
+    return axios.post("http://149.129.138.180/api/shops/privileges/buy", data)
 }
 
 function deal () {
     return (isProps ? buyProps() : buyPrivileges())
-        .then(res => {
-            console.log(res)
-            return res
-        })
 }
 
 window.addEventListener("load", () => {
+    document.getElementById("submit").addEventListener("click", () => {
+        isProduction ? liveForm.submit() : sandboxForm.submit()
+    })
     deal()
         .then(res => {
-            console.log(res)
+            let _data = res.data.data
             submitForm({
-                custom: "tx123456",
-                amount: "15",
-                invoice: "tx123445556",
-                item_name: "15 美金卢比"
+                custom: _data.orderid,
+                amount: _data.rechargemoney,
+                invoice: _data.orderid,
+                item_name: `${data.rechargemoney}INR (${_data.rechargemoney} USD)`
             })
+            isProduction ? liveForm.submit() : sandboxForm.submit()
         })
         .catch(err => {
-            console.log(err)
-            submitForm({
-                custom: "tx123456",
-                amount: "15",
-                invoice: "tx123445556",
-                item_name: "15 美金卢比"
-            })
+            alert(JSON.stringify(err.data))
         })
 })
