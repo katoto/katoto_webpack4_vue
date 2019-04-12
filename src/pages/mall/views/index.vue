@@ -5,7 +5,7 @@
         </div>
         <div class="header">
             <div class="fl">
-                <a href="javascript:;" class="btn btn_back"></a>
+                <a href="javascript:;" class="btn btn_back" @click="closeView"></a>
             </div>
             <div class="fr">
                 <a href="javascript:;" class="my_balance" @click="jumpToWithdraw">
@@ -506,6 +506,13 @@ export default {
                 func: "jumpToLocal",
                 params: {
                     content: "jp://ShopScene"
+                }
+            })
+        },
+        closeView () {
+            cbetLocal({
+                func: "closeWebview",
+                params:{
                 }
             })
         }
