@@ -173,9 +173,8 @@ export default {
         confirmVirtual () {
             this.exchange(this.activeItem)
                 .then(res => {
-                    console.log(res)
-                    this.virtualCard = "123456789"
-                    this.virtualPass = "987654321"
+                    this.virtualCard = res.data.cardno
+                    this.virtualPass = res.data.password
                 })
         },
         exchangeReal () {
