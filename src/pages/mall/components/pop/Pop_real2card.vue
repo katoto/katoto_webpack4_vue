@@ -8,8 +8,8 @@
     </div>
     <p class="product_use">{{message.goodsdesc}}</p>
     <div class="pop_rechange_many_main">
-      <ul>
-        <li class="pop_rechange_many_list" v-for="item in message.cards" :key="item.cardno">
+      <ul v-if="message.convert">
+        <li class="pop_rechange_many_list" v-for="item in message.convert.cards" :key="item.cardno">
           <p>
             <span class="card_num">{{_('m_payment.card_no')}}:</span>
             <i class="card_psw">{{item.goodsid}}</i>
@@ -49,6 +49,9 @@ export default {
     },
     components:{
         Pop
+    },
+    mounted(){
+        console.log(this.message)
     }
 }
 </script>
