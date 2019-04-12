@@ -3,8 +3,18 @@ import {
     cbetLocal
 } from "@/common/util"
 
-cbetLocal({
-    func: "closeWebview",
-    params:{
-    }
+function quit () {
+    cbetLocal({
+        func: "closeWebview",
+        params:{
+        }
+    })
+}
+
+window.addEventListener("load", () => {
+    quit()
+})
+
+window.addEventListener("click", () => {
+    quit()
 })
