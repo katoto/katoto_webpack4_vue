@@ -1,15 +1,15 @@
 <template>
-    <div class="pop-list">
-        <RecordList></RecordList>
-        <RechangeMany></RechangeMany>
-        <Real2card></Real2card>
-        <RuleHelp></RuleHelp>
-        <ExchangeTips></ExchangeTips>
-        <ProductDetail></ProductDetail>
-        <ExchangeVirtual></ExchangeVirtual>
-        <ExchangeReal></ExchangeReal>
-        <common></common>
-    </div>
+  <div class="pop-list">
+    <RecordList></RecordList>
+    <RechangeMany></RechangeMany>
+    <Real2card></Real2card>
+    <RuleHelp></RuleHelp>
+    <ExchangeTips></ExchangeTips>
+    <ProductDetail></ProductDetail>
+    <ExchangeVirtual></ExchangeVirtual>
+    <ExchangeReal></ExchangeReal>
+    <common></common>
+  </div>
 </template>
 <script>
 import RecordList from "./pop/Pop_record_list.vue"
@@ -107,13 +107,13 @@ export default {
       line-height: 40/75rem;
     }
 
-    .record_view{
-        flex: 1;
+    .record_view {
+      flex: 1;
     }
-    .goods_unusual{
-        display: flex;
-        align-items: center;
-        height: 100%;
+    .goods_unusual {
+      display: flex;
+      align-items: center;
+      height: 100%;
     }
   }
   &.pop_rule {
@@ -193,10 +193,10 @@ export default {
         align-items: center;
         height: 51/75rem;
       }
-      span{
-          display: block;
-          width: 93/75rem;
-          width: 150/75rem;
+      span {
+        display: block;
+        width: 93/75rem;
+        width: 150/75rem;
       }
       p + p {
         margin-top: 22/75rem;
@@ -388,12 +388,19 @@ export default {
       font-size: 20/75rem;
       opacity: 0.3;
     }
+    .address_input {
+      position: relative;
+      width: 605/75rem;
+      margin: 0 auto;
+      overflow: hidden;
+    }
     input {
+      position: relative;
+      z-index: 2;
       display: block;
       width: 605/75rem;
       height: 90/75rem;
       overflow: hidden;
-      margin: 0 auto;
       border-radius: 10/75rem;
       line-height: 90/75rem;
       background: rgba(31, 28, 41, 0.75);
@@ -408,6 +415,22 @@ export default {
       }
       & + input {
         margin-top: 12/75rem;
+      }
+    }
+    .address_detail {
+      position: absolute;
+      z-index: 1;
+      left: 0;
+      top: (90+90+12+12)/75rem;
+      width: 605/75rem;
+      line-height: 90/75rem;
+      text-indent: 28/75rem;
+      color: rgba(255, 255, 255, 1);
+      font-size: 30/75rem;
+      white-space: nowrap;
+    text-align: left;
+      i {
+        font-size: 20/75rem;
       }
     }
     .user_msg {

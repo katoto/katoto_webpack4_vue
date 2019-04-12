@@ -6,7 +6,6 @@ import simpleAjax from "@plugins/simpleAjax"
 import VueClipboard from "vue-clipboard2"
 import Toast from "@/components/toast/toast.js"
 require("@common/flexble")
-
 // 初始化与公共样式
 require("@/styles/lib-reset.css")
 require("@/styles/lib-public.less")
