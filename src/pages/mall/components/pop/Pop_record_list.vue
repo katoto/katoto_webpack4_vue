@@ -54,7 +54,7 @@ export default {
     inject: ["app"],
     data () {
         return {
-            recordList: null,
+            recordList: [],
             allnum: 0
         }
     },
@@ -77,6 +77,7 @@ export default {
     },
     watch: {
         show (val) {
+            this.recordList = []
             val && this.getRecordList()
         }
     },

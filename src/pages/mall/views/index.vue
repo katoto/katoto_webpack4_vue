@@ -171,16 +171,22 @@ export default {
             this.setPopStore("setExchangeReal", true)
         },
         confirmVirtual () {
+            if (this.virtualCard && this.virtualPass) {
+                this.setPopStore("setExchangeVirtual", false)
+                return
+            }
             this.exchange(this.activeItem)
                 .then(res => {
                     this.virtualCard = res.data.cardno
                     this.virtualPass = res.data.password
+                    this.getUserInfo()
                 })
         },
         exchangeReal () {
             this.exchange(this.activeItem, this.aid)
                 .then(() => {
                     this.setPopStore("setExchangeReal", false)
+                    this.getUserInfo()
                 })
         },
         getList () {
@@ -238,6 +244,9 @@ export default {
                     this.realAddress = res.data.f_address || ""
                     this.realPostcode = res.data.f_postcode || ""
                     this.aid = res.data.f_aid
+                    if (this.aid) {
+                        this.isCheckReal = true
+                    }
                 })
         },
         exchange (item, aid, amount = 1) {
@@ -398,7 +407,7 @@ export default {
 .mall_tab {
   width: 686/75rem;
   height: 58/75rem;
-//   overflow: hidden;
+  //   overflow: hidden;
   margin: 0 auto;
   border: 2/75rem solid #7952af;
   border-radius: 10/75rem;

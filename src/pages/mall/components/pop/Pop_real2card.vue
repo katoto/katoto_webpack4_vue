@@ -4,7 +4,7 @@
         <img class="product_img" :src="message.imgurl" alt>
         <div class="product_msg">
             <p class="product_name">{{message.goodsname}}</p>
-            <p class="product_count">({{_('m_payment.virtual_num', 3)}})</p>
+            <p class="product_count">({{_('m_payment.virtual_num', message.convert.cards.length)}})</p>
         </div>
         <p class="product_use">{{message.goodsdesc}}</p>
         <div class="pop_rechange_many_main">
@@ -56,10 +56,8 @@ export default {
     methods: {
         copy,
         getCopyData () {
-            let data = this.message.convert.cards.map(item => `${item.password}`)
-            console.log(data)
-            console.log(data.join('|'))
-            return data.join("|")
+            let data = this.message.convert.cards.map(item => `${_("m_payment.card_no")}:${item.password}\n${_("m_payment.password")}:${item.cardno}`)
+            return data.join("\n-------------------\n")
         }
     }
 }

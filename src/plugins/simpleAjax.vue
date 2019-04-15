@@ -10,8 +10,8 @@ if (process.env.NODE_ENV === "production") {
     BASEURL = ""
 } else if (process.env.NODE_ENV === "development") {
     // BASEURL = "http://10.0.1.41:8001"
-    BASEURL = "http://10.0.0.171:8001"
-    // BASEURL = "http://149.129.138.180/api"  // xiaob
+    // BASEURL = "http://10.0.0.171:8001"
+    BASEURL = "http://149.129.138.180/api"  // xiaob
 }
 
 MyPlugin.install = function (Vue, config={
@@ -31,6 +31,12 @@ MyPlugin.install = function (Vue, config={
             content: res.message
         })
         return res.status !== "100" ? Promise.reject(res) : res
+    }
+    let errorHandler = err => {
+        Vue.prototype.$toast({
+            content: "Network Error"
+        })
+        return Promise.reject(err)
     }
     let commonParams = config.commonParams
 
@@ -59,6 +65,22 @@ MyPlugin.install = function (Vue, config={
             }
             if (dataType == null) {dataType = "json"}
             let xhr = createXHR()
+            xhr.onreadystatechange = function () {
+                let responseData = ""
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    if (dataType == "text" || dataType == "TEXT") {
+                        responseData = xhr.responseXML
+                    } else if (dataType == "xml" || dataType == "XML") {
+                        responseData = xhr.responseText
+                    } else if (dataType == "json" || dataType == "JSON") {
+                        responseData = JSON.parse(xhr.responseText)
+                    }
+                    resolve(responseData)
+                } else if (xhr.readyState == 4 && xhr.status != 200) {
+                    console.warn("请求有误")
+                    reject(xhr.status)
+                }
+            }
             xhr.open(type, url, true)
             if (type == "GET" || type == "get") {
                 xhr.send(null)
@@ -74,22 +96,6 @@ MyPlugin.install = function (Vue, config={
                 } else {
                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8")
                     xhr.send(obj2str(data))
-                }
-            }
-            xhr.onreadystatechange = function () {
-                let responseData = ""
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    if (dataType == "text" || dataType == "TEXT") {
-                        responseData = xhr.responseXML
-                    } else if (dataType == "xml" || dataType == "XML") {
-                        responseData = xhr.responseText
-                    } else if (dataType == "json" || dataType == "JSON") {
-                        responseData = JSON.parse(xhr.responseText)
-                    }
-                    resolve(responseData)
-                } else if (xhr.readyState == 4 && xhr.status != 200) {
-                    console.warn("请求有误")
-                    reject(xhr.status)
                 }
             }
         })
@@ -110,7 +116,7 @@ MyPlugin.install = function (Vue, config={
                 ...commonParams,
                 ...data
             }
-        }).then(commonHandler)
+        }).catch(errorHandler).then(commonHandler)
     }
     Vue.prototype.$get = function (url = "", data = {
     }) {
@@ -126,7 +132,7 @@ MyPlugin.install = function (Vue, config={
         return this.$http({
             type: "get",
             url
-        }).then(commonHandler)
+        }).catch(errorHandler).then(commonHandler)
     }
 }
 
