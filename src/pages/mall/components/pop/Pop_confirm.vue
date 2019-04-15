@@ -1,5 +1,5 @@
 <template>
-    <div class="pop_congratulation"  v-if="!show">
+    <div class="pop_congratulation"  v-if="!show && 0">
         <transition name="pop_animate">
             <div class="pop_con_main">
                 <div class="c_title" data-msg="Congratulations"></div>

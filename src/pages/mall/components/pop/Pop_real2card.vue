@@ -48,17 +48,19 @@ export default {
             get:function () {
                 return this.app.covert_message
             }
-        },
-        getCopyData () {
-            let data = this.message.convert.cards.map(item => `${item.cardno} \r\n ${item.password}`)
-            return data.join("\r\n\r\n")
         }
     },
     components:{
         Pop
     },
     methods: {
-        copy
+        copy,
+        getCopyData () {
+            let data = this.message.convert.cards.map(item => `${item.password}`)
+            console.log(data)
+            console.log(data.join('|'))
+            return data.join("|")
+        }
     }
 }
 </script>

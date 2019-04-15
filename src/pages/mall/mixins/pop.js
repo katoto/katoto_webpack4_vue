@@ -9,7 +9,7 @@ export default {
                 showExchangeTips: false,
                 showProductDetail: false,
                 showExchangeVirtual: false,
-                showExchangeReal: true,
+                showExchangeReal: false,
                 showCommon: false,
                 showReal2card: false,
                 showCongratulation: false

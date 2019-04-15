@@ -4,25 +4,6 @@
         <div class="redemption_record">
             <template v-if="recordList&&recordList.length>0">
                 <ul>
-                    <!-- <li>
-            <div class="record_img">
-              <img src="@assets/img/10g.png" alt>
-              <p class="record_name">100 Amazon</p>
-            </div>
-            <div class="record_msg">
-              <div class="record_view">
-                <p>
-                  <span>{{_('m_payment.card_no')}}：</span>
-                  <i>1325144654685asdas</i>
-                </p>
-                <p>
-                  <span>{{_('m_payment.password')}}：</span>
-                  <i>1325144654asdasdasd</i>
-                </p>
-              </div>
-              <span class="record_time">2018.08.10 18:52:32</span>
-            </div>
-          </li>-->
                     <li v-for="item in recordList" :key="item.id">
                         <div class="record_img">
                             <img :src="item.imgurl" :alt="item.goodsdesc">
@@ -43,16 +24,16 @@
                                 </template>
                                 <!--  实物转换成虚拟卡  -->
                                 <div class="goods_unusual" v-else-if="item.goodstype=='2'&&item.orderstatus=='7'" @click="ShowPopReal2Card(item)">
-                                    <p>因邮寄问题，已更换为礼品卡奖励,点击该条兑换信息查看卡号</p>
+                                    <p>{{ _('m_payment.sm_deliveryList') }}</p>
                                 </div>
                                 <!-- 实物正常派送中  -->
                                 <template v-else>
                                     <p>
-                                        <span>订单状态：</span>
+                                        <span>{{ _('m_payment.sm_orderStatus') }}：</span>
                                         <i>{{item.orderstatus}}</i>
                                     </p>
                                     <p>
-                                        <span>快递单号：</span>
+                                        <span>{{ _('m_payment.goodno') }}：</span>
                                         <i>{{item.sid}}</i>
                                     </p>
                                 </template>
@@ -63,7 +44,7 @@
                     </li>
                 </ul>
             </template>
-            <div class="nomsg" v-else>No data yet</div>
+            <div class="nomsg" v-else>{{ _('m_payment.sm_nodata') }}</div>
         </div>
     </Pop>
 </template>
