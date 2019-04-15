@@ -8,7 +8,7 @@ export default {
                 showExchangeTips: false,
                 showProductDetail: false,
                 showExchangeVirtual: false,
-                showExchangeReal: false,
+                showExchangeReal: true,
                 showCommon: false,
                 showReal2card: false
             },

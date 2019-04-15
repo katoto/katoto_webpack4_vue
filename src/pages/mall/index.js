@@ -15,6 +15,9 @@ require("@/styles/lib-public.less")
 require("@language").use(Vue, [mallLanguage])
 Vue.prototype.$toast = Toast
 window.$toast = Toast
+
+cookie.set("appck", "MTAwMDI1OGQ2ZmIyZmU0OThhYzcxYmFjZTY3YmE1NjEzZjkwNjJi")
+
 let cookies = cookie.getAll()
 cookies.appck = decodeURIComponent(cookies.appck)
 cookies.ck = cookies.appck
@@ -23,8 +26,7 @@ Vue.use(simpleAjax, {
         platform: "android",
         version: "1.0.0",
         channel: "test",
-        ...cookies,
-        ck: "MTAwMDI1OTNhOTVlY2JjZDZmMjYzMDAxZDk3OGU1NzBlYWFhYTY2"
+        ...cookies
     }
 })
 new Vue({
