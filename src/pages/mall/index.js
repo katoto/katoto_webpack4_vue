@@ -23,8 +23,8 @@ Vue.use(simpleAjax, {
         platform: "android",
         version: "1.0.0",
         channel: "test",
-        ...cookies
-        // ck: "MTAwMTUxMDM3ZWFhYjgyNGM1MGM3OWVhYjMzNWM2M2E2MWI1NTlmOA=="
+        ...cookies,
+        ck: "MTAwMDI1OTNhOTVlY2JjZDZmMjYzMDAxZDk3OGU1NzBlYWFhYTY2"
     }
 })
 new Vue({
