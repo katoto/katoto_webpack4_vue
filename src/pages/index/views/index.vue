@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="head">
-            <img src="../img/contenthead.png">
+            <img src="../img/contenthead.jpg">
             <div class="btn">
                 <a href="//play.google.com/store/apps/details?id=com.crazy500.cbet" target="_blank" class="down_and"></a>
                 <a href="https://itunes.apple.com/app/id1453136833" target="_blank" class="down_ios"></a>
