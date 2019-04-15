@@ -19,7 +19,7 @@ export default {
         "m_payment.exchange_now":"Confirm",
         "m_payment.back_modify":"Back",
         "m_payment.code1":"postcode",
-        "m_payment.phone1":"Tel.",
+        "m_payment.phone1":"Tel",
         "m_payment.address1":"Address",
         "m_payment.name1":"Name",
         "m_payment.code":"Postcode",

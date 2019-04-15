@@ -5,7 +5,7 @@
     <p class="product_name">100 Amazon</p>
     <p class="product_use">1000 gift card for Amazon Mail</p>
 
-    <div class="address_input" v-if="!app.isCheckReal">
+    <div class="address_input" v-if="!app.isCheckReal&&0">
       <input type="text" :placeholder="_('m_payment.name')" v-model="app.realName">
       <input type="text" :placeholder="_('m_payment.phone')" v-model="app.realTel">
       <input type="text" v-model="app.realAddress">
@@ -23,7 +23,7 @@
       </p>
       <p class="user_msg">
         <span class="user_t">{{_('m_payment.address1')}}:</span>
-        <span class="user_c">{{app.realAddress}}</span>
+        <span class="user_c user_address">{{app.realAddress}}</span>
       </p>
       <p class="user_msg">
         <span class="user_t">{{_('m_payment.phone1')}}:</span>

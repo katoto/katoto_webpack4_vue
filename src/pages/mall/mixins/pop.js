@@ -1,6 +1,7 @@
 export default {
     data () {
         return {
+            hadPopShow:false,
             pop: {
                 showRecordList: false,
                 showRechangeMany: false,
@@ -8,9 +9,10 @@ export default {
                 showExchangeTips: false,
                 showProductDetail: false,
                 showExchangeVirtual: false,
-                showExchangeReal: false,
+                showExchangeReal: true,
                 showCommon: false,
-                showReal2card: false
+                showReal2card: false,
+                showCongratulation: false
             },
             product_detail:{
                 activity_imgurl: "",
@@ -44,6 +46,18 @@ export default {
     },
     methods: {
         setPopStore (func = "setRecordList", data = false) {
+            // 弹层的灰色蒙版单独处理
+            if (!data ) {
+                // 二次弹层关闭时保留蒙版
+                if (func!=="setReal2card") {
+                    setTimeout(() => {
+                        this.hadPopShow = data
+                    }, 200)
+                }
+            } else {
+                this.hadPopShow = data
+            }
+
             switch (func) {
             case "setRecordList":
                 this.pop.showRecordList = data
@@ -71,6 +85,9 @@ export default {
                 break
             case "setReal2card":
                 this.pop.showReal2card = data
+                break
+            case "setCongratulation":
+                this.pop.showCongratulation = data
                 break
             }
         }
