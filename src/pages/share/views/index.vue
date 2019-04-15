@@ -123,7 +123,8 @@ import {
     formatTime,
     formatIndiaTime,
     calSecond,
-    copy
+    copy,
+    preloadImage
 } from "@common/util"
 
 export default {
@@ -176,8 +177,8 @@ export default {
         },
         sendInviteCode () {
             // 发送邀请码
-            let codeReg = /[A-Z]*/
-            if (codeReg.test(this.friend_code)) {
+            let codeReg = /^[A-Z]+$/g
+            if (this.friend_code && codeReg.test(this.friend_code.toUpperCase().trim())) {
                 // 发起请求
                 this.$post("/invite/use_code", {
                     code: this.friend_code.toUpperCase()
@@ -194,7 +195,9 @@ export default {
                     console.log(err)
                 })
             } else {
-                console.warn("code 有误")
+                this.$toast({
+                    content: _('m_share.sh_codeerr')
+                })
             }
         },
         popInviteFrient (noneTip = false) {
@@ -207,16 +210,7 @@ export default {
                         this.friendList = res.data
                     }
                 }).catch(e => {
-                    return {
-                        status: "100",
-                        message: "ok",
-                        data: [
-                            {
-                                name: "哈哈哈",
-                                userid: "1111"
-                            }
-                        ]
-                    }
+
                 })
         },
         shareCopy (code = "") {
@@ -323,11 +317,11 @@ export default {
         // todo
         // this.fadeIn = true
         // ,'nobase.bg_particle1.png','nobase.bg_particle2.png','nobase.bg_particle3.png'
-        // preloadImage(["nobase.bg.45950.jpg","nobase.bg_light.76a39.png"], () => {
-        //     console.log("img is ready")
-        //     this.fadeIn = true
-        // }, "./img/")
-        this.fadeIn = true
+        preloadImage(["nobase.bg.jpg","nobase.bg_light.png"], () => {
+            console.log("img is ready")
+            this.fadeIn = true
+        }, "./img/")
+        // this.fadeIn = true
         this.$nextTick(() => {
             this.popInviteFrient(true)
         })
