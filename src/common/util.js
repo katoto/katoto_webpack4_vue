@@ -1,4 +1,22 @@
 /**
+ *  客户端回调
+ */
+window.cbetLocalCallback = function (param) {
+    if (param.func==="copyToPasteboard") {
+        console.log("---------")
+        if (param.result) {
+            window.$toast({
+                content: "copy success"
+            })
+        } else {
+            window.$toast({
+                content: "copy error"
+            })
+        }
+    }
+}
+
+/**
  *  相关的工具函数
  */
 
@@ -525,6 +543,15 @@ export const cookie = {
     remove (name) {
         this.set(name, "", "Thu, 01 Jan 1970 00:00:00 GMT")
     }
+}
+
+export function copy (string) {
+    cbetLocal({
+        func: "copyToPasteboard",
+        params: {
+            content: string
+        }
+    })
 }
 
 export function copySucc () {

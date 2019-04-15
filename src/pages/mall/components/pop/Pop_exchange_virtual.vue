@@ -20,12 +20,12 @@
             <p>
                 <span>{{_('m_payment.card_no')}}:</span>
                 <i class="card_psw">{{app.virtualCard}}</i>
-                <a href="javascript:;" class="btn_copy" v-clipboard:copy="app.virtualCard" v-clipboard:success="app.copySucc" v-clipboard:error="app.copyError">{{_('m_payment.copy')}}</a>
+                <a href="javascript:;" class="btn_copy" @click="copy(app.virtualCard)">{{_('m_payment.copy')}}</a>
             </p>
             <p>
                 <span>{{_('m_payment.password')}}:</span>
                 <i class="card_psw">{{app.virtualPass}}</i>
-                <a href="javascript:;" class="btn_copy" v-clipboard:copy="app.virtualPass" v-clipboard:success="app.copySucc" v-clipboard:error="app.copyError">{{_('m_payment.copy')}}</a>
+                <a href="javascript:;" class="btn_copy" @click="copy(app.virtualPass)">{{_('m_payment.copy')}}</a>
             </p>
         </div>
         <a href="javascript:" class="btn_default" @click="app.confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
@@ -34,6 +34,9 @@
 </template>
 <script>
 import Pop from "./Pop.vue"
+import {
+    copy
+} from "@/common/util"
 export default {
     inject: ["app"],
     computed:{
@@ -53,7 +56,8 @@ export default {
     components:{
         Pop
     },
-    mounted () {
+    methods: {
+        copy
     }
 }
 </script>

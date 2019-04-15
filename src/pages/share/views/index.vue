@@ -101,7 +101,7 @@
             </transition>
         </div>
         <!-- 收获金币 -->
-          <div class="pop_congratulation" :class="{hide:!show_pop_congratulation}">
+        <div class="pop_congratulation" :class="{hide:!show_pop_congratulation}">
             <transition name="pop_animate">
                 <div class="pop_con_main" v-if="show_pop_congratulation">
                     <div class="c_title" data-msg="Congratulations"></div>
@@ -110,47 +110,21 @@
                     <a href="javascript:;" class="btn_default" @click="show_pop_congratulation=false">OK</a>
                 </div>
             </transition>
-          </div>
+        </div>
     </div>
 </template>
 
 <script>
 
-/*
-    *  客户端回调
-    * */
-window.cbetLocalCallback = function(param){
-    if(param.func==='copyToPasteboard'){
-        console.log('---------')
-        if(param.result){
-            window.$toast({
-                content: 'copy success'
-            })
-        }else{
-            window.$toast({
-                content: 'copy error'
-            })
-        }
-    }
-}
-
 import {
-    isIOS,
-    appID,
     cbetLocal,
-    preloadImage,
     formateBalance,
     formatMoney,
     formatTime,
     formatIndiaTime,
-    calSecond
+    calSecond,
+    copy
 } from "@common/util"
-import {
-    setTimeout, clearInterval, setInterval
-} from "timers"
-import {
-    log, isNull
-} from "util"
 
 export default {
     data () {
@@ -172,7 +146,7 @@ export default {
             expireTime: 0,
             beginTime: 0,
             endTime: 0,
-            expireTimerInter: null,
+            expireTimerInter: null
         }
     },
     watch: {
@@ -247,12 +221,7 @@ export default {
         },
         shareCopy (code = "") {
             if (this.invitemsg && this.invitemsg.invite_code) {
-                cbetLocal({
-                    func: "copyToPasteboard",
-                    params: {
-                        content: this.invitemsg.invite_code
-                    }
-                })
+                copy(this.invitemsg.invite_code)
             }
         },
         fb_whatsapp () {
@@ -272,7 +241,7 @@ export default {
                 })
             } else {
                 this.$toast({
-                    content: 'page error please reload ~'
+                    content: "page error please reload ~"
                 })
             }
         },
@@ -293,7 +262,7 @@ export default {
                 })
             } else {
                 this.$toast({
-                    content: 'page error please reload ~'
+                    content: "page error please reload ~"
                 })
             }
         },
@@ -309,9 +278,9 @@ export default {
                                 this.inviteCodeNum = resData.config.prize.inviter
                             }
                             this.expireTime = resData.config.prize.expire
-                            if(parseFloat(this.expireTime) <= 0 ){
+                            if (parseFloat(this.expireTime) <= 0 ) {
                                 // 过期隐藏入口
-                                this.invitemsg.used_code = '1'
+                                this.invitemsg.used_code = "1"
                             }
                             this.startExpireTime(this.expireTime)
                         }
@@ -326,15 +295,15 @@ export default {
                     console.log("error invite info")
                 })
         },
-        startExpireTime(time){
+        startExpireTime (time) {
             time = Number(time)
-            if(isNaN(time)) return false
+            if (isNaN(time)) {return false}
             clearInterval(this.expireTimerInter)
-            this.expireTimerInter = setInterval(()=>{
+            this.expireTimerInter = setInterval(() => {
                 this.expireTime = this.expireTime - 30
-                if(this.expireTime <= 0 ){
+                if (this.expireTime <= 0 ) {
                     clearInterval(this.expireTimerInter)
-                    this.invitemsg.used_code = '1'
+                    this.invitemsg.used_code = "1"
                 }
             },30000)
 
@@ -346,7 +315,6 @@ export default {
         this.getInviteInfo()
     },
     async mounted () {
-        console.log(formateBalance(100000))
         // window.$toast({
         //     content:'123123qweewq'
         // })
@@ -375,7 +343,7 @@ export default {
       font-style: italic;
       font-family: sans-eb;
       display: inline-block;
-      font-size: 114/75rem;
+      font-size: 108/75rem;
       color: #ffe533;
       text-shadow: 0 4/75rem 0 #ed7912,
         0px 8/75rem 13/75rem rgba(31, 11, 11, 0.81);

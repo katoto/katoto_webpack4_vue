@@ -1,340 +1,83 @@
 <template>
-  <div class="fullscreen page_mall">
-    <div class="bg">
-      <div class="bg_header"></div>
-    </div>
-    <div class="header">
-      <div class="fl">
-        <a href="javascript:;" class="btn btn_back"></a>
-      </div>
-      <div class="fr">
-        <a href="javascript:;" class="my_balance">
-          <span>{{formateBalance(avaliable_total)}}</span>
-        </a>
-        <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
-        <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
-      </div>
-    </div>
-    <!-- todo 提成公共组件轮询新闻 -->
-    <div class="news">
-      <!-- <ul>
+    <div class="fullscreen page_mall">
+        <div class="bg">
+            <div class="bg_header"></div>
+        </div>
+        <div class="header">
+            <div class="fl">
+                <a href="javascript:;" class="btn btn_back" @click="closeView"></a>
+            </div>
+            <div class="fr">
+                <a href="javascript:;" class="my_balance" @click="jumpToWithdraw">
+                    <span>{{formateBalance(avaliable_total)}}</span>
+                </a>
+                <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
+                <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
+            </div>
+        </div>
+        <!-- todo 提成公共组件轮询新闻 -->
+        <div class="news">
+            <!-- <ul>
             <li :style="{width:newsWidth}" ref="newsWidth">
                 {{_('m_payment.mall_title')}}
             </li>
       </ul>-->
-      <div class="news_main">
-        <p :style="{width:newsWidth}" ref="newsWidth">{{_('m_payment.mall_title')}}</p>
-      </div>
+            <div class="news_main">
+                <p :style="{width:newsWidth}" ref="newsWidth">{{_('m_payment.mall_title')}}</p>
+            </div>
+        </div>
+        <div class="mall">
+            <div class="mall_tab">
+                <ul>
+                    <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
+                        <a href="javascript:;">{{_('m_payment.all')}}</a>
+                    </li>
+                    <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
+                        <a href="javascript:;">{{_('m_payment.card')}}</a>
+                    </li>
+                    <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
+                        <a href="javascript:;">{{_('m_payment.electronics')}}</a>
+                    </li>
+                    <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
+                        <a href="javascript:;">{{_('m_payment.other')}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mall_main">
+                <template v-if="getList().length>0">
+                    <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
+                        <li :class="{unlock: item[0].islock === '1'}">
+                            <div class="reward_box" @click="showProductDetail(item[0])">
+                                <img :src="item[0].imgurl" alt>
+                                <p class="reward_name">{{item[0].name}}</p>
+                            </div>
+                            <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
+                        </li>
+                        <li :class="{unlock: item[1] && item[1].islock === '1'}">
+                            <template v-if="item[1]">
+                                <div class="reward_box" @click="showProductDetail(item[1])">
+                                    <img :src="item[1].imgurl" alt>
+                                    <p class="reward_name">{{item[1].name}}</p>
+                                </div>
+                                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
+                            </template>
+                        </li>
+                    </ul>
+                </template>
+                <div class="nomsg" v-else>No data yet</div>
+            </div>
+        </div>
+
+        <!-- 初始化全部的弹窗   -->
+        <popList></popList>
+        <Toast v-if="toast"></Toast>
     </div>
-    <div class="mall">
-      <div class="mall_tab">
-        <ul>
-          <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
-            <a href="javascript:;">{{_('m_payment.all')}}</a>
-          </li>
-          <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
-            <a href="javascript:;">{{_('m_payment.card')}}</a>
-          </li>
-          <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
-            <a href="javascript:;">{{_('m_payment.electronics')}}</a>
-          </li>
-          <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
-            <a href="javascript:;">{{_('m_payment.other')}}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="mall_main">
-        <template v-if="getList().length>0">
-          <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
-            <li :class="{unlock: item[0].islock === '1'}">
-              <div class="reward_box" @click="showProductDetail(item[0])">
-                <img :src="item[0].imgurl" alt>
-                <p class="reward_name">{{item[0].name}}</p>
-              </div>
-              <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
-            </li>
-            <li :class="{unlock: item[1] && item[1].islock === '1'}">
-              <template v-if="item[1]">
-                <div class="reward_box" @click="showProductDetail(item[1])">
-                  <img :src="item[1].imgurl" alt>
-                  <p class="reward_name">{{item[1].name}}</p>
-                </div>
-                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
-              </template>
-            </li>
-          </ul>
-        </template>
-        <div class="nomsg" v-else>No data yet</div>
-      </div>
-    </div>
-
-    <!-- 初始化全部的弹窗   -->
-    <popList></popList>
-
-    <!-- 历史兑换记录 -->
-    <!-- <transition name="pop_animate">
-      <div class="pop pop_list_redemption_record" v-if="pop_list_redemption_record">
-        <div class="pop_main">
-          <a href="javascript:" class="pop_close" @click="pop_list_redemption_record = false"></a>
-          <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
-          <div class="redemption_record">
-            <ul>
-              <li>
-                <div class="record_img">
-                  <img src="@assets/img/10g.png" alt>
-                  <p class="record_name">100 Amazon</p>
-                </div>
-                <div class="record_msg">
-                  <div class="record_view">
-                    <p>
-                      <span>{{_('m_payment.card_no')}}：</span>
-                      <i>1325144654685asdas</i>
-                    </p>
-                    <p>
-                      <span>{{_('m_payment.password')}}：</span>
-                      <i>1325144654asdasdasd</i>
-                    </p>
-                  </div>
-                  <span class="record_time">2018.08.10 18:52:32</span>
-                </div>
-              </li>
-              <li>
-                <div class="record_img">
-                  <img src="@assets/img/10g.png" alt>
-                  <p class="record_name">Iphone SE (16GB)</p>
-                </div>
-                <div class="record_msg">
-                  <div class="record_view">
-                    <p>
-                      <span>{{_('m_payment.goodstatus')}}:</span>
-                      <i>1</i>
-                    </p>
-                    <p>
-                      <span>{{_('m_payment.goodno')}}:</span>
-                      <i>2</i>
-                    </p>
-                  </div>
-                  <span class="record_time">2018.08.10 18:52:32</span>
-                </div>
-              </li>
-            </ul>
-            todo empty -
-          </div>
-        </div>
-      </div>
-    </transition>-->
-
-    <!-- 批量兑换 -->
-    <!-- <div class="pop pop_rechange_many hide">
-      <div class="pop_main">
-        <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">{{_('m_payment.exchange_success')}}</div>
-        <img class="product_img" src="@assets/img/amazon.png" alt>
-        <div class="product_msg">
-          <p class="product_name">100 Amazon</p>
-          <p class="product_count">({{_('m_payment.virtual_num', 3)}})</p>
-        </div>
-        <p class="product_use">1000 gift card for Amazon Mail</p>
-         批量兑换前
-        <div class="pop_rechange_many_before">
-          <p class="text_error"></p>
-          <div class="input_box">
-            <a href="javascript:;" class="btn btn_delete">-</a>
-            <input type="number">
-            <a href="javascript:;" class="btn btn_add">+</a>
-          </div>
-          <p class="text_tips">({{_('m_payment.exchange_tip', 50)}})</p>
-        </div>
-        批量兑换成功后
-        <div class="pop_rechange_many_main hide">
-          <ul>
-            <li class="pop_rechange_many_list">
-              <p>
-                <span class="card_num">{{_('m_payment.card_no')}}:</span>
-                <i class="card_psw">1256484359765815</i>
-              </p>
-              <p>
-                <span class="card_num">{{_('m_payment.password')}}:</span>
-                <i class="card_psw">654235654235654235654</i>
-              </p>
-            </li>
-            <li class="pop_rechange_many_list">
-              <p>
-                <span class="card_num">{{_('m_payment.card_no')}}:</span>
-                <i class="card_psw">1256484359765815</i>
-              </p>
-              <p>
-                <span class="card_num">{{_('m_payment.password')}}:</span>
-                <i class="card_psw">654235654235654235654235654235654235</i>
-              </p>
-            </li>
-            <li class="pop_rechange_many_list">
-              <p>
-                <span class="card_num">{{_('m_payment.card_no')}}:</span>
-                <i class="card_psw">1256484359765815</i>
-              </p>
-              <p>
-                <span class="card_num">{{_('m_payment.password')}}:</span>
-                <i class="card_psw">654235654235654235654235654235654235</i>
-              </p>
-            </li>
-          </ul>
-        </div>
-        <a href="javascript:" class="btn_default">{{_('m_payment.copy_all')}}</a>
-      </div>
-    </div>-->
-
-    <!-- 帮助弹层+ -->
-    <!-- <div class="pop pop_rule hide">
-      <div class="pop_main">
-        <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
-        <div class="pop_rule_main">
-          <p v-html="_('m_payment.rule1')"></p>
-          <p v-html="_('m_payment.rule2')"></p>
-          <p v-html="_('m_payment.rule3')"></p>
-        </div>
-      </div>
-    </div>-->
-
-    <!-- 兑换提醒弹层 -->
-    <!-- <div class="pop pop_rule" :class="{hide: !showDeliverPop}">
-      <div class="pop_main">
-        <a href="javascript:" class="pop_close" @click="showDeliverPop = false"></a>
-        <div class="h3 pop_name">{{_('m_payment.rule_title')}}</div>
-        <div class="pop_rule_main">
-          <p v-html="_('m_payment.rule1')"></p>
-          <p v-html="_('m_payment.rule2')"></p>
-          <p v-html="_('m_payment.rule3')"></p>
-        </div>
-        <div class="rechange_tips">
-           disable 不可点击
-          <a href="javascript:" class="btn_default" @click="confirmDeliverTip">{{_('m_payment.confirm')}}</a>
-          <div class="tips_form">
-            <input type="checkbox" v-model="deliverConfirm">
-            <i class="icon_checkbox" :class="{on: deliverConfirm}" @click="deliverConfirm = !deliverConfirm"></i>
-            <label for="tips">{{_('m_payment.rule_tip')}}</label>
-          </div>
-        </div>
-      </div>
-    </div>-->
-
-    <!-- 商品详情 -->
-    <!-- <div class="pop pop_product_detailed hide">
-      <div class="pop_main">
-        <a href="javascript:" class="pop_close"></a>
-        <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
-        <img class="product_img" src="@assets/img/amazon.png" alt>
-        <p class="product_name">100 Amazon</p>
-        <p class="product_use">1000 gift card for Amazon Mail</p>
-        <p class="product_nedd">
-          <i class="icon_gold"></i>10
-        </p>
-      </div>
-    </div>-->
-
-    <!-- 虚拟商品兑换弹层 -->
-    <!-- <div class="pop pop_exchange_virtual" :class="{hide: !showVirtualPop}">
-      <div class="pop_main">
-        <a href="javascript:" class="pop_close" @click="showVirtualPop = false"></a>
-        <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
-        <img class="product_img" src="@assets/img/amazon.png" alt>
-        <p class="product_name">100 Amazon</p>
-        <p class="product_use">1000 gift card for Amazon Mail</p>
-
-        <div class="card_msg card_msg_before" :class="{hide: virtualCard !== '' && virtualPass !== ''}">
-          <p>
-            <span>{{_('m_payment.card_no')}}:</span>
-            <i class="card_layer"></i>
-          </p>
-          <p>
-            <span>{{_('m_payment.password')}}:</span>
-            <i class="card_layer"></i>
-          </p>
-        </div>
-
-        <div class="card_msg card_msg_after" :class="{hide: virtualCard === '' || virtualPass === ''}">
-          <p>
-            <span>{{_('m_payment.card_no')}}:</span>
-            <i class="card_psw">{{virtualCard}}</i>
-            <a href="javascript:;" class="btn_copy" v-clipboard:copy="virtualCard" v-clipboard:success="copySucc" v-clipboard:error="copyError">{{_('m_payment.copy')}}</a>
-          </p>
-          <p>
-            <span>{{_('m_payment.password')}}:</span>
-            <i class="card_psw">{{virtualPass}}</i>
-            <a href="javascript:;" class="btn_copy" v-clipboard:copy="virtualPass" v-clipboard:success="copySucc" v-clipboard:error="copyError">{{_('m_payment.copy')}}</a>
-          </p>
-        </div>
-        <a href="javascript:" class="btn_default" @click="confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
-      </div>
-    </div>-->
-
-    <!-- 实物商品兑换弹层 -->
-    <!-- <div class="pop pop_exchange_real" :class="{hide: !showRealPop}">
-      <div class="pop_main">
-        <a href="javascript:" class="pop_close" @click="showRealPop = false"></a>
-        <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
-        <img class="product_img" src="@assets/img/10g.png" alt>
-        <p class="product_name">100 Amazon</p>
-        <p class="product_use">1000 gift card for Amazon Mail</p>
-
-        <div class="address_input" v-if="isCheckReal">
-          <input type="text" :placeholder="_('m_payment.name')" v-model="realName">
-          <input type="text" :placeholder="_('m_payment.phone')" v-model="realTel">
-
-          <input type="text" :placeholder="_('m_payment.address')" v-model="realAddress">
-          <input type="text" :placeholder="_('m_payment.code')" v-model="realPostcode">
-          <a href="javascript:" class="btn_default" @click="checkRealInfo">{{_('m_payment.exchange_confirm')}}</a>
-        </div>
-        <div class="address_check" v-else>
-          <p class="user_msg">
-            <span class="user_t">{{_('m_payment.name1')}}:</span>
-            <span class="user_c">{{realName}}</span>
-          </p>
-          <p class="user_msg">
-            <span class="user_t">{{_('m_payment.address1')}}:</span>
-            <span class="user_c">{{realAddress}}</span>
-          </p>
-          <p class="user_msg">
-            <span class="user_t">{{_('m_payment.phone1')}}:</span>
-            <span class="user_c">{{realTel}}</span>
-          </p>
-          <p class="user_msg">
-            <span class="user_t">{{_('m_payment.code1')}}:</span>
-            <span class="user_c">{{realPostcode}}</span>
-          </p>
-          <div class="btn_choose">
-            <a href="javascript:;" class="btn_back">{{_('m_payment.back_modify')}}</a>
-            <a href="javascript:;" class="btn_default">{{_('m_payment.exchange_now')}}</a>
-          </div>
-        </div>
-        兑换成功
-        <div class="icon_success"></div>
-      </div>
-    </div>-->
-
-    <!-- pop_common -->
-    <!-- <div class="pop pop_common ">
-      <div class="pop_main">
-        <a href="javascript:;" class="pop_close"></a>
-        <div class="pop_common_title"></div>
-        <p class="is-center">
-          因为获得充值送优惠，
-          <br>您还需要使用
-          <i class="color_white bold">5000猜球币</i> ，才可进行兑换哦~
-        </p>
-        <a href="javascript:;" class="btn_default">知道了</a>
-      </div>
-    </div>-->
-
-    <Toast v-if="toast"></Toast>
-  </div>
 </template>
 
 <script>
 import Toast from "@components/Toast.vue"
 import {
-    copySucc, copyError, formateBalance
+    copySucc, copyError, formateBalance, cbetLocal
 } from "@/common/util"
 // 弹窗
 import popList from "../components/Pop_list"
@@ -369,7 +112,8 @@ export default {
             },
             toast: false,
             showNews:false,
-            newsWidth:''
+            newsWidth:"",
+            userInfo: false
         }
     },
     components: {
@@ -382,6 +126,9 @@ export default {
                 return true
             }
             return false
+        },
+        isLog () {
+            return this.userInfo && this.userInfo.user_type !== "guest"
         }
     },
     methods: {
@@ -391,12 +138,18 @@ export default {
         recordListFn () {
             this.setPopStore("setRecordList", true)
         },
-        showProductDetail(e){
+        showProductDetail (e) {
             this.product_detail = e
             this.setPopStore("setProductDetail", true)
         },
         showDetail (item) {
             this.activeItem = item
+            if (!this.isLog) {
+                this.$toast({
+                    content: "please login"
+                })
+                return
+            }
             if (item.goodstype === "2") {
                 let deliverTip = window.localStorage && localStorage.getItem("noDeliverTip")
                 if (!deliverTip) {
@@ -420,9 +173,8 @@ export default {
         confirmVirtual () {
             this.exchange(this.activeItem)
                 .then(res => {
-                    console.log(res)
-                    this.virtualCard = "123456789"
-                    this.virtualPass = "987654321"
+                    this.virtualCard = res.data.cardno
+                    this.virtualPass = res.data.password
                 })
         },
         exchangeReal () {
@@ -463,6 +215,7 @@ export default {
         getUserInfo () {
             this.$get("/simple/user/info").then(res => {
                 this.avaliable_total = Number(res.data.avaliable_total)
+                this.userInfo = res.data
             })
         },
         addAddress () {
@@ -500,11 +253,32 @@ export default {
                     console.log(res)
                     return res
                 })
+        },
+        jumpToWithdraw () {
+            if (!this.isLog) {
+                this.$toast({
+                    content: "please login"
+                })
+                return
+            }
+            cbetLocal({
+                func: "jumpToLocal",
+                params: {
+                    content: "jp://ShopScene"
+                }
+            })
+        },
+        closeView () {
+            cbetLocal({
+                func: "closeWebview",
+                params:{
+                }
+            })
         }
     },
     mounted () {
-        this.$nextTick(()=>{
-            this.newsWidth = this.$refs.newsWidth.clientWidth + 'px'
+        this.$nextTick(() => {
+            this.newsWidth = this.$refs.newsWidth.clientWidth + "px"
         })
         this.getExchangeList()
         this.getUserInfo()
@@ -594,8 +368,8 @@ export default {
   color: #979ae1;
   transition: all 0.2s;
   background: url(../img/bg_new.png) no-repeat center;
-    background-size: cover;
-    font-size: 28/75rem;
+  background-size: cover;
+  font-size: 28/75rem;
   //   ul {
   //     display: flex;
   //     overflow: hidden;
@@ -611,7 +385,7 @@ export default {
   p {
     display: inline-block;
     white-space: nowrap;
-     animation: scrollNew 10s linear infinite;
+    animation: scrollNew 10s linear infinite;
   }
 }
 .mall {
