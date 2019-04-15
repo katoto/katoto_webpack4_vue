@@ -64,7 +64,7 @@
                         </li>
                     </ul>
                 </template>
-                <div class="nomsg" v-else>No data yet</div>
+                <div class="nomsg" v-else>{{ _('m_payment.sm_nodata') }}</div>
             </div>
         </div>
 
