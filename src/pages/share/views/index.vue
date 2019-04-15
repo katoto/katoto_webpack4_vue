@@ -178,7 +178,7 @@ export default {
         sendInviteCode () {
             // 发送邀请码
             let codeReg = /^[A-Z]+$/g
-            if (codeReg.test(this.friend_code)) {
+            if (this.friend_code && codeReg.test(this.friend_code.toUpperCase().trim())) {
                 // 发起请求
                 this.$post("/invite/use_code", {
                     code: this.friend_code.toUpperCase()
