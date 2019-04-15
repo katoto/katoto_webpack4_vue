@@ -30,7 +30,7 @@
                                 <template v-else>
                                     <p>
                                         <span>{{ _('m_payment.sm_orderStatus') }}：</span>
-                                        <i>{{item.orderstatus}}</i>
+                                        <i>{{formatStatus(item.orderstatus)}}</i>
                                     </p>
                                     <p>
                                         <span>{{ _('m_payment.goodno') }}：</span>
@@ -88,7 +88,6 @@ export default {
                 pagesize: "999"
             }).then(res => {
                 this.recordList = res.data.list
-                console.log(this.recordList)
                 this.allnum = res.data.allnum
             })
         },
@@ -97,6 +96,17 @@ export default {
                 ...e
             }
             this.app.setPopStore("setReal2card", true)
+        },
+        formatStatus (status) {
+            switch (status) {
+            case "2":
+                return _("m_payment.delivered")
+            case "3":
+                return _("m_payment.received")
+            case "4":
+                return _("m_payment.undelivered")
+            }
+            return ""
         }
     }
 }

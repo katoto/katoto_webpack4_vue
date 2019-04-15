@@ -47,7 +47,7 @@ export default {
         "m_payment.all": "All",
         "m_payment.sm_popget": "I get it",
         "m_payment.sm_nodata": "No data",
-        "m_payment.sm_orderStatus": "订单状态",
+        "m_payment.sm_orderStatus": "Status",
         "m_payment.sm_deliveryList": "Item changed to gift card due to the delivery issue",
         "m_payment.goodno": "Tracking Number",
         "m_payment.goodstatus": "Status",
