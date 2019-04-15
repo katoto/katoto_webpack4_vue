@@ -1,5 +1,6 @@
 export default {
     en: {
+        "m_share.sh_codeerr": "code error, please re-enter",
         "m_share.sh_win_inviteNum": "Both you and your friend received {0} coins",
         "m_share.sh_validday_time": "dd d HH h mm m",
         "m_share.sh_rule_1": "1. Duration: {0} - {1} </br> 2. Once your friend accepts your invitation, both of you will get {2} coins as reward (claim in Notifications). Each user can invite 30 friends at most. </br>3. The referral code is valid for 20 days since the referral log in to the APP. Each Facebook account can be invited only once. </br>4. MadSports reserves the right of cancelling or withdrawing the bonus, suspend user account or pursuing the legal responsibility if any breach occurs. </br>5. All rights reserved by MadSports.",
@@ -19,6 +20,7 @@ export default {
         "m_share.sh_bigTitle": "Invite Friends  Both Get <i data-msg='{0}'>{0}</i>"
     },
     india: {
+        "m_share.sh_codeerr": "गलत आमंत्रण कोड, कृपया पुनः दर्ज करें",
         "m_share.sh_win_inviteNum": "आपको और आपके मित्र दोनों को {0} सिक्के मिले",
         "m_share.sh_validday_time": "dd दिन, HH घंटे, mm मिनट",
         "m_share.sh_bigTitle": "मित्रों को आमंत्रित करेंदोनों <i data-msg='{0}'>{0}</i> पाएं",
