@@ -98,13 +98,13 @@ body {
       display: block;
       margin: 0 auto;
       padding: 66/75rem 0 0 0;
-      width: 666/75rem;
-      height: 212/75rem;
+      width: 679/75rem;
+      height: 210/75rem;
     }
     .bg2title {
       padding: 0;
-      width: 628/75rem;
-      height: 53/75rem;
+      width: 552/75rem;
+      height: 44/75rem;
     }
     .btn {
       a {
