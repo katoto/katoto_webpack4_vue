@@ -17,6 +17,10 @@ Vue.prototype.$toast = Toast
 window.$toast = Toast
 
 // cookie.set("appck", "OTk5OTM1NmVkMWUyMjczOTNiMmZkNTNiNzBiZjU1M2RjYzMyMjEw")
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d573d87c643a3bd4e0cf3c881a5cdbe359970a7
 let cookies = cookie.getAll()
 
 cookies.appck = decodeURIComponent(cookies.appck)
