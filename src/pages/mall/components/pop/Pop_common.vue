@@ -2,6 +2,7 @@
     <Pop class="pop_common" :show.sync="show">
         <div class="pop_common_title"></div>
         <!-- is-left is-right -->
+        <!--  m_payment.sm_popcom_exchange  -->
         <p class="is-center">
             因为获得充值送优惠，
             <br>您还需要使用
