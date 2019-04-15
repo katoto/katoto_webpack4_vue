@@ -16,7 +16,7 @@ require("@language").use(Vue, [mallLanguage])
 Vue.prototype.$toast = Toast
 window.$toast = Toast
 
-cookie.set("appck", "MTAwMDI1OGQ2ZmIyZmU0OThhYzcxYmFjZTY3YmE1NjEzZjkwNjJi")
+// cookie.set("appck", "MTAwMDI1OGQ2ZmIyZmU0OThhYzcxYmFjZTY3YmE1NjEzZjkwNjJi")
 
 let cookies = cookie.getAll()
 cookies.appck = decodeURIComponent(cookies.appck)

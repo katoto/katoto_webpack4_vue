@@ -13,6 +13,15 @@
     top: 0;
     left: 0;
 }
+.pop_layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 98;
+}
 .pop {
     position: absolute;
     top: 0;
@@ -38,8 +47,8 @@
     }
     .pop_close {
         position: absolute;
-        top: -34/75rem;
-        right: -36/75rem;
+        top: -45/75rem;
+        right: -45/75rem;
         width: 92/75rem;
         height: 92/75rem;
         overflow: hidden;
@@ -47,17 +56,22 @@
         background-size: cover;
     }
     .pop_name {
-        width: 367/75rem;
+        display: table;
+        min-width: 367/75rem;
+        max-width: 600/75rem;
+        width: auto;
         height: 60/75rem;
+        padding: 0 30/75rem;
         overflow: hidden;
         text-align: center;
         line-height: 60/75rem;
         background: url(../assets/img/pop_title_bg.png) no-repeat center;
-        background-size: cover;
+        background-size: 100%;
         font-size: 36/75rem;
         font-weight: bold;
         margin: 0 auto;
         color: #cbd9ef;
+        white-space: nowrap;
     }
     .btn_choose {
         display: flex;
@@ -92,7 +106,7 @@
         line-height: 46/75rem;
         font-size: 28/75rem;
         color: #c1c0c4;
-        .pop_main{
+        .pop_main {
             padding-bottom: 50/75rem;
         }
         .pop_common_title {
@@ -103,7 +117,7 @@
             background-size: cover;
             margin: 12/75rem auto 0;
         }
-        p{
+        p {
             width: 622/75rem;
             margin: 74/75rem auto;
         }
@@ -141,7 +155,7 @@
     }
 }
 
-.icon_gold{
+.icon_gold {
     display: block;
     width: 35/75rem;
     height: 36/75rem;

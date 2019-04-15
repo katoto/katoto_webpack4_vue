@@ -1,15 +1,17 @@
 <template>
-    <div class="pop-list">
-        <RecordList></RecordList>
-        <RechangeMany></RechangeMany>
-        <Real2card></Real2card>
-        <RuleHelp></RuleHelp>
-        <ExchangeTips></ExchangeTips>
-        <ProductDetail></ProductDetail>
-        <ExchangeVirtual></ExchangeVirtual>
-        <ExchangeReal></ExchangeReal>
-        <common></common>
-    </div>
+  <div class="pop-list">
+    <div class="pop_layer" v-show="app.hadPopShow"></div>
+    <RecordList></RecordList>
+    <RechangeMany></RechangeMany>
+    <Real2card></Real2card>
+    <RuleHelp></RuleHelp>
+    <ExchangeTips></ExchangeTips>
+    <ProductDetail></ProductDetail>
+    <ExchangeVirtual></ExchangeVirtual>
+    <ExchangeReal></ExchangeReal>
+    <common></common>
+    <confirm></confirm>
+  </div>
 </template>
 <script>
 import RecordList from "./pop/Pop_record_list.vue"
@@ -21,7 +23,9 @@ import ProductDetail from "./pop/Pop_product_detail.vue"
 import ExchangeVirtual from "./pop/Pop_exchange_virtual.vue"
 import ExchangeReal from "./pop/Pop_exchange_real.vue"
 import common from "./pop/Pop_common.vue"
+import confirm from "./pop/Pop_confirm.vue"
 export default {
+    inject: ["app"],
     components:{
         RecordList,
         RechangeMany,
@@ -31,7 +35,8 @@ export default {
         ProductDetail,
         ExchangeVirtual,
         ExchangeReal,
-        common
+        common,
+        confirm
     }
 }
 </script>
@@ -85,8 +90,9 @@ export default {
       flex-direction: column;
       justify-content: space-between;
       width: 330/75rem;
-      height: 157/75rem;
+      height: 200/75rem;
       overflow: hidden;
+      padding-top: 20/75rem;
       font-size: 22/75rem;
     }
     .record_view {
@@ -119,7 +125,7 @@ export default {
   &.pop_rule {
     .pop_rule_main {
       width: 616/75rem;
-      max-height: 1000/75rem;
+      max-height: 500/75rem;
       overflow: auto;
       padding: 12/75rem 16/75rem 20/75rem 40/75rem;
       line-height: 44/75rem;
@@ -262,7 +268,6 @@ export default {
       line-height: 57/75rem;
       padding: 0 12/75rem;
       font-size: 36/75rem;
-      background: #322e3e;
       font-weight: bold;
     }
     .product_count {
@@ -275,7 +280,6 @@ export default {
       padding: 0 22/75rem;
       line-height: 57/75rem;
       font-size: 20/75rem;
-      background: #322e3e;
       color: #807e86;
     }
     .pop_rechange_many_main {
@@ -428,7 +432,7 @@ export default {
       color: rgba(255, 255, 255, 1);
       font-size: 30/75rem;
       white-space: nowrap;
-    text-align: left;
+      text-align: left;
       i {
         font-size: 20/75rem;
       }
@@ -446,6 +450,11 @@ export default {
       }
       .user_c {
         width: 420/75rem;
+        word-break: break-all;
+        &.user_address {
+          margin-top: 5/75rem;
+          line-height: 40/75rem;
+        }
       }
       & + .user_msg {
         margin-top: 15/75rem;
@@ -491,6 +500,101 @@ export default {
       display: flex;
       justify-content: center;
       margin: 50/75rem auto 70/75rem;
+    }
+  }
+}
+.pop_congratulation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .pop_con_main {
+    position: relative;
+    width: 100%;
+    img{
+        display: block;
+         width: 230/75rem;
+    }
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 506/75rem;
+      position: absolute;
+      z-index: 1;
+      top: 115/75rem;
+      left: 0;
+      background: url(../img/pop_congratulation_light.png) no-repeat center;
+      background-size: 512/75rem;
+    }
+  }
+  .c_title,
+  .c_count,
+  .c_msg {
+    position: relative;
+    z-index: 2;
+  }
+  .c_title {
+    width: 486/75rem;
+    height: 231/75rem;
+    overflow: hidden;
+    margin: 72/75rem auto 42/75rem;
+    background: url(../img/pop_congratulation_title.png) no-repeat center;
+    background-size: cover;
+    // line-height: 80/75rem;
+    // font-size: 48/75rem;
+    // font-weight: bold;
+    // color: #f4d82a;
+    // &::before {
+    //   content: attr(data-msg);
+    //   background-image: linear-gradient(to bottom, #f4b632, #f4e228);
+    //   -webkit-background-clip: text;
+    //   -webkit-text-fill-color: transparent;
+    //   text-shadow: 0 0 10/75rem rgba(50, 46, 82, 0.75),
+    //     0 0 4/75rem rgba(124, 115, 163, 0.75);
+    //   line-height: 80/75rem;
+    //   font-size: 48/75rem;
+    //   font-weight: bold;
+    //   color: #f4d82a;
+    // }
+  }
+  .c_count {
+    padding-top: 139/75rem;
+    line-height: 66/75rem;
+    font-size: 50/75rem;
+    color: #febb2b;
+    font-weight: bold;
+    font-family: sans-eb;
+    background: url(../img/pop_congratulation_box.png) no-repeat center top;
+    background-size: 216/75rem;
+  }
+  .c_msg {
+    max-width: 94%;
+    margin: 0 auto;
+    line-height: 50/75rem;
+    font-size: 24/75rem;
+    opacity: 0.6;
+  }
+  .btn_default {
+    width: 213/75rem;
+    height: 76/75rem;
+    overflow: hidden;
+    margin: 90/75rem auto 0;
+    text-align: center;
+    line-height: 76/75rem;
+    font-size: 34/75rem;
+    font-weight: bold;
+    background: url(~@assets/img/btn_default.png) no-repeat center;
+    background-size: cover;
+    &.disable {
+      color: rgba(255, 255, 255, 0.4);
     }
   }
 }

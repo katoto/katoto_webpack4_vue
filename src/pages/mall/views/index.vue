@@ -335,6 +335,7 @@ export default {
       background: url(../../../assets/img/icon_list_redemption_record.png)
         no-repeat center;
       background-size: cover;
+      margin-right: 0;
     }
   }
   .my_balance {
@@ -397,7 +398,7 @@ export default {
 .mall_tab {
   width: 686/75rem;
   height: 58/75rem;
-  overflow: hidden;
+//   overflow: hidden;
   margin: 0 auto;
   border: 2/75rem solid #7952af;
   border-radius: 10/75rem;
@@ -427,14 +428,16 @@ export default {
       &::after {
         content: "";
         position: absolute;
-        left: -2px;
-        top: -1px;
+        right: -2/75rem;
+        top: -6/75rem;
         display: block;
         width: 33/75rem;
         height: 33/75rem;
         overflow: hidden;
         background: url(../../../assets/img/icon_hot.png) no-repeat center;
         background-size: cover;
+        transform-origin: right;
+        transform: scale(0.85);
       }
     }
   }

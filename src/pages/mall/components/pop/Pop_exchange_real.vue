@@ -23,7 +23,7 @@
             </p>
             <p class="user_msg">
                 <span class="user_t">{{_('m_payment.address1')}}:</span>
-                <span class="user_c">{{app.realAddress}}</span>
+                <span class="user_c user_address">{{app.realAddress}}</span>
             </p>
             <p class="user_msg">
                 <span class="user_t">{{_('m_payment.phone1')}}:</span>
