@@ -22,10 +22,10 @@
                 <i class="card_psw">{{app.virtualCard}}</i>
                 <a href="javascript:;" class="btn_copy" @click="copy(app.virtualCard)">{{_('m_payment.copy')}}</a>
             </p>
-            <p>
+            <p :class="{message: !app.virtualCardStatus}">
                 <span>{{_('m_payment.password')}}:</span>
-                <i class="card_psw">{{app.virtualPass}}</i>
-                <a href="javascript:;" class="btn_copy" @click="copy(app.virtualPass)">{{_('m_payment.copy')}}</a>
+                <i class="card_psw" :class="{message: app.virtualCardStatus}">{{app.virtualPass}}</i>
+                <a href="javascript:;" class="btn_copy" @click="copy(app.virtualPass)" v-if="app.virtualCardStatus">{{_('m_payment.copy')}}</a>
             </p>
         </div>
         <a href="javascript:" class="btn_default" @click="app.confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>

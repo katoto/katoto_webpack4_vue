@@ -198,6 +198,9 @@ export default {
         display: flex;
         align-items: center;
         height: 51/75rem;
+        &.message {
+          height: auto;
+        }
       }
       span {
         display: block;
@@ -223,7 +226,11 @@ export default {
       width: 360/75rem;
       overflow: hidden;
       margin-left: 24/75rem;
-      .text-overflow();
+      word-break: break-word;
+      white-space: normal;
+      &.message {
+        .text-overflow();
+      }
     }
     .btn_copy {
       position: relative;
@@ -519,8 +526,8 @@ export default {
     position: relative;
     width: 100%;
     img{
-        display: block;
-         width: 230/75rem;
+      display: block;
+      width: 230/75rem;
     }
     &::before {
       content: "";

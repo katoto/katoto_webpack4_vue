@@ -4,7 +4,7 @@
         <div class="redemption_record">
             <template v-if="recordList&&recordList.length>0">
                 <ul>
-                    <li v-for="item in recordList" :key="item.id">
+                    <li v-for="item in recordList" :key="item.id" @click="item.goodstype === '1' && app.showCardDetail(item.cardno, item.password, item.orderstatus === '1')">
                         <div class="record_img">
                             <img :src="item.imgurl" :alt="item.goodsdesc">
                             <p class="record_name">{{item.name}}</p>
@@ -12,7 +12,7 @@
                         <div class="record_msg">
                             <div class="record_view">
                                 <!-- goodstype  1虚拟卡 -->
-                                <template v-if="item.goodstype=='1'">
+                                <template v-if="item.goodstype === '1'">
                                     <p>
                                         <span>{{_('m_payment.card_no')}}：</span>
                                         <i>{{item.cardno}}</i>
@@ -23,7 +23,7 @@
                                     </p>
                                 </template>
                                 <!--  实物转换成虚拟卡  -->
-                                <div class="goods_unusual" v-else-if="item.goodstype=='2'&&item.orderstatus=='7'" @click="ShowPopReal2Card(item)">
+                                <div class="goods_unusual" v-else-if="item.goodstype === '2'&& item.orderstatus === '7'" @click="ShowPopReal2Card(item)">
                                     <p>{{ _('m_payment.sm_deliveryList') }}</p>
                                 </div>
                                 <!-- 实物正常派送中  -->
@@ -88,6 +88,7 @@ export default {
                 pagesize: "999"
             }).then(res => {
                 this.recordList = res.data.list
+                console.log(this.recordList)
                 this.allnum = res.data.allnum
             })
         },

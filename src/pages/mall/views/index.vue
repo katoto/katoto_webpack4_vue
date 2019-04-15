@@ -101,6 +101,7 @@ export default {
             pop_list_redemption_record:false,
             virtualCard: "",
             virtualPass: "",
+            virtualCardStatus: false,
             realName: "",
             realAddress: "",
             realTel: "",
@@ -113,7 +114,12 @@ export default {
             toast: false,
             showNews:false,
             newsWidth:"",
-            userInfo: false
+            userInfo: false,
+            covert_message: {
+                convert: {
+                    cards: []
+                }
+            }
         }
     },
     components: {
@@ -163,6 +169,12 @@ export default {
                 this.setPopStore("setExchangeVirtual", true)
             }
         },
+        showCardDetail (cardno, password, virtualCardStatus) {
+            this.virtualCard = cardno
+            this.virtualPass = password
+            this.virtualCardStatus = virtualCardStatus
+            this.setPopStore("setExchangeVirtual", true)
+        },
         confirmDeliverTip () {
             if (this.deliverConfirm) {
                 window.localStorage && localStorage.setItem("noDeliverTip", "true")
@@ -179,6 +191,7 @@ export default {
                 .then(res => {
                     this.virtualCard = res.data.cardno
                     this.virtualPass = res.data.password
+                    this.virtualCardStatus = res.data.review === "False"
                     this.getUserInfo()
                 })
         },
