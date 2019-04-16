@@ -1,36 +1,36 @@
 <template>
-    <Pop class="pop_exchange_virtual" :show.sync="show">
-        <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
-        <img class="product_img" src="@assets/img/amazon.png" alt>
-        <p class="product_name">100 Amazon</p>
-        <p class="product_use">1000 gift card for Amazon Mail</p>
+  <Pop class="pop_exchange_virtual" :show.sync="show">
+    <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
+    <img class="product_img" src="@assets/img/amazon.png" alt>
+    <p class="product_name">100 Amazon</p>
+    <p class="product_use">1000 gift card for Amazon Mail</p>
 
-        <div class="card_msg card_msg_before" :class="{hide: app.virtualCard !== '' && app.virtualPass !== ''}">
-            <p>
-                <span>{{_('m_payment.card_no')}}:</span>
-                <i class="card_layer"></i>
-            </p>
-            <p>
-                <span>{{_('m_payment.password')}}:</span>
-                <i class="card_layer"></i>
-            </p>
-        </div>
+    <div class="card_msg card_msg_before" :class="{hide: app.virtualCard !== '' && app.virtualPass !== ''}">
+      <p>
+        <span>{{_('m_payment.card_no')}}:</span>
+        <i class="card_layer"></i>
+      </p>
+      <p>
+        <span>{{_('m_payment.password')}}:</span>
+        <i class="card_layer"></i>
+      </p>
+    </div>
 
-        <div class="card_msg card_msg_after" :class="{hide: app.virtualCard === '' || app.virtualPass === ''}">
-            <p>
-                <span>{{_('m_payment.card_no')}}:</span>
-                <i class="card_psw">{{app.virtualCard}}</i>
-                <a href="javascript:;" class="btn_copy" @click="copy(app.virtualCard)">{{_('m_payment.copy')}}</a>
-            </p>
-            <p :class="{message: !app.virtualCardStatus}">
-                <span>{{_('m_payment.password')}}:</span>
-                <i class="card_psw" :class="{overflow: app.virtualCardStatus, message: !app.virtualCardStatus}">{{app.virtualPass}}</i>
-                <a href="javascript:;" class="btn_copy" @click="copy(app.virtualPass)" v-if="app.virtualCardStatus">{{_('m_payment.copy')}}</a>
-            </p>
-        </div>
-        <a href="javascript:" class="btn_default" @click="app.confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
-    </Pop>
-
+    <div class="card_msg card_msg_after" :class="{hide: app.virtualCard === '' || app.virtualPass === ''}">
+      <p>
+        <span>{{_('m_payment.card_no')}}:</span>
+        <i class="card_psw">{{app.virtualCard}}</i>
+        <a href="javascript:;" class="btn_copy" @click="copy(app.virtualCard)">{{_('m_payment.copy')}}</a>
+      </p>
+      <p :class="{message: !app.virtualCardStatus}">
+        <span>{{_('m_payment.password')}}:</span>
+        <i class="card_psw" :class="{overflow: app.virtualCardStatus, message: !app.virtualCardStatus}">{{app.virtualPass}}</i>
+        <a href="javascript:;" class="btn_copy" @click="copy(app.virtualPass)" v-if="app.virtualCardStatus">{{_('m_payment.copy')}}</a>
+      </p>
+    </div>
+    <div class="icon_success" v-if="app.virtualCard !== '' && app.virtualPass !== ''"></div>
+    <a href="javascript:" class="btn_default" @click="app.confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
+  </Pop>
 </template>
 <script>
 import Pop from "./Pop.vue"
