@@ -460,11 +460,13 @@ export default {
 }
 .total {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 390/75rem;
   height: 46/75rem;
   overflow: hidden;
   margin: 48/75rem auto 0;
+  padding: 15/75rem;
   border-radius: 20/75rem;
   background: #c24632;
   box-shadow: 0/75rem 3/75rem 5/75rem 0/75rem rgba(0, 0, 0, 0.19);
@@ -476,10 +478,10 @@ export default {
   }
   .total_title {
     color: #ffbd82;
-    margin-left: 15/75rem;
+    // margin-left: 15/75rem;
   }
   .total_person {
-    margin-left: 20/75rem;
+    // margin-left: 20/75rem;
     padding-left: 45/75rem;
     background: url(../img/img_invide_info_icon_friend.png) no-repeat left
       center;
@@ -487,7 +489,7 @@ export default {
     text-decoration: underline;
   }
   .total_money {
-    margin-left: 52/75rem;
+    // margin-left: 52/75rem;
     padding-left: 34/75rem;
     background: url(../img/img_invide_info_icon_coins.png) no-repeat left center;
     background-size: 27/75rem;
