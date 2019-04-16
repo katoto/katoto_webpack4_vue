@@ -51,7 +51,7 @@
                                 <img :src="item[0].imgurl" alt>
                                 <p class="reward_name">{{item[0].name}}</p>
                             </div>
-                            <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{item[0].needgolds}}</a>
+                            <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{formateBalance(item[0].needgolds)}}</a>
                         </li>
                         <li :class="{unlock: item[1] && item[1].islock === '1'}">
                             <template v-if="item[1]">
@@ -59,7 +59,7 @@
                                     <img :src="item[1].imgurl" alt>
                                     <p class="reward_name">{{item[1].name}}</p>
                                 </div>
-                                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{item[1].needgolds}}</a>
+                                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{formateBalance(item[1].needgolds)}}</a>
                             </template>
                         </li>
                     </ul>
