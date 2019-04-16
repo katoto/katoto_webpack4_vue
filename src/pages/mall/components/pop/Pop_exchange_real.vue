@@ -1,9 +1,9 @@
 <template>
     <Pop class="pop_exchange_real" :show.sync="show">
-        <div class="h3 pop_name">{{_('m_payment.exchange')}}</div>
-        <img class="product_img" src="@assets/img/10g.png" alt>
-        <p class="product_name">100 Amazon</p>
-        <p class="product_use">1000 gift card for Amazon Mail</p>
+        <div class="h3 pop_name">{{app.isChangeReal ? _('m_payment.exchanged') : _('m_payment.exchange')}}</div>
+        <img class="product_img" :src="app.activeItem.imgurl" alt>
+        <p class="product_name">{{app.activeItem.name}}</p>
+        <p class="product_use">{{app.activeItem.goodsdesc}}</p>
 
         <div class="address_input" v-if="!app.isCheckReal">
             <input type="text" :placeholder="_('m_payment.name')" v-model="app.realName">
@@ -34,11 +34,11 @@
                 <span class="user_c">{{app.realPostcode}}</span>
             </p>
             <div class="btn_choose">
-                <a href="javascript:;" class="btn_back" @click="app.isCheckReal = false">{{_('m_payment.back_modify')}}</a>
-                <a href="javascript:;" class="btn_default" @click="app.exchangeReal">{{_('m_payment.exchange_now')}}</a>
+                <a href="javascript:;" class="btn_back" @click="app.isCheckReal = false" v-if="!app.isChangeReal">{{_('m_payment.back_modify')}}</a>
+                <a href="javascript:;" class="btn_default" @click="app.isChangeReal ? close() : app.exchangeReal()">{{_('m_payment.exchange_now')}}</a>
             </div>
         </div>
-        <div class="icon_success" v-if="1"></div>
+        <div class="icon_success" v-if="app.isChangeReal"></div>
     </Pop>
 </template>
 <script>
@@ -62,7 +62,10 @@ export default {
     components:{
         Pop
     },
-    mounted () {
+    methods: {
+        close () {
+            this.show = false
+        }
     }
 }
 </script>

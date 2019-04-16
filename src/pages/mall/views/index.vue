@@ -107,6 +107,7 @@ export default {
             realTel: "",
             realPostcode: "",
             isCheckReal: false,
+            isChangeReal: false,
             gold_total: "0",
             aid: "",
             activeItem: {
@@ -158,6 +159,8 @@ export default {
             }
             if (item.goodstype === "2") {
                 let deliverTip = window.localStorage && localStorage.getItem("noDeliverTip")
+                // 重置 兑换成功状态
+                this.isChangeReal = false
                 if (!deliverTip) {
                     this.setPopStore("setRuleHelp", true)
                     return
@@ -198,7 +201,7 @@ export default {
         exchangeReal () {
             this.exchange(this.activeItem, this.aid)
                 .then(() => {
-                    this.setPopStore("setExchangeReal", false)
+                    this.isChangeReal = true
                     this.getUserInfo()
                 })
         },
@@ -272,7 +275,6 @@ export default {
             }
             return this.$post("/shops/goods/exchange", data)
                 .then(res => {
-                    console.log(res)
                     return res
                 })
         },
