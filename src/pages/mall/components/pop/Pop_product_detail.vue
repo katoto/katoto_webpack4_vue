@@ -12,6 +12,9 @@
 </template>
 <script>
 import Pop from "./Pop.vue"
+import {
+    formateBalance
+} from "@/common/util"
 export default {
     inject: ["app"],
     computed:{
@@ -36,7 +39,8 @@ export default {
     components:{
         Pop
     },
-    mounted () {
+    methods: {
+        formateBalance
     }
 }
 </script>
