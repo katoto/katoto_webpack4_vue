@@ -9,7 +9,7 @@
             </div>
             <div class="fr">
                 <a href="javascript:;" class="my_balance" @click="jumpToWithdraw">
-                    <span>{{formateBalance(avaliable_total)}}</span>
+                    <span>{{formateBalance(gold_total)}}</span>
                 </a>
                 <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
                 <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
@@ -107,7 +107,7 @@ export default {
             realTel: "",
             realPostcode: "",
             isCheckReal: false,
-            avaliable_total: "0",
+            gold_total: "0",
             aid: "",
             activeItem: {
             },
@@ -233,7 +233,7 @@ export default {
         },
         getUserInfo () {
             this.$get("/simple/user/info").then(res => {
-                this.avaliable_total = Number(res.data.avaliable_total)
+                this.gold_total = Number(res.data.gold_total)
                 this.userInfo = res.data
             })
         },
