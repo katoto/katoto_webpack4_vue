@@ -16,7 +16,7 @@ require("@language").use(Vue, [mallLanguage])
 Vue.prototype.$toast = Toast
 window.$toast = Toast
 
-// cookie.set("appck", "OTk5OTM1NmVkMWUyMjczOTNiMmZkNTNiNzBiZjU1M2RjYzMyMjEw")
+// cookie.set("appck", "MTAwMDIxMGRlZDk4MWQ2OTI3MDEyY2Y2MTU2MWRiZjczMjMxY2Nl")
 
 let cookies = cookie.getAll()
 

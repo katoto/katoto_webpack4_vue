@@ -38,7 +38,7 @@
                 <a href="javascript:;" class="btn_default" @click="app.exchangeReal">{{_('m_payment.exchange_now')}}</a>
             </div>
         </div>
-        <div class="icon_success"></div>
+        <div class="icon_success" v-if="1"></div>
     </Pop>
 </template>
 <script>

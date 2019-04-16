@@ -1,17 +1,17 @@
 <template>
-    <div class="pop-list">
-        <div class="pop_layer" v-show="app.hadPopShow"></div>
-        <RecordList></RecordList>
-        <RechangeMany></RechangeMany>
-        <Real2card></Real2card>
-        <RuleHelp></RuleHelp>
-        <ExchangeTips></ExchangeTips>
-        <ProductDetail></ProductDetail>
-        <ExchangeVirtual></ExchangeVirtual>
-        <ExchangeReal></ExchangeReal>
-        <common></common>
-        <confirm></confirm>
-    </div>
+  <div class="pop-list">
+    <div class="pop_layer" v-show="app.hadPopShow"></div>
+    <RecordList></RecordList>
+    <RechangeMany></RechangeMany>
+    <Real2card></Real2card>
+    <RuleHelp></RuleHelp>
+    <ExchangeTips></ExchangeTips>
+    <ProductDetail></ProductDetail>
+    <ExchangeVirtual></ExchangeVirtual>
+    <ExchangeReal></ExchangeReal>
+    <common></common>
+    <confirm></confirm>
+  </div>
 </template>
 <script>
 import RecordList from "./pop/Pop_record_list.vue"
@@ -481,18 +481,6 @@ export default {
     .btn_choose {
       margin: 74/75rem auto 53/75rem;
     }
-    .icon_success {
-      position: absolute;
-      top: 170/75rem;
-      right: 200/75rem;
-      width: 74/75rem;
-      height: 74/75rem;
-      overflow: hidden;
-      background: #39b607 url(../../../assets/img/pop_confirm.png) no-repeat
-        center;
-      background-size: 55/75rem;
-      border-radius: 50%;
-    }
   }
   &.pop_product_detailed {
     text-align: center;
@@ -531,7 +519,7 @@ export default {
   .pop_con_main {
     position: relative;
     width: 100%;
-    img{
+    img {
       display: block;
       width: 230/75rem;
     }
@@ -609,6 +597,32 @@ export default {
     &.disable {
       color: rgba(255, 255, 255, 0.4);
     }
+  }
+}
+.icon_success {
+    position: absolute;
+    top: 170/75rem;
+    right: 200/75rem;
+    width: 74/75rem;
+    height: 74/75rem;
+    overflow: hidden;
+    background: #39b607 url(../../../assets/img/pop_confirm.png) no-repeat
+    center;
+    background-size: 55/75rem;
+    border-radius: 50%;
+    animation: icon_success_enter 0.2s;
+}
+@keyframes icon_success_enter {
+  0% {
+    opacity: 0;
+    transform: scale(5);
+  }
+  40%{
+      opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: 1;
   }
 }
 </style>
