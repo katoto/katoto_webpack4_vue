@@ -160,8 +160,8 @@ export function formateBalance (val = 0) {
     val = Number(val)
     if (isNaN(val)) {return false}
     if (val >= 1000000000) {
-        let num = formatNum(Number(accDiv(val, 1000000000)).toFixed(3), 2)
-        return `${num}B`
+        let num = formatNum(Number(accDiv(val, 1000000000)).toFixed(3), 1)
+        return `${num}b`
     } else if (val >= 1000000) {
         let num = formatNum(Number(accDiv(val, 1000000)).toFixed(3), 2)
         return `${num}m`

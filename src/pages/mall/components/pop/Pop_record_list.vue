@@ -99,6 +99,8 @@ export default {
         },
         formatStatus (status) {
             switch (status) {
+            case "1":
+                return _("m_payment.undelivered")
             case "2":
                 return _("m_payment.delivered")
             case "3":
