@@ -4,7 +4,7 @@
         <div class="redemption_record">
             <template v-if="recordList&&recordList.length>0">
                 <ul>
-                    <li v-for="item in recordList" :key="item.id" @click="handlerClick(item)">
+                    <li v-for="item in recordList" :key="item.oid" @click="handlerClick(item)">
                         <div class="record_img">
                             <img :src="item.imgurl" :alt="item.goodsdesc">
                             <p class="record_name">{{item.goodsname}}</p>
@@ -88,6 +88,7 @@ export default {
                 pagesize: "999"
             }).then(res => {
                 this.recordList = res.data.list
+                console.log(this.recordList)
                 this.allnum = res.data.allnum
             })
         },
@@ -112,10 +113,14 @@ export default {
         },
         handlerClick (item) {
             if (item.goodstype === "1") {
-                this.app.showCardDetail(item.cardno, item.password, item.orderstatus === "1")
+                this.app.showCardDetail(item.cardno, item.password, item.orderstatus === "1", item)
+                return
             } else if (item.goodstype === "2"&& item.orderstatus === "7") {
                 this.ShowPopReal2Card(item)
+                return
             }
+            this.app.activeItem = item
+            this.app.setPopStore("setExchangedReal", true)
         }
     }
 }

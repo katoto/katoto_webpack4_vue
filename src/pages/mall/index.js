@@ -3,6 +3,7 @@ import Vue from "vue"
 import index from "./views/index.vue"
 import mallLanguage from "@pack/mall"
 import simpleAjax from "@plugins/simpleAjax"
+import commonPlugin from "@plugins/common"
 import Toast from "@/components/toast/toast.js"
 import {
     cookie
@@ -22,7 +23,7 @@ let cookies = cookie.getAll()
 
 cookies.appck = decodeURIComponent(cookies.appck)
 cookies.ck = cookies.appck
-
+Vue.use(commonPlugin)
 Vue.use(simpleAjax, {
     commonParams: {
         platform: "android",
@@ -31,6 +32,7 @@ Vue.use(simpleAjax, {
         ...cookies
     }
 })
+
 new Vue({
     el: "#app",
     template: "<index />",

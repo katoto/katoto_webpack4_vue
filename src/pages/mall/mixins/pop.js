@@ -12,7 +12,8 @@ export default {
                 showExchangeReal: false,
                 showCommon: false,
                 showReal2card: false,
-                showCongratulation: false
+                showCongratulation: false,
+                showExchangedReal: false
             },
             product_detail:{
                 activity_imgurl: "",
@@ -89,7 +90,11 @@ export default {
             case "setCongratulation":
                 this.pop.showCongratulation = data
                 break
+            case "setExchangedReal":
+                this.pop.showExchangedReal = data
+                break
             }
+
         }
     }
 }

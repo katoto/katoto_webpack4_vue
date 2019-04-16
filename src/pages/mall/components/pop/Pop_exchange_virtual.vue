@@ -29,7 +29,7 @@
             </p>
         </div>
         <div class="icon_success" v-if="isChange"></div>
-        <a href="javascript:" class="btn_default" @click="app.confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
+        <a href="javascript:" class="btn_default" @click="app.confirmVirtual" v-hidden="isChange">{{_('m_payment.exchange_confirm')}}</a>
     </Pop>
 </template>
 <script>

@@ -172,7 +172,8 @@ export default {
                 this.setPopStore("setExchangeVirtual", true)
             }
         },
-        showCardDetail (cardno, password, virtualCardStatus) {
+        showCardDetail (cardno, password, virtualCardStatus, item) {
+            this.activeItem = item
             this.virtualCard = cardno
             this.virtualPass = password
             this.virtualCardStatus = virtualCardStatus

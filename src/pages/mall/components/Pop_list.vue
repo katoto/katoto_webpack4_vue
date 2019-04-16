@@ -9,8 +9,9 @@
         <ProductDetail></ProductDetail>
         <ExchangeVirtual></ExchangeVirtual>
         <ExchangeReal></ExchangeReal>
-        <common></common>
-        <confirm></confirm>
+        <ExchangedReal></ExchangedReal>
+        <!-- <common></common>
+        <confirm></confirm> -->
     </div>
 </template>
 <script>
@@ -22,8 +23,9 @@ import ExchangeTips from "./pop/Pop_exchange_tips.vue"
 import ProductDetail from "./pop/Pop_product_detail.vue"
 import ExchangeVirtual from "./pop/Pop_exchange_virtual.vue"
 import ExchangeReal from "./pop/Pop_exchange_real.vue"
-import common from "./pop/Pop_common.vue"
-import confirm from "./pop/Pop_confirm.vue"
+// import common from "./pop/Pop_common.vue"
+// import confirm from "./pop/Pop_confirm.vue"
+import ExchangedReal from "./pop/Pop_exchanged_real"
 export default {
     inject: ["app"],
     components:{
@@ -35,8 +37,9 @@ export default {
         ProductDetail,
         ExchangeVirtual,
         ExchangeReal,
-        common,
-        confirm
+        // common,
+        // confirm,
+        ExchangedReal
     }
 }
 </script>
