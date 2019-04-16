@@ -54,6 +54,7 @@ export default {
         "m_payment.shoptitle": "Get extra coins by first weekly Paypal top-up"
     },
     india:{
+        "m_payment.networkError": "Network Error",
         "m_payment.sm_popcom_exchange": "            因为获得充值送优惠，\n            <br>您还需要使用\n            <i class=\"color_white bold\">5000猜球币</i> ，才可进行兑换哦~",
         "m_payment.shoptitle": "Get extra coins by first weekly Paypal top-up",
         "m_payment.goodstatus": "Status",
@@ -70,7 +71,7 @@ export default {
         "m_payment.confirm": "Confirm",
         "m_payment.card_no": "Card No.",
         "m_payment.password": "Password",
-        "m_payment.copy": "Copy",
+        "m_payment.copy": "प्रतिलिपि",
         "m_payment.rule_title": "कृपया ध्यान दें: ",
         "m_payment.rule1": "1. सभी आइटम निश्चित रूप से वितरित नहीं किए जा सकते हैं, कृपया सही पोस्टकोड दर्ज करें।",
         "m_payment.rule2": "2. यदि आइटम वितरित नहीं किया जा सकता है तो आपको सूचनाएं मिलेंगी। इस मामले में, ईमेल के माध्यम से हमसे संपर्क करने के लिए आपका स्वागत है। (support@madcricket.com)",
@@ -103,7 +104,7 @@ export default {
         "m_payment.sm_received": "प्राप्त होने के लिए तैयार है",
         "m_payment.sm_popget": "I get it",
         "m_payment.sm_nodata": "No data",
-        "m_payment.sm_orderStatus": "订单状态",
+        "m_payment.sm_orderStatus": "Status",
         "m_payment.sm_deliveryList": "डिलीवरी के कारण आइटम गिफ्ट कार्ड में बदल गया।"
     }
 }

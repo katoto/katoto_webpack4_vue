@@ -159,12 +159,21 @@ export function formatMoney (s) {
 export function formateBalance (val = 0) {
     val = Number(val)
     if (isNaN(val)) {return false}
-    if (val >= 1000000) {
-        return `${(val / 1000000).toFixed(2)}m`
+    if (val >= 1000000000) {
+        let num = formatNum(Number(accDiv(val, 1000000000)).toFixed(3), 2)
+        return `${num}B`
+    } else if (val >= 1000000) {
+        let num = formatNum(Number(accDiv(val, 1000000)).toFixed(3), 2)
+        return `${num}m`
     } else if (val > 1000) {
-        return `${(val / 1000).toFixed(2)}k`
+        let num = formatNum(Number(accDiv(val, 1000)).toFixed(3), 2)
+        return `${num}k`
     }
     return val
+}
+
+export function formatNum (num, bit = 5) {
+    return accDiv(Math.floor(accMul(Number(num), Math.pow(10, bit))), Math.pow(10, bit))
 }
 
 export function formateEmail (email, isFull) {

@@ -5,7 +5,7 @@
         <p class="product_name">{{message.name}}</p>
         <p class="product_use">{{message.goodsdesc}}</p>
         <p class="product_nedd">
-            <i class="icon_gold"></i>{{message.needgolds}}
+            <i class="icon_gold"></i>{{formateBalance(message.needgolds)}}
         </p>
     </Pop>
 
