@@ -274,6 +274,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      white-space: nowrap;
     }
     .product_name {
       line-height: 57/75rem;
@@ -292,6 +293,7 @@ export default {
       line-height: 57/75rem;
       font-size: 20/75rem;
       color: #807e86;
+      white-space: nowrap;
     }
     .pop_rechange_many_main {
       width: 616/75rem;
