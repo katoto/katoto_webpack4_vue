@@ -7,7 +7,7 @@
                     <li v-for="item in recordList" :key="item.id" @click="handlerClick(item)">
                         <div class="record_img">
                             <img :src="item.imgurl" :alt="item.goodsdesc">
-                            <p class="record_name">{{item.name}}</p>
+                            <p class="record_name">{{item.goodsname}}</p>
                         </div>
                         <div class="record_msg">
                             <div class="record_view">

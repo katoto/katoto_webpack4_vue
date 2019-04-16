@@ -1,17 +1,17 @@
 <template>
-  <div class="pop-list">
-    <div class="pop_layer" v-show="app.hadPopShow"></div>
-    <RecordList></RecordList>
-    <RechangeMany></RechangeMany>
-    <Real2card></Real2card>
-    <RuleHelp></RuleHelp>
-    <ExchangeTips></ExchangeTips>
-    <ProductDetail></ProductDetail>
-    <ExchangeVirtual></ExchangeVirtual>
-    <ExchangeReal></ExchangeReal>
-    <common></common>
-    <confirm></confirm>
-  </div>
+    <div class="pop-list">
+        <div class="pop_layer" v-show="app.hadPopShow"></div>
+        <RecordList></RecordList>
+        <RechangeMany></RechangeMany>
+        <Real2card></Real2card>
+        <RuleHelp></RuleHelp>
+        <ExchangeTips></ExchangeTips>
+        <ProductDetail></ProductDetail>
+        <ExchangeVirtual></ExchangeVirtual>
+        <ExchangeReal></ExchangeReal>
+        <common></common>
+        <confirm></confirm>
+    </div>
 </template>
 <script>
 import RecordList from "./pop/Pop_record_list.vue"
@@ -80,6 +80,7 @@ export default {
       justify-content: center;
       align-items: center;
       width: 230/75rem;
+      white-space: nowrap;
       img {
       }
       .record_name {
@@ -600,17 +601,17 @@ export default {
   }
 }
 .icon_success {
-    position: absolute;
-    top: 170/75rem;
-    right: 200/75rem;
-    width: 74/75rem;
-    height: 74/75rem;
-    overflow: hidden;
-    background: #39b607 url(../../../assets/img/pop_confirm.png) no-repeat
+  position: absolute;
+  top: 170/75rem;
+  right: 200/75rem;
+  width: 74/75rem;
+  height: 74/75rem;
+  overflow: hidden;
+  background: #39b607 url(../../../assets/img/pop_confirm.png) no-repeat
     center;
-    background-size: 55/75rem;
-    border-radius: 50%;
-    animation: icon_success_enter 0.2s;
+  background-size: 55/75rem;
+  border-radius: 50%;
+  animation: icon_success_enter 0.2s;
 }
 @keyframes icon_success_enter {
   0% {
@@ -618,7 +619,7 @@ export default {
     transform: scale(5);
   }
   40%{
-      opacity: 1;
+    opacity: 1;
   }
   100% {
     opacity: 1;
