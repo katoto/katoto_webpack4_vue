@@ -1,11 +1,11 @@
 <template>
     <Pop class="pop_exchange_virtual" :show.sync="show">
-        <div class="h3 pop_name">{{_('m_payment.exchange_title')}}</div>
+        <div class="h3 pop_name">{{isChange ? _('m_payment.exchanged') : _('m_payment.exchange_title')}}</div>
         <img class="product_img" :src="app.activeItem.imgurl" alt>
         <p class="product_name">{{app.activeItem.name}}</p>
         <p class="product_use">{{app.activeItem.goodsdesc}}</p>
 
-        <div class="card_msg card_msg_before" :class="{hide: app.virtualCard !== '' && app.virtualPass !== ''}">
+        <div class="card_msg card_msg_before" :class="{hide: isChange}">
             <p>
                 <span>{{_('m_payment.card_no')}}:</span>
                 <i class="card_layer"></i>
@@ -16,7 +16,7 @@
             </p>
         </div>
 
-        <div class="card_msg card_msg_after" :class="{hide: app.virtualCard === '' || app.virtualPass === ''}">
+        <div class="card_msg card_msg_after" :class="{hide: !isChange}">
             <p>
                 <span>{{_('m_payment.card_no')}}:</span>
                 <i class="card_psw">{{app.virtualCard}}</i>
@@ -28,7 +28,7 @@
                 <a href="javascript:;" class="btn_copy" @click="copy(app.virtualPass)" v-if="app.virtualCardStatus">{{_('m_payment.copy')}}</a>
             </p>
         </div>
-        <div class="icon_success" v-if="app.virtualCard !== '' && app.virtualPass !== ''"></div>
+        <div class="icon_success" v-if="isChange"></div>
         <a href="javascript:" class="btn_default" @click="app.confirmVirtual">{{_('m_payment.exchange_confirm')}}</a>
     </Pop>
 </template>
@@ -45,13 +45,15 @@ export default {
                 return this.app.pop.showExchangeVirtual
             },
             set: function (isShow) {
-                console.log(this.app.activeItem)
                 if (isShow) {
                     this.app.setPopStore("setExchangeVirtual", true)
                 } else {
                     this.app.setPopStore("setExchangeVirtual", false)
                 }
             }
+        },
+        isChange () {
+            return this.app.virtualCard !== "" && this.app.virtualPass !== ""
         }
     },
     components:{

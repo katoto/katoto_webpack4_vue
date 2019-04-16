@@ -56,7 +56,7 @@ export default {
     methods: {
         copy,
         getCopyData () {
-            let data = this.message.convert.cards.map(item => `${_("m_payment.card_no")}:${item.password}\n${_("m_payment.password")}:${item.cardno}`)
+            let data = this.message.convert.cards.map(item => `${_("m_payment.card_no")}:${item.cardno}\n${_("m_payment.password")}:${item.password}`)
             return data.join("\n-------------------\n")
         }
     }

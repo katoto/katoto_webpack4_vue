@@ -10,7 +10,7 @@ export default {
         "m_payment.received": "Received",
         "m_payment.delivered": "Delivered",
         "m_payment.undelivered": "Undelivered",
-        "m_payment.problem": "Item changed to gift card due to the delivery issue.Tap to see card info",
+        "m_payment.problem": "Item changed to gift card due to the delivery issue.\r\nTap to see card info",
         "m_payment.exchange_success": "Exchange Successful",
         "m_payment.exchange_tip": "Max {0} cards",
         "m_payment.virtual_tip": "Batch exchange, tap to see all cards info",

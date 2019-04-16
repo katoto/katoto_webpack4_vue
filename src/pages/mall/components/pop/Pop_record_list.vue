@@ -4,7 +4,7 @@
         <div class="redemption_record">
             <template v-if="recordList&&recordList.length>0">
                 <ul>
-                    <li v-for="item in recordList" :key="item.id" @click="item.goodstype === '1' && app.showCardDetail(item.cardno, item.password, item.orderstatus === '1')">
+                    <li v-for="item in recordList" :key="item.id" @click="handlerClick(item)">
                         <div class="record_img">
                             <img :src="item.imgurl" :alt="item.goodsdesc">
                             <p class="record_name">{{item.name}}</p>
@@ -23,8 +23,8 @@
                                     </p>
                                 </template>
                                 <!--  实物转换成虚拟卡  -->
-                                <div class="goods_unusual" v-else-if="item.goodstype === '2'&& item.orderstatus === '7'" @click="ShowPopReal2Card(item)">
-                                    <p>{{ _('m_payment.sm_deliveryList') }}</p>
+                                <div class="goods_unusual" v-else-if="item.goodstype === '2'&& item.orderstatus === '7'">
+                                    <p v-html="_('m_payment.problem')"></p>
                                 </div>
                                 <!-- 实物正常派送中  -->
                                 <template v-else>
@@ -109,6 +109,13 @@ export default {
                 return _("m_payment.undelivered")
             }
             return ""
+        },
+        handlerClick (item) {
+            if (item.goodstype === "1") {
+                this.app.showCardDetail(item.cardno, item.password, item.orderstatus === "1")
+            } else if (item.goodstype === "2"&& item.orderstatus === "7") {
+                this.ShowPopReal2Card(item)
+            }
         }
     }
 }
