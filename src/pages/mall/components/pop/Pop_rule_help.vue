@@ -9,9 +9,8 @@
         <div class="rechange_tips">
             <a href="javascript:" class="btn_default" @click="app.confirmDeliverTip">{{_('m_payment.confirm')}}</a>
             <div class="tips_form">
-                <input type="checkbox" v-model="app.deliverConfirm">
-                <i class="icon_checkbox" :class="{on: app.deliverConfirm}" @click="app.deliverConfirm = !app.deliverConfirm"></i>
-                <label for="tips" @click="app.deliverConfirm = !app.deliverConfirm">{{_('m_payment.rule_tip')}}</label>
+                <i class="icon_checkbox" :class="{on: deliverConfirm}" @click="deliverConfirm = !deliverConfirm"></i>
+                <label for="tips" @click="deliverConfirm = !deliverConfirm">{{_('m_payment.rule_tip')}}</label>
             </div>
         </div>
     </Pop>
@@ -21,8 +20,8 @@
 import Pop from "./Pop.vue"
 export default {
     inject: ["app"],
-    computed:{
-        show:{
+    computed: {
+        show: {
             get: function () {
                 return this.app.pop.showRuleHelp
             },
@@ -35,10 +34,22 @@ export default {
             }
         }
     },
-    components:{
-        Pop
+    data () {
+        return {
+            deliverConfirm: false
+        }
     },
-    mounted () {
+    watch: {
+        deliverConfirm (val) {
+            if (val) {
+                window.localStorage.setItem("no_deliver_tip", "true")
+            } else {
+                window.localStorage.removeItem("no_deliver_tip")
+            }
+        }
+    },
+    components: {
+        Pop
     }
 }
 </script>

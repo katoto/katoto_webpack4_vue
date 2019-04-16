@@ -1,15 +1,14 @@
 <template>
     <!-- toast -->
-    <div v-if="messageArr && messageArr.length>0">
-        <!-- <transition name="toast"> -->
-        <div class="toast">
-            <div class="toast_main">
-                <span v-for="(item,index) in messageArr" :key="index">{{ item.content }}</span>
+    <div v-if="messageArr && messageArr.length > 0">
+        <transition name="toast">
+            <div class="toast">
+                <div class="toast_main">
+                    <span v-for="item in messageArr" :key="item.name">{{ item.content }}</span>
+                </div>
             </div>
-        </div>
-        <!-- </transition> -->
+        </transition>
     </div>
-
 </template>
 
 <script>
@@ -27,19 +26,14 @@ export default {
     methods: {
         addNotice (notice) {
             const name = getuid()
-            if (!notice.duration) {
-                notice = Object.assign({
-                    duration: 30000
-                }, notice)
+            notice = {
+                ...notice,
+                name
             }
-            notice = Object.assign({
-                name: name
-            }, notice)
-            let duration = notice.duration
             this.messageArr.push(notice)
             setTimeout(() => {
                 this.remove(name)
-            }, parseFloat(duration))
+            }, Number(notice.duration))
         },
         remove (name) {
             const messageArr = this.messageArr
@@ -50,8 +44,6 @@ export default {
                 }
             }
         }
-    },
-    mounted () {
     }
 }
 </script>

@@ -11,17 +11,12 @@
                 <a href="javascript:;" class="my_balance" @click="jumpToWithdraw">
                     <span>{{formateBalance(gold_total)}}</span>
                 </a>
-                <a href="javascript:;" class="btn btn_list_redemption_record" @click="recordListFn"></a>
+                <a href="javascript:;" class="btn btn_list_redemption_record" @click="setPopStore('setRecordList', true)"></a>
                 <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
             </div>
         </div>
         <!-- todo 提成公共组件轮询新闻 -->
         <div class="news">
-            <!-- <ul>
-            <li :style="{width:newsWidth}" ref="newsWidth">
-                {{_('m_payment.mall_title')}}
-            </li>
-      </ul>-->
             <div class="news_main">
                 <p :style="{width:newsWidth}" ref="newsWidth">{{_('m_payment.mall_title')}}</p>
             </div>
@@ -70,14 +65,12 @@
 
         <!-- 初始化全部的弹窗   -->
         <popList></popList>
-        <Toast v-if="toast"></Toast>
     </div>
 </template>
 
 <script>
-import Toast from "@components/Toast.vue"
 import {
-    copySucc, copyError, formateBalance, cbetLocal
+    copySucc, copyError, formateBalance, cbetLocal, cookie
 } from "@/common/util"
 // 弹窗
 import popList from "../components/Pop_list"
@@ -93,12 +86,7 @@ export default {
     data () {
         return {
             acitveClass: "all",
-            deliverConfirm: false,
-            showDeliverPop: false,
-            showRealPop: false,
-            showVirtualPop: false,
             exchangeList: [],
-            pop_list_redemption_record:false,
             virtualCard: "",
             virtualPass: "",
             virtualCardStatus: false,
@@ -110,11 +98,8 @@ export default {
             isChangeReal: false,
             gold_total: "0",
             aid: "",
-            activeItem: {
-            },
-            toast: false,
-            showNews:false,
-            newsWidth:"",
+            activeItem: {},
+            newsWidth: "",
             userInfo: false,
             covert_message: {
                 convert: {
@@ -124,8 +109,7 @@ export default {
         }
     },
     components: {
-        popList,
-        Toast
+        popList
     },
     computed: {
         checkRealInfo () {
@@ -142,9 +126,6 @@ export default {
         copySucc,
         copyError,
         formateBalance,
-        recordListFn () {
-            this.setPopStore("setRecordList", true)
-        },
         showProductDetail (e) {
             this.product_detail = e
             this.setPopStore("setProductDetail", true)
@@ -158,7 +139,7 @@ export default {
                 return
             }
             if (item.goodstype === "2") {
-                let deliverTip = window.localStorage && localStorage.getItem("noDeliverTip")
+                let deliverTip = window.localStorage.getItem("no_deliver_tip")
                 // 重置 兑换成功状态
                 this.isChangeReal = false
                 if (!deliverTip) {
@@ -180,9 +161,6 @@ export default {
             this.setPopStore("setExchangeVirtual", true)
         },
         confirmDeliverTip () {
-            if (this.deliverConfirm) {
-                window.localStorage && localStorage.setItem("noDeliverTip", "true")
-            }
             this.setPopStore("setRuleHelp", false)
             this.setPopStore("setExchangeReal", true)
         },
@@ -296,8 +274,7 @@ export default {
         closeView () {
             cbetLocal({
                 func: "closeWebview",
-                params:{
-                }
+                params: {}
             })
         }
     },

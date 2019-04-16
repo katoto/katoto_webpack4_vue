@@ -521,6 +521,9 @@ export function md5 (md5str) {
 export const cookie = {
     // 不设置expires等于关闭浏览器失效
     set (name, value, expired) {
+        if (expired === "always") {
+            expired = 99999
+        }
         if (!isNaN(Number(expired))) {
             let date = new Date()
             date.setDate(Number(expired))
