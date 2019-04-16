@@ -17,7 +17,7 @@ export default {
         "m_share.sh_invited_friends": "Invited: ",
         "m_share.sh_btc_copy": "Copy",
         "m_share.sh_refer_code": "Your code : ",
-        "m_share.sh_bigTitle": "Invite Friends  Both Get <i data-msg='{0}'>{0}</i>"
+        "m_share.sh_bigTitle": "Invite Friends Both Get <i data-msg='{0}'>{0}</i>"
     },
     india: {
         "m_share.sh_codeerr": "गलत आमंत्रण कोड, कृपया पुनः दर्ज करें",
