@@ -34,7 +34,7 @@
                                     </p>
                                     <p>
                                         <span>{{ _('m_payment.goodno') }}：</span>
-                                        <i>{{item.sid}}</i>
+                                        <i>{{item.sid || '-'}}</i>
                                     </p>
                                 </template>
 

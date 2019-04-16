@@ -46,7 +46,7 @@ export default {
         "m_payment.card": "Card",
         "m_payment.all": "All",
         "m_payment.sm_popget": "I get it",
-        "m_payment.sm_nodata": "No data",
+        "m_payment.sm_nodata": "No Data",
         "m_payment.sm_orderStatus": "Status",
         "m_payment.sm_deliveryList": "Item changed to gift card due to the delivery issue",
         "m_payment.goodno": "Tracking Number",
@@ -103,7 +103,7 @@ export default {
         "m_payment.ok": "OK",
         "m_payment.sm_received": "प्राप्त होने के लिए तैयार है",
         "m_payment.sm_popget": "I get it",
-        "m_payment.sm_nodata": "No data",
+        "m_payment.sm_nodata": "No Data",
         "m_payment.sm_orderStatus": "Status",
         "m_payment.sm_deliveryList": "डिलीवरी के कारण आइटम गिफ्ट कार्ड में बदल गया।"
     }

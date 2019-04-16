@@ -196,7 +196,7 @@ export default {
       white-space: nowrap;
       p {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         height: 51/75rem;
         &.message {
           height: auto;
@@ -223,13 +223,17 @@ export default {
     .card_psw {
       display: block;
       padding-right: 10/75rem;
-      width: 360/75rem;
+      width: 300/75rem;
       overflow: hidden;
       margin-left: 24/75rem;
       word-break: break-word;
       white-space: normal;
-      &.message {
+      &.overflow {
         .text-overflow();
+      }
+      &.message {
+        flex: 1;
+        padding-right: 20/75rem;
       }
     }
     .btn_copy {

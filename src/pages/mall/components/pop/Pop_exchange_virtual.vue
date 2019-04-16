@@ -24,7 +24,7 @@
             </p>
             <p :class="{message: !app.virtualCardStatus}">
                 <span>{{_('m_payment.password')}}:</span>
-                <i class="card_psw" :class="{message: app.virtualCardStatus}">{{app.virtualPass}}</i>
+                <i class="card_psw" :class="{overflow: app.virtualCardStatus, message: !app.virtualCardStatus}">{{app.virtualPass}}</i>
                 <a href="javascript:;" class="btn_copy" @click="copy(app.virtualPass)" v-if="app.virtualCardStatus">{{_('m_payment.copy')}}</a>
             </p>
         </div>
