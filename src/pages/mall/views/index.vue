@@ -70,7 +70,7 @@
 
 <script>
 import {
-    copySucc, copyError, formateBalance, cbetLocal, cookie
+    copySucc, copyError, formateBalance, cbetLocal
 } from "@/common/util"
 // 弹窗
 import popList from "../components/Pop_list"
