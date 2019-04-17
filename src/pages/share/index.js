@@ -18,26 +18,20 @@ require("@/styles/lib-reset.css")
 require("@/styles/lib-public.less")
 
 // test  注入的是www.madcrickets.com/
-// cookie.set("appck", encodeURIComponent("MTAwMTU1MjNiNGU5M2QyNTY5MzNlNTMyMTUxYWU5ZDViZTBhNDUyNA==") )
-// cookie.set("language", "en" )
+// cookie.set("appck", encodeURIComponent("MTAwMDI3NTI5N2I2MWIyMGIwOTQ1YjRmMTUzYTcwMDZmZTE1YjEy") )
+// cookie.set("language", "hi" )
 
-let appLanguage = cookie.get("language") || "en"
-if (appLanguage === "en" || appLanguage === "english") {
-    localStorage.setItem("lang", "en")
-} else {
-    localStorage.setItem("lang", "hi")
-}
+let language = cookie.get("language") || "en"
+let ck = cookie.get("appck") || "en"
 
 // 引入语言包
 require("@language").use(Vue, [shareLanguage])
-let ck = decodeURIComponent(window._.appck)
-let language = decodeURIComponent(window._._lang)
-
-if (!ck) {
+if (!ck || ck === "undefined") {
     window.$toast({
-        content: "请在app中打开"
+        content: "madsport open"
     })
 }
+
 console.log("==========")
 console.log(ck)
 console.log(language)
@@ -46,10 +40,7 @@ console.log("==========")
 Vue.use(simpleAjax, {
     commonParams: {
         ck,
-        language,
-        platform: "1",
-        version: "2",
-        channel: "3"
+        ...cookie.getAll()
     }
 })
 
