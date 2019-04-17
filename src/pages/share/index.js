@@ -18,8 +18,8 @@ require("@/styles/lib-reset.css")
 require("@/styles/lib-public.less")
 
 // test  注入的是www.madcrickets.com/
-// cookie.set("appck", encodeURIComponent("MTAwMTU1MjNiNGU5M2QyNTY5MzNlNTMyMTUxYWU5ZDViZTBhNDUyNA==") )
-// cookie.set("language", "en" )
+// cookie.set("appck", encodeURIComponent("MTAwMDI3NTI5N2I2MWIyMGIwOTQ1YjRmMTUzYTcwMDZmZTE1YjEy") )
+// cookie.set("language", "hi" )
 
 let appLanguage = cookie.get("language") || "en"
 if (appLanguage === "en" || appLanguage === "english") {

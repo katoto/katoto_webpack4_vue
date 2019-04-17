@@ -74,7 +74,7 @@
                 </div>
                 <div class="share_tips">
                     <p class="share_tips_t">{{ _('m_share.sh_rule_title') }}</p>
-                    <p v-html="_('m_share.sh_rule_1', formatIndiaTime(beginTime, _._lang), formatIndiaTime(endTime, _._lang), formatMoney(inviteCodeNum))"></p>
+                    <p v-html="_('m_share.sh_rule_1', formatIndiaTime(beginTime, lan), formatIndiaTime(endTime, lan), formatMoney(inviteCodeNum))"></p>
                 </div>
             </div>
         </div>
@@ -147,7 +147,8 @@ export default {
             expireTime: 0,
             beginTime: 0,
             endTime: 0,
-            expireTimerInter: null
+            expireTimerInter: null,
+            lan:''
         }
     },
     watch: {
@@ -280,7 +281,6 @@ export default {
                         }
                         this.beginTime = resData.config.begin_time
                         this.endTime = resData.config.end_time
-
                     } else {
                         console.warn("49")
                     }
@@ -306,6 +306,7 @@ export default {
     components: {
     },
     created () {
+        this.lan = cookie.get('language') || "en"
         this.getInviteInfo()
     },
     async mounted () {
