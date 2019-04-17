@@ -1,21 +1,22 @@
-var utils = require('./utils')
-var multiPage = require('./multi-page')
-var webpack = require('webpack')
-var config = require('../config')
-var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
-var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-var vConsolePlugin = require('vconsole-webpack-plugin')
+var utils = require("./utils")
+var multiPage = require("./multi-page")
+var webpack = require("webpack")
+var config = require("../config")
+var merge = require("webpack-merge")
+var baseWebpackConfig = require("./webpack.base.conf")
+var FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin")
+var vConsolePlugin = require("vconsole-webpack-plugin")
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
-    baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
+    baseWebpackConfig.entry[name] = ["./build/dev-client"].concat(baseWebpackConfig.entry[name])
 })
 
 module.exports = merge(baseWebpackConfig, {
-    mode: 'development',
+    mode: "development",
     module: {
-        rules: utils.styleLoaders({sourceMap: config.dev.cssSourceMap, extract: false})
+        rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap,
+            extract: false })
     },
     // devtool: 'cheap-module-eval-source-map', // see SourceMapDevToolPlugin speed
     plugins: [
@@ -27,7 +28,7 @@ module.exports = merge(baseWebpackConfig, {
         ...multiPage.htmlPlugins(baseWebpackConfig),
         new FriendlyErrorsPlugin(),
         new vConsolePlugin({
-            enable: process.env.ISconsole === 'true'
+            enable: process.env.ISconsole === "true"
         })
     ],
     optimization: {
@@ -35,5 +36,5 @@ module.exports = merge(baseWebpackConfig, {
         minimize: false,
         noEmitOnErrors: true,
         splitChunks: false
-    },
+    }
 })

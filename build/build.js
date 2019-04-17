@@ -2,25 +2,25 @@
 // var rm = require('rimraf')
 // rm(webpackConfig.output.path, e => !e && doWebpack())
 
-require('./check-versions')()
+require("./check-versions")()
 
-process.env.NODE_ENV = 'production'
+process.env.NODE_ENV = "production"
 
-var config = require('../config')
-config.isBuild = true; //需要生成（dist）目标文件。需放在require('webpack')之前
-var ora = require('ora')
-var chalk = require('chalk')
-var webpack = require('webpack')
-var webpackConfig = require('./webpack.build.conf')
-var spinner = ora('building for ' + process.env.NODE_ENV + '...')
+var config = require("../config")
+config.isBuild = true // 需要生成（dist）目标文件。需放在require('webpack')之前
+var ora = require("ora")
+var chalk = require("chalk")
+var webpack = require("webpack")
+var webpackConfig = require("./webpack.build.conf")
+var spinner = ora("building for " + process.env.NODE_ENV + "...")
 spinner.start()
 
 doWebpack()
 
-function doWebpack(onEnd) {
+function doWebpack (onEnd) {
     webpack(webpackConfig, function (err, stats) {
         spinner.stop()
-        if (onEnd) onEnd(err);
+        if (onEnd) {onEnd(err)}
         if (err) {
             throw err
         }
@@ -30,7 +30,7 @@ function doWebpack(onEnd) {
             children: false,
             chunks: false,
             chunkModules: false
-        }) + '\n\n')
-        console.log(chalk.cyan('  Build complete.\n'))
+        }) + "\n\n")
+        console.log(chalk.cyan("  Build complete.\n"))
     })
 }
