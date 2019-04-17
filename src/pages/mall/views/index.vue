@@ -258,12 +258,6 @@ export default {
                 })
         },
         jumpToWithdraw () {
-            if (!this.isLog) {
-                this.$toast({
-                    content: "please login"
-                })
-                return
-            }
             cbetLocal({
                 func: "jumpToLocal",
                 params: {
