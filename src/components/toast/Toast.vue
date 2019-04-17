@@ -1,14 +1,14 @@
 <template>
-    <!-- toast -->
-    <div v-if="messageArr && messageArr.length > 0">
-        <transition name="toast">
-            <div class="toast">
-                <div class="toast_main">
-                    <span v-for="item in messageArr" :key="item.name">{{ item.content }}</span>
-                </div>
-            </div>
-        </transition>
-    </div>
+  <!-- toast -->
+  <div v-if="messageArr && messageArr.length > 0">
+    <transition name="toast">
+      <div class="toast">
+        <div class="toast_main">
+          <span v-for="item in messageArr" :key="item.name">{{ item.content }}</span>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -61,17 +61,29 @@ export default {
   height: 100%;
   z-index: 100;
   .toast_main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 673/75rem;
     height: 132/75rem;
     overflow: hidden;
     // background: url(../../assets/img/toast.png) no-repeat center;
-    background: rgba(0,0,0,0.5);
-    background: linear-gradient(to right,transparent,#000,transparent);
+    background: rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to right, transparent, #000, transparent);
     background-size: cover;
     text-align: center;
-    line-height: 132/75rem;
+    line-height: 1.2;
     font-size: 30/75rem;
     color: #ffffff;
+  }
+  span + span {
+    margin-top: 10/75rem;
   }
 }
 .toast-enter-active,
