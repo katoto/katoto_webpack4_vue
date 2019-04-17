@@ -64,7 +64,9 @@ export default {
     width: 673/75rem;
     height: 132/75rem;
     overflow: hidden;
-    background: url(../../assets/img/toast.png) no-repeat center;
+    // background: url(../../assets/img/toast.png) no-repeat center;
+    background: rgba(0,0,0,0.5);
+    background: linear-gradient(to right,transparent,#000,transparent);
     background-size: cover;
     text-align: center;
     line-height: 132/75rem;

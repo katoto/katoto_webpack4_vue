@@ -59,7 +59,7 @@ module.exports = {
                 use: [{
                     loader: "url-loader",
                     options: {
-                        limit: 20000,
+                        limit: 10000,
                         name: utils.assetsPath("img/[name].[ext]")
                     }
                 },{
