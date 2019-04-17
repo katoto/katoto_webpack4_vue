@@ -140,7 +140,7 @@ body {
       &:nth-child(2) {
         margin: 2/75rem auto;
         width: 750/75rem;
-        height: 336/75rem;
+        height: 509/75rem;
       }
       &:nth-child(3) {
         margin: 150/75rem auto;
