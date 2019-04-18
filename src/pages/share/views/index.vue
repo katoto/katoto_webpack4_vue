@@ -115,7 +115,8 @@ export default {
             beginTime: 0,
             endTime: 0,
             expireTimerInter: null,
-            lan:''
+            lan:'',
+            isCodeSucc: true, // 请求之后
         }
     },
     watch: {
@@ -148,19 +149,28 @@ export default {
             let codeReg = /^[A-Z]+$/g
             if (this.friend_code && codeReg.test(this.friend_code.toUpperCase().trim())) {
                 // 发起请求
+                if(!this.isCodeSucc){ return false }
+                this.isCodeSucc = false
                 this.$post("/invite/use_code", {
                     code: this.friend_code.toUpperCase()
                 }).then(res => {
+                    this.isCodeSucc = false
                     if (res && res.status === "100") {
                         this.winInviteNum = this.formatMoney(res.data.award)
                         this.show_pop_congratulation = true
-                        // todo 更新状态，隐藏 invited by friend
                         this.getInviteInfo()
                     } else {
                         // 邀请出错
+                        this.$toast({
+                            content: _('m_share.sh_neterr')
+                        })
                     }
                 }).catch((err) => {
-                    console.log(err)
+                    // 邀请出错
+                    this.isCodeSucc = false
+                    this.$toast({
+                        content: _('m_share.sh_neterr')
+                    })
                 })
             } else {
                 this.$toast({
@@ -203,7 +213,7 @@ export default {
                 })
             } else {
                 this.$toast({
-                    content: "page error please reload ~"
+                    content: _('m_share.sh_neterr')
                 })
             }
         },
@@ -224,16 +234,15 @@ export default {
                 })
             } else {
                 this.$toast({
-                    content: "page error please reload ~"
+                    content: _('m_share.sh_neterr')
                 })
             }
         },
         getInviteInfo () {
-            this.$get("/invite/info")
+            this.$post("/invite/info")
                 .then(res => {
                     if (res && res.status === "100") {
                         let resData = res.data
-                        console.log(res)
                         this.invitemsg = resData.info
                         if (resData.config && resData.config.prize) {
                             if (resData.config.prize.inviter) {
@@ -253,7 +262,9 @@ export default {
                     }
                 })
                 .catch(e => {
-                    console.log("error invite info")
+                    this.$toast({
+                        content: _('m_share.sh_neterr')
+                    })
                 })
         },
         startExpireTime (time) {
@@ -277,13 +288,6 @@ export default {
         this.getInviteInfo()
     },
     async mounted () {
-        // window.$toast({
-        //     content:'123123qweewq'
-        // })
-        // April 1, 2019
-        // July 1, 2019
-        // todo
-        // this.fadeIn = true
         // ,'nobase.bg_particle1.png','nobase.bg_particle2.png','nobase.bg_particle3.png'
         preloadImage(["nobase.bg.jpg","nobase.bg_light.png"], () => {
             console.log("img is ready")
@@ -414,7 +418,7 @@ export default {
   opacity: 0;
   font-style: italic;
   line-height: 1.2;
-  font-size: 80/75rem;
+  font-size: 72/75rem;
   color: #f3eab8;
   font-weight: bold;
   text-align: center;
