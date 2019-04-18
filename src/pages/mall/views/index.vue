@@ -286,7 +286,6 @@ export default {
         this.getExchangeList()
         this.getUserInfo()
         this.getUserAddress()
-        window._this = this
     }
 }
 </script>
@@ -497,7 +496,6 @@ export default {
         left: 40/75rem;
         align-items: center;
         justify-content: center;
-        content: "Top up to unlock it";
         width: 215/75rem;
         height: 49/75rem;
         overflow: hidden;
