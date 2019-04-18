@@ -132,11 +132,15 @@ export default {
             this.activeItem = item
             if (!this.isLog) {
                 this.$toast({
-                    content: "please login"
+                    content: _("please_login")
                 })
                 return
             }
-            if (item.goodstype === "2") {
+            if (item.goodstype === "1") {
+                this.virtualCard = ""
+                this.virtualPass = ""
+                this.setPopStore("setExchangeVirtual", true)
+            } else {
                 let deliverTip = window.localStorage.getItem("no_deliver_tip")
                 // 重置 兑换成功状态
                 this.isChangeReal = false
@@ -145,10 +149,6 @@ export default {
                     return
                 }
                 this.setPopStore("setExchangeReal", true)
-            } else {
-                this.virtualCard = ""
-                this.virtualPass = ""
-                this.setPopStore("setExchangeVirtual", true)
             }
         },
         showCardDetail (cardno, password, virtualCardStatus, item) {
@@ -218,6 +218,9 @@ export default {
             })
         },
         addAddress () {
+            if (!this.checkRealInfo) {
+                return
+            }
             this.$post("/shipping/address/add", {
                 consignee: this.realName,
                 mobile: this.realTel,
