@@ -86,9 +86,6 @@ export default {
         close () {
             this.show = false
         }
-    },
-    mounted () {
-        alert(1)
     }
 }
 </script>
