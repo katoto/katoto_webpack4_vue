@@ -1,5 +1,6 @@
 export default {
     en: {
+        "m_share.sh_neterr": "Network Error",
         "m_share.sh_codeerr": "code error, please re-enter",
         "m_share.sh_win_inviteNum": "Both you and your friend received {0} coins",
         "m_share.sh_validday_time": "dd d HH h mm m",
