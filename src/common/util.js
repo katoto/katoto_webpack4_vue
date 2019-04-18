@@ -3,15 +3,14 @@
  *  客户端回调
  */
 window.cbetLocalCallback = function (param) {
-    if (param.func==="copyToPasteboard") {
-        console.log("---------")
+    if (param.func === "copyToPasteboard") {
         if (param.result) {
             window.$toast({
-                content: "copy success"
+                content: _("copy_success")
             })
         } else {
             window.$toast({
-                content: "copy error"
+                content: _("copy_fail")
             })
         }
     }

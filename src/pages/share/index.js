@@ -20,7 +20,7 @@ require("@/styles/lib-public.less")
 
 // test  注入的是www.madcrickets.com/
 // cookie.set("appck", encodeURIComponent("MTAwMDI3NTI5N2I2MWIyMGIwOTQ1YjRmMTUzYTcwMDZmZTE1YjEy") )
-cookie.set("language", "en" )
+// cookie.set("language", "en" )
 
 let language = cookie.get("language") || "en"
 
