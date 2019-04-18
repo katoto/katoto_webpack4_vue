@@ -42,6 +42,7 @@
                 <template v-if="getList().length>0">
                     <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
                         <li :class="{unlock: item[0].islock === '1'}">
+                            <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
                             <div class="reward_box" @click="showProductDetail(item[0])">
                                 <img :src="item[0].imgurl" alt>
                                 <p class="reward_name">{{item[0].name}}</p>
@@ -49,6 +50,7 @@
                             <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{formateBalance(item[0].needgolds)}}</a>
                         </li>
                         <li :class="{unlock: item[1] && item[1].islock === '1'}">
+                            <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
                             <template v-if="item[1]">
                                 <div class="reward_box" @click="showProductDetail(item[1])">
                                     <img :src="item[1].imgurl" alt>
@@ -134,6 +136,10 @@ export default {
                 this.$toast({
                     content: _("please_login")
                 })
+                return
+            }
+            if (item.islock === "1") {
+                this.$toast({ content: _("m_payment.unlock_tip") })
                 return
             }
             if (item.goodstype === "1") {
@@ -482,31 +488,34 @@ export default {
         background-size: cover;
       }
     }
+    .unlock-tip {
+        display: none;
+        position: absolute;
+        box-sizing: border-box;
+        z-index: 2;
+        top: 10/75rem;
+        left: 40/75rem;
+        align-items: center;
+        justify-content: center;
+        content: "Top up to unlock it";
+        width: 215/75rem;
+        height: 49/75rem;
+        overflow: hidden;
+        padding: 22/75rem 0 0 37/75rem;
+        background: url(../img/icon_unlock.png) no-repeat center;
+        background-size: cover;
+        //   font-family: "openSans_bold";
+        font-weight: bold;
+        font-size: 16/75rem;
+        white-space: nowrap;
+    }
   }
   li.unlock {
     img {
       opacity: 0.4;
     }
-    &::before {
-      position: absolute;
-      box-sizing: border-box;
-      z-index: 2;
-      top: 10/75rem;
-      left: 40/75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      content: "Top up to unlock it";
-      width: 215/75rem;
-      height: 49/75rem;
-      overflow: hidden;
-      padding: 22/75rem 0 0 37/75rem;
-      background: url(../img/icon_unlock.png) no-repeat center;
-      background-size: cover;
-      //   font-family: "openSans_bold";
-      font-weight: bold;
-      font-size: 16/75rem;
-      white-space: nowrap;
+    .unlock-tip {
+        display: flex;
     }
   }
   .reward_box {

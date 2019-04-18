@@ -46,7 +46,8 @@ export default {
         "m_payment.sm_deliveryList": "Item changed to gift card due to the delivery issue",
         "m_payment.goodno": "Tracking Number",
         "m_payment.goodstatus": "Status",
-        "m_payment.shoptitle": "Get extra coins by first weekly Paypal top-up"
+        "m_payment.shoptitle": "Get extra coins by first weekly Paypal top-up",
+        "m_payment.unlock_tip": "Top up to unlock it"
     },
     india: {
         "m_payment.networkError": "नेटवर्क त्रुटि",
@@ -95,6 +96,7 @@ export default {
         "m_payment.sm_received": "प्राप्त होने के लिए तैयार है",
         "m_payment.sm_popget": "समझ गया",
         "m_payment.sm_nodata": "कोई डेटा नहीं",
-        "m_payment.sm_deliveryList": "डिलीवरी के कारण आइटम गिफ्ट कार्ड में बदल गया।"
+        "m_payment.sm_deliveryList": "डिलीवरी के कारण आइटम गिफ्ट कार्ड में बदल गया।",
+        "m_payment.unlock_tip": "इसे अनलॉक करने के लिए टॉप अप करें"
     }
 }
