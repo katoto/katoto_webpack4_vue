@@ -29,7 +29,7 @@
                                 <!-- 实物正常派送中  -->
                                 <template v-else>
                                     <p>
-                                        <span>{{ _('m_payment.sm_orderStatus') }}：</span>
+                                        <span>{{ _('m_payment.goodstatus') }}：</span>
                                         <i>{{formatStatus(item.orderstatus)}}</i>
                                     </p>
                                     <p>
@@ -58,8 +58,8 @@ export default {
             allnum: 0
         }
     },
-    computed:{
-        show:{
+    computed: {
+        show: {
             get: function () {
                 return this.app.pop.showRecordList
             },
@@ -72,7 +72,7 @@ export default {
             }
         }
     },
-    components:{
+    components: {
         Pop
     },
     watch: {

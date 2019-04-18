@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 /**
  *  客户端回调
  */
@@ -140,7 +141,7 @@ export function formatTime (time, format = "MM-dd HH:mm:ss") {
         case "week":
             return getWeek(t.getDay())
         case "gmt":
-            let val = -(t.getTimezoneOffset() / 60)
+            var val = -(t.getTimezoneOffset() / 60)
             return val > 0 ? "GMT+" + val : "GMT" + val
         }
     })
@@ -155,21 +156,31 @@ export function formatMoney (s) {
     }
     return t.split("").reverse().join("")
 }
-
+window._formateBalance = formateBalance
 export function formateBalance (val = 0) {
     val = Number(val)
-    if (isNaN(val)) {return false}
-    if (val >= 1000000000) {
-        let num = formatNum(Number(accDiv(val, 1000000000)).toFixed(3), 1)
-        return `${num}b`
-    } else if (val >= 1000000) {
-        let num = formatNum(Number(accDiv(val, 1000000)).toFixed(3), 2)
-        return `${num}m`
-    } else if (val > 1000) {
+    if (isNaN(val)) {
+        return ""
+    } else if (val <= 9999) {
+        return val.toString()
+    } else if (val <= 99999) {
         let num = formatNum(Number(accDiv(val, 1000)).toFixed(3), 2)
         return `${num}k`
+    } else if (val <= 999999) {
+        let num = formatNum(Number(accDiv(val, 1000)).toFixed(3), 1)
+        return `${num}k`
+    } else if (val <= 99999999) {
+        let num = formatNum(Number(accDiv(val, 1000000)).toFixed(6), 2)
+        return `${num}m`
+    } else if (val <= 999999999) {
+        let num = formatNum(Number(accDiv(val, 1000000)).toFixed(6), 1)
+        return `${num}m`
+    } else if (val <= 99999999999) {
+        let num = formatNum(Number(accDiv(val, 1000000000)).toFixed(9), 2)
+        return `${num}b`
     }
-    return val
+    let num = formatNum(Number(accDiv(val, 1000000000)).toFixed(9), 1)
+    return `${num}b`
 }
 
 export function formatNum (num, bit = 5) {
@@ -229,10 +240,12 @@ export function accDiv (arg1, arg2) {
     let r2
     try {
         t1 = arg1.toString().split(".")[1].length
-    } catch (e) { }
+    } catch (e) {
+    }
     try {
         t2 = arg2.toString().split(".")[1].length
-    } catch (e) { }
+    } catch (e) {
+    }
     r1 = Number(arg1.toString().replace(".", ""))
     r2 = Number(arg2.toString().replace(".", ""))
     return (r1 / r2) * Math.pow(10, t2 - t1)
@@ -245,10 +258,12 @@ export function accMul (arg1, arg2) {
     let s2 = arg2.toString()
     try {
         m += s1.split(".")[1].length
-    } catch (e) { }
+    } catch (e) {
+    }
     try {
         m += s2.split(".")[1].length
-    } catch (e) { }
+    } catch (e) {
+    }
     return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
 }
 
@@ -564,14 +579,6 @@ export function copy (string) {
             content: string
         }
     })
-}
-
-export function copySucc () {
-    console.log("Copied to clipboard")
-}
-
-export function copyError () {
-    console.log("Failed to copy, please retry")
 }
 
 // 预加载图片

@@ -70,7 +70,7 @@
 
 <script>
 import {
-    copySucc, copyError, formateBalance, cbetLocal
+    formateBalance, cbetLocal
 } from "@/common/util"
 // 弹窗
 import popList from "../components/Pop_list"
@@ -123,8 +123,6 @@ export default {
         }
     },
     methods: {
-        copySucc,
-        copyError,
         formateBalance,
         showProductDetail (e) {
             this.product_detail = e
