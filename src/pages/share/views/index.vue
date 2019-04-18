@@ -24,7 +24,7 @@
       <div class="share_code" :class="{fadeIn:fadeIn}">
         <p>
           {{ _('m_share.sh_refer_code') }}
-          <i class="bold" v-if="invitemsg">{{ invitemsg.invite_code }}</i>
+          <i class="bold" v-if="invitemsg" @click="shareCopy(invitemsg.invite_code)">{{ invitemsg.invite_code }}</i>
         </p>
         <a href="javascript:;" class="btn_copy" @click="shareCopy(invitemsg.invite_code)">{{ _('m_share.sh_btc_copy') }}</a>
       </div>
@@ -518,6 +518,7 @@ export default {
     margin-right: 6/75rem;
     color: #ffbd82;
     text-decoration: underline;
+    padding: 0 20px 0 10px
   }
 }
 .tips {
