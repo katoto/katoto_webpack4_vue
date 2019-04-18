@@ -13,17 +13,17 @@ export default {
         "m_share.sh_btn_confirm": "Confirm",
         "m_share.sh_enter_code": "Enter code, get reward",
         "m_share.sh_invited_byfriends": "Invited by friend",
-        "m_share.sh_invitemsg": "*You can get reward once the friend accepts your invitations",
+        "m_share.sh_invitemsg": "*You can get reward once the friend accepts your invitation",
         "m_share.sh_invited_friends": "Invited: ",
         "m_share.sh_btc_copy": "Copy",
         "m_share.sh_refer_code": "My referral code:",
-        "m_share.sh_bigTitle": "Invite Friends  Both Get <i data-msg='{0}'>{0}</i>"
+        "m_share.sh_bigTitle": "Invite Friends <br /> Both Get <i data-msg='{0}'>{0}</i>"
     },
     india: {
         "m_share.sh_codeerr": "गलत आमंत्रण कोड, कृपया पुनः दर्ज करें",
         "m_share.sh_win_inviteNum": "आपको और आपके मित्र दोनों को {0} सिक्के मिले",
         "m_share.sh_validday_time": "dd दिन, HH घंटे, mm मिनट",
-        "m_share.sh_bigTitle": "मित्रों को आमंत्रित करें, दोनों <i data-msg='{0}'>{0}</i> प्राप्त करें",
+        "m_share.sh_bigTitle": "मित्रों को आमंत्रित करें, <br /> दोनों <i data-msg='{0}'>{0}</i> प्राप्त करें",
         "m_share.sh_refer_code": "मेरा रेफरल कोड:",
         "m_share.sh_btc_copy": "प्रतिलिपि",
         "m_share.sh_invited_friends": "आमंत्रित",
