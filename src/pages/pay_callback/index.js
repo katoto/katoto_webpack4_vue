@@ -6,7 +6,7 @@ import {
 function quit () {
     cbetLocal({
         func: "closeWebview",
-        params:{
+        params: {
         }
     })
 }
