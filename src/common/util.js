@@ -162,23 +162,14 @@ export function formateBalance (val = 0) {
         return ""
     } else if (val <= 9999) {
         return val.toString()
-    } else if (val <= 99999) {
+    } else if (val <= 999999) {
         let num = formatNum(Number(accDiv(val, 1000)).toFixed(3), 2)
         return `${num}k`
-    } else if (val <= 999999) {
-        let num = formatNum(Number(accDiv(val, 1000)).toFixed(3), 1)
-        return `${num}k`
-    } else if (val <= 99999999) {
+    } else if (val <= 999999999) {
         let num = formatNum(Number(accDiv(val, 1000000)).toFixed(6), 2)
         return `${num}m`
-    } else if (val <= 999999999) {
-        let num = formatNum(Number(accDiv(val, 1000000)).toFixed(6), 1)
-        return `${num}m`
-    } else if (val <= 99999999999) {
-        let num = formatNum(Number(accDiv(val, 1000000000)).toFixed(9), 2)
-        return `${num}b`
     }
-    let num = formatNum(Number(accDiv(val, 1000000000)).toFixed(9), 1)
+    let num = formatNum(Number(accDiv(val, 1000000000)).toFixed(9), 2)
     return `${num}b`
 }
 
