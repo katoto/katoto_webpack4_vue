@@ -1,7 +1,7 @@
 export default {
     data () {
         return {
-            hadPopShow:false,
+            hadPopShow: false,
             pop: {
                 showRecordList: false,
                 showRechangeMany: false,
@@ -15,7 +15,7 @@ export default {
                 showCongratulation: false,
                 showExchangedReal: false
             },
-            product_detail:{
+            product_detail: {
                 activity_imgurl: "",
                 goodsdesc: "",
                 goodstype: "",
