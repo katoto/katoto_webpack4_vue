@@ -616,7 +616,7 @@ export default {
     center;
   background-size: 55/75rem;
   border-radius: 50%;
-  animation: icon_success_enter 0.2s;
+  animation: icon_success_enter 0.1s;
 }
 @keyframes icon_success_enter {
   0% {

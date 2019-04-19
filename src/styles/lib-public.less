@@ -21,11 +21,11 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.00006);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 98;
 }
 .pop {
-    background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6);
   position: absolute;
   top: 0;
   left: 0;
@@ -47,7 +47,7 @@
     border-image-width: 10;
     border-image-repeat: stretch;
     border-radius: 10/75rem;
-    transform-origin: center !important;
+    transform-origin: center;
   }
   .pop_close {
     position: absolute;
@@ -128,34 +128,34 @@
   }
 }
 .pop_animate-enter-active {
-  animation: popEnter 0.4s;
+    animation: popEnter 0.4s;
 }
 .pop_animate-leave-active {
   animation: popLeave 0.2s;
 }
 @keyframes popEnter {
   0% {
-    transform: scale(0) translate(-50%,-50%);
+    transform: translate(-50%,-50%) scale(0);
   }
   50% {
-    transform: scale(1.05) translate(-50%,-50%);
+    transform: translate(-50%,-50%) scale(1.05);
   }
   75% {
-    transform: scale(0.95) translate(-50%,-50%);
+    transform: translate(-50%,-50%) scale(0.95);
   }
   100% {
-    transform: scale(1) translate(-50%,-50%);
+    transform: translate(-50%,-50%) scale(1);
   }
 }
 @keyframes popLeave {
   0% {
-    transform: scale(1) translate(-50%,-50%);
+    transform: translate(-50%,-50%) scale(1);
   }
   50% {
-    transform: scale(1.05) translate(-50%,-50%);
+    transform: translate(-50%,-50%) scale(1.05);
   }
   100% {
-    transform: scale(0) translate(-50%,-50%);
+    transform: translate(-50%,-50%) scale(0);
   }
 }
 
@@ -172,10 +172,10 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    width: 36/75rem;
-    height: 36/75rem;
+    width: 72/75rem;
+    height: 72/75rem;
     background: url(~@/assets/img/img_loading_on_btn.png) no-repeat center;
-    background-size: 36/75rem;
+    background-size: 72/75rem;
     animation: loading 2s infinite linear;
 }
 @keyframes loading{
