@@ -115,8 +115,8 @@ export default {
             beginTime: 0,
             endTime: 0,
             expireTimerInter: null,
-            lan:'',
-            isCodeSucc: true, // 请求之后
+            lan: "",
+            isCodeSucc: true // 请求之后
         }
     },
     watch: {
@@ -149,7 +149,7 @@ export default {
             let codeReg = /^[A-Z]+$/g
             if (this.friend_code && codeReg.test(this.friend_code.toUpperCase().trim())) {
                 // 发起请求
-                if(!this.isCodeSucc){ return false }
+                if (!this.isCodeSucc) { return false }
                 this.isCodeSucc = false
                 this.$post("/invite/use_code", {
                     code: this.friend_code.toUpperCase()
@@ -162,19 +162,19 @@ export default {
                     } else {
                         // 邀请出错
                         this.$toast({
-                            content: _('m_share.sh_neterr')
+                            content: _("m_share.sh_neterr")
                         })
                     }
                 }).catch((err) => {
                     // 邀请出错
                     this.isCodeSucc = false
                     this.$toast({
-                        content: _('m_share.sh_neterr')
+                        content: _("m_share.sh_neterr")
                     })
                 })
             } else {
                 this.$toast({
-                    content: _('m_share.sh_codeerr')
+                    content: _("m_share.sh_codeerr")
                 })
             }
         },
@@ -213,7 +213,7 @@ export default {
                 })
             } else {
                 this.$toast({
-                    content: _('m_share.sh_neterr')
+                    content: _("m_share.sh_neterr")
                 })
             }
         },
@@ -234,7 +234,7 @@ export default {
                 })
             } else {
                 this.$toast({
-                    content: _('m_share.sh_neterr')
+                    content: _("m_share.sh_neterr")
                 })
             }
         },
@@ -243,6 +243,10 @@ export default {
                 .then(res => {
                     if (res && res.status === "100") {
                         let resData = res.data
+                        // if(!resData.info || !resData.config){
+                        //     // 过期了 todo
+                        //     return false
+                        // }
                         this.invitemsg = resData.info
                         if (resData.config && resData.config.prize) {
                             if (resData.config.prize.inviter) {
@@ -263,7 +267,7 @@ export default {
                 })
                 .catch(e => {
                     this.$toast({
-                        content: _('m_share.sh_neterr')
+                        content: _("m_share.sh_neterr")
                     })
                 })
         },
@@ -284,7 +288,7 @@ export default {
     components: {
     },
     created () {
-        this.lan = cookie.get('language') || "en"
+        this.lan = cookie.get("language") || "en"
         this.getInviteInfo()
     },
     async mounted () {
@@ -522,7 +526,7 @@ export default {
     margin-right: 6/75rem;
     color: #ffbd82;
     text-decoration: underline;
-    padding: 0 20px 0 10px
+    padding: 0 20px 0 10px;
   }
 }
 .tips {
