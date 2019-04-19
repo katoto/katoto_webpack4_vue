@@ -6,32 +6,32 @@
         <p class="product_use">{{app.activeItem.goodsdesc}}</p>
 
         <div class="address_input" v-if="!app.isCheckReal">
-            <input type="text" :placeholder="_('m_payment.name')" v-model="app.realName">
-            <input type="text" :placeholder="_('m_payment.phone')" v-model="app.realTel">
-            <input type="text" v-model="app.realAddress">
-            <input type="text" :placeholder="_('m_payment.code')" v-model="app.realPostcode">
-            <p class="address_detail" v-html="_('m_payment.address')" v-if="!app.realAddress">
+            <input type="text" :placeholder="_('m_payment.name')" v-model="address.f_consignee">
+            <input type="text" :placeholder="_('m_payment.phone')" v-model="address.f_mobile">
+            <input type="text" v-model="address.f_address">
+            <input type="text" :placeholder="_('m_payment.code')" v-model="address.f_postcode">
+            <p class="address_detail" v-html="_('m_payment.address')" v-if="!address.f_address">
                 <!-- Shipping address
         <i class="sm_add">(accurate to street and number)</i> -->
             </p>
-            <a href="javascript:" class="btn_default" @click="app.addAddress" :class="{disable: !app.checkRealInfo}">{{_('m_payment.exchange_confirm')}}</a>
+            <a href="javascript:" class="btn_default" @click="checkRealInfo && app.addAddress(address)" :class="{disable: !checkRealInfo}">{{_('m_payment.exchange_confirm')}}</a>
         </div>
         <div class="address_check" v-else>
             <p class="user_msg">
                 <span class="user_t">{{_('m_payment.name1')}}:</span>
-                <span class="user_c">{{app.realName}}</span>
+                <span class="user_c">{{address.f_consignee}}</span>
             </p>
             <p class="user_msg">
                 <span class="user_t">{{_('m_payment.address1')}}:</span>
-                <span class="user_c user_address">{{app.realAddress}}</span>
+                <span class="user_c user_address">{{address.f_address}}</span>
             </p>
             <p class="user_msg">
                 <span class="user_t">{{_('m_payment.phone1')}}:</span>
-                <span class="user_c">{{app.realTel}}</span>
+                <span class="user_c">{{address.f_mobile}}</span>
             </p>
             <p class="user_msg">
                 <span class="user_t">{{_('m_payment.code1')}}:</span>
-                <span class="user_c">{{app.realPostcode}}</span>
+                <span class="user_c">{{address.f_postcode}}</span>
             </p>
             <div class="btn_choose">
                 <a href="javascript:;" class="btn_back" @click="app.isCheckReal = false" v-if="!app.isChangeReal">{{_('m_payment.back_modify')}}</a>
@@ -45,8 +45,13 @@
 import Pop from "./Pop.vue"
 export default {
     inject: ["app"],
-    computed:{
-        show:{
+    data () {
+        return {
+            address: {}
+        }
+    },
+    computed: {
+        show: {
             get: function () {
                 return this.app.pop.showExchangeReal
             },
@@ -57,9 +62,24 @@ export default {
                     this.app.setPopStore("setExchangeReal", false)
                 }
             }
+        },
+        checkRealInfo () {
+            if (this.address.f_consignee && this.address.f_address && this.address.f_mobile && this.address.f_postcode) {
+                return true
+            }
+            return false
         }
     },
-    components:{
+    watch: {
+        show (val) {
+            if (val) {
+                this.address = {
+                    ...this.app.address
+                }
+            }
+        }
+    },
+    components: {
         Pop
     },
     methods: {

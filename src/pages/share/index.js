@@ -22,8 +22,6 @@ require("@/styles/lib-public.less")
 // cookie.set("appck", encodeURIComponent("MTAwMDI3NTI5N2I2MWIyMGIwOTQ1YjRmMTUzYTcwMDZmZTE1YjEy") )
 // cookie.set("language", "en" )
 
-let language = cookie.get("language") || "en"
-
 let ck = cookie.get("appck")
 if (!ck || ck === "undefined") {
     ck = getURLParams().appck
@@ -35,11 +33,6 @@ if (!ck || ck === "undefined") {
         content: "please use madsport open this pages"
     })
 }
-
-console.log("==========")
-console.log(ck)
-console.log(language)
-console.log("==========")
 
 Vue.use(simpleAjax, {
     commonParams: {

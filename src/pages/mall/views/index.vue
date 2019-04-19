@@ -92,15 +92,12 @@ export default {
             virtualCard: "",
             virtualPass: "",
             virtualCardStatus: false,
-            realName: "",
-            realAddress: "",
-            realTel: "",
-            realPostcode: "",
             isCheckReal: false,
             isChangeReal: false,
             gold_total: "0",
             aid: "",
             activeItem: {},
+            address: {},
             newsWidth: "",
             userInfo: false,
             covert_message: {
@@ -114,12 +111,6 @@ export default {
         popList
     },
     computed: {
-        checkRealInfo () {
-            if (this.realName && this.realAddress && this.realTel && this.realPostcode) {
-                return true
-            }
-            return false
-        },
         isLog () {
             return this.userInfo && this.userInfo.user_type !== "guest"
         }
@@ -196,9 +187,9 @@ export default {
             } else if (this.acitveClass === "card") {
                 arr = this.exchangeList.filter(item => item.goodstype === "1")
             } else if (this.acitveClass === "electronics") {
-                arr = this.exchangeList.filter(item => item.goodstype === "2")
+                arr = this.exchangeList.filter(item => item.goodstype === "2" && item.classify !== "other")
             } else {
-                arr = this.exchangeList.filter(item => item.goodstype !== "1" && item.goodstype !== "2")
+                arr = this.exchangeList.filter(item => item.goodstype === "2" && item.classify === "other")
             }
             arr.forEach((item, index) => {
                 if (index % 2 === 0) {
@@ -212,6 +203,7 @@ export default {
         getExchangeList () {
             this.$get("/shops/goods/list")
                 .then(res => {
+                    console.log(res.data)
                     res.data.sort((a, b) => Number(a.weigth) > Number(b.weight) ? 1 : -1)
                     this.exchangeList = res.data
                 })
@@ -222,28 +214,23 @@ export default {
                 this.userInfo = res.data
             })
         },
-        addAddress () {
-            if (!this.checkRealInfo) {
-                return
-            }
+        addAddress (address) {
             this.$post("/shipping/address/add", {
-                consignee: this.realName,
-                mobile: this.realTel,
-                address: this.realAddress,
-                postcode: this.realPostcode
+                consignee: address.f_consignee,
+                mobile: address.f_mobile,
+                address: address.f_address,
+                postcode: address.f_postcode
             })
                 .then(res => {
                     this.isCheckReal = true
                     this.aid = res.data.aid
+                    this.getUserAddress()
                 })
         },
         getUserAddress () {
             this.$post("/shipping/address/get")
                 .then(res => {
-                    this.realName = res.data.f_consignee || ""
-                    this.realTel = res.data.f_mobile || ""
-                    this.realAddress = res.data.f_address || ""
-                    this.realPostcode = res.data.f_postcode || ""
+                    this.address = res.data
                     this.aid = res.data.f_aid
                     if (this.aid) {
                         this.isCheckReal = true
@@ -278,7 +265,7 @@ export default {
             })
         }
     },
-    mounted () {
+    async mounted () {
         this.$nextTick(() => {
             this.newsWidth = this.$refs.newsWidth.clientWidth + "px"
         })
