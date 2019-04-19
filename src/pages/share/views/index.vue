@@ -40,7 +40,7 @@
           <p class="time" v-if="expireTime">{{ calSecond(expireTime) }}</p>
         </div>
         <div class="share_tips">
-          <p class="share_tips_t">{{ _('m_share.sh_rule_title') }}</p>
+          <!-- <p class="share_tips_t">{{ _('m_share.sh_rule_title') }}</p> -->
           <p v-html="_('m_share.sh_rule_1', formatIndiaTime(beginTime, lan), formatIndiaTime(endTime, lan), formatMoney(inviteCodeNum))"></p>
         </div>
       </div>

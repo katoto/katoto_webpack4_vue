@@ -1,73 +1,73 @@
 <template>
-    <div class="fullscreen page_mall">
-        <div class="bg">
-            <div class="bg_header"></div>
-        </div>
-        <div class="header">
-            <div class="fl">
-                <a href="javascript:;" class="btn btn_back" @click="closeView"></a>
-            </div>
-            <div class="fr">
-                <a href="javascript:;" class="my_balance" @click="jumpToWithdraw">
-                    <span>{{formateBalance(gold_total)}}</span>
-                </a>
-                <a href="javascript:;" class="btn btn_list_redemption_record" @click="setPopStore('setRecordList', true)"></a>
-                <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
-            </div>
-        </div>
-        <!-- todo 提成公共组件轮询新闻 -->
-        <div class="news">
-            <div class="news_main">
-                <p :style="{width:newsWidth}" ref="newsWidth">{{_('m_payment.mall_title')}}</p>
-            </div>
-        </div>
-        <div class="mall">
-            <div class="mall_tab">
-                <ul>
-                    <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
-                        <a href="javascript:;">{{_('m_payment.all')}}</a>
-                    </li>
-                    <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
-                        <a href="javascript:;">{{_('m_payment.card')}}</a>
-                    </li>
-                    <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
-                        <a href="javascript:;">{{_('m_payment.electronics')}}</a>
-                    </li>
-                    <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
-                        <a href="javascript:;">{{_('m_payment.other')}}</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="mall_main">
-                <template v-if="getList().length>0">
-                    <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
-                        <li :class="{unlock: item[0].islock === '1'}">
-                            <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
-                            <div class="reward_box" @click="showProductDetail(item[0])">
-                                <img :src="item[0].imgurl" alt>
-                                <p class="reward_name">{{item[0].name}}</p>
-                            </div>
-                            <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{formateBalance(item[0].needgolds)}}</a>
-                        </li>
-                        <li :class="{unlock: item[1] && item[1].islock === '1'}">
-                            <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
-                            <template v-if="item[1]">
-                                <div class="reward_box" @click="showProductDetail(item[1])">
-                                    <img :src="item[1].imgurl" alt>
-                                    <p class="reward_name">{{item[1].name}}</p>
-                                </div>
-                                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{formateBalance(item[1].needgolds)}}</a>
-                            </template>
-                        </li>
-                    </ul>
-                </template>
-                <div class="nomsg" v-else>{{ _('m_payment.sm_nodata') }}</div>
-            </div>
-        </div>
-        <!-- 初始化全部的弹窗   -->
-        <popList></popList>
+  <div class="fullscreen page_mall">
+    <div class="bg">
+      <div class="bg_header"></div>
     </div>
-
+    <div class="header">
+      <div class="fl">
+        <a href="javascript:;" class="btn btn_back" @click="closeView"></a>
+      </div>
+      <div class="fr">
+        <a href="javascript:;" class="my_balance" @click="jumpToWithdraw">
+          <span>{{formateBalance(gold_total)}}</span>
+        </a>
+        <a href="javascript:;" class="btn btn_list_redemption_record" @click="setPopStore('setRecordList', true)"></a>
+        <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
+      </div>
+    </div>
+    <!-- todo 提成公共组件轮询新闻 -->
+    <div class="news">
+      <div class="news_main">
+        <p :style="{width:newsWidth}" ref="newsWidth">{{_('m_payment.mall_title')}}</p>
+      </div>
+    </div>
+    <div class="mall">
+      <div class="mall_tab">
+        <ul>
+          <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
+            <a href="javascript:;">{{_('m_payment.all')}}</a>
+          </li>
+          <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
+            <a href="javascript:;">{{_('m_payment.card')}}</a>
+          </li>
+          <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
+            <a href="javascript:;">{{_('m_payment.electronics')}}</a>
+          </li>
+          <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
+            <a href="javascript:;">{{_('m_payment.other')}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="mall_main">
+        <template v-if="getList().length>0">
+          <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
+            <li :class="{unlock: item[0].islock === '1'}">
+              <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
+              <div class="reward_box" @click="showProductDetail(item[0])">
+                <img :src="item[0].imgurl" alt>
+                <p class="reward_name">{{item[0].name}}</p>
+              </div>
+              <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{formateBalance(item[0].needgolds)}}</a>
+            </li>
+            <li :class="{unlock: item[1] && item[1].islock === '1'}">
+              <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
+              <template v-if="item[1]">
+                <div class="reward_box" @click="showProductDetail(item[1])">
+                  <img :src="item[1].imgurl" alt>
+                  <p class="reward_name">{{item[1].name}}</p>
+                </div>
+                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{formateBalance(item[1].needgolds)}}</a>
+              </template>
+            </li>
+          </ul>
+        </template>
+        <div class="nomsg" v-else-if="getList().length==0">{{ _('m_payment.sm_nodata') }}</div>
+        <div class="common_loading" v-else></div>
+      </div>
+    </div>
+    <!-- 初始化全部的弹窗   -->
+    <popList></popList>
+  </div>
 </template>
 
 <script>
@@ -200,7 +200,6 @@ export default {
             } else {
                 arr = this.exchangeList.filter(item => item.goodstype !== "1" && item.goodstype !== "2")
             }
-
             arr.forEach((item, index) => {
                 if (index % 2 === 0) {
                     displayArr.push([item])
@@ -488,24 +487,24 @@ export default {
       }
     }
     .unlock-tip {
-        display: none;
-        position: absolute;
-        box-sizing: border-box;
-        z-index: 2;
-        top: 10/75rem;
-        left: 40/75rem;
-        align-items: center;
-        justify-content: center;
-        width: 215/75rem;
-        height: 49/75rem;
-        overflow: hidden;
-        padding: 22/75rem 0 0 37/75rem;
-        background: url(../img/icon_unlock.png) no-repeat center;
-        background-size: cover;
-        //   font-family: "openSans_bold";
-        font-weight: bold;
-        font-size: 16/75rem;
-        white-space: nowrap;
+      display: none;
+      position: absolute;
+      box-sizing: border-box;
+      z-index: 2;
+      top: 10/75rem;
+      left: 40/75rem;
+      align-items: center;
+      justify-content: center;
+      width: 215/75rem;
+      height: 49/75rem;
+      overflow: hidden;
+      padding: 22/75rem 0 0 37/75rem;
+      background: url(../img/icon_unlock.png) no-repeat center;
+      background-size: cover;
+      //   font-family: "openSans_bold";
+      font-weight: bold;
+      font-size: 16/75rem;
+      white-space: nowrap;
     }
   }
   li.unlock {
@@ -513,19 +512,19 @@ export default {
       opacity: 0.4;
     }
     .unlock-tip {
-        display: flex;
+      display: flex;
     }
     .btn_reward {
       background: url(../img/btn_reward_lock.png) no-repeat center;
       background-size: cover;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255, 255, 255, 0.4);
     }
   }
   .reward_box {
     position: relative;
     width: 308/75rem;
     height: 243/75rem;
-    padding-top: 15/75rem;
+    padding-top: 20/75rem;
     img {
       width: 223/75rem;
       height: 163/75rem;

@@ -1,6 +1,5 @@
 <template>
     <div class="pop-list">
-        <div class="pop_layer" v-show="app.hadPopShow"></div>
         <RecordList></RecordList>
         <RechangeMany></RechangeMany>
         <Real2card></Real2card>
@@ -45,6 +44,9 @@ export default {
 </script>
 <style lang="less" type="text/less" scope>
 @import "../../../styles/lib-mixins.less";
+.pop-list{
+    z-index: 99;
+}
 .pop {
   &.pop_list_redemption_record {
     .pop_main {
