@@ -140,9 +140,12 @@ export default {
         formateBalance,
         formatTime,
         calSecond,
-        testFriendCode () {
+        testFriendCode (e) {
             if (this.friend_code && this.friend_code.length > 10) {
                 this.friend_code = this.friend_code.slice(0, 10)
+            }
+            if(e && e.target){
+                this.friend_code = e.target.value
             }
         },
         sendInviteCode () {
@@ -155,23 +158,18 @@ export default {
                 this.$post("/invite/use_code", {
                     code: this.friend_code.toUpperCase()
                 }).then(res => {
-                    this.isCodeSucc = false
+                    this.isCodeSucc = true
                     if (res && res.status === "100") {
                         this.winInviteNum = this.formatMoney(res.data.award)
                         this.show_pop_congratulation = true
                         this.getInviteInfo()
-                    } else {
-                        // 邀请出错
-                        this.$toast({
-                            content: _("m_share.sh_neterr")
-                        })
                     }
                 }).catch((err) => {
                     // 邀请出错
-                    this.isCodeSucc = false
-                    this.$toast({
-                        content: _("m_share.sh_neterr")
-                    })
+                    this.isCodeSucc = true
+                    // this.$toast({
+                    //     content: _("m_share.sh_neterr")
+                    // })
                 })
             } else {
                 this.$toast({
