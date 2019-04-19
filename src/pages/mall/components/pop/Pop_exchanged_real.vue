@@ -31,8 +31,8 @@
 import Pop from "./Pop.vue"
 export default {
     inject: ["app"],
-    computed:{
-        show:{
+    computed: {
+        show: {
             get: function () {
                 return this.app.pop.showExchangedReal
             },
@@ -48,7 +48,7 @@ export default {
             return this.app.activeItem
         }
     },
-    components:{
+    components: {
         Pop
     },
     methods: {

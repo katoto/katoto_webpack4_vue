@@ -15,8 +15,8 @@
 import Pop from "./Pop.vue"
 export default {
     inject: ["app"],
-    computed:{
-        show:{
+    computed: {
+        show: {
             get: function () {
                 return this.app.pop.showCongratulation
             },
@@ -29,7 +29,7 @@ export default {
             }
         }
     },
-    components:{
+    components: {
         Pop
     },
     mounted () {

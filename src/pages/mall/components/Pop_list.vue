@@ -28,7 +28,7 @@ import ExchangeReal from "./pop/Pop_exchange_real.vue"
 import ExchangedReal from "./pop/Pop_exchanged_real"
 export default {
     inject: ["app"],
-    components:{
+    components: {
         RecordList,
         RechangeMany,
         Real2card,

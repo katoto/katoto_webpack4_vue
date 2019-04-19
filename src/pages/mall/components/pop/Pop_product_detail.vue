@@ -17,8 +17,8 @@ import {
 } from "@/common/util"
 export default {
     inject: ["app"],
-    computed:{
-        show:{
+    computed: {
+        show: {
             get: function () {
                 return this.app.pop.showProductDetail
             },
@@ -30,13 +30,13 @@ export default {
                 }
             }
         },
-        message:{
-            get:function () {
+        message: {
+            get: function () {
                 return this.app.product_detail
             }
         }
     },
-    components:{
+    components: {
         Pop
     },
     methods: {

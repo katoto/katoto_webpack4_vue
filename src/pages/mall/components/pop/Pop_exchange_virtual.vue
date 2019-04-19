@@ -39,8 +39,8 @@ import {
 } from "@/common/util"
 export default {
     inject: ["app"],
-    computed:{
-        show:{
+    computed: {
+        show: {
             get: function () {
                 return this.app.pop.showExchangeVirtual
             },
@@ -56,7 +56,7 @@ export default {
             return this.app.virtualCard !== "" && this.app.virtualPass !== ""
         }
     },
-    components:{
+    components: {
         Pop
     },
     methods: {

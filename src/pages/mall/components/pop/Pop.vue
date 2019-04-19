@@ -12,17 +12,17 @@
 <script>
 
 export default {
-    props:{
+    props: {
         show: {
             type: Boolean,
-            default:false
+            default: false
         },
         hideClose: {
             type: Boolean,
             default: true
         }
     },
-    methods:{
+    methods: {
         onClose () {
             this.$emit("update:show", false)
         }

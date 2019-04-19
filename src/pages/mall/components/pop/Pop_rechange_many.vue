@@ -60,8 +60,8 @@
 import Pop from "./Pop.vue"
 export default {
     inject: ["app"],
-    computed:{
-        show:{
+    computed: {
+        show: {
             get: function () {
                 return this.app.pop.showRechangeMany
             },
@@ -74,7 +74,7 @@ export default {
             }
         }
     },
-    components:{
+    components: {
         Pop
     }
 }

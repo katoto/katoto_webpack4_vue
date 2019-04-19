@@ -31,8 +31,8 @@ import {
 } from "@/common/util"
 export default {
     inject: ["app"],
-    computed:{
-        show:{
+    computed: {
+        show: {
             get: function () {
                 return this.app.pop.showReal2card
             },
@@ -44,13 +44,13 @@ export default {
                 }
             }
         },
-        message:{
-            get:function () {
+        message: {
+            get: function () {
                 return this.app.covert_message
             }
         }
     },
-    components:{
+    components: {
         Pop
     },
     methods: {

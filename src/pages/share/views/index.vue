@@ -1,84 +1,84 @@
 <template>
-  <div class="page_share">
-    <div class="bg_page">
-      <div class="bg_particle">
-        <div class="bg bg_p1" :class="{bounceIn:fadeIn}"></div>
-        <div class="bg bg_p2" :class="{bounceIn:fadeIn}"></div>
-        <div class="bg bg_p3" :class="{bounceIn:fadeIn}"></div>
-      </div>
-      <div class="bg_light"></div>
-    </div>
-    <div class="page_share_main">
-      <h1 class="title" :class="{fadeIn:fadeIn}" v-html="_('m_share.sh_bigTitle', formatMoney(this.inviteCodeNum))"></h1>
-      <div class="total" :class="{fadeIn:fadeIn}" @click="show_pop_invite_frient = true">
-        <p class="total_title">{{ _('m_share.sh_invited_friends') }}</p>
-        <div class="total_person" @click="popInviteFrient()">
-          <span v-if="invitemsg">{{ invitemsg.invited_num }}</span>
+    <div class="page_share">
+        <div class="bg_page">
+            <div class="bg_particle">
+                <div class="bg bg_p1" :class="{bounceIn:fadeIn}"></div>
+                <div class="bg bg_p2" :class="{bounceIn:fadeIn}"></div>
+                <div class="bg bg_p3" :class="{bounceIn:fadeIn}"></div>
+            </div>
+            <div class="bg_light"></div>
         </div>
-        <div class="total_money">{{ formateBalance(invitemsg.have_earn) }}</div>
-      </div>
-      <div class="btn_box">
-        <a href="javascript:;" @click="fb_fackbook()" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
-        <a href="javascript:;" @click="fb_whatsapp()" class="btn btn_whatsApp" :class="{fadeIn:fadeIn}">WhatsApp</a>
-      </div>
-      <div class="share_code" :class="{fadeIn:fadeIn}">
-        <p>
-          {{ _('m_share.sh_refer_code') }}
-          <i class="bold" v-if="invitemsg" @click="shareCopy(invitemsg.invite_code)">{{ invitemsg.invite_code }}</i>
-        </p>
-        <a href="javascript:;" class="btn_copy" @click="shareCopy(invitemsg.invite_code)">{{ _('m_share.sh_btc_copy') }}</a>
-      </div>
-      <div class="tips" :class="{fadeIn:fadeIn}">{{ _('m_share.sh_invitemsg') }}</div>
-      <div class="page_share_bottom" :class="{fadeIn:fadeIn}">
-        <div class="share_byfriend" v-if="invitemsg && invitemsg.used_code === '0'">
-          <p class="msg">{{ _('m_share.sh_invited_byfriends') }}</p>
-          <div class="input_box">
-            <input type="text" :placeholder="_('m_share.sh_enter_code')" @input="testFriendCode" v-model="friend_code" :class="{isput:friend_code}">
-            <a href="javascript:;" class="btn" v-if="friend_code" @click="sendInviteCode">{{ _('m_share.sh_btn_confirm') }}</a>
-          </div>
-          <!-- 倒计时 todo 定时器 -->
-          <p class="time" v-if="expireTime">{{ calSecond(expireTime) }}</p>
+        <div class="page_share_main">
+            <h1 class="title" :class="{fadeIn:fadeIn}" v-html="_('m_share.sh_bigTitle', formatMoney(this.inviteCodeNum))"></h1>
+            <div class="total" :class="{fadeIn:fadeIn}" @click="show_pop_invite_frient = true">
+                <p class="total_title">{{ _('m_share.sh_invited_friends') }}</p>
+                <div class="total_person" @click="popInviteFrient()">
+                    <span v-if="invitemsg">{{ invitemsg.invited_num }}</span>
+                </div>
+                <div class="total_money">{{ formateBalance(invitemsg.have_earn) }}</div>
+            </div>
+            <div class="btn_box">
+                <a href="javascript:;" @click="fb_fackbook()" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
+                <a href="javascript:;" @click="fb_whatsapp()" class="btn btn_whatsApp" :class="{fadeIn:fadeIn}">WhatsApp</a>
+            </div>
+            <div class="share_code" :class="{fadeIn:fadeIn}">
+                <p>
+                    {{ _('m_share.sh_refer_code') }}
+                    <i class="bold" v-if="invitemsg" @click="shareCopy(invitemsg.invite_code)">{{ invitemsg.invite_code }}</i>
+                </p>
+                <a href="javascript:;" class="btn_copy" @click="shareCopy(invitemsg.invite_code)">{{ _('m_share.sh_btc_copy') }}</a>
+            </div>
+            <div class="tips" :class="{fadeIn:fadeIn}">{{ _('m_share.sh_invitemsg') }}</div>
+            <div class="page_share_bottom" :class="{fadeIn:fadeIn}">
+                <div class="share_byfriend" v-if="invitemsg && invitemsg.used_code === '0'">
+                    <p class="msg">{{ _('m_share.sh_invited_byfriends') }}</p>
+                    <div class="input_box">
+                        <input type="text" :placeholder="_('m_share.sh_enter_code')" @input="testFriendCode" v-model="friend_code" :class="{isput:friend_code}">
+                        <a href="javascript:;" class="btn" v-if="friend_code" @click="sendInviteCode">{{ _('m_share.sh_btn_confirm') }}</a>
+                    </div>
+                    <!-- 倒计时 todo 定时器 -->
+                    <p class="time" v-if="expireTime">{{ calSecond(expireTime) }}</p>
+                </div>
+                <div class="share_tips">
+                    <p class="share_tips_t">{{ _('m_share.sh_rule_title') }}</p>
+                    <p v-html="_('m_share.sh_rule_1', formatIndiaTime(beginTime, lan), formatIndiaTime(endTime, lan), formatMoney(inviteCodeNum))"></p>
+                </div>
+            </div>
         </div>
-        <div class="share_tips">
-          <p class="share_tips_t">{{ _('m_share.sh_rule_title') }}</p>
-          <p v-html="_('m_share.sh_rule_1', formatIndiaTime(beginTime, lan), formatIndiaTime(endTime, lan), formatMoney(inviteCodeNum))"></p>
-        </div>
-      </div>
-    </div>
-    <!-- 邀请好友列表 -->
-    <div class="pop_invite_frient" :class="{hide:!show_pop_invite_frient}">
-      <transition name="pop_animate">
-        <div class="pop_invite_frient_layer" v-if="show_pop_invite_frient">
-          <div class="pop_main">
-            <a href="javascript:" class="pop_close" @click="show_pop_invite_frient = false"></a>
-            <div class="header">{{ _('m_share.sh_pop_invited_friends') }}</div>
-            <ul class="pop_invite_frient_list" v-if="friendList && friendList.length>0">
-              <!-- <li>
+        <!-- 邀请好友列表 -->
+        <div class="pop_invite_frient" :class="{hide:!show_pop_invite_frient}">
+            <transition name="pop_animate">
+                <div class="pop_invite_frient_layer" v-if="show_pop_invite_frient">
+                    <div class="pop_main">
+                        <a href="javascript:" class="pop_close" @click="show_pop_invite_frient = false"></a>
+                        <div class="header">{{ _('m_share.sh_pop_invited_friends') }}</div>
+                        <ul class="pop_invite_frient_list" v-if="friendList && friendList.length>0">
+                            <!-- <li>
                                 <p class="list_rank">{{ _('m_share.sh_no_list') }}</p>
                                 <p class="list_name">{{ _('m_share.sh_name') }}</p>
               </li>-->
-              <li v-for="(item, index) in friendList" :key="index">
-                <p class="list_rank">{{ _('m_share.sh_no_list') }}{{ index + 1 }}</p>
-                <p class="list_name">{{ item.username }}</p>
-              </li>
-            </ul>
-            <p class="nomsg" v-else>{{ _('m_share.sh_invite_nodata') }}</p>
-          </div>
+                            <li v-for="(item, index) in friendList" :key="index">
+                                <p class="list_rank">{{ _('m_share.sh_no_list') }}{{ index + 1 }}</p>
+                                <p class="list_name">{{ item.username }}</p>
+                            </li>
+                        </ul>
+                        <p class="nomsg" v-else>{{ _('m_share.sh_invite_nodata') }}</p>
+                    </div>
+                </div>
+            </transition>
         </div>
-      </transition>
-    </div>
-    <!-- 收获金币 -->
-    <div class="pop_congratulation" :class="{hide:!show_pop_congratulation}">
-      <transition name="pop_animate">
-        <div class="pop_con_main" v-if="show_pop_congratulation">
-          <div class="c_title" data-msg="Congratulations"></div>
-          <p class="c_count">+{{ winInviteNum }}</p>
-          <p class="c_msg">{{ _('m_share.sh_win_inviteNum', winInviteNum) }}</p>
-          <a href="javascript:;" class="btn_default" @click="show_pop_congratulation=false">OK</a>
+        <!-- 收获金币 -->
+        <div class="pop_congratulation" :class="{hide:!show_pop_congratulation}">
+            <transition name="pop_animate">
+                <div class="pop_con_main" v-if="show_pop_congratulation">
+                    <div class="c_title" data-msg="Congratulations"></div>
+                    <p class="c_count">+{{ winInviteNum }}</p>
+                    <p class="c_msg">{{ _('m_share.sh_win_inviteNum', winInviteNum) }}</p>
+                    <a href="javascript:;" class="btn_default" @click="show_pop_congratulation=false">OK</a>
+                </div>
+            </transition>
         </div>
-      </transition>
     </div>
-  </div>
 </template>
 
 <script>
@@ -115,8 +115,8 @@ export default {
             beginTime: 0,
             endTime: 0,
             expireTimerInter: null,
-            lan:'',
-            isCodeSucc: true, // 请求之后
+            lan: "",
+            isCodeSucc: true // 请求之后
         }
     },
     watch: {
@@ -149,7 +149,7 @@ export default {
             let codeReg = /^[A-Z]+$/g
             if (this.friend_code && codeReg.test(this.friend_code.toUpperCase().trim())) {
                 // 发起请求
-                if(!this.isCodeSucc){ return false }
+                if (!this.isCodeSucc) { return false }
                 this.isCodeSucc = false
                 this.$post("/invite/use_code", {
                     code: this.friend_code.toUpperCase()
@@ -162,19 +162,19 @@ export default {
                     } else {
                         // 邀请出错
                         this.$toast({
-                            content: _('m_share.sh_neterr')
+                            content: _("m_share.sh_neterr")
                         })
                     }
                 }).catch((err) => {
                     // 邀请出错
                     this.isCodeSucc = false
                     this.$toast({
-                        content: _('m_share.sh_neterr')
+                        content: _("m_share.sh_neterr")
                     })
                 })
             } else {
                 this.$toast({
-                    content: _('m_share.sh_codeerr')
+                    content: _("m_share.sh_codeerr")
                 })
             }
         },
@@ -213,7 +213,7 @@ export default {
                 })
             } else {
                 this.$toast({
-                    content: _('m_share.sh_neterr')
+                    content: _("m_share.sh_neterr")
                 })
             }
         },
@@ -234,7 +234,7 @@ export default {
                 })
             } else {
                 this.$toast({
-                    content: _('m_share.sh_neterr')
+                    content: _("m_share.sh_neterr")
                 })
             }
         },
@@ -243,6 +243,10 @@ export default {
                 .then(res => {
                     if (res && res.status === "100") {
                         let resData = res.data
+                        // if(!resData.info || !resData.config){
+                        //     // 过期了 todo
+                        //     return false
+                        // }
                         this.invitemsg = resData.info
                         if (resData.config && resData.config.prize) {
                             if (resData.config.prize.inviter) {
@@ -263,7 +267,7 @@ export default {
                 })
                 .catch(e => {
                     this.$toast({
-                        content: _('m_share.sh_neterr')
+                        content: _("m_share.sh_neterr")
                     })
                 })
         },
@@ -284,7 +288,7 @@ export default {
     components: {
     },
     created () {
-        this.lan = cookie.get('language') || "en"
+        this.lan = cookie.get("language") || "en"
         this.getInviteInfo()
     },
     async mounted () {
