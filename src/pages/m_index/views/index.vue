@@ -1,49 +1,49 @@
 <template>
-    <div>
-        <header>
-            <img
-                src="../img/madsportslogo.png"
-                alt=""
-            >
-        </header>
-        <div class="contain">
-            <img
-                src="../img/bgtitle.png"
-                alt=""
-            >
-            <img
-                class="bg2title"
-                src="../img/bg2title.png"
-                alt=""
-            >
-            <div class="btn">
-                <a
-                    :href="contHref"
-                    target="_blank"
-                ></a>
-            </div>
-            <div class="secondTitle">
+        <div>
+            <header>
                 <img
-                    src="../img/feature.png"
-                    alt=""
+                        src="../img/madsportslogo.png"
+                        alt=""
                 >
+            </header>
+            <div class="contain">
+                <img
+                        src="../img/bgtitle.png"
+                        alt=""
+                >
+                <img
+                        class="bg2title"
+                        src="../img/bg2title.png"
+                        alt=""
+                >
+                <div class="btn">
+                    <a
+                            :href="contHref"
+                            target="_blank"
+                    ></a>
+                </div>
+                <div class="secondTitle">
+                    <img
+                            src="../img/feature.png"
+                            alt=""
+                    >
+                </div>
             </div>
+            <footer>
+                <img
+                        src="../img/style1.png"
+                        alt=""
+                >
+                <img
+                        src="../img/style2.png"
+                        alt=""
+                >
+                <img
+                        src="../img/style3.png"
+                        alt=""
+                >
+            </footer>
         </div>
-        <footer>
-            <img
-                src="../img/style1.png"
-                alt=""
-            >
-            <img
-                src="../img/style2.png"
-                alt=""
-            >
-            <img
-                src="../img/style3.png"
-                alt=""
-            >
-        </footer>
-    </div>
 </template>
 
 <script>

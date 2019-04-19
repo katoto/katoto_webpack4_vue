@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 MyPlugin.install = function (Vue, config={
-    commonParams:{
+    commonParams: {
     }
 }) {
     // 对象转get字符串

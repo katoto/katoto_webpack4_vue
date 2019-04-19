@@ -3,6 +3,7 @@
     <div class="bg">
       <div class="bg_header"></div>
     </div>
+    <div class="asd-asd"></div>
     <div class="header">
       <div class="fl">
         <a href="javascript:;" class="btn btn_back" @click="closeView"></a>
@@ -71,209 +72,205 @@
 </template>
 
 <script>
-import {
-    formateBalance, cbetLocal
-} from "@/common/util"
+import { formateBalance, cbetLocal } from "@/common/util";
 // 弹窗
-import popList from "../components/Pop_list"
+import popList from "../components/Pop_list";
 // 弹窗data
-import mixins_pop from "../mixins/pop.js"
+import mixins_pop from "../mixins/pop.js";
 export default {
-    mixins: [mixins_pop],
-    provide () {
-        return {
-            app: this
+  mixins: [mixins_pop],
+  provide() {
+    return {
+      app: this
+    };
+  },
+  data() {
+    return {
+      acitveClass: "all",
+      exchangeList: [],
+      virtualCard: "",
+      virtualPass: "",
+      virtualCardStatus: false,
+      isCheckReal: false,
+      isChangeReal: false,
+      gold_total: "0",
+      aid: "",
+      activeItem: {},
+      address: {},
+      newsWidth: "",
+      userInfo: false,
+      covert_message: {
+        convert: {
+          cards: []
         }
-    },
-    data () {
-        return {
-            acitveClass: "all",
-            exchangeList: [],
-            virtualCard: "",
-            virtualPass: "",
-            virtualCardStatus: false,
-            isCheckReal: false,
-            isChangeReal: false,
-            gold_total: "0",
-            aid: "",
-            activeItem: {},
-            address: {},
-            newsWidth: "",
-            userInfo: false,
-            covert_message: {
-                convert: {
-                    cards: []
-                }
-            }
-        }
-    },
-    components: {
-        popList
-    },
-    computed: {
-        isLog () {
-            return this.userInfo && this.userInfo.user_type !== "guest"
-        }
-    },
-    methods: {
-        formateBalance,
-        showProductDetail (e) {
-            this.product_detail = e
-            this.setPopStore("setProductDetail", true)
-        },
-        showDetail (item) {
-            this.activeItem = item
-            if (!this.isLog) {
-                this.$toast({
-                    content: _("please_login")
-                })
-                return
-            }
-            if (item.islock === "1") {
-                this.$toast({ content: _("m_payment.unlock_tip") })
-                return
-            }
-            if (item.goodstype === "1") {
-                this.virtualCard = ""
-                this.virtualPass = ""
-                this.setPopStore("setExchangeVirtual", true)
-            } else {
-                let deliverTip = window.localStorage.getItem("no_deliver_tip")
-                // 重置 兑换成功状态
-                this.isChangeReal = false
-                if (!deliverTip) {
-                    this.setPopStore("setRuleHelp", true)
-                    return
-                }
-                this.setPopStore("setExchangeReal", true)
-            }
-        },
-        showCardDetail (cardno, password, virtualCardStatus, item) {
-            this.activeItem = item
-            this.virtualCard = cardno
-            this.virtualPass = password
-            this.virtualCardStatus = virtualCardStatus
-            this.setPopStore("setExchangeVirtual", true)
-        },
-        confirmDeliverTip () {
-            this.setPopStore("setRuleHelp", false)
-            this.setPopStore("setExchangeReal", true)
-        },
-        confirmVirtual () {
-            if (this.virtualCard && this.virtualPass) {
-                this.setPopStore("setExchangeVirtual", false)
-                return
-            }
-            this.exchange(this.activeItem)
-                .then(res => {
-                    this.virtualCard = res.data.cardno
-                    this.virtualPass = res.data.password
-                    this.virtualCardStatus = res.data.review === "False"
-                    this.getUserInfo()
-                })
-        },
-        exchangeReal () {
-            this.exchange(this.activeItem, this.aid)
-                .then(() => {
-                    this.isChangeReal = true
-                    this.getUserInfo()
-                })
-        },
-        getList () {
-            let arr = []
-            let displayArr = []
-            if (this.acitveClass === "all") {
-                arr = [...this.exchangeList]
-            } else if (this.acitveClass === "card") {
-                arr = this.exchangeList.filter(item => item.goodstype === "1")
-            } else if (this.acitveClass === "electronics") {
-                arr = this.exchangeList.filter(item => item.goodstype === "2" && item.classify !== "other")
-            } else {
-                arr = this.exchangeList.filter(item => item.goodstype === "2" && item.classify === "other")
-            }
-            arr.forEach((item, index) => {
-                if (index % 2 === 0) {
-                    displayArr.push([item])
-                } else {
-                    displayArr[displayArr.length - 1].push(item)
-                }
-            })
-            return displayArr
-        },
-        getExchangeList () {
-            this.$get("/shops/goods/list")
-                .then(res => {
-                    console.log(res.data)
-                    res.data.sort((a, b) => Number(a.weigth) > Number(b.weight) ? 1 : -1)
-                    this.exchangeList = res.data
-                })
-        },
-        getUserInfo () {
-            this.$get("/simple/user/info").then(res => {
-                this.gold_total = Number(res.data.gold_total)
-                this.userInfo = res.data
-            })
-        },
-        addAddress (address) {
-            this.$post("/shipping/address/add", {
-                consignee: address.f_consignee,
-                mobile: address.f_mobile,
-                address: address.f_address,
-                postcode: address.f_postcode
-            })
-                .then(res => {
-                    this.isCheckReal = true
-                    this.aid = res.data.aid
-                    this.getUserAddress()
-                })
-        },
-        getUserAddress () {
-            this.$post("/shipping/address/get")
-                .then(res => {
-                    this.address = res.data
-                    this.aid = res.data.f_aid
-                    if (this.aid) {
-                        this.isCheckReal = true
-                    }
-                })
-        },
-        exchange (item, aid, amount = 1) {
-            let data = {
-                goodsid: item.id,
-                amount
-            }
-            if (aid) {
-                data.aid = aid
-            }
-            return this.$post("/shops/goods/exchange", data)
-                .then(res => {
-                    return res
-                })
-        },
-        jumpToWithdraw () {
-            cbetLocal({
-                func: "jumpToLocal",
-                params: {
-                    content: "jp://ShopScene"
-                }
-            })
-        },
-        closeView () {
-            cbetLocal({
-                func: "closeWebview",
-                params: {}
-            })
-        }
-    },
-    async mounted () {
-        this.$nextTick(() => {
-            this.newsWidth = this.$refs.newsWidth.clientWidth + "px"
-        })
-        this.getExchangeList()
-        this.getUserInfo()
-        this.getUserAddress()
+      }
+    };
+  },
+  components: {
+    popList
+  },
+  computed: {
+    isLog() {
+      return this.userInfo && this.userInfo.user_type !== "guest";
     }
-}
+  },
+  methods: {
+    formateBalance,
+    showProductDetail(e) {
+      this.product_detail = e;
+      this.setPopStore("setProductDetail", true);
+    },
+    showDetail(item) {
+      this.activeItem = item;
+      if (!this.isLog) {
+        this.$toast({
+          content: _("please_login")
+        });
+        return;
+      }
+      if (item.islock === "1") {
+        this.$toast({ content: _("m_payment.unlock_tip") });
+        return;
+      }
+      if (item.goodstype === "1") {
+        this.virtualCard = "";
+        this.virtualPass = "";
+        this.setPopStore("setExchangeVirtual", true);
+      } else {
+        let deliverTip = window.localStorage.getItem("no_deliver_tip");
+        // 重置 兑换成功状态
+        this.isChangeReal = false;
+        if (!deliverTip) {
+          this.setPopStore("setRuleHelp", true);
+          return;
+        }
+        this.setPopStore("setExchangeReal", true);
+      }
+    },
+    showCardDetail(cardno, password, virtualCardStatus, item) {
+      this.activeItem = item;
+      this.virtualCard = cardno;
+      this.virtualPass = password;
+      this.virtualCardStatus = virtualCardStatus;
+      this.setPopStore("setExchangeVirtual", true);
+    },
+    confirmDeliverTip() {
+      this.setPopStore("setRuleHelp", false);
+      this.setPopStore("setExchangeReal", true);
+    },
+    confirmVirtual() {
+      if (this.virtualCard && this.virtualPass) {
+        this.setPopStore("setExchangeVirtual", false);
+        return;
+      }
+      this.exchange(this.activeItem).then(res => {
+        this.virtualCard = res.data.cardno;
+        this.virtualPass = res.data.password;
+        this.virtualCardStatus = res.data.review === "False";
+        this.getUserInfo();
+      });
+    },
+    exchangeReal() {
+      this.exchange(this.activeItem, this.aid).then(() => {
+        this.isChangeReal = true;
+        this.getUserInfo();
+      });
+    },
+    getList() {
+      let arr = [];
+      let displayArr = [];
+      if (this.acitveClass === "all") {
+        arr = [...this.exchangeList];
+      } else if (this.acitveClass === "card") {
+        arr = this.exchangeList.filter(item => item.goodstype === "1");
+      } else if (this.acitveClass === "electronics") {
+        arr = this.exchangeList.filter(
+          item => item.goodstype === "2" && item.classify !== "other"
+        );
+      } else {
+        arr = this.exchangeList.filter(
+          item => item.goodstype === "2" && item.classify === "other"
+        );
+      }
+      arr.forEach((item, index) => {
+        if (index % 2 === 0) {
+          displayArr.push([item]);
+        } else {
+          displayArr[displayArr.length - 1].push(item);
+        }
+      });
+      return displayArr;
+    },
+    getExchangeList() {
+      this.$get("/shops/goods/list").then(res => {
+        console.log(res.data);
+        res.data.sort((a, b) => (Number(a.weigth) > Number(b.weight) ? 1 : -1));
+        this.exchangeList = res.data;
+      });
+    },
+    getUserInfo() {
+      this.$get("/simple/user/info").then(res => {
+        this.gold_total = Number(res.data.gold_total);
+        this.userInfo = res.data;
+      });
+    },
+    addAddress(address) {
+      this.$post("/shipping/address/add", {
+        consignee: address.f_consignee,
+        mobile: address.f_mobile,
+        address: address.f_address,
+        postcode: address.f_postcode
+      }).then(res => {
+        this.isCheckReal = true;
+        this.aid = res.data.aid;
+        this.getUserAddress();
+      });
+    },
+    getUserAddress() {
+      this.$post("/shipping/address/get").then(res => {
+        this.address = res.data;
+        this.aid = res.data.f_aid;
+        if (this.aid) {
+          this.isCheckReal = true;
+        }
+      });
+    },
+    exchange(item, aid, amount = 1) {
+      let data = {
+        goodsid: item.id,
+        amount
+      };
+      if (aid) {
+        data.aid = aid;
+      }
+      return this.$post("/shops/goods/exchange", data).then(res => {
+        return res;
+      });
+    },
+    jumpToWithdraw() {
+      cbetLocal({
+        func: "jumpToLocal",
+        params: {
+          content: "jp://ShopScene"
+        }
+      });
+    },
+    closeView() {
+      cbetLocal({
+        func: "closeWebview",
+        params: {}
+      });
+    }
+  },
+  async mounted() {
+    this.$nextTick(() => {
+      this.newsWidth = this.$refs.newsWidth.clientWidth + "px";
+    });
+    this.getExchangeList();
+    this.getUserInfo();
+    this.getUserAddress();
+  }
+};
 </script>
 
 <style lang="less" type="text/less" scope>

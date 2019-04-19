@@ -1,14 +1,14 @@
 <template>
-  <!-- toast -->
-  <div v-if="messageArr && messageArr.length > 0">
-    <transition name="toast">
-      <div class="toast">
-        <div class="toast_main">
-          <span v-for="item in messageArr" :key="item.name">{{ item.content }}</span>
+        <!-- toast -->
+        <div v-if="messageArr && messageArr.length > 0">
+            <transition name="toast">
+                <div class="toast">
+                    <div class="toast_main">
+                        <span v-for="item in messageArr" :key="item.name">{{ item.content }}</span>
+                    </div>
+                </div>
+            </transition>
         </div>
-      </div>
-    </transition>
-  </div>
 </template>
 
 <script>
