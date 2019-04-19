@@ -1,13 +1,13 @@
 <!-- 公共弹窗 -->
 <template>
-    <transition name="pop_animate">
-        <div class="pop" v-if="show">
-            <div class="pop_main">
-                <a href="javascript:" class="pop_close" v-if="hideClose" @click="onClose"></a>
-                <slot></slot>
-            </div>
+        <div class="pop" v-show="show2">
+            <transition name="pop_animate">
+                <div class="pop_main" v-show="show">
+                    <a href="javascript:" class="pop_close" v-if="hideClose" @click="onClose"></a>
+                    <slot></slot>
+                </div>
+            </transition>
         </div>
-    </transition>
 </template>
 <script>
 
@@ -20,6 +20,22 @@ export default {
         hideClose: {
             type: Boolean,
             default: true
+        }
+    },
+    data () {
+        return {
+            show2: false
+        }
+    },
+    watch: {
+        show (e) {
+            if (e) {
+                this.show2 = e
+            } else {
+                setTimeout(() => {
+                    this.show2 = e
+                }, 250)
+            }
         }
     },
     methods: {

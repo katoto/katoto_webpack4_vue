@@ -1,14 +1,27 @@
 <template>
-    <!-- toast -->
-    <div v-if="messageArr && messageArr.length > 0">
-        <transition name="toast">
-            <div class="toast">
-                <div class="toast_main">
-                    <span v-for="item in messageArr" :key="item.name">{{ item.content }}</span>
+        <<<<<<< HEAD
+        <!-- toast -->
+        <div v-if="messageArr && messageArr.length > 0">
+            <transition name="toast">
+                <div class="toast">
+                    <div class="toast_main">
+                        <span v-for="item in messageArr" :key="item.name">{{ item.content }}</span>
+                    </div>
                 </div>
-            </div>
-        </transition>
-    </div>
+            </transition>
+        </div>
+        =======
+        <!-- toast -->
+        <div v-if="messageArr && messageArr.length > 0">
+            <transition name="toast">
+                <div class="toast">
+                    <div class="toast_main">
+                        <span v-for="item in messageArr" :key="item.name">{{ item.content }}</span>
+                    </div>
+                </div>
+            </transition>
+        </div>
+        >>>>>>> 2faabc937f50f91debe251e0d1dfa8b497a2c130
 </template>
 
 <script>

@@ -1,7 +1,6 @@
 export default {
     data () {
         return {
-            hadPopShow: false,
             pop: {
                 showRecordList: false,
                 showRechangeMany: false,
@@ -47,18 +46,6 @@ export default {
     },
     methods: {
         setPopStore (func = "setRecordList", data = false) {
-            // 弹层的灰色蒙版单独处理
-            if (!data ) {
-                // 二次弹层关闭时保留蒙版
-                if (func!=="setReal2card") {
-                    setTimeout(() => {
-                        this.hadPopShow = data
-                    }, 200)
-                }
-            } else {
-                this.hadPopShow = data
-            }
-
             switch (func) {
             case "setRecordList":
                 this.pop.showRecordList = data

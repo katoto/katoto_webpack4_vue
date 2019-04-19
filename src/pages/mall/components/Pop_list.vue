@@ -1,18 +1,17 @@
 <template>
-    <div class="pop-list">
-        <div class="pop_layer" v-show="app.hadPopShow"></div>
-        <RecordList></RecordList>
-        <RechangeMany></RechangeMany>
-        <Real2card></Real2card>
-        <RuleHelp></RuleHelp>
-        <ExchangeTips></ExchangeTips>
-        <ProductDetail></ProductDetail>
-        <ExchangeVirtual></ExchangeVirtual>
-        <ExchangeReal></ExchangeReal>
-        <ExchangedReal></ExchangedReal>
+        <div class="pop-list">
+            <RecordList></RecordList>
+            <RechangeMany></RechangeMany>
+            <Real2card></Real2card>
+            <RuleHelp></RuleHelp>
+            <ExchangeTips></ExchangeTips>
+            <ProductDetail></ProductDetail>
+            <ExchangeVirtual></ExchangeVirtual>
+            <ExchangeReal></ExchangeReal>
+            <ExchangedReal></ExchangedReal>
         <!-- <common></common>
         <confirm></confirm> -->
-    </div>
+        </div>
 </template>
 <script>
 import RecordList from "./pop/Pop_record_list.vue"
@@ -45,6 +44,9 @@ export default {
 </script>
 <style lang="less" type="text/less" scope>
 @import "../../../styles/lib-mixins.less";
+.pop-list{
+    z-index: 99;
+}
 .pop {
   &.pop_list_redemption_record {
     .pop_main {
@@ -614,7 +616,7 @@ export default {
     center;
   background-size: 55/75rem;
   border-radius: 50%;
-  animation: icon_success_enter 0.2s;
+  animation: icon_success_enter 0.1s;
 }
 @keyframes icon_success_enter {
   0% {
