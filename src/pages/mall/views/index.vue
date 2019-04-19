@@ -1,73 +1,73 @@
 <template>
-  <div class="fullscreen page_mall">
-    <div class="bg">
-      <div class="bg_header"></div>
+    <div class="fullscreen page_mall">
+        <div class="bg">
+            <div class="bg_header"></div>
+        </div>
+        <div class="header">
+            <div class="fl">
+                <a href="javascript:;" class="btn btn_back" @click="closeView"></a>
+            </div>
+            <div class="fr">
+                <a href="javascript:;" class="my_balance" @click="jumpToWithdraw">
+                    <span>{{formateBalance(gold_total)}}</span>
+                </a>
+                <a href="javascript:;" class="btn btn_list_redemption_record" @click="setPopStore('setRecordList', true)"></a>
+                <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
+            </div>
+        </div>
+        <!-- todo 提成公共组件轮询新闻 -->
+        <div class="news">
+            <div class="news_main">
+                <p :style="{width:newsWidth}" ref="newsWidth">{{_('m_payment.mall_title')}}</p>
+            </div>
+        </div>
+        <div class="mall">
+            <div class="mall_tab">
+                <ul>
+                    <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
+                        <a href="javascript:;">{{_('m_payment.all')}}</a>
+                    </li>
+                    <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
+                        <a href="javascript:;">{{_('m_payment.card')}}</a>
+                    </li>
+                    <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
+                        <a href="javascript:;">{{_('m_payment.electronics')}}</a>
+                    </li>
+                    <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
+                        <a href="javascript:;">{{_('m_payment.other')}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mall_main">
+                <template v-if="getList().length > 0">
+                    <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
+                        <li :class="{unlock: item[0].islock === '1'}">
+                            <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
+                            <div class="reward_box" @click="showProductDetail(item[0])">
+                                <img :src="item[0].imgurl" alt>
+                                <p class="reward_name">{{item[0].name}}</p>
+                            </div>
+                            <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{formateBalance(item[0].needgolds)}}</a>
+                        </li>
+                        <li :class="{unlock: item[1] && item[1].islock === '1'}">
+                            <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
+                            <template v-if="item[1]">
+                                <div class="reward_box" @click="showProductDetail(item[1])">
+                                    <img :src="item[1].imgurl" alt>
+                                    <p class="reward_name">{{item[1].name}}</p>
+                                </div>
+                                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{formateBalance(item[1].needgolds)}}</a>
+                            </template>
+                        </li>
+                    </ul>
+                </template>
+                <div class="nomsg" v-else-if="isReady">{{ _('m_payment.sm_nodata') }}</div>
+                <div class="common_loading" v-else></div>
+            </div>
+        </div>
+        <!-- 初始化全部的弹窗   -->
+        <popList></popList>
     </div>
-    <div class="header">
-      <div class="fl">
-        <a href="javascript:;" class="btn btn_back" @click="closeView"></a>
-      </div>
-      <div class="fr">
-        <a href="javascript:;" class="my_balance" @click="jumpToWithdraw">
-          <span>{{formateBalance(gold_total)}}</span>
-        </a>
-        <a href="javascript:;" class="btn btn_list_redemption_record" @click="setPopStore('setRecordList', true)"></a>
-        <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
-      </div>
-    </div>
-    <!-- todo 提成公共组件轮询新闻 -->
-    <div class="news">
-      <div class="news_main">
-        <p :style="{width:newsWidth}" ref="newsWidth">{{_('m_payment.mall_title')}}</p>
-      </div>
-    </div>
-    <div class="mall">
-      <div class="mall_tab">
-        <ul>
-          <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
-            <a href="javascript:;">{{_('m_payment.all')}}</a>
-          </li>
-          <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
-            <a href="javascript:;">{{_('m_payment.card')}}</a>
-          </li>
-          <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
-            <a href="javascript:;">{{_('m_payment.electronics')}}</a>
-          </li>
-          <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
-            <a href="javascript:;">{{_('m_payment.other')}}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="mall_main">
-        <template v-if="getList().length>0">
-          <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
-            <li :class="{unlock: item[0].islock === '1'}">
-              <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
-              <div class="reward_box" @click="showProductDetail(item[0])">
-                <img :src="item[0].imgurl" alt>
-                <p class="reward_name">{{item[0].name}}</p>
-              </div>
-              <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{formateBalance(item[0].needgolds)}}</a>
-            </li>
-            <li :class="{unlock: item[1] && item[1].islock === '1'}">
-              <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
-              <template v-if="item[1]">
-                <div class="reward_box" @click="showProductDetail(item[1])">
-                  <img :src="item[1].imgurl" alt>
-                  <p class="reward_name">{{item[1].name}}</p>
-                </div>
-                <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{formateBalance(item[1].needgolds)}}</a>
-              </template>
-            </li>
-          </ul>
-        </template>
-        <div class="nomsg" v-else-if="getList().length==0">{{ _('m_payment.sm_nodata') }}</div>
-        <div class="common_loading" v-else></div>
-      </div>
-    </div>
-    <!-- 初始化全部的弹窗   -->
-    <popList></popList>
-  </div>
 </template>
 
 <script>
@@ -87,11 +87,12 @@ export default {
     },
     data () {
         return {
+            isReady: false,
             acitveClass: "all",
             exchangeList: [],
             virtualCard: "",
             virtualPass: "",
-            virtualCardStatus: false,
+            isShowPassword: false,
             isCheckReal: false,
             isChangeReal: false,
             gold_total: "0",
@@ -148,13 +149,6 @@ export default {
                 this.setPopStore("setExchangeReal", true)
             }
         },
-        showCardDetail (cardno, password, virtualCardStatus, item) {
-            this.activeItem = item
-            this.virtualCard = cardno
-            this.virtualPass = password
-            this.virtualCardStatus = virtualCardStatus
-            this.setPopStore("setExchangeVirtual", true)
-        },
         confirmDeliverTip () {
             this.setPopStore("setRuleHelp", false)
             this.setPopStore("setExchangeReal", true)
@@ -168,7 +162,7 @@ export default {
                 .then(res => {
                     this.virtualCard = res.data.cardno
                     this.virtualPass = res.data.password
-                    this.virtualCardStatus = res.data.review === "False"
+                    this.isShowPassword = res.data.review === "False"
                     this.getUserInfo()
                 })
         },
@@ -201,17 +195,18 @@ export default {
             return displayArr
         },
         getExchangeList () {
-            this.$get("/shops/goods/list")
+            return this.$get("/shops/goods/list")
                 .then(res => {
-                    console.log(res.data)
                     res.data.sort((a, b) => Number(a.weigth) > Number(b.weight) ? 1 : -1)
                     this.exchangeList = res.data
+                    return res
                 })
         },
         getUserInfo () {
-            this.$get("/simple/user/info").then(res => {
+            return this.$get("/simple/user/info").then(res => {
                 this.gold_total = Number(res.data.gold_total)
                 this.userInfo = res.data
+                return res
             })
         },
         addAddress (address) {
@@ -269,8 +264,14 @@ export default {
         this.$nextTick(() => {
             this.newsWidth = this.$refs.newsWidth.clientWidth + "px"
         })
-        this.getExchangeList()
-        this.getUserInfo()
+        Promise.all([
+            this.getExchangeList(),
+            this.getUserInfo()
+        ])
+            .finally(res => {
+                console.log(res)
+                this.isReady = true
+            })
         this.getUserAddress()
     }
 }

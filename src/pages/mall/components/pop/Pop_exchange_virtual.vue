@@ -22,10 +22,10 @@
                 <i class="card_psw">{{app.virtualCard}}</i>
                 <a href="javascript:;" class="btn_copy" @click="copy(app.virtualCard)">{{_('m_payment.copy')}}</a>
             </p>
-            <p :class="{message: !app.virtualCardStatus}">
+            <p :class="{message: !app.isShowPassword}">
                 <span>{{_('m_payment.password')}}:</span>
-                <i class="card_psw" :class="{overflow: app.virtualCardStatus, message: !app.virtualCardStatus}">{{app.virtualPass}}</i>
-                <a href="javascript:;" class="btn_copy" @click="copy(app.virtualPass)" v-if="app.virtualCardStatus">{{_('m_payment.copy')}}</a>
+                <i class="card_psw" :class="{overflow: app.isShowPassword, message: !app.isShowPassword}">{{app.virtualPass}}</i>
+                <a href="javascript:;" class="btn_copy" @click="copy(app.virtualPass)" v-if="app.isShowPassword">{{_('m_payment.copy')}}</a>
             </p>
         </div>
         <div class="icon_success" v-if="isChange"></div>
@@ -39,8 +39,8 @@ import {
 } from "@/common/util"
 export default {
     inject: ["app"],
-    computed:{
-        show:{
+    computed: {
+        show: {
             get: function () {
                 return this.app.pop.showExchangeVirtual
             },
@@ -56,7 +56,7 @@ export default {
             return this.app.virtualCard !== "" && this.app.virtualPass !== ""
         }
     },
-    components:{
+    components: {
         Pop
     },
     methods: {

@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 MyPlugin.install = function (Vue, config={
-    commonParams:{
+    commonParams: {
     }
 }) {
     // 对象转get字符串
@@ -34,7 +34,7 @@ MyPlugin.install = function (Vue, config={
     }
     let errorHandler = err => {
         Vue.prototype.$toast({
-            content: "Network Error"
+            content: window._ ? window._("networkError") : "Network Error"
         })
         return Promise.reject(err)
     }
@@ -55,48 +55,39 @@ MyPlugin.install = function (Vue, config={
                 reject(new Error("url 不能留空"))
                 return false
             }
-            let type = options.type
+            let type = (options.type || "GET").toUpperCase()
             let url = options.url
-            let data = options.data
-            let dataType = options.dataType
-            if (type == null) {type = "get"}
-            if (data && Object.prototype.toString.call(data) === "[object Object]" && type === "get") {
-                url = url + "?" + obj2str(data)
-            }
-            if (dataType == null) {dataType = "json"}
+            let data = options.data || {}
+            let dataType = (options.dataType || "JSON").toUpperCase()
             let xhr = createXHR()
+
+            if (type === "GET") {
+                url = url.indexOf("?") > -1 ? `${url}&${obj2str(data)}` : `${url}?${obj2str(data)}`
+            }
+
             xhr.onreadystatechange = function () {
                 let responseData = ""
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    if (dataType == "text" || dataType == "TEXT") {
+                if (xhr.readyState === 4 && xhr.status == 200) {
+                    if (dataType === "TEXT") {
                         responseData = xhr.responseXML
-                    } else if (dataType == "xml" || dataType == "XML") {
+                    } else if (dataType === "XML") {
                         responseData = xhr.responseText
-                    } else if (dataType == "json" || dataType == "JSON") {
+                    } else if (dataType === "JSON") {
                         responseData = JSON.parse(xhr.responseText)
                     }
                     resolve(responseData)
-                } else if (xhr.readyState == 4 && xhr.status != 200) {
+                } else if (xhr.readyState === 4 && xhr.status != 200) {
                     console.warn("请求有误")
                     reject(xhr.status)
                 }
             }
             xhr.open(type, url, true)
-            if (type == "GET" || type == "get") {
+            xhr.setRequestHeader("language", data.language || "en")
+            xhr.setRequestHeader("Content-Type", options.contentType || "application/x-www-form-urlencoded;charset=UTF-8")
+            if (type === "GET") {
                 xhr.send(null)
-            } else if (type == "POST" || type == "post") {
-                if (data.language) {
-                    xhr.setRequestHeader("language", data.language)
-                } else {
-                    xhr.setRequestHeader("language", "en")
-                }
-                if (options.contentType) {
-                    xhr.setRequestHeader("Content-Type", options.contentType)
-                    xhr.send(data)
-                } else {
-                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8")
-                    xhr.send(obj2str(data))
-                }
+            } else {
+                xhr.send(options.contentType ? data : obj2str(data))
             }
         })
     }
@@ -108,9 +99,8 @@ MyPlugin.install = function (Vue, config={
         if (!url) {
             return new Error("url 参数有误")
         }
-        url = `${BASEURL}${url}`
         return this.$http({
-            url,
+            url: `${BASEURL}${url}`,
             type: "post",
             data: {
                 ...commonParams,
@@ -121,17 +111,15 @@ MyPlugin.install = function (Vue, config={
     Vue.prototype.$get = function (url = "", data = {
     }) {
         if (!url) {
-            return new Error("option 参数有误")
+            return new Error("url 参数有误")
         }
-        data = {
-            ...commonParams,
-            ...data
-        }
-        url = `${BASEURL}${url}`
-        url = url.indexOf("?") > -1 ? `${url}&${obj2str(data)}` : `${url}?${obj2str(data)}`
         return this.$http({
             type: "get",
-            url
+            url: `${BASEURL}${url}`,
+            data: {
+                ...commonParams,
+                ...data
+            }
         }).catch(errorHandler).then(commonHandler)
     }
 }
