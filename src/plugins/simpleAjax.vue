@@ -5,16 +5,18 @@ const MyPlugin = {
 }
 let BASEURL = ""
 if (process.env.NODE_ENV === "production") {
-    BASEURL = window.location.protocol + "//www.madcrickets.com/api"
+    BASEURL = window.location.protocol + "//www.madcrickets.com"
 } else if (process.env.NODE_ENV === "preRelease") {
-    BASEURL = window.location.protocol + "//prewww.madcrickets.com/api"
+    BASEURL = window.location.protocol + "//prewww.madcrickets.com"
 } else if (process.env.NODE_ENV === "development") {
     // BASEURL = "http://10.0.1.41:8001"
     // BASEURL = "http://10.0.0.171:8001"
-    // BASEURL = "http://149.129.138.180/api"
-    // BASEURL = "https://www.madcrickets.com/api"
-    BASEURL = "https://prewww.madcrickets.com/api"
+    // BASEURL = "http://149.129.138.180"
+    // BASEURL = "https://www.madcrickets.com"
+    BASEURL = "https://prewww.madcrickets.com"
 }
+export const URL = BASEURL
+BASEURL = `${BASEURL}/api`
 
 MyPlugin.install = function (Vue, config={
     commonParams: {
