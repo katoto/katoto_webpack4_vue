@@ -167,9 +167,6 @@ export default {
                 }).catch((err) => {
                     // 邀请出错
                     this.isCodeSucc = true
-                    // this.$toast({
-                    //     content: _("m_share.sh_neterr")
-                    // })
                 })
             } else {
                 this.$toast({
@@ -186,8 +183,6 @@ export default {
                     if (res && res.status === "100") {
                         this.friendList = res.data
                     }
-                }).catch(e => {
-
                 })
         },
         shareCopy (code = "") {
@@ -260,14 +255,7 @@ export default {
                         }
                         this.beginTime = resData.config.begin_time
                         this.endTime = resData.config.end_time
-                    } else {
-                        console.warn("49")
                     }
-                })
-                .catch(e => {
-                    this.$toast({
-                        content: _("m_share.sh_neterr")
-                    })
                 })
         },
         startExpireTime (time) {
