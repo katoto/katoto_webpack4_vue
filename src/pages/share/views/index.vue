@@ -619,6 +619,7 @@ export default {
     overflow: hidden;
     border-radius: 10/75rem;
     background: #8a2826;
+  transform-origin: center;
   }
   .pop_close {
     position: absolute;
