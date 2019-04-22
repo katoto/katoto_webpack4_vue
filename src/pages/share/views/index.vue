@@ -50,7 +50,7 @@
             <transition name="pop_animate">
                 <div class="pop_invite_frient_layer" v-if="show_pop_invite_frient">
                     <div class="pop_main">
-                        <a href="javascript:" class="pop_close" @click="show_pop_invite_frient = false"></a>
+                        <a href="javascript:"  class="pop_close" @click="show_pop_invite_frient = false"></a>
                         <div class="header">{{ _('m_share.sh_pop_invited_friends') }}</div>
                         <ul class="pop_invite_frient_list" v-if="friendList && friendList.length>0">
                             <!-- <li>
