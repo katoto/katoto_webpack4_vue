@@ -47,16 +47,16 @@
         </div>
         <!-- 邀请好友列表 -->
         <div class="pop_invite_frient" :class="{hide:!show_pop_invite_frient}">
-            <transition name="pop_animate">
+            <transition name="pop_share">
                 <div class="pop_invite_frient_layer" v-if="show_pop_invite_frient">
                     <div class="pop_main">
-                        <a href="javascript:" class="pop_close" @click="show_pop_invite_frient = false"></a>
+                        <a href="javascript:"  class="pop_close" @click="show_pop_invite_frient = false"></a>
                         <div class="header">{{ _('m_share.sh_pop_invited_friends') }}</div>
                         <ul class="pop_invite_frient_list" v-if="friendList && friendList.length>0">
                             <!-- <li>
                                 <p class="list_rank">{{ _('m_share.sh_no_list') }}</p>
                                 <p class="list_name">{{ _('m_share.sh_name') }}</p>
-              </li>-->
+                            </li>-->
                             <li v-for="(item, index) in friendList" :key="index">
                                 <p class="list_rank">{{ _('m_share.sh_no_list') }}{{ index + 1 }}</p>
                                 <p class="list_name">{{ item.username }}</p>
@@ -619,6 +619,7 @@ export default {
     overflow: hidden;
     border-radius: 10/75rem;
     background: #8a2826;
+    transform-origin: center;
   }
   .pop_close {
     position: absolute;
@@ -846,6 +847,38 @@ export default {
     &.disable {
       color: rgba(255, 255, 255, 0.4);
     }
+  }
+}
+
+.pop_share-enter-active {
+    animation: popShareEnter 0.4s;
+}
+.pop_share-leave-active {
+  animation: popShareLeave 0.2s;
+}
+@keyframes popShareEnter {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  75% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes popShareLeave {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(0);
   }
 }
 </style>
