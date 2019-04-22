@@ -15,8 +15,7 @@ let data = {
     ...params,
     ...cookie.getAll()
 }
-data.ck = decodeURIComponent(data.appck)
-data.appck = data.ck
+data.ck = data.appck
 function setValue (name, value) {
     Array.prototype.slice.call(document.querySelectorAll(`.${name}`), 0).map(item => {
         item.setAttribute("value", value)
