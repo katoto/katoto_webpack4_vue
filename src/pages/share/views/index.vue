@@ -56,7 +56,7 @@
                             <!-- <li>
                                 <p class="list_rank">{{ _('m_share.sh_no_list') }}</p>
                                 <p class="list_name">{{ _('m_share.sh_name') }}</p>
-              </li>-->
+                            </li>-->
                             <li v-for="(item, index) in friendList" :key="index">
                                 <p class="list_rank">{{ _('m_share.sh_no_list') }}{{ index + 1 }}</p>
                                 <p class="list_name">{{ item.username }}</p>
