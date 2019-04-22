@@ -478,6 +478,7 @@ export default {
     opacity: 0;
   }
   .btn_facebook {
+    margin-top: 40/75rem;
     background: url(../img/btn_facebook.png) no-repeat center;
     background-size: cover;
     &.fadeIn {
@@ -485,7 +486,6 @@ export default {
     }
   }
   .btn_whatsApp {
-    margin-top: 40/75rem;
     background: url(../img/btn_whatsApp.png) no-repeat center;
     background-size: cover;
     &.fadeIn {
