@@ -144,7 +144,7 @@ export default {
             if (this.friend_code && this.friend_code.length > 10) {
                 this.friend_code = this.friend_code.slice(0, 10)
             }
-            if(e && e.target){
+            if (e && e.target) {
                 this.friend_code = e.target.value
             }
         },
