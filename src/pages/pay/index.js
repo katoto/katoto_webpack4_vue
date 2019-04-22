@@ -8,14 +8,12 @@ import simpleAjax from "@plugins/simpleAjax"
 import { URL } from "@plugins/simpleAjax"
 function sendOrderToApp (orderid) {
     cbetLocal({
-        func: "jumpToLocal",
+        func: "pay_order",
         params: {
             content: orderid
         }
     })
 }
-
-console.log(URL)
 
 function http () {}
 http.prototype.$toast = function (data) {
@@ -83,7 +81,7 @@ window.addEventListener("load", () => {
                 invoice: _data.orderid,
                 item_name: `${data.rechargemoney}INR (${_data.rechargemoney} USD)`
             })
-            // sendOrderToApp(_data.orderid)
+            sendOrderToApp(_data.orderid)
             isProduction ? liveForm.submit() : sandboxForm.submit()
         })
         .catch(err => {
