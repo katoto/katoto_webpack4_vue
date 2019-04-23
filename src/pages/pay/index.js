@@ -52,8 +52,8 @@ function submitForm (data) {
     setValue("amount", data.amount)
     setValue("invoice", data.invoice)
     setValue("item_name", data.item_name)
-    setValue("cancel_return", `${URL}?_type=error`)
-    setValue("return", `${URL}?_type=success`)
+    setValue("cancel_return", `${URL}/pay_callback.html?_type=error`)
+    setValue("return", `${URL}/pay_callback.html?_type=success`)
 }
 
 function buyProps () {
