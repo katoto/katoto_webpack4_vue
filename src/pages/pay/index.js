@@ -1,8 +1,24 @@
-import axios from "axios"
+/* eslint-disable import/no-duplicates */
 import {
     getURLParams,
-    cookie
+    cookie,
+    cbetLocal
 } from "@/common/util"
+import simpleAjax from "@plugins/simpleAjax"
+import { URL } from "@plugins/simpleAjax"
+function sendOrderToApp (orderid) {
+    cbetLocal({
+        func: "pay_order",
+        params: {
+            content: orderid
+        }
+    })
+}
+
+function http () {}
+http.prototype.$toast = function (data) {
+    alert(data.content)
+}
 
 let params = getURLParams()
 
@@ -15,8 +31,16 @@ let data = {
     ...params,
     ...cookie.getAll()
 }
-data.ck = decodeURIComponent(data.appck)
-data.appck = data.ck
+data.ck = data.appck
+
+simpleAjax.install(http, {
+    commonParams: {
+        platform: "android",
+        version: "1.0.0",
+        channel: "test",
+        ...data
+    }
+})
 function setValue (name, value) {
     Array.prototype.slice.call(document.querySelectorAll(`.${name}`), 0).map(item => {
         item.setAttribute("value", value)
@@ -28,14 +52,16 @@ function submitForm (data) {
     setValue("amount", data.amount)
     setValue("invoice", data.invoice)
     setValue("item_name", data.item_name)
+    setValue("cancel_return", `${URL}/pay_callback.html?_type=error`)
+    setValue("return", `${URL}/pay_callback.html?_type=success`)
 }
 
 function buyProps () {
-    return axios.post("http://149.129.138.180/api/shops/props/buy", data)
+    return http.prototype.$post("/shops/props/buy", data)
 }
 
 function buyPrivileges () {
-    return axios.post("http://149.129.138.180/api/shops/privileges/buy", data)
+    return http.prototype.$post("/shops/privileges/buy", data)
 }
 
 function deal () {
@@ -48,16 +74,17 @@ window.addEventListener("load", () => {
     })
     deal()
         .then(res => {
-            let _data = res.data.data
+            let _data = res.data
             submitForm({
                 custom: _data.orderid,
                 amount: _data.rechargemoney,
                 invoice: _data.orderid,
                 item_name: `${data.rechargemoney}INR (${_data.rechargemoney} USD)`
             })
+            sendOrderToApp(_data.orderid)
             isProduction ? liveForm.submit() : sandboxForm.submit()
         })
         .catch(err => {
-            alert(JSON.stringify(err.data))
+            alert(JSON.stringify(err))
         })
 })

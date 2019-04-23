@@ -4,8 +4,6 @@
 
 require("./check-versions")()
 
-process.env.NODE_ENV = "production"
-
 var config = require("../config")
 config.isBuild = true // 需要生成（dist）目标文件。需放在require('webpack')之前
 var ora = require("ora")

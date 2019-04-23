@@ -29,7 +29,7 @@ function _format () {
 }
 
 export function use (Vue, language) {
-    if (language && language.__proto__ === Array.prototype) {
+    if (language && language.length && language.length) {
         language.map(item => {
             lang = {
                 en: {
@@ -42,7 +42,7 @@ export function use (Vue, language) {
                 }
             }
         })
-    } else if (language && language.__proto__ === Object.prototype) {
+    } else if (language) {
         lang = {
             en: {
                 ...lang.en,

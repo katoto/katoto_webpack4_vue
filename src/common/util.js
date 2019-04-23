@@ -552,7 +552,7 @@ export const cookie = {
         cookiesArr.map(item => {
             if (item) {
                 let tmp = item.split("=")
-                cookies[tmp[0].trim()] = tmp[1]
+                cookies[tmp[0].trim()] = decodeURIComponent(decodeURIComponent(tmp[1]))
             }
         })
         return cookies

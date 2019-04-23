@@ -20,8 +20,6 @@ window.$toast = Toast
 // cookie.set("appck", "MTAwMDI3NTQ5MDBjODliYWQ4MmVjN2Y2NGI4OWUyYTQ4ZTk1NzE1")
 
 let cookies = cookie.getAll()
-
-cookies.appck = decodeURIComponent(cookies.appck)
 cookies.ck = cookies.appck
 Vue.use(commonPlugin)
 Vue.use(simpleAjax, {

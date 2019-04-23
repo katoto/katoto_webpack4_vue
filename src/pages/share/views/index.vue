@@ -18,8 +18,8 @@
                 <div class="total_money">{{ formateBalance(invitemsg.have_earn) }}</div>
             </div>
             <div class="btn_box">
-                <a href="javascript:;" @click="fb_fackbook()" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
                 <a href="javascript:;" @click="fb_whatsapp()" class="btn btn_whatsApp" :class="{fadeIn:fadeIn}">WhatsApp</a>
+                <a href="javascript:;" @click="fb_fackbook()" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
             </div>
             <div class="share_code" :class="{fadeIn:fadeIn}">
                 <p>
@@ -50,7 +50,7 @@
             <transition name="pop_share">
                 <div class="pop_invite_frient_layer" v-if="show_pop_invite_frient">
                     <div class="pop_main">
-                        <a href="javascript:" class="pop_close" @click="show_pop_invite_frient = false"></a>
+                        <a href="javascript:"  class="pop_close" @click="show_pop_invite_frient = false"></a>
                         <div class="header">{{ _('m_share.sh_pop_invited_friends') }}</div>
                         <ul class="pop_invite_frient_list" v-if="friendList && friendList.length>0">
                             <!-- <li>
@@ -478,18 +478,18 @@ export default {
     opacity: 0;
   }
   .btn_facebook {
+    margin-top: 40/75rem;
     background: url(../img/btn_facebook.png) no-repeat center;
     background-size: cover;
     &.fadeIn {
-      animation-delay: 1.8s;
+      animation-delay: 2s;
     }
   }
   .btn_whatsApp {
-    margin-top: 40/75rem;
     background: url(../img/btn_whatsApp.png) no-repeat center;
     background-size: cover;
     &.fadeIn {
-      animation-delay: 2s;
+      animation-delay: 1.8s;
     }
   }
 }
