@@ -18,8 +18,8 @@
                 <div class="total_money">{{ formateBalance(invitemsg.have_earn) }}</div>
             </div>
             <div class="btn_box">
-                <a href="javascript:;" @click="fb_fackbook()" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
                 <a href="javascript:;" @click="fb_whatsapp()" class="btn btn_whatsApp" :class="{fadeIn:fadeIn}">WhatsApp</a>
+                <a href="javascript:;" @click="fb_fackbook()" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
             </div>
             <div class="share_code" :class="{fadeIn:fadeIn}">
                 <p>
@@ -478,6 +478,7 @@ export default {
     opacity: 0;
   }
   .btn_facebook {
+    margin-top: 40/75rem;
     background: url(../img/btn_facebook.png) no-repeat center;
     background-size: cover;
     &.fadeIn {
@@ -485,7 +486,6 @@ export default {
     }
   }
   .btn_whatsApp {
-    margin-top: 40/75rem;
     background: url(../img/btn_whatsApp.png) no-repeat center;
     background-size: cover;
     &.fadeIn {
