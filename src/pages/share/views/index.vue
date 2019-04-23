@@ -482,14 +482,14 @@ export default {
     background: url(../img/btn_facebook.png) no-repeat center;
     background-size: cover;
     &.fadeIn {
-      animation-delay: 1.8s;
+      animation-delay: 2s;
     }
   }
   .btn_whatsApp {
     background: url(../img/btn_whatsApp.png) no-repeat center;
     background-size: cover;
     &.fadeIn {
-      animation-delay: 2s;
+      animation-delay: 1.8s;
     }
   }
 }
@@ -851,7 +851,7 @@ export default {
 }
 
 .pop_share-enter-active {
-    animation: popShareEnter 0.4s;
+  animation: popShareEnter 0.4s;
 }
 .pop_share-leave-active {
   animation: popShareLeave 0.2s;
