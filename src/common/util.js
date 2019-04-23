@@ -35,7 +35,7 @@ export function calSecond (second = 100) {
     let daysRound = Math.floor(second / 60 / 60 /24)
     let hourRound = Math.floor( second/60/60 - (24*daysRound) )
     let minutesRound = Math.floor( second/60 - (24*60*daysRound) -(60 * hourRound) )
-    return `${daysRound} d ${hourRound} h ${minutesRound} m`
+    return `${daysRound}d ${hourRound}h ${minutesRound}m`
 }
 
 // 原生交互

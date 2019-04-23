@@ -69,7 +69,7 @@
         </div>
         <!-- 收获金币 -->
         <div class="pop_congratulation" :class="{hide:!show_pop_congratulation}">
-            <transition name="pop_share">
+            <transition name="pop_animate">
                 <div class="pop_con_main" v-if="show_pop_congratulation">
                     <div class="c_title" data-msg="Congratulations"></div>
                     <p class="c_count">+{{ winInviteNum }}</p>
@@ -554,7 +554,7 @@ export default {
   }
   input {
     flex: 1;
-    text-align: center;
+    text-indent: 50/75rem;
     font-size: 30/75rem;
     color: #fff6c0;
     &::placeholder {
@@ -562,7 +562,6 @@ export default {
     }
     &.isput {
       text-align: left;
-      text-indent: 56/75rem;
       color: #fff6c0;
       font-weight: bold;
     }
