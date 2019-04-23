@@ -851,7 +851,7 @@ export default {
 }
 
 .pop_share-enter-active {
-    animation: popShareEnter 0.4s;
+  animation: popShareEnter 0.4s;
 }
 .pop_share-leave-active {
   animation: popShareLeave 0.2s;
