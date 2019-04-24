@@ -14,7 +14,7 @@ export default {
         "m_share.sh_btn_confirm": "Confirm",
         "m_share.sh_enter_code": "Enter code, get reward",
         "m_share.sh_invited_byfriends": "Invited by friend",
-        "m_share.sh_invitemsg": "*You can get reward once the friend accepts your invitation",
+        "m_share.sh_invitemsg": "*After your friends enter your referral code, you can get reward via Notifications",
         "m_share.sh_invited_friends": "Invited: ",
         "m_share.sh_btc_copy": "Copy",
         "m_share.sh_refer_code": "My referral code:",

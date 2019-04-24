@@ -76,6 +76,7 @@ import { formateBalance, cbetLocal } from "@/common/util"
 import popList from "../components/Pop_list"
 // 弹窗data
 import mixins_pop from "../mixins/pop.js"
+// provide 与inject 的绑定并不是可响应的，如果传入的是一个可监听的对象，那么其对象的属性也是可响应的
 export default {
     mixins: [mixins_pop],
     provide () {
