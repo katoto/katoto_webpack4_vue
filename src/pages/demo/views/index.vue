@@ -2,7 +2,15 @@
     <div>
         <!-- 组件 -->
         <div>
-
+            <el-alert title="message" type="success"></el-alert>
+            <el-alert title="message222" :closable="false" type="error"></el-alert>
+            <el-alert title="message2" close-text="i know" type="error"></el-alert>
+            <el-alert title="message2" type="error" show-icon></el-alert>
+            <el-alert title="message2" type="error" @close="test"></el-alert>
+            <el-alert title="message2" type="error" @close="test" show-icon>
+                <span>111发范德萨热武器若未确认热温热了完全</span>
+            </el-alert>
+            <el-alert center title="message3"></el-alert>
         </div>
         <div class="head">
             <img src="../img/contenthead.jpg">
@@ -24,6 +32,11 @@ export default {
         return {
             contentSrc: "",
             contHref: "//play.google.com/store/apps/details?id=com.crazy500.cbet"
+        }
+    },
+    methods:{
+        test(){
+            console.log('222222222')
         }
     },
     components: {

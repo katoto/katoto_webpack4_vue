@@ -118,7 +118,7 @@
     function PullToLoad (selector, options) {
 
         EventEmitter.call(this)
-        if (selector.self === selector || document.querySelector(selector).tagName.toLowerCase() == "body") {
+        if ( document.querySelector(selector) && (selector.self === selector || document.querySelector(selector).tagName.toLowerCase() == "body")) {
             isWindow = true
             this.element = window
             this.container = document.body
