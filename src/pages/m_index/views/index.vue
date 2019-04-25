@@ -42,6 +42,9 @@
                 src="../img/style3.png"
                 alt=""
             >
+            <p class="reserved">
+                ©ROTARY FORTUNE LIMITED 2018. All Rights Reserved
+            </p>
         </footer>
     </div>
 </template>
@@ -130,6 +133,7 @@ body {
     }
   }
   footer {
+      position: relative;
     img {
       display: block;
       &:nth-child(1) {
@@ -150,5 +154,16 @@ body {
       }
     }
   }
+}
+.reserved{
+    position: absolute;
+    left: 0;
+    bottom: -1.5rem;
+    width: 100%;
+    line-height: 2;
+    text-align: center;
+    color: #eec870;
+    opacity: 0.8;
+    user-select: auto;
 }
 </style>

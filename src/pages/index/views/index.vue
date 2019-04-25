@@ -9,6 +9,9 @@
         </div>
         <div class="content">
             <img :src="contentSrc">
+            <p class="reserved">
+                ©ROTARY FORTUNE LIMITED 2018. All Rights Reserved
+            </p>
         </div>
     </div>
 </template>
@@ -108,6 +111,20 @@ body .head .btn a:active,body .head .btn a:hover {
 body .head .btn a:active,
 body .head .btn a:hover {
   filter: brightness(0.8);
+}
+.content{
+    position: relative;
+}
+.reserved{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    line-height: 2;
+    text-align: center;
+    color: #eec870;
+    opacity: 0.8;
+    user-select: auto;
 }
 
 </style>
