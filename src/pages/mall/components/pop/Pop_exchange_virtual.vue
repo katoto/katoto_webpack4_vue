@@ -20,12 +20,12 @@
             <p>
                 <span>{{_('m_payment.card_no')}}:</span>
                 <i class="card_psw">{{app.virtualCard}}</i>
-                <a href="javascript:;" class="btn_copy" @click="copy(app.virtualCard)">{{_('m_payment.copy')}}</a>
+                <a class="btn_copy" @click="copy(app.virtualCard)">{{_('m_payment.copy')}}</a>
             </p>
             <p :class="{message: !app.isShowPassword}">
                 <span>{{_('m_payment.password')}}:</span>
                 <i class="card_psw" :class="{overflow: app.isShowPassword, message: !app.isShowPassword}">{{app.virtualPass}}</i>
-                <a href="javascript:;" class="btn_copy" @click="copy(app.virtualPass)" v-if="app.isShowPassword">{{_('m_payment.copy')}}</a>
+                <a class="btn_copy" @click="copy(app.virtualPass)" v-if="app.isShowPassword">{{_('m_payment.copy')}}</a>
             </p>
         </div>
         <div class="icon_success" v-if="isChange"></div>

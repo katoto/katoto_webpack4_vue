@@ -6,7 +6,7 @@
                 <img src="@/assets/img/amazon.png" alt="">
                 <!-- <p class="c_count"></p> -->
                 <!-- <p class="c_msg">{{ _('m_share.sh_win_inviteNum', winInviteNum) }}</p> -->
-                <a href="javascript:;" class="btn_default">OK</a>
+                <a class="btn_default">OK</a>
             </div>
         </transition>
     </div>

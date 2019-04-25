@@ -8,7 +8,7 @@
             <br>您还需要使用
             <i class="color_white bold">5000猜球币</i> ，才可进行兑换哦~
         </p>
-        <a href="javascript:;" class="btn_default">{{ _('m_payment.sm_popget') }}</a>
+        <a class="btn_default">{{ _('m_payment.sm_popget') }}</a>
     </Pop>
 </template>
 <script>
