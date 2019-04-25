@@ -78,6 +78,10 @@
                 </div>
             </transition>
         </div>
+        <div class="hide" style="width:0;height:0;">
+            <img src="../img/pop_congratulation_light.png">
+            <img src="../img/pop_congratulation_title.png">
+        </div>
     </div>
 </template>
 
