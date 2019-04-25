@@ -1,18 +1,24 @@
 <template>
     <div>
+        <!-- 组件 -->
+        <div>
+            <el-alert title="message" type="success"></el-alert>
+            <el-alert title="message222" :closable="false" type="error"></el-alert>
+            <el-alert title="message2" close-text="i know" type="error"></el-alert>
+            <el-alert title="message2" type="error" show-icon></el-alert>
+            <el-alert title="message2" type="error" @close="test"></el-alert>
+            <el-alert title="message2" type="error" @close="test" show-icon>
+                <span>111发范德萨热武器若未确认热温热了完全</span>
+            </el-alert>
+            <el-alert center title="message3"></el-alert>
+        </div>
         <div class="head">
             <img src="../img/contenthead.jpg">
             <div class="btn">
-                <a href="//play.google.com/store/apps/details?id=com.crazy500.cbet" target="_blank" class="down_and"></a>
                 <a href="https://itunes.apple.com/app/id1453136833" target="_blank" class="down_ios"></a>
             </div>
         </div>
-        <div class="content">
-            <img :src="contentSrc">
-            <p class="reserved">
-                ©ROTARY FORTUNE LIMITED 2018. All Rights Reserved
-            </p>
-        </div>
+
     </div>
 </template>
 
@@ -26,6 +32,11 @@ export default {
         return {
             contentSrc: "",
             contHref: "//play.google.com/store/apps/details?id=com.crazy500.cbet"
+        }
+    },
+    methods:{
+        test(){
+            console.log('222222222')
         }
     },
     components: {
@@ -111,20 +122,6 @@ body .head .btn a:active,body .head .btn a:hover {
 body .head .btn a:active,
 body .head .btn a:hover {
   filter: brightness(0.8);
-}
-.content{
-    position: relative;
-}
-.reserved{
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    line-height: 2;
-    text-align: center;
-    color: #eec870;
-    opacity: 0.8;
-    user-select: auto;
 }
 
 </style>

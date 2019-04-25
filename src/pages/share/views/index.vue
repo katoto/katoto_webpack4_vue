@@ -69,7 +69,7 @@
         </div>
         <!-- 收获金币 -->
         <div class="pop_congratulation" :class="{hide:!show_pop_congratulation}">
-            <transition name="pop_animate">
+            <transition name="pop_share">
                 <div class="pop_con_main" v-if="show_pop_congratulation">
                     <div class="c_title" data-msg="Congratulations"></div>
                     <p class="c_count">+{{ winInviteNum }}</p>
@@ -77,6 +77,10 @@
                     <a class="btn_default" @click="show_pop_congratulation=false">OK</a>
                 </div>
             </transition>
+        </div>
+        <div class="hide" style="width:0;height:0;">
+            <img src="../img/pop_congratulation_light.png">
+            <img src="../img/pop_congratulation_title.png">
         </div>
     </div>
 </template>
