@@ -327,7 +327,13 @@ export default {
 }
 </style>
 <style lang="less" scoped type="text/less">
+body {
+  width: 100%;
+  overflow: hidden;
+}
 .page_share {
+  position: relative;
+  width: 100%;
   min-height: 1500/75rem;
   overflow: hidden;
   background: #752120 url(../img/nobase.bg.jpg) no-repeat center top;
@@ -338,6 +344,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
   z-index: 1;
   .bg_particle {
     position: absolute;
