@@ -5,14 +5,14 @@
         </div>
         <div class="header">
             <div class="fl">
-                <a href="javascript:;" class="btn btn_back" @click="closeView"></a>
+                <a class="btn btn_back" @click="closeView"></a>
             </div>
             <div class="fr">
-                <a href="javascript:;" class="my_balance" @click="jumpToWithdraw">
+                <a class="my_balance" @click="jumpToWithdraw">
                     <span>{{formateBalance(gold_total)}}</span>
                 </a>
-                <a href="javascript:;" class="btn btn_list_redemption_record" @click="setPopStore('setRecordList', true)"></a>
-                <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
+                <a class="btn btn_list_redemption_record" @click="setPopStore('setRecordList', true)"></a>
+                <a class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
             </div>
         </div>
         <!-- todo 提成公共组件轮询新闻 -->
@@ -25,16 +25,16 @@
             <div class="mall_tab">
                 <ul>
                     <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
-                        <a href="javascript:;">{{_('m_payment.all')}}</a>
+                        <a>{{_('m_payment.all')}}</a>
                     </li>
                     <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
-                        <a href="javascript:;">{{_('m_payment.card')}}</a>
+                        <a>{{_('m_payment.card')}}</a>
                     </li>
                     <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
-                        <a href="javascript:;">{{_('m_payment.electronics')}}</a>
+                        <a>{{_('m_payment.electronics')}}</a>
                     </li>
                     <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
-                        <a href="javascript:;">{{_('m_payment.other')}}</a>
+                        <a>{{_('m_payment.other')}}</a>
                     </li>
                 </ul>
             </div>

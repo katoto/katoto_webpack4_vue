@@ -3,7 +3,7 @@
     <div class="pop" v-show="show2">
         <transition name="pop_animate">
             <div class="pop_main" v-show="show">
-                <a href="javascript:" class="pop_close" @click="onClose"></a>
+                <a class="pop_close" @click="onClose"></a>
                 <slot></slot>
             </div>
         </transition>
