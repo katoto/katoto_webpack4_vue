@@ -5,14 +5,14 @@
         </div>
         <div class="header">
             <div class="fl">
-                <a href="javascript:;" class="btn btn_back" @click="closeView"></a>
+                <a class="btn btn_back" @click="closeView"></a>
             </div>
             <div class="fr">
-                <a href="javascript:;" class="my_balance" @click="jumpToWithdraw">
+                <a class="my_balance" @click="jumpToWithdraw">
                     <span>{{formateBalance(gold_total)}}</span>
                 </a>
-                <a href="javascript:;" class="btn btn_list_redemption_record" @click="setPopStore('setRecordList', true)"></a>
-                <a href="javascript:;" class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
+                <a class="btn btn_list_redemption_record" @click="setPopStore('setRecordList', true)"></a>
+                <a class="btn btn_question" @click="setPopStore('setExchangeTips', true)" v-if="false"></a>
             </div>
         </div>
         <!-- todo 提成公共组件轮询新闻 -->
@@ -25,16 +25,16 @@
             <div class="mall_tab">
                 <ul>
                     <li @click="acitveClass = 'all'" :class="{on: acitveClass === 'all'}">
-                        <a href="javascript:;">{{_('m_payment.all')}}</a>
+                        <a>{{_('m_payment.all')}}</a>
                     </li>
                     <li @click="acitveClass = 'card'" :class="{on: acitveClass === 'card'}">
-                        <a href="javascript:;">{{_('m_payment.card')}}</a>
+                        <a>{{_('m_payment.card')}}</a>
                     </li>
                     <li @click="acitveClass = 'electronics'" :class="{on: acitveClass === 'electronics'}" class="hot">
-                        <a href="javascript:;">{{_('m_payment.electronics')}}</a>
+                        <a>{{_('m_payment.electronics')}}</a>
                     </li>
                     <li @click="acitveClass = 'other'" :class="{on: acitveClass === 'other'}">
-                        <a href="javascript:;">{{_('m_payment.other')}}</a>
+                        <a>{{_('m_payment.other')}}</a>
                     </li>
                 </ul>
             </div>
@@ -279,12 +279,12 @@ export default {
 <style lang="less" type="text/less" scope>
 @import "../../../styles/lib-mixins.less";
 .page_mall {
-  width: 750/75rem;
+  position: relative;
+  width: 100%;
   height: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background-size: 750/75rem;
   font-size: 24/75rem;
   .bg {
     position: absolute;
@@ -294,17 +294,17 @@ export default {
     width: 100%;
     height: 100%;
     background: url(../img/bg_line.jpg) repeat-y;
-    background-size: 750/75rem;
+    background-size: 100%;
     .bg_header {
-      width: 750/75rem;
+      width: 100%;
       height: 600/75rem;
       background: url(../img/bg_mall.jpg) no-repeat center top;
-      background-size: cover;
+      background-size: 100%;
     }
   }
 }
 .header {
-  width: 730/75rem;
+  width: percentage(730/750);
   margin: 2/75rem auto 0;
   overflow: hidden;
   .btn {
@@ -384,7 +384,7 @@ export default {
   margin: 52/75rem 0 0;
 }
 .mall_tab {
-  width: 686/75rem;
+  width: percentage(686/750);
   height: 58/75rem;
   //   overflow: hidden;
   margin: 0 auto;
@@ -432,7 +432,7 @@ export default {
 }
 .mall_main {
   position: relative;
-  width: 740/75rem;
+  width: percentage(740/750);
   flex: 1;
   overflow: auto;
   margin: 30/75rem auto 0;
@@ -451,7 +451,7 @@ export default {
       display: block;
       background: url(../img/light.png) no-repeat bottom;
       background-size: 100%;
-      width: 740/75rem;
+      width: percentage(740/750);
       height: 117/75rem;
     }
   }

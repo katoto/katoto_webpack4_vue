@@ -18,15 +18,15 @@
                 <div class="total_money">{{ formateBalance(invitemsg.have_earn) }}</div>
             </div>
             <div class="btn_box">
-                <a href="javascript:;" @click="fb_whatsapp()" class="btn btn_whatsApp" :class="{fadeIn:fadeIn}">WhatsApp</a>
-                <a href="javascript:;" @click="fb_fackbook()" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
+                <a @click="fb_whatsapp()" class="btn btn_whatsApp" :class="{fadeIn:fadeIn}">WhatsApp</a>
+                <a @click="fb_fackbook()" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
             </div>
             <div class="share_code" :class="{fadeIn:fadeIn}">
                 <p>
                     {{ _('m_share.sh_refer_code') }}
                     <i class="bold" v-if="invitemsg" @click="shareCopy(invitemsg.invite_code)">{{ invitemsg.invite_code }}</i>
                 </p>
-                <a href="javascript:;" class="btn_copy" @click="shareCopy(invitemsg.invite_code)">{{ _('m_share.sh_btc_copy') }}</a>
+                <a class="btn_copy" @click="shareCopy(invitemsg.invite_code)">{{ _('m_share.sh_btc_copy') }}</a>
             </div>
             <div class="tips" :class="{fadeIn:fadeIn}">{{ _('m_share.sh_invitemsg') }}</div>
             <div class="page_share_bottom" :class="{fadeIn:fadeIn}">
@@ -34,7 +34,7 @@
                     <p class="msg">{{ _('m_share.sh_invited_byfriends') }}</p>
                     <div class="input_box">
                         <input type="text" :placeholder="_('m_share.sh_enter_code')" @input="testFriendCode" v-model="friend_code" :class="{isput:friend_code}">
-                        <a href="javascript:;" class="btn" v-if="friend_code" @click="sendInviteCode">{{ _('m_share.sh_btn_confirm') }}</a>
+                        <a class="btn" v-if="friend_code" @click="sendInviteCode">{{ _('m_share.sh_btn_confirm') }}</a>
                     </div>
                     <!-- 倒计时 todo 定时器 -->
                     <p class="time" v-if="expireTime">{{ calSecond(expireTime) }}</p>
@@ -74,7 +74,7 @@
                     <div class="c_title" data-msg="Congratulations"></div>
                     <p class="c_count">+{{ winInviteNum }}</p>
                     <p class="c_msg">{{ _('m_share.sh_win_inviteNum', winInviteNum) }}</p>
-                    <a href="javascript:;" class="btn_default" @click="show_pop_congratulation=false">OK</a>
+                    <a class="btn_default" @click="show_pop_congratulation=false">OK</a>
                 </div>
             </transition>
         </div>
@@ -327,7 +327,13 @@ export default {
 }
 </style>
 <style lang="less" scoped type="text/less">
+body {
+  width: 100%;
+  overflow: hidden;
+}
 .page_share {
+  position: relative;
+  width: 100%;
   min-height: 1500/75rem;
   overflow: hidden;
   background: #752120 url(../img/nobase.bg.jpg) no-repeat center top;
@@ -338,6 +344,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
   z-index: 1;
   .bg_particle {
     position: absolute;

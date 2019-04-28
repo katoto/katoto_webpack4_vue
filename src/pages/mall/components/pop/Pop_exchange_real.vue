@@ -34,8 +34,8 @@
                 <span class="user_c">{{address.f_postcode}}</span>
             </p>
             <div class="btn_choose">
-                <a href="javascript:;" class="btn_back" @click="app.isCheckReal = false" v-if="!app.isChangeReal">{{_('m_payment.back_modify')}}</a>
-                <a href="javascript:;" class="btn_default" @click="app.isChangeReal ? close() : app.exchangeReal()">{{_('m_payment.exchange_now')}}</a>
+                <a class="btn_back" @click="app.isCheckReal = false" v-if="!app.isChangeReal">{{_('m_payment.back_modify')}}</a>
+                <a class="btn_default" @click="app.isChangeReal ? close() : app.exchangeReal()">{{_('m_payment.exchange_now')}}</a>
             </div>
         </div>
         <div class="icon_success" v-if="app.isChangeReal"></div>

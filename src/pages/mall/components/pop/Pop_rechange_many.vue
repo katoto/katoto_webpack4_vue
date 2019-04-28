@@ -11,9 +11,9 @@
         <div class="pop_rechange_many_before">
             <p class="text_error"></p>
             <div class="input_box">
-                <a href="javascript:;" class="btn btn_delete">-</a>
+                <a class="btn btn_delete">-</a>
                 <input type="number">
-                <a href="javascript:;" class="btn btn_add">+</a>
+                <a class="btn btn_add">+</a>
             </div>
             <p class="text_tips">({{_('m_payment.exchange_tip', 50)}})</p>
         </div>
