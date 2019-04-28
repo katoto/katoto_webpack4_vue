@@ -1,87 +1,17 @@
 <template>
     <div class="page_share">
+        <h1>fb 的分享打开页</h1>
         <div class="bg_page">
             <div class="bg_particle">
                 <div class="bg bg_p1" :class="{bounceIn:fadeIn}"></div>
-                <div class="bg bg_p2" :class="{bounceIn:fadeIn}"></div>
-                <div class="bg bg_p3" :class="{bounceIn:fadeIn}"></div>
             </div>
             <div class="bg_light"></div>
         </div>
-        <div class="page_share_main">
-            <h1 class="title" :class="{fadeIn:fadeIn}" v-html="_('m_share.sh_bigTitle', formatMoney(this.inviteCodeNum))"></h1>
-            <div class="total" :class="{fadeIn:fadeIn}" @click="show_pop_invite_frient = true">
-                <p class="total_title">{{ _('m_share.sh_invited_friends') }}</p>
-                <div class="total_person" @click="popInviteFrient()">
-                    <span v-if="invitemsg">{{ invitemsg.invited_num }}</span>
-                </div>
-                <div class="total_money">{{ formateBalance(invitemsg.have_earn) }}</div>
-            </div>
-            <div class="btn_box">
-                <a @click="fb_whatsapp()" class="btn btn_whatsApp" :class="{fadeIn:fadeIn}">WhatsApp</a>
-                <a @click="fb_fackbook()" class="btn btn_facebook" :class="{fadeIn:fadeIn}">Facebook</a>
-            </div>
-            <div class="share_code" :class="{fadeIn:fadeIn}">
-                <p>
-                    {{ _('m_share.sh_refer_code') }}
-                    <i class="bold" v-if="invitemsg" @click="shareCopy(invitemsg.invite_code)">{{ invitemsg.invite_code }}</i>
-                </p>
-                <a class="btn_copy" @click="shareCopy(invitemsg.invite_code)">{{ _('m_share.sh_btc_copy') }}</a>
-            </div>
-            <div class="tips" :class="{fadeIn:fadeIn}">{{ _('m_share.sh_invitemsg') }}</div>
-            <div class="page_share_bottom" :class="{fadeIn:fadeIn}">
-                <div class="share_byfriend" v-if="invitemsg && invitemsg.used_code === '0'">
-                    <p class="msg">{{ _('m_share.sh_invited_byfriends') }}</p>
-                    <div class="input_box">
-                        <input type="text" :placeholder="_('m_share.sh_enter_code')" @input="testFriendCode" v-model="friend_code" :class="{isput:friend_code}">
-                        <a class="btn" v-if="friend_code" @click="sendInviteCode">{{ _('m_share.sh_btn_confirm') }}</a>
-                    </div>
-                    <!-- 倒计时 todo 定时器 -->
-                    <p class="time" v-if="expireTime">{{ calSecond(expireTime) }}</p>
-                </div>
-                <div class="share_tips">
-                    <!-- <p class="share_tips_t">{{ _('m_share.sh_rule_title') }}</p> -->
-                    <p v-html="_('m_share.sh_rule_1', formatIndiaTime(beginTime, lan), formatIndiaTime(endTime, lan), formatMoney(inviteCodeNum))"></p>
-                </div>
-            </div>
+        <div>
+            <p>测试facebook 的登陆</p><br>
+            <button class="fbbtn" @click="checkFb">fb 授权登陆</button><br>
         </div>
-        <!-- 邀请好友列表 -->
-        <div class="pop_invite_frient" :class="{hide:!show_pop_invite_frient}">
-            <transition name="pop_share">
-                <div class="pop_invite_frient_layer" v-if="show_pop_invite_frient">
-                    <div class="pop_main">
-                        <a href="javascript:"  class="pop_close" @click="show_pop_invite_frient = false"></a>
-                        <div class="header">{{ _('m_share.sh_pop_invited_friends') }}</div>
-                        <ul class="pop_invite_frient_list" v-if="friendList && friendList.length>0">
-                            <!-- <li>
-                                <p class="list_rank">{{ _('m_share.sh_no_list') }}</p>
-                                <p class="list_name">{{ _('m_share.sh_name') }}</p>
-                            </li>-->
-                            <li v-for="(item, index) in friendList" :key="index">
-                                <p class="list_rank">{{ _('m_share.sh_no_list') }}{{ index + 1 }}</p>
-                                <p class="list_name">{{ item.username }}</p>
-                            </li>
-                        </ul>
-                        <p class="nomsg" v-else>{{ _('m_share.sh_invite_nodata') }}</p>
-                    </div>
-                </div>
-            </transition>
-        </div>
-        <!-- 收获金币 -->
-        <div class="pop_congratulation" :class="{hide:!show_pop_congratulation}">
-            <transition name="pop_share">
-                <div class="pop_con_main" v-if="show_pop_congratulation">
-                    <div class="c_title" data-msg="Congratulations"></div>
-                    <p class="c_count">+{{ winInviteNum }}</p>
-                    <p class="c_msg">{{ _('m_share.sh_win_inviteNum', winInviteNum) }}</p>
-                    <a class="btn_default" @click="show_pop_congratulation=false">OK</a>
-                </div>
-            </transition>
-        </div>
-        <div class="hide" style="width:0;height:0;">
-            <img src="../img/pop_congratulation_light.png">
-            <img src="../img/pop_congratulation_title.png">
-        </div>
+
     </div>
 </template>
 
@@ -107,35 +37,12 @@ export default {
             baseFB: null,
             accToken: null,
             fadeIn: false,
-            scrollTop: 0,
-            isOnPop: true,
-            show_pop_invite_frient: false,
-            show_pop_congratulation: false,
-            friend_code: null,
-            invitemsg: "",
-            friendList: null, // 好友列表
-            inviteCodeNum: 5000,
-            winInviteNum: 5000, // 中了5000
-            expireTime: 0,
-            beginTime: 0,
-            endTime: 0,
-            expireTimerInter: null,
-            lan: "",
-            isCodeSucc: true // 请求之后
+            scrollTop: 0
         }
     },
     watch: {
         show_pop_invite_frient (val) {
-            if (val) {
-                this.scrollTop =
-          document.documentElement.scrollTop || document.body.scrollTop
-                document.body.classList.add("isOnPop")
-                document.body.style.top = -this.scrollTop + "px"
-            } else {
-                document.body.classList.remove("isOnPop")
-                window.scrollTo(0, this.scrollTop)
-                document.body.style.top = 0
-            }
+
         }
     },
     methods: {
@@ -152,151 +59,59 @@ export default {
                 this.friend_code = e.target.value
             }
         },
-        sendInviteCode () {
-            // 发送邀请码
-            let codeReg = /^[A-Z]+$/g
-            if (this.friend_code && codeReg.test(this.friend_code.toUpperCase().trim())) {
-                // 发起请求
-                if (!this.isCodeSucc) { return false }
-                this.isCodeSucc = false
-                this.$post("/invite/use_code", {
-                    code: this.friend_code.toUpperCase()
-                }).then(res => {
-                    this.isCodeSucc = true
-                    if (res && res.status === "100") {
-                        this.winInviteNum = this.formatMoney(res.data.award)
-                        this.show_pop_congratulation = true
-                        this.getInviteInfo()
+        checkFb () {
+            window.FB.getLoginStatus( (response) => {
+                console.log(response)
+                console.log("===response=======")
+                if(response.status){
+                    if (response.status !== "connected") {
+                        window.FB.login()
+                    } else {
+                        this.startPage(response.authResponse)
                     }
-                }).catch((err) => {
-                    // 邀请出错
-                    this.isCodeSucc = true
-                })
-            } else {
-                this.$toast({
-                    content: _("m_share.sh_codeerr")
-                })
-            }
-        },
-        popInviteFrient (noneTip = false) {
-            if (!noneTip) {
-                this.show_pop_invite_frient = true
-            }
-            this.$post("/invite/get_firends")
-                .then(res => {
-                    if (res && res.status === "100") {
-                        this.friendList = res.data
-                    }
-                })
-        },
-        shareCopy (code = "") {
-            if (this.invitemsg && this.invitemsg.invite_code) {
-                copy(this.invitemsg.invite_code)
-            }
-        },
-        fb_whatsapp () {
-            // 分享的内容
-            if (this.invitemsg && this.invitemsg.invite_code) {
-                let cont = this._(
-                    "m_share.sh_invite_copy_msg",
-                    this.invitemsg.invite_code,
-                    this.inviteCodeNum
-                )
-                cbetLocal({
-                    func: "share",
-                    params: {
-                        content: cont,
-                        plat: "whatsapp"
-                    }
-                })
-            } else {
-                this.$toast({
-                    content: _("m_share.sh_neterr")
-                })
-            }
-        },
-        fb_fackbook () {
-            // 分享的内容
-            if (this.invitemsg && this.invitemsg.invite_code) {
-                let cont = this._(
-                    "m_share.sh_bigTitle",
-                    this.invitemsg.invite_code,
-                    this.inviteCodeNum
-                )
-                cbetLocal({
-                    func: "share",
-                    params: {
-                        content: cont,
-                        plat: "facebook"
-                    }
-                })
-            } else {
-                this.$toast({
-                    content: _("m_share.sh_neterr")
-                })
-            }
-        },
-        getInviteInfo () {
-            this.$post("/invite/info")
-                .then(res => {
-                    if (res && res.status === "100") {
-                        let resData = res.data
-                        // if(!resData.info || !resData.config){
-                        //     // 过期了 todo
-                        //     return false
-                        // }
-                        this.invitemsg = resData.info
-                        if (resData.config && resData.config.prize) {
-                            if (resData.config.prize.inviter) {
-                                this.inviteCodeNum = resData.config.prize.inviter
-                            }
-                            this.expireTime = resData.config.prize.expire
-                            if (parseFloat(this.expireTime) <= 0 ) {
-                                // 过期隐藏入口
-                                this.invitemsg.used_code = "1"
-                            }
-                            this.startExpireTime(this.expireTime)
-                        }
-                        this.beginTime = resData.config.begin_time
-                        this.endTime = resData.config.end_time
-                    }
-                })
-        },
-        startExpireTime (time) {
-            time = Number(time)
-            if (isNaN(time)) {return false}
-            clearInterval(this.expireTimerInter)
-            this.expireTimerInter = setInterval(() => {
-                this.expireTime = this.expireTime - 30
-                if (this.expireTime <= 0 ) {
-                    clearInterval(this.expireTimerInter)
-                    this.invitemsg.used_code = "1"
                 }
-            },30000)
-
+                // 请求信息
+                // status 表示应用用户的登录状态。状态可以是以下某个值：
+                // connected — 用户已登录 Facebook 和您的应用。
+                // not_authorized — 用户已登录 Facebook，但未登录您的应用。
+                // unknown — 用户未登录 Facebook，所以不知道其是否已登录您的应用，或者 FB.logout() 在之前已被调用，因此无法连接至 Facebook。
+            })
+        },
+        startPage({accessToken}){
+            let data = this.$post('/login/cpuser',{
+                token: accessToken,
+                idfa: ''
+            })
+            console.log(data)
         }
     },
     components: {
     },
     created () {
-        this.lan = cookie.get("language") || "en"
-        this.getInviteInfo()
+        window.onload = function () {
+            this.checkFb()
+        }.bind(this)
     },
     async mounted () {
-        // ,'nobase.bg_particle1.png','nobase.bg_particle2.png','nobase.bg_particle3.png'
-        preloadImage(["nobase.bg.jpg","nobase.bg_light.png"], () => {
-            console.log("img is ready")
-            this.fadeIn = true
-        }, "./img/")
-        // this.fadeIn = true
+        this.fadeIn = true
         this.$nextTick(() => {
-            this.popInviteFrient(true)
+            console.log(window.FB)
         })
+
+        console.log(window.FB)
     }
 }
 </script>
 
 <style lang="less" type="text/less">
+
+.fbbtn{
+    cursor: pointer;
+    position: relative;
+    z-index: 1000;
+    font-size: 23px;
+}
+
 .page_share {
   .title {
     i {
