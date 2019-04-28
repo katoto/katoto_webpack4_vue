@@ -58,6 +58,7 @@ module.exports = {
         "linebreak-style": [2, "windows"],
 		"eol-last": [2, "windows"],
         "object-property-newline": [2, {}],
+        "space-infix-ops": 2,
         "vue/html-indent": [2, 4, {
             "attribute": 1,
             "baseIndent": 1,
