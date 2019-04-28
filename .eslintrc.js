@@ -52,11 +52,7 @@ module.exports = {
         "semi": [2, "never"],
         "no-multiple-empty-lines": [2, {"max": 1}],
         "generator-star-spacing": [2, { "before": true, "after": true }],
-        "object-curly-newline": [2, {
-            "ObjectPattern": {
-                "multiline": true
-            }
-        }],
+        "object-curly-newline": ["error", { "consistent": true, "minProperties": 2 }],
         "object-curly-spacing": [2, "always"],
         "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
         "linebreak-style": [2, "windows"],
