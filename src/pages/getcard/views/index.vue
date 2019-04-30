@@ -1,6 +1,6 @@
 <template>
     <div class="page_share">
-        <h1>fb 的分享打开页</h1>
+        <h1>刮刮卡调广告</h1>
         <div class="bg_page">
             <div class="bg_particle">
                 <div class="bg bg_p1" :class="{bounceIn:fadeIn}"></div>
@@ -8,8 +8,8 @@
             <div class="bg_light"></div>
         </div>
         <div>
-            <p>测试facebook 的登陆</p><br>
-            <button class="fbbtn" @click="checkFb">fb 授权登陆</button><br>
+            <p>刮刮卡调广告</p><br>
+            <button class="fbbtn" @click="goAds">去看广告</button><br>
         </div>
 
     </div>
@@ -21,12 +21,6 @@ import {
     cbetLocal,
     formateBalance,
     formatMoney,
-    formatTime,
-    formatIndiaTime,
-    calSecond,
-    copy,
-    cookie,
-    preloadImage
 } from "@common/util"
 
 export default {
@@ -47,58 +41,21 @@ export default {
     },
     methods: {
         formatMoney,
-        formatIndiaTime,
-        formateBalance,
-        formatTime,
-        calSecond,
-        testFriendCode (e) {
-            if (this.friend_code && this.friend_code.length > 10) {
-                this.friend_code = this.friend_code.slice(0, 10)
-            }
-            if (e && e.target) {
-                this.friend_code = e.target.value
-            }
-        },
-        checkFb () {
-            window.FB.getLoginStatus( (response) => {
-                console.log(response)
-                console.log("===response=======")
-                if(response.status){
-                    if (response.status !== "connected") {
-                        window.FB.login()
-                    } else {
-                        this.startPage(response.authResponse)
-                    }
-                }
-                // 请求信息
-                // status 表示应用用户的登录状态。状态可以是以下某个值：
-                // connected — 用户已登录 Facebook 和您的应用。
-                // not_authorized — 用户已登录 Facebook，但未登录您的应用。
-                // unknown — 用户未登录 Facebook，所以不知道其是否已登录您的应用，或者 FB.logout() 在之前已被调用，因此无法连接至 Facebook。
+        goAds (e) {
+            console.log('jp://showAdVideo?type=3')
+            cbetLocal({
+                func: "jumpToLocal",
+                params: { content: "jp://showAdVideo?type=3" }
             })
         },
-        startPage({accessToken}){
-            let data = this.$post('/login/cpuser',{
-                token: accessToken,
-                idfa: ''
-            })
-            console.log(data)
-        }
     },
     components: {
     },
     created () {
-        window.onload = function () {
-            this.checkFb()
-        }.bind(this)
+
     },
     async mounted () {
         this.fadeIn = true
-        this.$nextTick(() => {
-            console.log(window.FB)
-        })
-        new Error('123')
-        console.log(window.FB)
     }
 }
 </script>
