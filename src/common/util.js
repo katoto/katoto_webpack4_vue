@@ -32,9 +32,9 @@ export const isMobile = /applewebkit.*mobile.*/.test(window.navigator.userAgent.
 export function calSecond (second = 100) {
     second = Number(second)
     if (isNaN(second)) {return false}
-    let daysRound = Math.floor(second / 60 / 60 /24)
-    let hourRound = Math.floor( second/60/60 - (24*daysRound) )
-    let minutesRound = Math.floor( second/60 - (24*60*daysRound) -(60 * hourRound) )
+    let daysRound = Math.floor(second / 60 / 60 / 24)
+    let hourRound = Math.floor( second / 60 / 60 - (24 * daysRound) )
+    let minutesRound = Math.floor( second / 60 - (24 * 60 * daysRound) - (60 * hourRound) )
     return `${daysRound}d ${hourRound}h ${minutesRound}m`
 }
 
@@ -86,7 +86,7 @@ export function wait (time) {
     })
 }
 
-export function formatIndiaTime (time, language="en") {
+export function formatIndiaTime (time, language = "en") {
     let getUSTIme = date => {
         var monthArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Spt", "Oct", "Nov", "Dec"]
         var indiaArr = ["जनवरी", "फरवरी", " मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"]
@@ -216,7 +216,7 @@ export function getURLParams () {
     string.slice(1).split("&").map(item => {
         if (item !== "") {
             let arr = item.split("=")
-            obj[arr[0]] = decodeURIComponent(arr[1])
+            obj[arr[0]] = decodeURIComponent(decodeURIComponent(arr[1]))
         }
     })
     return obj

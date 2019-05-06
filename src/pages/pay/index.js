@@ -79,7 +79,7 @@ window.addEventListener("load", () => {
                 custom: _data.orderid,
                 amount: _data.rechargemoney,
                 invoice: _data.orderid,
-                item_name: `${data.rechargemoney}INR (${_data.rechargemoney} USD)`
+                item_name: data.currency === "USD" ? `${_data.rechargemoney} USD` : `${data.rechargemoney}${data.currency} (${_data.rechargemoney} USD)`
             })
             sendOrderToApp(_data.orderid)
             isProduction ? liveForm.submit() : sandboxForm.submit()

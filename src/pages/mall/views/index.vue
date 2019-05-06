@@ -17,9 +17,9 @@
         </div>
         <!-- todo 提成公共组件轮询新闻 -->
         <div class="news">
-            <div class="news_main">
-                <p :style="{width:newsWidth}" ref="newsWidth">{{_('m_payment.mall_title')}}</p>
-            </div>
+            <broadcast :time="10">
+                <p>{{_('m_payment.mall_title')}}</p>
+            </broadcast>
         </div>
         <div class="mall">
             <div class="mall_tab">
@@ -71,7 +71,11 @@
 </template>
 
 <script>
-import { formateBalance, cbetLocal } from "@/common/util"
+import {
+    formateBalance, cbetLocal
+} from "@/common/util"
+
+import broadcast from "@/components/broadcast"
 // 弹窗
 import popList from "../components/Pop_list"
 // 弹窗data
@@ -98,7 +102,6 @@ export default {
             aid: "",
             activeItem: {},
             address: {},
-            newsWidth: "",
             userInfo: false,
             covert_message: {
                 convert: {
@@ -108,7 +111,8 @@ export default {
         }
     },
     components: {
-        popList
+        popList,
+        broadcast
     },
     computed: {
         isLog () {
@@ -260,9 +264,6 @@ export default {
         }
     },
     async mounted () {
-        this.$nextTick(() => {
-            this.newsWidth = this.$refs.newsWidth.clientWidth + "px"
-        })
         Promise.all([
             this.getExchangeList(),
             this.getUserInfo()
@@ -373,7 +374,6 @@ export default {
   p {
     display: inline-block;
     white-space: nowrap;
-    animation: scrollNew 10s linear infinite;
   }
 }
 .mall {
@@ -557,14 +557,5 @@ export default {
   font-size: 30/75rem;
   color: rgba(255, 255, 255, 0.6);
   white-space: nowrap;
-}
-
-@keyframes scrollNew {
-  0% {
-    transform: translate(100%);
-  }
-  100% {
-    transform: translate(-100%);
-  }
 }
 </style>
