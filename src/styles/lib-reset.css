@@ -5,8 +5,9 @@
   font-family: "Helvetica";
   user-select:none;
 }
-html{
-  color: #fff;
+body{
+    min-height: 100vh;
+    color: #fff;
 }
 h1,
 h2,
