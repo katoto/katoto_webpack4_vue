@@ -219,7 +219,7 @@ export default {
   transform: translate(-50%, 0);
   width: 670 * @vw;
   height: 454 * @vw;
-  background: url(../img/test.jpg) no-repeat center -60 * @vw;
+  background: url(../img/icon_card.jpg) no-repeat center -60 * @vw;
   background-size: 100%;
   border-radius: 16 * @vw;
   animation: bgMove 0.2s cubic-bezier(0, 0, 0.67,-0.11) both;
@@ -621,7 +621,7 @@ export default {
         overflow: hidden;
         width: 100%;
         height: 454 * @vw;
-        background: url(../img/test.jpg) no-repeat center -60 * @vw;
+        background: url(../img/icon_card.jpg) no-repeat center -60 * @vw;
         background-size: 100%;
       }
       .actlist_view {
