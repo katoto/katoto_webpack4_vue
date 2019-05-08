@@ -3,7 +3,7 @@ import {
 } from "../common/util"
 import common from "./common"
 const _lang = cookie.get("language") || "en"
-
+const _isEn = (_lang === "en")
 let lang = {
     ...common
 }
@@ -12,7 +12,7 @@ window.cookie = cookie
 
 window._ = function (string) {
     return (
-        _lang === "en" ?
+        _isEn ?
             _format.apply(lang.en[string], arguments) :
             _format.apply(lang.hi[string], arguments)
     )
@@ -55,4 +55,5 @@ export function use (Vue, language) {
         }
     }
     Vue.prototype._ = window._
+    Vue.prototype.$isEn = _isEn
 }
