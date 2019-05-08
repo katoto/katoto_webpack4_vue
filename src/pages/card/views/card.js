@@ -48,8 +48,8 @@ export default {
             cacheContext.drawImage(cacheImage, 0, 0)
             that.lists.forEach(function (key, index) {
                 /* image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight */
-                // resultContext.drawImage(cacheImage,location[key].x,location[key].y, 200 , 200, location[key].x , location[key].y , 200 , 200)
-                resultContext.drawImage(cacheImage, 0, 0)
+                resultContext.drawImage(cacheImage,location[key].x,location[key].y, 200 , 200, location[key].x , location[key].y , 200 , 200)
+                // resultContext.drawImage(cacheImage, 0, 0)
             })
         }
         preloadImage(imgs, function () {

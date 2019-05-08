@@ -1,7 +1,8 @@
 <template>
     <div class="page_card" :class="[inList?'lists':'card']">
+        <div class="bg_card" v-if="!inList"></div>
         <header class="card_header">
-            <a class="btn_back" @click="handleBack"></a>
+            <a class="btn_back" @click="handleBack" key="btn_back"></a>
             <template v-if="inList">
                 <a class="btn_card">Star Card</a>
                 <a class="btn_gift">Gift</a>
@@ -9,14 +10,13 @@
             <template v-else>
                 <a class="btn_star">Star Card 0</a>
             </template>
-            <a class="btn_ticket" @click="handlePop('pop_ticket',true)">
+            <a class="btn_ticket" @click="handlePop('pop_ticket',true)" key="btn_ticket">
                 6
                 <transition name="ticketChange">
                     <i class="ticketChange" v-if="ticketChange">+1</i>
                 </transition>
             </a>
         </header>
-
         <template v-if="inList">
             <div class="news">
                 <ul>
@@ -30,6 +30,7 @@
                 </div>
                 <ul>
                     <li class="actlist regular" @click="goView">
+                        <div class="bg"></div>
                         <p class="actlist_view">Giving Cricket Star Card</p>
                     </li>
                 </ul>
@@ -134,6 +135,8 @@ export default {
         return {
             /* 在列表页？ */
             inList: true,
+            /* 图片位置 */
+            location: {},
             ticketChange: false,
             lists: [1,2,3],
             pop_ticket: false,
@@ -165,9 +168,7 @@ export default {
             }
         },
         goView (e) {
-            e.target.addEventListener("transitionend",() => {
-                this.inList = false
-            })
+            this.inList = false
         },
         handleBack () {
             if (this.inList) {
@@ -186,6 +187,7 @@ export default {
 <style lang="less" scoped type="text/less">
 @vw: 100/750vw;
 @vh: 100/1334vh;
+
 .page_card {
   position: relative;
   min-height: 100vh;
@@ -202,8 +204,37 @@ export default {
     }
   }
   &.card {
-    background: #b31b58 url(../img/ticket_bg.jpg) no-repeat top center;
-    background-size: 100%;
+    // background: #b31b58 url(../img/ticket_bg.jpg) no-repeat top center;
+    // background-size: 100%;
+    .btn_ticket {
+      margin-left: 19 * @vw;
+    }
+  }
+}
+.bg_card {
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 330 * @vw;
+  transform: translate(-50%, 0);
+  width: 670 * @vw;
+  height: 454 * @vw;
+  background: url(../img/test.jpg) no-repeat center -60 * @vw;
+  background-size: 100%;
+  border-radius: 16 * @vw;
+  animation: bgMove 0.2s cubic-bezier(0, 0, 0.67,-0.11) both;
+  transform-origin: center;
+}
+@keyframes bgMove {
+  0% {
+
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    border-radius: 0;
+    background-position: center top;
   }
 }
 .card_header {
@@ -225,6 +256,7 @@ export default {
   .btn_card,
   .btn_gift {
     overflow: hidden;
+    margin-top: 20*@vw;
     padding-top: 52 * @vw;
     min-width: 66 * @vw;
     background-size: 66 * @vw;
@@ -240,13 +272,14 @@ export default {
     background-image: url(../img/icon_amazon.png);
     background-position: center top;
   }
-  .btn_star{
-      margin-left: auto;
-      height: 60*@vw;
-      line-height: 60*@vw;
-      border-radius: 30*@vw;
-      background: #363a46;
-      padding: 0 25*@vw;
+  .btn_star {
+    margin-left: auto;
+    height: 60 * @vw;
+    line-height: 60 * @vw;
+    border-radius: 30 * @vw;
+    background: #363a46;
+    padding: 0 25 * @vw;
+    transition-duration: 0;
   }
   .btn_ticket {
     position: relative;
@@ -256,11 +289,11 @@ export default {
     width: 195 * @vw;
     height: 60 * @vw;
     overflow: hidden;
-    margin-left: 19*@vw;
     background: url(../img/btn_ticket.png) no-repeat center;
     background-size: cover;
     font-size: 36 * @vw;
     font-weight: bold;
+    margin-left: auto;
     i {
       position: absolute;
       top: 0;
@@ -275,16 +308,16 @@ export default {
   width: 444 * @vw;
   height: 181 * @vw;
   overflow: hidden;
-  background: url(../img/ticket_title.png) no-repeat center;
-  background-size: cover;
+  //   background: url(../img/ticket_title.png) no-repeat center;
+  //   background-size: cover;
   margin: 0 0 0 25 * @vw;
 }
 .ticket_bonus {
   width: 419 * @vw;
   height: 166 * @vw;
   overflow: hidden;
-  background: url(../img/ticket_bonus.png) no-repeat center;
-  background-size: cover;
+  //   background: url(../img/ticket_bonus.png) no-repeat center;
+  //   background-size: cover;
   margin: 2 * @vw 0 0 45 * @vw;
 }
 .ticket_img {
@@ -580,8 +613,21 @@ export default {
       left: 0;
     }
     &.regular {
-      background: url(../img/list_bg.png) no-repeat center;
-      background-size: 670 * @vw;
+      .bg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 16 * @vw;
+        overflow: hidden;
+        width: 100%;
+        height: 454 * @vw;
+        background: url(../img/test.jpg) no-repeat center -60 * @vw;
+        background-size: 100%;
+      }
+      .actlist_view {
+        background: url(../img/actlist_view.png) no-repeat center;
+        background-size: 511 * @vw;
+      }
     }
     &:active {
       transform: scale(0.8);
