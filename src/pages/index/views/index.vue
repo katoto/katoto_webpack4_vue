@@ -3,7 +3,7 @@
         <div class="head">
             <img src="../img/contenthead.jpg">
             <div class="btn">
-                <a href="//play.google.com/store/apps/details?id=com.crazy500.cbet" target="_blank" class="down_and"></a>
+                <a :href="contHref" target="_blank" class="down_and"></a>
                 <a href="https://itunes.apple.com/app/id1453136833" target="_blank" class="down_ios"></a>
             </div>
         </div>
@@ -18,7 +18,8 @@
 
 <script>
 import {
-    isIOS
+    isIOS,
+    getURLParams
 } from "@common/util"
 
 export default {
@@ -31,12 +32,11 @@ export default {
     components: {
     },
     mounted () {
+        if(getURLParams() && getURLParams().utm_source === 'facebook'){
+            this.contHref = '//www.madcrickets.com/msapk/cbet_release_v1.2.7_fbsns.apk'
+        }
         this.$nextTick(() => {
             this.contentSrc = require("@/pages/index/img/contentbody.png")
-            if (isIOS) {
-                // 待修改
-                // this.contHref = '//www.baidu.com'
-            }
         })
     }
 }
