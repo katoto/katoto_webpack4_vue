@@ -34,12 +34,14 @@ export default {
   width: 100%;
   margin: 0 auto;
   .broadcast-box /deep/ {
-    display: inline-block;
     animation: go 10s linear infinite;
     min-width: 100%;
-    .broadcast-item, p {
+    text-indent: 0;
+    float: left;
+    .broadcast-item, p, li {
       white-space: nowrap;
-      display: inline;
+      display: inline-block;
+      padding-left: 20px;
     }
   }
 }
