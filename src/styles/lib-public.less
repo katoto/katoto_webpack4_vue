@@ -37,7 +37,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 674/75rem;
+    width: percentage(674/750);
     // height: 500px;
     background: #2d2a38 url(../assets/img/pop_gradient_bg.jpg) no-repeat top center;
     background-size: 668/75rem;
@@ -128,7 +128,7 @@
   }
 }
 .pop_animate-enter-active {
-    animation: popEnter 0.4s;
+  animation: popEnter 0.4s;
 }
 .pop_animate-leave-active {
   animation: popLeave 0.2s;
@@ -168,23 +168,23 @@
 }
 
 .common_loading {
-    position: fixed;
-    z-index: 11;
-    left: 50%;
-    top: 50%;
-    width: 72/75rem;
-    height: 72/75rem;
-    background: url(~@/assets/img/img_loading_on_btn.png) no-repeat center;
-    background-size: 72/75rem;
-    animation: loading 2s infinite linear;
+  position: fixed;
+  z-index: 11;
+  left: 50%;
+  top: 50%;
+  width: 72/75rem;
+  height: 72/75rem;
+  background: url(~@/assets/img/img_loading_on_btn.png) no-repeat center;
+  background-size: 72/75rem;
+  animation: loading 2s infinite linear;
 }
 @keyframes loading {
-    0%{
-        transform: translate(-50%,-50%) rotate(0);
-    }
-    100%{
-        transform: translate(-50%,-50%) rotate(360deg);
-    }
+  0%{
+    transform: translate(-50%,-50%) rotate(0);
+  }
+  100%{
+    transform: translate(-50%,-50%) rotate(360deg);
+  }
 }
 
 

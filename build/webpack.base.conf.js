@@ -1,6 +1,7 @@
 var path = require("path")
 var utils = require("./utils")
 var multiPage = require("./multi-page")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
 var config = require("../config")
 var webpack = require("webpack")
 const { VueLoaderPlugin } = require("vue-loader")
@@ -96,7 +97,14 @@ module.exports = {
                 NODE_ENV: JSON.stringify(process.env.NODE_ENV),
                 ENV_CONFIG: JSON.stringify(process.env.ENV_CONFIG)
             }
-        })
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, "../static"),
+                to: config.dev.assetsSubDirectory,
+                ignore: [".*"]
+            }
+        ])
     ],
 
     node: {

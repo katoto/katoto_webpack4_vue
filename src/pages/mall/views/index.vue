@@ -42,18 +42,18 @@
                 <template v-if="getList().length > 0">
                     <ul v-for="item in getList()" :key="`${item[0].id}-${item[1] ? item[1].id : '-'}`">
                         <li :class="{unlock: item[0].islock === '1'}">
-                            <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
+                            <i class="unlock-tip" v-if="$isEn">{{_('m_payment.unlock_tip')}}</i>
                             <div class="reward_box" @click="showProductDetail(item[0])">
-                                <img :src="item[0].imgurl" alt>
+                                <img class="good" :src="item[0].imgurl" alt>
                                 <p class="reward_name">{{item[0].name}}</p>
                             </div>
                             <a href="javascript:" class="btn_reward" @click="showDetail(item[0])">{{formateBalance(item[0].needgolds)}}</a>
                         </li>
                         <li :class="{unlock: item[1] && item[1].islock === '1'}">
-                            <i class="unlock-tip">{{_('m_payment.unlock_tip')}}</i>
+                            <i class="unlock-tip" v-if="$isEn">{{_('m_payment.unlock_tip')}}</i>
                             <template v-if="item[1]">
                                 <div class="reward_box" @click="showProductDetail(item[1])">
-                                    <img :src="item[1].imgurl" alt>
+                                    <img class="good" :src="item[1].imgurl" alt>
                                     <p class="reward_name">{{item[1].name}}</p>
                                 </div>
                                 <a href="javascript:" class="btn_reward" @click="showDetail(item[1])">{{formateBalance(item[1].needgolds)}}</a>
@@ -495,7 +495,7 @@ export default {
     }
   }
   li.unlock {
-    img {
+    img.good {
       opacity: 0.4;
     }
     .unlock-tip {
