@@ -10,6 +10,7 @@ Vue.use(Alert)
 
 // 初始化与公共样式
 require("@/styles/lib-reset.css")
+require("@/styles/lib-public.less")
 
 new Vue({
     el: "#app",
