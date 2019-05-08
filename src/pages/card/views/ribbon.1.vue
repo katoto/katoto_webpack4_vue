@@ -16,7 +16,6 @@ export default {
             // 重力加速度
             G: 0.1,
             isMove: true
-
         }
     },
     components: {
@@ -47,7 +46,7 @@ export default {
                 /* +- 2 */
                 this.vx =  Math.round((Math.random() * 2 - 1) * 8)
                 /* 8-10 */
-                this.vy = getRandom(5,10)
+                this.vy = Math.random() * 5 + 10
             }
             draw () {
                 ribbon_context.beginPath()
@@ -100,6 +99,7 @@ export default {
         }
     }
 }
+
 </script>
 
 <style lang="less" scoped type="text/less">
