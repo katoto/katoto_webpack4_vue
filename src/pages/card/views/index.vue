@@ -212,6 +212,7 @@ export default {
   }
 }
 .bg_card {
+  //todo位置暂时写死，应该从列表页获取
   position: absolute;
   z-index: -1;
   left: 50%;
