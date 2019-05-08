@@ -16,7 +16,7 @@
     <script>
         var isMobile = /applewebkit.*mobile.*/.test(window.navigator.userAgent.toLowerCase());
         if (isMobile) {
-            if(getURLParams && getURLParams.utm_source === 'facebook'){
+            if(getURLParams() && getURLParams().utm_source === 'facebook'){
                 window.location.href = './m_index.html' + window.location.search
             } else {
                 window.location.href = './m_index.html'
