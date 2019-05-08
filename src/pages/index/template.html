@@ -16,7 +16,23 @@
     <script>
         var isMobile = /applewebkit.*mobile.*/.test(window.navigator.userAgent.toLowerCase());
         if (isMobile) {
-            window.location.href = './m_index.html'
+            if(getURLParams && getURLParams.utm_source === 'facebook'){
+                window.location.href = './m_index.html' + window.location.search
+            } else {
+                window.location.href = './m_index.html'
+            }
+        }
+        function getURLParams () {
+            var string = window.location.search
+            var obj = {
+            }
+            string.slice(1).split("&").map(item => {
+                if (item !== "") {
+                    var arr = item.split("=")
+                    obj[arr[0]] = decodeURIComponent(decodeURIComponent(arr[1]))
+                }
+            })
+            return obj
         }
     </script>
 </head>
@@ -25,6 +41,18 @@
     <div id="app">
         <div style="margin-top: 200px;text-align: center">Loading...</div>
     </div>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139871909-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-139871909-1');
+    </script>
+
 </body>
 
 </html>
