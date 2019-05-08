@@ -8,10 +8,10 @@
 export default {
     data () {
         return {
-            n: 50,
+            n: 5,
             colors: ["#00ff6c","#ff6b2a","#7fa9ff","#febb2b"],
-            width: 40,
-            height: 20,
+            width: 20,
+            height: 40,
             ribbons: [],
             // 重力加速度
             G: 0.1,
@@ -30,67 +30,40 @@ export default {
         let ribbon_context = ribbon.getContext("2d")
         let WIDTH = ribbon.width
         let HEIGHT = ribbon.height
+
         class Ribbon {
-            constructor (color = "#ff6b2a",width,height) {
-                this.color = color
-                this.x = width / 2
-                this.y = height / 2
-                this.width = width
-                this.height = height
-                /* +-100 */
-                this.transform_x = ~~(WIDTH / 2 + (Math.random() * 2 - 1) * 100)
-                this.transform_y = HEIGHT / 2
-                /* +-60deg */
-                this.angle = Math.round((Math.random() * 2 - 1) * 90)
-                /* 旋转加速度 */
-                this.angleV = (Math.random() * 2 - 1) * 2
-                /* +- 2 */
-                this.vx =  Math.round((Math.random() * 2 - 1) * 8)
-                /* 8-10 */
-                this.vy = getRandom(5,10)
+            constructor (x,y) {
+                this.color = getColor()
+                this.x = x
+                this.y = y
+                this.width = that.width
+                this.height = that.height
             }
-            draw () {
-                ribbon_context.beginPath()
-                ribbon_context.save()
+            print (index) {
                 ribbon_context.fillStyle = this.color
-                ribbon_context.translate(this.transform_x, this.transform_y)
-                ribbon_context.rotate(Math.PI / 180 * this.angle)
-                ribbon_context.fillRect(-this.width / 2,-this.height / 2,this.width,this.height)
-                ribbon_context.restore()
-                ribbon_context.closePath()
+                ribbon_context.rotate(Math.PI / 180 * index)
+                ribbon_context.fillRect(this.x,this.y,this.width,this.height)
+            }
+            move () {
+                this.print()
             }
         }
-        for (let i = 0;i < this.n;i++) {
-            let ribbon = new Ribbon(getColor(),this.width,this.height)
-            ribbon.draw()
-            this.ribbons.push(ribbon)
-        }
-        (function frame () {
-            if (that.isMove) {
-                requestAnimationFrame(frame)
-                ribbon_context.clearRect(0,0,WIDTH,HEIGHT)
-                that.ribbons.forEach((ribbon,index) => {
-                    ribbon.transform_y -= ribbon.vy
-                    ribbon.vy -= that.G
-                    ribbon.angle -= ribbon.angleV
-                    if ( ribbon.vx > 0 ) {
-                        ribbon.transform_x -= ribbon.vx
-                        ribbon.vx -= that.G
-                    }
-                    if ( ribbon.vx < 0 ) {
-                        ribbon.vx += that.G
-                        ribbon.transform_x -= ribbon.vx
-                    }
-                    if (ribbon.transform_y > HEIGHT) {
-                        that.ribbons.splice(index,1)
-                    }
-                    ribbon.draw()
-                })
-                if (that.ribbons.length == 0) {
-                    that.isMove = false
-                }
+
+        function init () {
+            for (let i = 0; i < 50; i++) {
+                let ribbon = new Ribbon(WIDTH / 2,HEIGHT / 2)
+                that.ribbons.push(ribbon)
             }
-        })()
+            update()
+        }
+        function update () {
+            ribbon_context.clearRect(0,0,WIDTH,HEIGHT)
+            that.ribbons.forEach((ribbon, index) => {
+                ribbon.move(index)
+            })
+            // requestAnimationFrame(update)
+        }
+        init()
 
         function getRandom (a, b) {
             return Math.random() * (b - a) + a
@@ -98,6 +71,7 @@ export default {
         function getColor () {
             return that.colors[Math.round(Math.random() * that.colors.length)]
         }
+
     }
 }
 </script>
