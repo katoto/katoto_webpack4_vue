@@ -1,8 +1,15 @@
+<template>
+    <div class="ticket_img" id="ticket_img">
+        <canvas id="canvas_off" class="canvas_off" width="620" height="620"></canvas>
+        <canvas id="canvas_on" class="canvas_on" width="620" height="620"></canvas>
+    </div>
+</template>
 
+<script>
 export default {
     data () {
         return {
-
+            lists: [1,2,3]
         }
     },
     components: {
@@ -48,8 +55,8 @@ export default {
             cacheContext.drawImage(cacheImage, 0, 0)
             that.lists.forEach(function (key, index) {
                 /* image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight */
-                resultContext.drawImage(cacheImage,location[key].x,location[key].y, 200 , 200, location[key].x , location[key].y , 200 , 200)
-                // resultContext.drawImage(cacheImage, 0, 0)
+                // resultContext.drawImage(cacheImage,location[key].x,location[key].y, 200 , 200, location[key].x , location[key].y , 200 , 200)
+                resultContext.drawImage(cacheImage, 0, 0)
             })
         }
         preloadImage(imgs, function () {
@@ -143,3 +150,36 @@ export default {
         }
     }
 }
+</script>
+
+<style lang="less" scoped type="text/less">
+@vw: 100/750vw;
+.ticket_img {
+  position: relative;
+  width: 620 * @vw;
+  overflow: hidden;
+  margin: 146 * @vw auto 0;
+  opacity: 0;
+  animation: fadeIn 0.5s 0.4s cubic-bezier(0.73,-0.2, 1, 1) both;
+  canvas {
+    display: block;
+    width: 100%;
+  }
+  .canvas_off {
+    position: relative;
+    z-index: 2;
+  }
+  .canvas_on {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+  }
+}
+@keyframes fadeIn {
+    0%{}
+    100%{
+        opacity: 1;
+    }
+}
+</style>

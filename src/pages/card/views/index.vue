@@ -1,14 +1,14 @@
 <template>
     <div class="page_card" :class="[inList?'lists':'card']">
-        <div class="bg_card" v-if="!inList"></div>
+        <div class="bg_card" v-show="!inList" ref="bg_card"></div>
         <header class="card_header">
             <a class="btn_back" @click="handleBack" key="btn_back"></a>
             <template v-if="inList">
-                <a class="btn_card">Star Card</a>
-                <a class="btn_gift">Gift</a>
+                <a class="btn_card" key="starcard">Star Card</a>
+                <a class="btn_gift" key="gift">Gift</a>
             </template>
             <template v-else>
-                <a class="btn_star">Star Card 0</a>
+                <a class="btn_star" key="Star">Star Card 0</a>
             </template>
             <a class="btn_ticket" @click="handlePop('pop_ticket',true)" key="btn_ticket">
                 6
@@ -47,18 +47,15 @@
         <template v-else>
             <div class="ticket_title"></div>
             <div class="ticket_bonus"></div>
-            <div class="ticket_img" id="ticket_img">
-                <canvas id="canvas_off" class="canvas_off" width="620" height="620"></canvas>
-                <canvas id="canvas_on" class="canvas_on" width="620" height="620"></canvas>
-            </div>
+            <card :class="{'on': isShowCard}"></card>
             <div class="balance">
                 <p>10.6K</p>
             </div>
         </template>
 
         <!-- pop -->
-        <div class="pop_layer" v-if="pop_layer" @click="handlePop('all',false)">
-            <canvas id="ribbon" width="750" height="1334"></canvas>
+        <div class="pop_layer" v-if="pop_layer || 1" @click="handlePop('all',false)">
+            <ribbon></ribbon>
         </div>
         <!-- 购买门票 -->
         <transition name="pop_animate">
@@ -128,26 +125,28 @@
 </template>
 
 <script>
-import card from "./card.js"
-import ribbon from "./ribbon.js"
+import card from "./card.vue"
+import ribbon from "./ribbon.vue"
 export default {
     data () {
         return {
             /* 在列表页？ */
-            inList: true,
+            inList: false,
             /* 图片位置 */
             location: {},
+            /* 修改头部门票数量 */
             ticketChange: false,
-            lists: [1,2,3],
             pop_ticket: false,
             pop_coins: false,
             pop_celebtity: false,
-            pop_amazon: false
+            pop_amazon: false,
+            isShowCard: false
         }
     },
     // mixins: [ribbon,card],
     components: {
-
+        card,
+        ribbon
     },
     computed: {
         pop_layer () {
@@ -168,7 +167,9 @@ export default {
             }
         },
         goView (e) {
-            this.inList = false
+            setTimeout(() => {
+                this.inList = false
+            }, 300)
         },
         handleBack () {
             if (this.inList) {
@@ -180,14 +181,13 @@ export default {
         }
     },
     mounted () {
+
     }
 }
 </script>
 
 <style lang="less" scoped type="text/less">
 @vw: 100/750vw;
-@vh: 100/1334vh;
-
 .page_card {
   position: relative;
   min-height: 100vh;
@@ -223,12 +223,11 @@ export default {
   background: url(../img/icon_card.jpg) no-repeat center -60 * @vw;
   background-size: 100%;
   border-radius: 16 * @vw;
-  animation: bgMove 0.2s cubic-bezier(0, 0, 0.67,-0.11) both;
+  animation: bgMove 0.2s cubic-bezier(0, 0, 0.67, -0.11) both;
   transform-origin: center;
 }
 @keyframes bgMove {
   0% {
-
   }
   100% {
     width: 100%;
@@ -257,7 +256,7 @@ export default {
   .btn_card,
   .btn_gift {
     overflow: hidden;
-    margin-top: 20*@vw;
+    margin-top: 20 * @vw;
     padding-top: 52 * @vw;
     min-width: 66 * @vw;
     background-size: 66 * @vw;
@@ -280,7 +279,8 @@ export default {
     border-radius: 30 * @vw;
     background: #363a46;
     padding: 0 25 * @vw;
-    transition-duration: 0;
+    opacity: 0;
+    animation: fadeIn 0.5s cubic-bezier(0.73,-0.2, 1, 1) both;
   }
   .btn_ticket {
     position: relative;
@@ -321,26 +321,7 @@ export default {
   //   background-size: cover;
   margin: 2 * @vw 0 0 45 * @vw;
 }
-.ticket_img {
-  position: relative;
-  width: 620 * @vw;
-  overflow: hidden;
-  margin: 146 * @vw auto 0;
-  canvas {
-    display: block;
-    width: 100%;
-  }
-  .canvas_off {
-    position: relative;
-    z-index: 2;
-  }
-  .canvas_on {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-  }
-}
+
 .balance {
   position: fixed;
   z-index: 100;
@@ -636,6 +617,17 @@ export default {
     & + .actlist {
       margin-top: 20 * @vw;
     }
+    &::after{
+        position: absolute;
+        left: -100%;
+        top: 0;
+        width: 36px;
+        height: 100%;
+        content: "";
+        background: linear-gradient(90deg,rgba(255,255,255,0) 0,rgba(255,255,255,.3) 50%,rgba(255,255,255,0));
+        transform: skewX(-20deg);
+        animation: moveLight 2s infinite;
+    }
   }
 }
 .more {
@@ -646,5 +638,25 @@ export default {
   color: #959fac;
   background: url(../img/icon_smile.png) no-repeat center bottom;
   background-size: 40 * @vw;
+}
+
+@keyframes fadeIn {
+    0%{}
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes moveLight {
+    0% {
+        left: 0
+    }
+    90%{
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+        left: 100%;
+    }
 }
 </style>
