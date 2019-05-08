@@ -96,7 +96,8 @@ import {
     calSecond,
     copy,
     cookie,
-    preloadImage
+    preloadImage,
+    viewEvent
 } from "@common/util"
 
 export default {
@@ -179,6 +180,7 @@ export default {
             }
         },
         popInviteFrient (noneTip = false) {
+            viewEvent('Promos_Referral_Friends', 'Promos_Referral_Friends', '邀请好友查看')
             if (!noneTip) {
                 this.show_pop_invite_frient = true
             }
@@ -190,12 +192,14 @@ export default {
                 })
         },
         shareCopy (code = "") {
+            viewEvent('Promos_Referral_Copy', 'Promos_Referral_Copy', '复制点击')
             if (this.invitemsg && this.invitemsg.invite_code) {
                 copy(this.invitemsg.invite_code)
             }
         },
         fb_whatsapp () {
             // 分享的内容
+            viewEvent('Promos_Referral_WhatsApp', 'Promos_Referral_WhatsApp', 'whatsApp 点击')
             if (this.invitemsg && this.invitemsg.invite_code) {
                 let cont = this._(
                     "m_share.sh_invite_copy_msg",
@@ -217,6 +221,7 @@ export default {
         },
         fb_fackbook () {
             // 分享的内容
+            viewEvent('Promos_Referral_Facebook', 'Promos_Referral_Facebook', 'facebook 点击')
             if (this.invitemsg && this.invitemsg.invite_code) {
                 let cont = this._(
                     "m_share.sh_bigTitle",
