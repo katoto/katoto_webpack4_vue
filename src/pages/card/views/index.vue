@@ -54,8 +54,8 @@
         </template>
 
         <!-- pop -->
-        <div class="pop_layer" v-if="pop_layer || 1" @click="handlePop('all',false)">
-            <ribbon></ribbon>
+        <div class="pop_layer" v-if="pop_layer" @click="handlePop('all',false)">
+            <ribbon v-if="pop_celebtity || pop_amazon"></ribbon>
         </div>
         <!-- 购买门票 -->
         <transition name="pop_animate">

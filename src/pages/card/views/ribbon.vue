@@ -8,7 +8,7 @@
 export default {
     data () {
         return {
-            n: 5,
+            n: 30,
             colors: ["#00ff6c","#ff6b2a","#7fa9ff","#febb2b"],
             width: 20,
             height: 40,
@@ -30,27 +30,38 @@ export default {
         let ribbon_context = ribbon.getContext("2d")
         let WIDTH = ribbon.width
         let HEIGHT = ribbon.height
-
+        let img = new Image()
+        img.src = "./staticImg/icon_c.png"
+        img.onload = function () {
+            init()
+        }
         class Ribbon {
             constructor (x,y) {
                 this.color = getColor()
                 this.x = x
                 this.y = y
-                this.width = that.width
-                this.height = that.height
+                this.a = 0.99
+                this.vx = ~~getRandom(10,20) * getDirection()
+                this.vy = ~~getRandom(10,20) * getDirection()
             }
-            print (index) {
-                ribbon_context.fillStyle = this.color
-                ribbon_context.rotate(Math.PI / 180 * index)
-                ribbon_context.fillRect(this.x,this.y,this.width,this.height)
+            print () {
+                ribbon_context.drawImage(img,0,0,40,41,this.x,this.y,40,41)
             }
-            move () {
+            move (index) {
                 this.print()
+                this.x += this.vx
+                this.y += this.vy
+                this.vx *= this.a
+                this.vy *= this.a
+                if (this.x > WIDTH || this.x < 0 || this.y > HEIGHT || this.y < 0) {
+                    this.x = WIDTH / 2
+                    this.y = HEIGHT / 2
+                }
             }
         }
 
         function init () {
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < that.n; i++) {
                 let ribbon = new Ribbon(WIDTH / 2,HEIGHT / 2)
                 that.ribbons.push(ribbon)
             }
@@ -58,15 +69,20 @@ export default {
         }
         function update () {
             ribbon_context.clearRect(0,0,WIDTH,HEIGHT)
-            that.ribbons.forEach((ribbon, index) => {
-                ribbon.move(index)
-            })
-            // requestAnimationFrame(update)
+            for (let i = 0;i < that.ribbons.length;i++) {
+                that.ribbons[i].move()
+            }
+            requestAnimationFrame(update)
         }
-        init()
 
+        function getDirection () {
+            let t = Math.random()
+            let direction = 0
+            t > 0.5 ? direction = 1 : direction = -1
+            return direction
+        }
         function getRandom (a, b) {
-            return Math.random() * (b - a) + a
+            return (Math.random() * (b - a) + a)
         }
         function getColor () {
             return that.colors[Math.round(Math.random() * that.colors.length)]
