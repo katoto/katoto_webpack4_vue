@@ -4,7 +4,7 @@
         <header class="card_header">
             <a class="btn_back" @click="handleBack" key="btn_back"></a>
             <template v-if="inList">
-                <a class="btn_card" key="starcard">Star Card</a>
+                <a class="btn_card" key="starcard" v-if="false">Star Card</a>
                 <a class="btn_gift" key="gift">Gift</a>
             </template>
             <template v-else>
@@ -20,7 +20,12 @@
         <template v-if="inList">
             <div class="news">
                 <ul>
-                    <li>BLO* * * to get <i class="red bold">500</i></li>
+                    <broadcast>
+                        <li>BLO* * * to get <i class="red bold">500</i></li>
+                        <li>BLO* * * to get <i class="red bold">500</i></li>
+                        <li>BLO* * * to get <i class="red bold">500</i></li>
+                        <li>BLO* * * to get <i class="red bold">500</i></li>
+                    </broadcast>
                 </ul>
             </div>
             <div class="actlists">
@@ -49,7 +54,7 @@
             <div class="ticket_bonus"></div>
             <card :class="{'on': isShowCard}"></card>
             <div class="balance">
-                <p>10.6K</p>
+                <p>{{formateBalance(gold_total)}}</p>
             </div>
         </template>
 
@@ -127,6 +132,11 @@
 <script>
 import card from "./card.vue"
 import ribbon from "./ribbon.vue"
+import {
+    formateBalance, cbetLocal
+} from "@/common/util"
+// 通用播报
+import broadcast from "@/components/broadcast"
 export default {
     data () {
         return {
@@ -146,7 +156,8 @@ export default {
     // mixins: [ribbon,card],
     components: {
         card,
-        ribbon
+        ribbon,
+        broadcast
     },
     computed: {
         pop_layer () {
@@ -156,6 +167,7 @@ export default {
     watch: {
     },
     methods: {
+        formateBalance,
         handlePop (pop,show) {
             if (pop === "all") {
                 this.pop_ticket = false
@@ -171,9 +183,21 @@ export default {
                 this.inList = false
             }, 300)
         },
+        getUserInfo () {
+            return this.$get("/simple/user/info").then(res => {
+                // 获取用户金额
+                this.gold_total = Number(res.data.gold_total)
+                this.userInfo = res.data
+                return res
+            })
+        },
         handleBack () {
             if (this.inList) {
-                // 返回客户端首页
+                // 回到客户端首页
+                cbetLocal({
+                    func: "closeWebview",
+                    params: {}
+                })
             } else {
                 // 返回列表页
                 this.inList = true
@@ -181,7 +205,7 @@ export default {
         }
     },
     mounted () {
-
+        this.getUserInfo()
     }
 }
 </script>
@@ -555,6 +579,9 @@ export default {
   background: #fff url(../img/icon_news.png) no-repeat 20 * @vw center;
   background-size: 28 * @vw;
   text-indent: 65 * @vw;
+  ul {
+    margin: 0 30px;
+  }
   .red {
     color: #e83340;
   }
@@ -618,15 +645,15 @@ export default {
       margin-top: 20 * @vw;
     }
     &::after{
-        position: absolute;
-        left: -100%;
-        top: 0;
-        width: 36px;
-        height: 100%;
-        content: "";
-        background: linear-gradient(90deg,rgba(255,255,255,0) 0,rgba(255,255,255,.3) 50%,rgba(255,255,255,0));
-        transform: skewX(-20deg);
-        animation: moveLight 2s infinite;
+      position: absolute;
+      left: -100%;
+      top: 0;
+      width: 36px;
+      height: 100%;
+      content: "";
+      background: linear-gradient(90deg,rgba(255,255,255,0) 0,rgba(255,255,255,.3) 50%,rgba(255,255,255,0));
+      transform: skewX(-20deg);
+      animation: moveLight 2s infinite;
     }
   }
 }
@@ -641,22 +668,22 @@ export default {
 }
 
 @keyframes fadeIn {
-    0%{}
-    100%{
-        opacity: 1;
-    }
+  0%{}
+  100%{
+    opacity: 1;
+  }
 }
 
 @keyframes moveLight {
-    0% {
-        left: 0
-    }
-    90%{
-        opacity: 0;
-    }
-    100% {
-        opacity: 0;
-        left: 100%;
-    }
+  0% {
+    left: 0
+  }
+  90%{
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    left: 100%;
+  }
 }
 </style>
