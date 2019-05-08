@@ -16,6 +16,24 @@ window.cbetLocalCallback = function (param) {
     }
 }
 
+//  <action> eventName是在 Google Analytics（分析）事件报告中显示为事件操作的字符串。 <category> eventCategory 是显示为事件类别的字符串。 <label> eventLabel 是显示为事件标签的字符串。
+export function viewEvent (eventName, eventCategory, eventLabel) {
+    let eventPage = function () {
+        try {
+            window.gtag("event", eventName, {
+                "event_category": eventCategory,
+                "event_label": eventLabel,
+                "value": 1
+            })
+        } catch (e) {
+            setTimeout(() => {
+                eventPage()
+            }, 5000)
+        }
+    }
+    eventPage()
+}
+
 /**
  *  相关的工具函数
  */
