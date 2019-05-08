@@ -17,19 +17,19 @@
         var isMobile = /applewebkit.*mobile.*/.test(window.navigator.userAgent.toLowerCase());
         if (isMobile) {
             if(getURLParams() && getURLParams().utm_source === 'facebook'){
-                window.location.href = './m_index.html' + window.location.search
+                window.location.href = './m_index.html' + window.location.search;
             } else {
-                window.location.href = './m_index.html'
+                window.location.href = './m_index.html';
             }
         }
         function getURLParams () {
-            var string = window.location.search
+            var string = window.location.search;
             var obj = {
-            }
+            };
             string.slice(1).split("&").map(item => {
                 if (item !== "") {
-                    var arr = item.split("=")
-                    obj[arr[0]] = decodeURIComponent(decodeURIComponent(arr[1]))
+                    var arr = item.split("=");
+                    obj[arr[0]] = decodeURIComponent(decodeURIComponent(arr[1]));
                 }
             })
             return obj
