@@ -10,7 +10,7 @@
             <template v-else>
                 <a class="btn_star" key="Star">Star Card 0</a>
             </template>
-            <a class="btn_ticket" @click="handlePop('pop_ticket',true)" key="btn_ticket">
+            <a class="btn_ticket" @click="handlePop('pop_amazon',true)" key="btn_ticket">
                 6
                 <transition name="ticketChange">
                     <i class="ticketChange" v-if="ticketChange">+1</i>
@@ -60,7 +60,7 @@
 
         <!-- pop -->
         <div class="pop_layer" v-if="pop_layer" @click="handlePop('all',false)">
-            <ribbon v-if="pop_celebtity || pop_amazon"></ribbon>
+            <ribbon v-if="pop_celebtity || pop_amazon || 1"></ribbon>
         </div>
         <!-- 购买门票 -->
         <transition name="pop_animate">
@@ -98,7 +98,6 @@
                 <p class="bold">114 coins</p>
             </div>
         </transition>
-
         <!-- 获得球星卡 -->
         <transition name="pop_animate">
             <div class="pop_celebtity"  v-if="pop_celebtity">
@@ -110,7 +109,6 @@
                 <img src="../img/img_celebtity.png" alt="">
             </div>
         </transition>
-
         <!-- 获得亚马逊卡 -->
         <transition name="pop_animate">
             <div class="pop_amazon"  v-if="pop_amazon">
@@ -124,6 +122,14 @@
                 <a class="btn btn_continue">
                     Continue
                 </a>
+            </div>
+        </transition>
+        <!-- 赠送两张门票 -->
+        <transition name="pop_animate">
+            <div class="pop_freeTicket">
+                <p></p>
+                <div class="icon">x2</div>
+                <a class="btn">OK</a>
             </div>
         </transition>
     </div>
@@ -150,7 +156,8 @@ export default {
             pop_coins: false,
             pop_celebtity: false,
             pop_amazon: false,
-            isShowCard: false
+            isShowCard: false,
+            gold_total: ""
         }
     },
     // mixins: [ribbon,card],
