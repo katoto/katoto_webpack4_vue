@@ -69,7 +69,7 @@ export default {
             }
         },
         renderGold (number, x, y) {
-            this.contextOn.font = "32px bold Helvetica"
+            this.contextOn.font = "4.3vw bold Helvetica"
             this.contextOn.textAlign = "center"
             this.contextOn.textBaseline = "middle"
             this.contextOn.fillStyle = "#48198e"

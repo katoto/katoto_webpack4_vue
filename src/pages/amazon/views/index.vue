@@ -47,13 +47,13 @@
         </div>
         <transition name="pop_animate">
             <div class="pop_topup" v-if="pop_topup">
-                <a class="btn_close"  @click="pop_topup = false"></a>
+                <a class="btn_close" @click="pop_topup = false"></a>
                 <h2 class="title">Authenticate</h2>
                 <p class="msg">Please recharge for verification Get the same number of tokens</p>
                 <div class="count">
                     79,000
                 </div>
-                <a class="btn">卢比79 Charge verification</a>
+                <a class="btn" @click="gotoshop">卢比79 Charge verification</a>
                 <p class="tips">After successful recharge display card</p>
             </div>
         </transition>
@@ -61,7 +61,9 @@
 </template>
 
 <script>
-import { copy } from "@common/util"
+import {
+    copy, cbetLocal
+} from "@common/util"
 export default {
     data () {
         return {
@@ -73,14 +75,15 @@ export default {
                     id: 1,
                     key: "283847297384948",
                     val: "2379472047583xx373"
+                },
+                {
+                    id: 1,
+                    key: "283847297384948",
+                    val: "2379472047583xx373"
                 }
             ]
         }
     },
-    components: {
-
-    },
-    computed: {},
     methods: {
         href (href) {
             location.href = href
@@ -90,9 +93,16 @@ export default {
         },
         handleCopy (e) {
             copy(e)
+        },
+        gotoshop () {
+            cbetLocal({
+                func: "jumpToLocal",
+                params: {
+                    content: "jp://ShopScene"
+                }
+            })
         }
-    },
-    mounted () {}
+    }
 }
 </script>
 

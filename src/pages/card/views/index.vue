@@ -113,7 +113,7 @@
                 <p class="title">
                     {{_('m_card.congratulations')}}
                 </p>
-                <img src="../img/icon_amazon.png" alt="">
+                <img src="../img/img_amazon.png" alt="">
                 <a class="btn btn_get" @click="href('/amazon.html')">
                     Get Now
                 </a>
@@ -200,7 +200,12 @@ export default {
         getUserInfo () {
             return this.$get("/scratch/detail").then(res => {
                 // 获取用户金额
-                this.userInfo = res.data
+                this.userInfo = {
+                    ...res.data
+                }
+                if (this.userInfo.is_first) {
+                    this.pop_freeTicket = true
+                }
                 return res
             })
         },
@@ -227,7 +232,7 @@ export default {
             })
         },
         showAdVideoCallback () {
-            alert("video success")
+            // todo 需增加一个看完广告 得到奖励的告知
             this.getUserInfo()
         },
         getPrize (card) {
@@ -589,7 +594,7 @@ export default {
   color: #febb2b;
   font-weight: bold;
   img {
-    width: 502 * @vw;
+    width: 394 * @vw;
   }
   .btn {
     width: 426 * @vw;
