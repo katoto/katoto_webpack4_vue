@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === "production") {
     // BASEURL = "https://prewww.madcrickets.com"
 }
 export const URL = BASEURL
-// BASEURL = `${BASEURL}/api`
+BASEURL = `${BASEURL}/api`
 
 MyPlugin.install = function (Vue, config = {
     commonParams: {

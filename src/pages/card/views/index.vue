@@ -1,17 +1,17 @@
 <template>
-    <div class="page_card" :class="[inList?'lists':'card']">
+    <div class="page_card" :class="[inList?'lists':'card']" @click="closeAnimation">
         <div class="bg_card" v-show="!inList" ref="bg_card"></div>
         <header class="card_header">
             <a class="btn_back" @click="handleBack" key="btn_back"></a>
             <template v-if="inList">
-                <a class="btn_card" key="starcard" v-if="false">Star Card</a>
-                <a class="btn_gift" key="gift">Gift</a>
+                <a class="btn_card" key="starcard" style="opacity: 0;">Star Card</a>
+                <a class="btn_gift" key="gift" @click="href('/amazon.html')">Gift</a>
             </template>
             <template v-else>
                 <a class="btn_star" key="Star">Star Card 0</a>
             </template>
             <a class="btn_ticket" @click="handlePop('pop_ticket',true)" key="btn_ticket">
-                6
+                {{userInfo.total_card || 0}}
                 <transition name="ticketChange">
                     <i class="ticketChange" v-if="ticketChange">+1</i>
                 </transition>
@@ -52,22 +52,22 @@
         <template v-else>
             <div class="ticket_title"></div>
             <div class="ticket_bonus"></div>
-            <card :class="{'on': isShowCard}"></card>
+            <card :class="{'on': isShowCard}" @getPrize="getPrize" @refreshInfo="getUserInfo"></card>
             <div class="balance">
-                <p>{{formateBalance(gold_total)}}</p>
+                <p>{{formateBalance(userInfo.total_gold || 0)}}</p>
             </div>
         </template>
 
         <!-- pop -->
         <div class="pop_layer" v-if="pop_layer" @click="handlePop('all',false)">
-            <ribbon v-if="pop_celebtity || pop_amazon || 1"></ribbon>
+            <ribbon v-if="pop_celebtity || pop_amazon"></ribbon>
         </div>
         <!-- 购买门票 -->
         <transition name="pop_animate">
             <div class="pop_ticket" v-if="pop_ticket">
                 <div class="pop_ticket_header">
-                    <p class="myticket">0</p>
-                    <p class="mycoins">5,700</p>
+                    <p class="myticket">{{userInfo.total_card || 0}}</p>
+                    <p class="mycoins">{{formateBalance(userInfo.total_gold || 0)}}</p>
                 </div>
                 <a class="btn_close" @click="handlePop('pop_ticket', false)"></a>
                 <p class="title">Get scratch</p>
@@ -95,7 +95,7 @@
         <transition name="pop_animate">
             <div class="pop_coins" v-if="pop_coins">
                 <p>Congratulations!</p>
-                <p class="bold">114 coins</p>
+                <p class="bold">{{golds_amount}} coins</p>
             </div>
         </transition>
         <!-- 获得球星卡 -->
@@ -115,7 +115,7 @@
                 <p class="title">
                     Congratulations!
                 </p>
-                <img src="../img/img_celebtity.png" alt="">
+                <img src="../img/icon_amazon.png" alt="">
                 <a class="btn btn_get">
                     Get Now
                 </a>
@@ -126,9 +126,13 @@
         </transition>
         <!-- 赠送两张门票 -->
         <transition name="pop_animate">
-            <div class="pop_freeTicket">
-                <p></p>
-                <div class="icon">x2</div>
+            <div class="pop_freeTicket" v-if="pop_freeTicket">
+                <p>For The First Time</p>
+                <p>Tickets For Free Giving</p>
+                <div class="icon">
+                    <p class="p1">x</p>
+                    <p class="p2">2</p>
+                </div>
                 <a class="btn">OK</a>
             </div>
         </transition>
@@ -144,6 +148,7 @@ import {
 } from "@/common/util"
 // 通用播报
 import broadcast from "@/components/broadcast"
+import { setTimeout } from "timers"
 export default {
     data () {
         return {
@@ -157,8 +162,10 @@ export default {
             pop_coins: false,
             pop_celebtity: false,
             pop_amazon: false,
+            pop_freeTicket: false,
             isShowCard: false,
-            gold_total: 0
+            golds_amount: 0,
+            userInfo: {}
         }
     },
     // mixins: [ribbon,card],
@@ -169,19 +176,28 @@ export default {
     },
     computed: {
         pop_layer () {
-            return this.pop_ticket || this.pop_coins || this.pop_celebtity || this.pop_amazon
+            return this.pop_ticket || this.pop_coins || this.pop_celebtity || this.pop_amazon || this.pop_freeTicket
         }
-    },
-    watch: {
     },
     methods: {
         formateBalance,
+        closeAnimation () {
+            this.pop_ticket = false
+            this.pop_coins = false
+            this.pop_celebtity = false
+            this.pop_amazon = false
+            this.pop_freeTicket = false
+        },
+        href (href) {
+            location.href = href
+        },
         handlePop (pop,show) {
             if (pop === "all") {
                 this.pop_ticket = false
                 this.pop_coins = false
                 this.pop_celebtity = false
                 this.pop_amazon = false
+                this.pop_freeTicket = false
             } else {
                 this[pop] = show
             }
@@ -192,9 +208,8 @@ export default {
             }, 300)
         },
         getUserInfo () {
-            return this.$get("/simple/user/info").then(res => {
+            return this.$get("/scratch/detail").then(res => {
                 // 获取用户金额
-                this.gold_total = Number(res.data.gold_total)
                 this.userInfo = res.data
                 return res
             })
@@ -224,11 +239,24 @@ export default {
         showAdVideoCallback () {
             alert("video success")
             this.getUserInfo()
+        },
+        getPrize (card) {
+            if (card.card_result === "H") {
+                // 获得亚马逊卡
+                this.pop_amazon = true
+            } else {
+                // 获得金币
+                this.pop_coins = true
+                this.golds_amount = card.golds_amount
+            }
         }
     },
     mounted () {
         this.getUserInfo()
         event.$on("showAdVideoCallback", this.showAdVideoCallback)
+        setTimeout(() => {
+            this.pop_amazon = true
+        }, 200)
     }
 }
 </script>
@@ -308,6 +336,7 @@ export default {
     min-width: 66 * @vw;
     background-size: 66 * @vw;
     background-repeat: no-repeat;
+    transition-duration: 0ms;
   }
   .btn_card {
     margin-left: 155 * @vw;
@@ -320,14 +349,28 @@ export default {
     background-position: center top;
   }
   .btn_star {
+    position: relative;
     margin-left: auto;
     height: 60 * @vw;
     line-height: 60 * @vw;
+    overflow: hidden;
     border-radius: 30 * @vw;
     background: #363a46;
     padding: 0 25 * @vw;
     opacity: 0;
     animation: fadeIn 0.5s cubic-bezier(0.73,-0.2, 1, 1) both;
+    &::after{
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: -50%;
+      width: 100%;
+      height: 100%;
+      border-radius: 30*@vw;
+      background: #4c5160;
+      z-index: -1;
+    }
   }
   .btn_ticket {
     position: relative;
@@ -404,6 +447,17 @@ export default {
   }
 }
 
+.pop_layer {
+  position: fixed;
+  canvas {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    transform: translate(0, -50%);
+  }
+}
 .pop_coins {
   position: absolute;
   top: 50%;
@@ -418,7 +472,6 @@ export default {
     margin-top: 40 * @vw;
   }
 }
-
 .pop_ticket {
   position: absolute;
   z-index: 99;
@@ -521,7 +574,6 @@ export default {
     }
   }
 }
-
 .pop_celebtity {
   position: absolute;
   z-index: 99;
@@ -575,16 +627,49 @@ export default {
     }
   }
 }
-
-.pop_layer {
-  position: fixed;
-  canvas {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    transform: translate(0, -50%);
+.pop_freeTicket{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  min-width: 80%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  line-height: 60*@vw;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 48*@vw;
+  color: #fff;
+  font-weight: bold;
+  .icon{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    margin: 75*@vw 0 66*@vw 0;
+    &::before{
+      content: '';
+      display: block;
+      width: 125*@vw;
+      height: 129*@vw;
+      background: url(../img/icon_ticket.png) no-repeat center;
+      background-size: 125*@vw;
+    }
+    .p1{
+      font-size: 64*@vw;
+      margin: 0 20*@vw 0 10*@vw;
+    }
+    .p2{
+      font-size: 96*@vw;
+    }
+  }
+  .btn{
+    width:426*@vw;
+    height:88*@vw;
+    overflow: hidden;
+    margin: 0 auto;
+    line-height: 76*@vw;
+    border:6*@vw solid #fff;
+    border-radius:44*@vw;
   }
 }
 

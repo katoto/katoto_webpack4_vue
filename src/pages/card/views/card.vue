@@ -1,5 +1,5 @@
 <template>
-    <div class="ticket_img" id="ticket_img" ref="ticket_img">
+    <div class="ticket_img" id="ticket_img" ref="ticket_img" v-if="isloading">
         <canvas id="canvas_off" ref="off" class="canvas_off" width="620" height="620"></canvas>
         <canvas id="canvas_on" ref="on" class="canvas_on" width="620" height="620"></canvas>
     </div>
@@ -15,7 +15,8 @@ export default {
         return {
             card: null,
             isClear: false,
-            timer: null
+            timer: null,
+            isloading: false
         }
     },
     methods: {
@@ -59,7 +60,7 @@ export default {
                         this.contextOn.drawImage(this.imgon, xmod * 210, ymod * 210, 200, 200, xcanvasmod * 210, ycanvasmod * 210, 200 , 200)
                     }
                 })
-                this.renderGold(this.card.golds_amount, goldIndex % 3 * 210 + 30, Math.floor(goldIndex / 3) * 210 + 140)
+                this.renderGold(this.card.golds_amount, goldIndex % 3 * 210 + 95, Math.floor(goldIndex / 3) * 210 + 152)
             } else {
                 this.$toast({
                     content: _("networkError")
@@ -67,9 +68,7 @@ export default {
             }
         },
         renderGold (number, x, y) {
-            console.log(32 * this.scale)
-            this.contextOff.clearRect(0, 0, 620, 620)
-            this.contextOn.font = `${(32 * this.scale).toFixed(2)}px`
+            this.contextOn.font = "32px bold Helvetica"
             this.contextOn.textAlign = "center"
             this.contextOn.textBaseline = "middle"
             this.contextOn.fillStyle = "#48198e"
@@ -88,16 +87,21 @@ export default {
             this.canvasOff.addEventListener(tapmove, this.touchMoveHandler)
         },
         touchStartHandler (event) {
+            event.preventDefault()
+            if (this.isClear || this.card === null) {
+                return
+            }
             event = event || window.event
             let touch = hastouch ? event.changedTouches[0] : event
             this.contextOff.beginPath()
             this.contextOff.arc((touch.pageX - this.offsetLeft) * this.scale, (touch.pageY - this.offsetTop) * this.scale, 40, 0, 2 * Math.PI, false)
             this.contextOff.fill()
             this.currentTouch = touch
-            event.preventDefault()
+
         },
         touchMoveHandler (event) {
-            if (this.isClear) {
+            event.preventDefault()
+            if (this.isClear || this.card === null) {
                 return
             }
             event = event || window.event
@@ -109,7 +113,6 @@ export default {
             this.contextOff.stroke()
             this.currentTouch = touch
             this.getClearArea()
-            event.preventDefault()
         },
         getClearArea () {
             if (this.timer) {
@@ -122,16 +125,15 @@ export default {
                 if (area >= 0.8) {
                     this.contextOff.clearRect(0, 0, 620, 620)
                     this.isClear = true
+                    // 上报刮刮卡后调用 refreshInfo 刷新金币数量
+                    this.$emit("getPrize", {
+                        ...this.card
+                    })
                 }
             }, 300)
         },
         init () {
-            this.isClear = false
-            this.timer = null
-            this.canvasOff = this.$refs.off
-            this.contextOff = this.canvasOff.getContext("2d")
-            this.canvasOn = this.$refs.on
-            this.contextOn = this.canvasOn.getContext("2d")
+            this.isloading = false
             let imgDataPromise = this.getImgData([
                 "./staticImg/all_off.png",
                 "./staticImg/all.png"
@@ -147,7 +149,16 @@ export default {
                 imgDataPromise
             ])
                 .then(data => {
-                    this.renderAll()
+                    this.isloading = true
+                    this.$nextTick(() => {
+                        this.isClear = false
+                        this.timer = null
+                        this.canvasOff = this.$refs.off
+                        this.contextOff = this.canvasOff.getContext("2d")
+                        this.canvasOn = this.$refs.on
+                        this.contextOn = this.canvasOn.getContext("2d")
+                        this.renderAll()
+                    })
                 })
         }
     },
