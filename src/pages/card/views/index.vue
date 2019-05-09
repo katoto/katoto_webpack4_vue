@@ -147,7 +147,7 @@ export default {
     data () {
         return {
             /* 在列表页？ */
-            inList: false,
+            inList: true,
             /* 图片位置 */
             location: {},
             /* 修改头部门票数量 */
