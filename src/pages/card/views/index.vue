@@ -115,7 +115,7 @@
                 <p class="title">
                     Congratulations!
                 </p>
-                <img src="../img/icon_amazon.png" alt="">
+                <img src="../img/img_amazon.png" alt="">
                 <a class="btn btn_get">
                     Get Now
                 </a>
@@ -602,7 +602,7 @@ export default {
   color: #febb2b;
   font-weight: bold;
   img {
-    width: 502 * @vw;
+    width: 394 * @vw;
   }
   .btn {
     width: 426 * @vw;
