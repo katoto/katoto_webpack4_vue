@@ -1,14 +1,14 @@
 <template>
-    <div class="page_card" :class="[inList?'lists':'card']" @click="closeAnimation">
+    <div class="page_card" :class="[inList?'lists':'card']">
         <div class="bg_card" v-show="!inList" ref="bg_card"></div>
         <header class="card_header">
             <a class="btn_back" @click="handleBack" key="btn_back"></a>
             <template v-if="inList">
-                <a class="btn_card" key="starcard" style="opacity: 0;">Star Card</a>
-                <a class="btn_gift" key="gift" @click="href('/amazon.html')">Gift</a>
+                <a class="btn_card" key="starcard" v-hidden="true">Star Card</a>
+                <a class="btn_gift" key="gift" @click="href('/amazon.html')">{{_('m_card.prize')}}</a>
             </template>
             <template v-else>
-                <a class="btn_star" key="Star">Star Card 0</a>
+                <a class="btn_star" key="Star" v-hidden="true">Star Card 0</a>
             </template>
             <a class="btn_ticket" @click="handlePop('pop_ticket',true)" key="btn_ticket">
                 {{userInfo.total_card || 0}}
@@ -21,22 +21,20 @@
             <div class="news">
                 <ul>
                     <broadcast>
-                        <li>BLO* * * to get <i class="red bold">500</i></li>
-                        <li>BLO* * * to get <i class="red bold">500</i></li>
-                        <li>BLO* * * to get <i class="red bold">500</i></li>
-                        <li>BLO* * * to get <i class="red bold">500</i></li>
+                        <li v-html="_('m_card.broadcast1', 'richole', formateBalance('100000'))"></li>
+                        <li v-html="_('m_card.broadcast1', 'yu', formateBalance('10000'))"></li>
                     </broadcast>
                 </ul>
             </div>
             <div class="actlists">
                 <div class="act">
-                    <p>Fortune Scratch</p>
-                    <a class="btn_question"></a>
+                    <p>{{_('m_card.title')}}</p>
+                    <a class="btn_question hide"></a>
                 </div>
                 <ul>
                     <li class="actlist regular" @click="goView">
                         <div class="bg"></div>
-                        <p class="actlist_view">Giving Cricket Star Card</p>
+                        <p class="actlist_view hide">Giving Cricket Star Card</p>
                     </li>
                 </ul>
             </div>
@@ -59,7 +57,7 @@
         </template>
 
         <!-- pop -->
-        <div class="pop_layer" v-if="pop_layer" @click="handlePop('all',false)">
+        <div class="pop_layer" v-if="pop_layer" @click="handlePop('all', false)">
             <ribbon v-if="pop_celebtity || pop_amazon"></ribbon>
         </div>
         <!-- 购买门票 -->
@@ -70,31 +68,31 @@
                     <p class="mycoins">{{formateBalance(userInfo.total_gold || 0)}}</p>
                 </div>
                 <a class="btn_close" @click="handlePop('pop_ticket', false)"></a>
-                <p class="title">Get scratch</p>
+                <p class="title">{{_('m_card.getcard')}}</p>
                 <ul class="list">
                     <li>
                         <div class="ticket_count">x1</div>
-                        <p class="ticket_msg" @click="goAD">Get scratch</p>
+                        <p class="ticket_msg" @click="goAD">{{_('m_card.watch')}}</p>
+                    </li>
+                    <li>
+                        <div class="ticket_count">x10</div>
+                        <p class="ticket_msg">{{_('m_card.inviting')}}</p>
                     </li>
                     <li>
                         <div class="ticket_count">x1</div>
-                        <p class="ticket_msg">Invite friends</p>
+                        <p class="ticket_msg">{{_('m_card.spending500')}}</p>
                     </li>
                     <li>
-                        <div class="ticket_count">x1</div>
-                        <p class="ticket_msg">500 coin buy</p>
-                    </li>
-                    <li>
-                        <div class="ticket_count">x1</div>
-                        <p class="ticket_msg">5000 coin buy</p>
+                        <div class="ticket_count">x10</div>
+                        <p class="ticket_msg">{{_('m_card.spending5000')}}</p>
                     </li>
                 </ul>
             </div>
         </transition>
         <!-- 获得金币 -->
         <transition name="pop_animate">
-            <div class="pop_coins" v-if="pop_coins">
-                <p>Congratulations!</p>
+            <div class="pop_coins" v-if="pop_coins" @click="handlePop('all', false)">
+                <p>{{_('m_card.congratulations')}}</p>
                 <p class="bold">{{golds_amount}} coins</p>
             </div>
         </transition>
@@ -113,13 +111,13 @@
         <transition name="pop_animate">
             <div class="pop_amazon"  v-if="pop_amazon">
                 <p class="title">
-                    Congratulations!
+                    {{_('m_card.congratulations')}}
                 </p>
                 <img src="../img/icon_amazon.png" alt="">
-                <a class="btn btn_get">
+                <a class="btn btn_get" @click="href('/amazon.html')">
                     Get Now
                 </a>
-                <a class="btn btn_continue">
+                <a class="btn btn_continue" @click="handlePop('all', false)">
                     Continue
                 </a>
             </div>
@@ -127,13 +125,13 @@
         <!-- 赠送两张门票 -->
         <transition name="pop_animate">
             <div class="pop_freeTicket" v-if="pop_freeTicket">
-                <p>For The First Time</p>
-                <p>Tickets For Free Giving</p>
+                <p>{{_('m_card.welcome')}}</p>
+                <p>{{_('m_card.getCardSuccess')}}</p>
                 <div class="icon">
                     <p class="p1">x</p>
                     <p class="p2">2</p>
                 </div>
-                <a class="btn">OK</a>
+                <a class="btn" @click="handlePop('all', false)">OK</a>
             </div>
         </transition>
     </div>
@@ -148,7 +146,6 @@ import {
 } from "@/common/util"
 // 通用播报
 import broadcast from "@/components/broadcast"
-import { setTimeout } from "timers"
 export default {
     data () {
         return {
@@ -181,17 +178,10 @@ export default {
     },
     methods: {
         formateBalance,
-        closeAnimation () {
-            this.pop_ticket = false
-            this.pop_coins = false
-            this.pop_celebtity = false
-            this.pop_amazon = false
-            this.pop_freeTicket = false
-        },
         href (href) {
             location.href = href
         },
-        handlePop (pop,show) {
+        handlePop (pop, show) {
             if (pop === "all") {
                 this.pop_ticket = false
                 this.pop_coins = false
@@ -247,16 +237,13 @@ export default {
             } else {
                 // 获得金币
                 this.pop_coins = true
-                this.golds_amount = card.golds_amount
+                this.golds_amount = formateBalance(card.golds_amount)
             }
         }
     },
     mounted () {
         this.getUserInfo()
         event.$on("showAdVideoCallback", this.showAdVideoCallback)
-        setTimeout(() => {
-            this.pop_amazon = true
-        }, 200)
     }
 }
 </script>
@@ -569,7 +556,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 44 * @vw;
+      font-size: 35 * @vw;
       background: #ec4e00;
     }
   }
@@ -690,7 +677,7 @@ export default {
   ul {
     margin: 0 30px;
   }
-  .red {
+  /deep/ .red {
     color: #e83340;
   }
 }
