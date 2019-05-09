@@ -10,7 +10,7 @@
             <template v-else>
                 <a class="btn_star" key="Star">Star Card 0</a>
             </template>
-            <a class="btn_ticket" @click="handlePop('pop_amazon',true)" key="btn_ticket">
+            <a class="btn_ticket" @click="handlePop('pop_ticket',true)" key="btn_ticket">
                 6
                 <transition name="ticketChange">
                     <i class="ticketChange" v-if="ticketChange">+1</i>
@@ -74,7 +74,7 @@
                 <ul class="list">
                     <li>
                         <div class="ticket_count">x1</div>
-                        <p class="ticket_msg">Get scratch</p>
+                        <p class="ticket_msg" @click="goAD">Get scratch</p>
                     </li>
                     <li>
                         <div class="ticket_count">x1</div>
@@ -136,6 +136,7 @@
 </template>
 
 <script>
+import event from "@/common/event"
 import card from "./card.vue"
 import ribbon from "./ribbon.vue"
 import {
@@ -209,10 +210,25 @@ export default {
                 // 返回列表页
                 this.inList = true
             }
+        },
+        goAD () {
+            // 观看广告
+            cbetLocal({
+                func: "jumpToLocal",
+                params: {
+                    content: "jp://showAdVideo?type=3",
+                    hold: "1"
+                }
+            })
+        },
+        showAdVideoCallback () {
+            alert("video success")
+            this.getUserInfo()
         }
     },
     mounted () {
         this.getUserInfo()
+        event.$on("showAdVideoCallback", this.showAdVideoCallback)
     }
 }
 </script>

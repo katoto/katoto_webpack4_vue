@@ -6,18 +6,18 @@ import "./components/theme-chalk/index.css"
 import Alert from "./components/alert"
 import Toast from "@/components/toast/toast.js"
 import {
-    cookie
+    cookie, copy
 } from "@/common/util"
+require("@/styles/lib-reset.css")
+require("@/styles/lib-public.less")
 Vue.prototype.$toast = Toast
 window.$toast = Toast
 Vue.use(Alert)
-Vue.use(simpleAjax)
-
+cookie.set("appck", "MTAwNTQzOWM3YWIwN2UyOTJhMjZiZmIyZWVjOTc1NmIzMGJmZg==")
 let cookies = cookie.getAll()
 cookies.ck = cookies.appck
 // 初始化与公共样式
-require("@/styles/lib-reset.css")
-require("@/styles/lib-public.less")
+copy(cookies.ck)
 Vue.use(simpleAjax, {
     commonParams: {
         platform: "android",

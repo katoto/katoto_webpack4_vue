@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === "production") {
     BASEURL = window.location.protocol + "//www.madcrickets.com"
 } else if (process.env.NODE_ENV === "preRelease") {
     BASEURL = window.location.protocol + "//prewww.madcrickets.com"
+    BASEURL = "http://10.0.0.175:8001"
 } else if (process.env.NODE_ENV === "development") {
     // BASEURL = "http://10.0.1.41:8001"
     // BASEURL = "http://10.0.0.171:8001"
