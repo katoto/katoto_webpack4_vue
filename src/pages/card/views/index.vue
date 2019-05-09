@@ -60,7 +60,7 @@
 
         <!-- pop -->
         <div class="pop_layer" v-if="pop_layer" @click="handlePop('all',false)">
-            <ribbon v-if="pop_celebtity || pop_amazon || 1"></ribbon>
+            <ribbon v-if="pop_celebtity || pop_amazon"></ribbon>
         </div>
         <!-- 购买门票 -->
         <transition name="pop_animate">
@@ -126,9 +126,13 @@
         </transition>
         <!-- 赠送两张门票 -->
         <transition name="pop_animate">
-            <div class="pop_freeTicket">
-                <p></p>
-                <div class="icon">x2</div>
+            <div class="pop_freeTicket" v-if="pop_freeTicket">
+                <p>For The First Time</p>
+                <p>Tickets For Free Giving</p>
+                <div class="icon">
+                    <p class="p1">x</p>
+                    <p class="p2">2</p>
+                </div>
                 <a class="btn">OK</a>
             </div>
         </transition>
@@ -156,6 +160,7 @@ export default {
             pop_coins: false,
             pop_celebtity: false,
             pop_amazon: false,
+            pop_freeTicket: false,
             isShowCard: false,
             gold_total: ""
         }
@@ -168,7 +173,7 @@ export default {
     },
     computed: {
         pop_layer () {
-            return this.pop_ticket || this.pop_coins || this.pop_celebtity || this.pop_amazon
+            return this.pop_ticket || this.pop_coins || this.pop_celebtity || this.pop_amazon || this.pop_freeTicket
         }
     },
     watch: {
@@ -181,6 +186,7 @@ export default {
                 this.pop_coins = false
                 this.pop_celebtity = false
                 this.pop_amazon = false
+                this.pop_freeTicket = false
             } else {
                 this[pop] = show
             }
@@ -304,14 +310,28 @@ export default {
     background-position: center top;
   }
   .btn_star {
+      position: relative;
     margin-left: auto;
     height: 60 * @vw;
     line-height: 60 * @vw;
+    overflow: hidden;
     border-radius: 30 * @vw;
     background: #363a46;
     padding: 0 25 * @vw;
     opacity: 0;
     animation: fadeIn 0.5s cubic-bezier(0.73,-0.2, 1, 1) both;
+    &::after{
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: -50%;
+        width: 100%;
+        height: 100%;
+        border-radius: 30*@vw;
+        background: #4c5160;
+        z-index: -1;
+    }
   }
   .btn_ticket {
     position: relative;
@@ -388,6 +408,17 @@ export default {
   }
 }
 
+.pop_layer {
+  position: fixed;
+  canvas {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    transform: translate(0, -50%);
+  }
+}
 .pop_coins {
   position: absolute;
   top: 50%;
@@ -402,7 +433,6 @@ export default {
     margin-top: 40 * @vw;
   }
 }
-
 .pop_ticket {
   position: absolute;
   z-index: 99;
@@ -505,7 +535,6 @@ export default {
     }
   }
 }
-
 .pop_celebtity {
   position: absolute;
   z-index: 99;
@@ -559,17 +588,50 @@ export default {
     }
   }
 }
-
-.pop_layer {
-  position: fixed;
-  canvas {
+.pop_freeTicket{
     position: absolute;
-    z-index: 1;
-    left: 0;
+    left: 50%;
     top: 50%;
-    width: 100%;
-    transform: translate(0, -50%);
-  }
+    min-width: 80%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    line-height: 60*@vw;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 48*@vw;
+    color: #fff;
+    font-weight: bold;
+    .icon{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        margin: 75*@vw 0 66*@vw 0;
+        &::before{
+            content: '';
+            display: block;
+            width: 125*@vw;
+            height: 129*@vw;
+            background: url(../img/icon_ticket.png) no-repeat center;
+            background-size: 125*@vw;
+        }
+        .p1{
+            font-size: 64*@vw;
+            margin: 0 20*@vw 0 10*@vw;
+        }
+        .p2{
+            font-size: 96*@vw;
+        }
+    }
+    .btn{
+        width:426*@vw;
+        height:88*@vw;
+        overflow: hidden;
+        margin: 0 auto;
+        line-height: 76*@vw;
+        border:6*@vw solid #fff;
+        border-radius:44*@vw;
+    }
 }
 
 /* lists */
