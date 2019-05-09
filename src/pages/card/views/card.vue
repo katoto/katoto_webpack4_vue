@@ -164,9 +164,11 @@ export default {
         }
     },
     beforeDestroy () {
-        this.canvasOff.removeEventListener(tapstart, this.touchStartHandler)
-        this.canvasOff.removeEventListener(tapmove, this.touchMoveHandler)
-        this.canvasOff.removeEventListener(tapend, this.touchEndHandler)
+        if (this.canvasOff) {
+            this.canvasOff.removeEventListener(tapstart, this.touchStartHandler)
+            this.canvasOff.removeEventListener(tapmove, this.touchMoveHandler)
+            this.canvasOff.removeEventListener(tapend, this.touchEndHandler)
+        }
     },
     mounted () {
         this.init()
