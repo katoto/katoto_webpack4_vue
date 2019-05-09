@@ -4,13 +4,13 @@
         <header class="card_header">
             <a class="btn_back" @click="handleBack" key="btn_back"></a>
             <template v-if="inList">
-                <a class="btn_card" key="starcard" v-if="false">Star Card</a>
-                <a class="btn_gift" key="gift">Gift</a>
+                <a class="btn_card" key="starcard" style="opacity: 0;">Star Card</a>
+                <a class="btn_gift" key="gift" @click="href('/amazon.html')">Gift</a>
             </template>
             <template v-else>
                 <a class="btn_star" key="Star">Star Card 0</a>
             </template>
-            <a class="btn_ticket" @click="handlePop('pop_amazon',true)" key="btn_ticket">
+            <a class="btn_ticket" @click="handlePop('pop_ticket',true)" key="btn_ticket">
                 6
                 <transition name="ticketChange">
                     <i class="ticketChange" v-if="ticketChange">+1</i>
@@ -151,7 +151,7 @@ export default {
     data () {
         return {
             /* 在列表页？ */
-            inList: false,
+            inList: true,
             /* 图片位置 */
             location: {},
             /* 修改头部门票数量 */
@@ -162,7 +162,7 @@ export default {
             pop_amazon: false,
             pop_freeTicket: false,
             isShowCard: false,
-            gold_total: ""
+            gold_total: 0
         }
     },
     // mixins: [ribbon,card],
@@ -180,6 +180,9 @@ export default {
     },
     methods: {
         formateBalance,
+        href (href) {
+            location.href = href
+        },
         handlePop (pop,show) {
             if (pop === "all") {
                 this.pop_ticket = false
@@ -298,6 +301,7 @@ export default {
     min-width: 66 * @vw;
     background-size: 66 * @vw;
     background-repeat: no-repeat;
+    transition-duration: 0ms;
   }
   .btn_card {
     margin-left: 155 * @vw;

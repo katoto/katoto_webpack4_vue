@@ -48,6 +48,7 @@ export default {
 </script>
 
 <style lang="less" scoped type="text/less">
+@vw: 100/750vw;
 //toast
 .toast {
   display: flex;
@@ -69,8 +70,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 673/75rem;
-    height: 132/75rem;
+    width: 673*@vw;
+    height: 132*@vw;
     overflow: hidden;
     // background: url(../../assets/img/toast.png) no-repeat center;
     background: rgba(0, 0, 0, 0.5);
@@ -78,11 +79,11 @@ export default {
     background-size: cover;
     text-align: center;
     line-height: 1.2;
-    font-size: 30/75rem;
+    font-size: 30*@vw;
     color: #ffffff;
   }
   span + span {
-    margin-top: 10/75rem;
+    margin-top: 10*@vw;
   }
 }
 .toast-enter-active,

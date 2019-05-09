@@ -13,12 +13,13 @@ if (process.env.NODE_ENV === "production") {
     // BASEURL = "http://10.0.0.171:8001"
     // BASEURL = "http://149.129.138.180"
     BASEURL = "http://147.139.3.102"
+    BASEURL = "http://10.0.0.175:8001"
     // BASEURL = "https://prewww.madcrickets.com"
 }
 export const URL = BASEURL
-BASEURL = `${BASEURL}/api`
+// BASEURL = `${BASEURL}/api`
 
-MyPlugin.install = function (Vue, config={
+MyPlugin.install = function (Vue, config = {
     commonParams: {
     }
 }) {
@@ -47,7 +48,7 @@ MyPlugin.install = function (Vue, config={
     window.$http = function (options) {
         let createXHR = function () {
             let xhr
-            window.XMLHttpRequest ? xhr=new XMLHttpRequest() : xhr=new ActiveXObject("Microsoft.XMLHTTP")
+            window.XMLHttpRequest ? xhr = new XMLHttpRequest() : xhr = new ActiveXObject("Microsoft.XMLHTTP")
             return xhr
         }
         return new Promise((resolve, reject) => {
