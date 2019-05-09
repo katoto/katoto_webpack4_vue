@@ -157,7 +157,7 @@ export default {
             pop_celebtity: false,
             pop_amazon: false,
             isShowCard: false,
-            gold_total: ""
+            gold_total: 0
         }
     },
     // mixins: [ribbon,card],
