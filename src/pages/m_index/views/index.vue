@@ -69,9 +69,9 @@ export default {
             if (isIOS) {
                 // 待修改
                 this.contHref = "https://itunes.apple.com/app/id1453136833"
-            }else{
-                if(getURLParams() && getURLParams().utm_source === 'facebook'){
-                    this.contHref = '//www.madcrickets.com/msapk/cbet_release_v1.2.7_fbsns.apk'
+            } else {
+                if (getURLParams() && getURLParams().utm_source === "facebook") {
+                    this.contHref = "//www.madcrickets.com/msapk/cbet_release_v1.2.7_fbsns.apk"
                 }
             }
         })

@@ -63,7 +63,7 @@ export default {
             window.FB.getLoginStatus( (response) => {
                 console.log(response)
                 console.log("===response=======")
-                if(response.status){
+                if (response.status) {
                     if (response.status !== "connected") {
                         window.FB.login()
                     } else {
@@ -77,10 +77,10 @@ export default {
                 // unknown — 用户未登录 Facebook，所以不知道其是否已登录您的应用，或者 FB.logout() 在之前已被调用，因此无法连接至 Facebook。
             })
         },
-        startPage({accessToken}){
-            let data = this.$post('/login/cpuser',{
+        startPage ({ accessToken }) {
+            let data = this.$post("/login/cpuser",{
                 token: accessToken,
-                idfa: ''
+                idfa: ""
             })
             console.log(data)
         }
@@ -97,7 +97,7 @@ export default {
         this.$nextTick(() => {
             console.log(window.FB)
         })
-        new Error('123')
+        new Error("123")
         console.log(window.FB)
     }
 }

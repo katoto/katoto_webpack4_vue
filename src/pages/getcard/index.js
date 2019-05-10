@@ -6,7 +6,9 @@ import simpleAjax from "@plugins/simpleAjax"
 
 import Toast from "@/components/toast/toast.js"
 
-import { cookie,getURLParams } from "@common/util"
+import {
+    cookie,getURLParams 
+} from "@common/util"
 
 Vue.prototype.$toast = Toast
 window.$toast = Toast
