@@ -166,7 +166,6 @@ export default {
             userInfo: {}
         }
     },
-    // mixins: [ribbon,card],
     components: {
         card,
         ribbon,
@@ -787,6 +786,7 @@ export default {
       background: linear-gradient(90deg,rgba(255,255,255,0) 0,rgba(255,255,255,.3) 50%,rgba(255,255,255,0));
       transform: skewX(-20deg);
       animation: moveLight 2s infinite;
+      touch-action: none;
     }
   }
 }

@@ -63,7 +63,7 @@ export default {
                         this.contextOn.drawImage(this.imgon, xmod * 210, ymod * 210, 200, 200, xcanvasmod * 210, ycanvasmod * 210, 200 , 200)
                     }
                 })
-                this.renderGold(this.card.golds_amount, goldIndex % 3 * 210 + 95, Math.floor(goldIndex / 3) * 210 + 152)
+                this.renderGold(this.card.golds_amount, goldIndex % 3 * 210 + 95, Math.floor(goldIndex / 3) * 210 + 125)
             } else {
                 this.$toast({
                     content: _("networkError")
@@ -71,9 +71,9 @@ export default {
             }
         },
         renderGold (number, x, y) {
-            this.contextOn.font = "4.3vw bold Helvetica"
+            this.contextOn.font = "9vw bold Helvetica"
             this.contextOn.textAlign = "center"
-            this.contextOn.textBaseline = "middle"
+            this.contextOn.textBaseline = "top"
             this.contextOn.fillStyle = "#48198e"
             this.contextOn.fillText(formateBalance(number.toString()), x, y)
         },
@@ -128,7 +128,7 @@ export default {
                 let area = data.filter((item, index) => item === 0 && (index % 4 === 3)).length / (this.width * this.height)
 
                 // 如果刮到的部分超过80%则开奖
-                if (area >= 0.8) {
+                if (area >= 0.5) {
                     this.contextOff.clearRect(0, 0, this.width, this.height)
                     this.isClear = true
                     // 触发开奖动画
@@ -203,6 +203,7 @@ export default {
   width: 620 * @vw;
   overflow: hidden;
   margin: 146 * @vw auto 0;
+  border-radius: 16*@vw;
   opacity: 0;
   animation: fadeIn 0.5s 0.4s cubic-bezier(0.73,-0.2, 1, 1) both;
   canvas {
