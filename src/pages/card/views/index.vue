@@ -159,7 +159,7 @@ export default {
             /* 修改头部门票数量 */
             ticketChange: false,
             pop_ticket: false,
-            pop_coins: false,
+            pop_coins: true,
             pop_celebtity: false,
             pop_amazon: false,
             pop_freeTicket: false,
