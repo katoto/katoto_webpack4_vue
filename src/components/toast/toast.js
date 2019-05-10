@@ -23,7 +23,9 @@ function getMessageInstance () {
     return messageInstance
 }
 
-function notice ({ duration = 2000, content = "" }) {
+function notice ({
+    duration = 2000, content = "" 
+}) {
     getMessageInstance().addNotice({
         content,
         duration

@@ -20,7 +20,7 @@
 import {
     cbetLocal,
     formateBalance,
-    formatMoney,
+    formatMoney
 } from "@common/util"
 
 export default {
@@ -42,12 +42,12 @@ export default {
     methods: {
         formatMoney,
         goAds (e) {
-            console.log('jp://showAdVideo?type=3')
+            console.log("jp://showAdVideo?type=3")
             cbetLocal({
                 func: "jumpToLocal",
                 params: { content: "jp://showAdVideo?type=3" }
             })
-        },
+        }
     },
     components: {
     },
