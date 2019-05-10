@@ -201,7 +201,9 @@ export default {
                 this.getUserInfo()
                     .then(res => {
                         if (Number(res.data.total_card) > 0) {
-                            // debugger
+                            this.$refs.card && this.$refs.card.init()
+                        } else {
+                            this.pop_ticket = true
                         }
                     })
             } else if (this.pop_freeTicket) {
@@ -256,9 +258,15 @@ export default {
                 }
             })
         },
-        showAdVideoCallback () {
+        showAdVideoCallback (isSuccess) {
             // todo 需增加一个看完广告 得到奖励的告知
-            this.getUserInfo()
+            if (isSuccess) {
+                this.getUserInfo()
+            } else {
+                this.$toast({
+                    content: _("m_card.adLoading")
+                })
+            }
         },
         getPrize (card) {
             if (card.card_result === "H") {

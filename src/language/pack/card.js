@@ -20,7 +20,8 @@ export default {
         "m_card.tip2": "Tips: 100% winning opportunities, win up to 10,000 coins",
         "m_card.tip1": "Tips: Scratch the ₹500 Amazon card behind!",
         "m_card.title": "Fortune Scratch",
-        "m_card.prize": "My Prize"
+        "m_card.prize": "My Prize",
+        "m_card.adLoading": "Ad loading failed, please retry after 10s"
     },
     india: {
     }

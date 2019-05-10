@@ -6,7 +6,7 @@ import Toast from "@/components/toast/toast.js"
 import Language from "@pack/card"
 import commonPlugin from "@plugins/common"
 import {
-    cookie, copy
+    cookie
 } from "@/common/util"
 require("@/styles/lib-reset.css")
 require("@/styles/lib-public.less")
@@ -14,12 +14,11 @@ require("@/styles/animate.css")
 require("@language").use(Vue, [Language])
 Vue.prototype.$toast = Toast
 window.$toast = Toast
-cookie.set("appck", "MTAwNTQzOWM3YWIwN2UyOTJhMjZiZmIyZWVjOTc1NmIzMGJmZg")
+// cookie.set("appck", "MTAwNTQzOWM3YWIwN2UyOTJhMjZiZmIyZWVjOTc1NmIzMGJmZg")
 
 let cookies = cookie.getAll()
 cookies.ck = cookies.appck
 // 初始化与公共样式
-copy(cookies.ck)
 Vue.use(simpleAjax, {
     commonParams: {
         platform: "android",
