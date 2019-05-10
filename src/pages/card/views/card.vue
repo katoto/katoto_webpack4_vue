@@ -123,7 +123,7 @@ export default {
             this.timer = setTimeout(() => {
                 let data = this.contextOff.getImageData(0, 0, 620, 620).data
                 let area = data.filter((item, index) => item === 0 && (index % 4 === 3)).length / (620 * 620)
-                if (area >= 0.8) {
+                if (area >= 0.5) {
                     this.contextOff.clearRect(0, 0, 620, 620)
                     this.isClear = true
                     // 上报刮刮卡后调用 refreshInfo 刷新金币数量
@@ -187,6 +187,7 @@ export default {
   width: 620 * @vw;
   overflow: hidden;
   margin: 146 * @vw auto 0;
+  border-radius: 16*@vw;
   opacity: 0;
   animation: fadeIn 0.5s 0.4s cubic-bezier(0.73,-0.2, 1, 1) both;
   canvas {
