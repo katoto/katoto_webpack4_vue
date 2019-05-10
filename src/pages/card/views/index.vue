@@ -102,7 +102,7 @@
         <transition name="pop_animate">
             <div class="pop_coins" v-if="pop_coins" @click="handlePop('coins', false)">
                 <p>{{_('m_card.congratulations')}}</p>
-                <p class="bold">{{golds_amount}} coins</p>
+                <p class="bold">{{formatterNum(golds_amount)}} coins</p>
             </div>
         </transition>
         <!-- 获得球星卡 -->
@@ -179,7 +179,8 @@ export default {
             // 金币余额
             balance: false,
             loading: false,
-            canInvite: false
+            canInvite: false,
+            isReady: false
         }
     },
     components: {
@@ -239,6 +240,9 @@ export default {
             }
         },
         goView (e) {
+            if (!this.isReady) {
+                return
+            }
             if (this.userInfo && Number(this.userInfo.total_card) > 0) {
                 setTimeout(() => {
                     this.inList = false
@@ -249,6 +253,7 @@ export default {
         },
         getUserInfo () {
             return this.$get("/api/scratch/list").then(res => {
+                this.isReady = true
                 // 获取用户金额
                 this.userInfo = {
                     ...res.data
@@ -257,8 +262,6 @@ export default {
                     this.pop_freeTicket = true
                 }
                 return res
-            }).catch(err => {
-                alert(1)
             })
         },
         handleBack () {
@@ -303,17 +306,22 @@ export default {
                 // 获得金币
                 this.pop_coins = true
             }
-            this.golds_amount = formatterNum(card.golds_amount)
+            this.golds_amount = Number(card.golds_amount)
             this.addCoinAnimate()
         },
         buyCard (amount) {
             if (Number(this.userInfo.gold_total) - (500 * Number(amount)) > 0) {
-                this.$post("/scratch/buy", {
+                this.loading = true
+                this.$post("/api/scratch/buy", {
                     amount
                 }).then(() => {
-                    this.showAddTicket().then(() => {
-                        this.getUserInfo()
-                    })
+                    this.loading = false
+                    this.userInfo.gold_total = Number(this.userInfo.gold_total) - (500 * Number(amount))
+                    this.userInfo.total_card = Number(this.userInfo.total_card) + Number(amount)
+                    this.getUserInfo()
+                    // this.showAddTicket()
+                }).catch(err => {
+                    this.loading = false
                 })
             } else {
                 this.$toast({
@@ -321,16 +329,12 @@ export default {
                 })
             }
         },
-        showAddTicket (num) {
-            return new Promise(resolve => {
-                this.add_ticket_num = Number(num)
-                this.$nextTick(() => {
-                    this.ticketChange = true
-                    setTimeout(() => {
-                        this.ticketChange = false
-                        resolve(true)
-                    }, 500)
-                })
+        async showAddTicket (num) {
+            this.add_ticket_num = Number(num)
+            this.$nextTick(async () => {
+                this.ticketChange = true
+                await this.wait(500)
+                this.ticketChange = false
             })
         },
         invite () {
