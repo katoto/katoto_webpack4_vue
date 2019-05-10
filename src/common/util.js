@@ -245,6 +245,10 @@ export function getURLParams () {
     return obj
 }
 
+export function formatterNum (numInt) {
+    return numInt.toString().replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,"$&,")
+}
+
 // 浮点数除法
 export function accDiv (arg1, arg2) {
     let t1 = 0

@@ -28,7 +28,7 @@
             <div class="news">
                 <ul>
                     <broadcast :time="userInfo.broadcast ? userInfo.broadcast.length * 1 : 0">
-                        <li v-for="(item, index) in userInfo.broadcast" :key="index" v-html="_(item.prize_type === 'golds' ? 'm_card.broadcast1' : 'm_card.broadcast', item.username, formateBalance(item.prize_amount || 0))"></li>
+                        <li v-for="(item, index) in userInfo.broadcast" :key="index" v-html="_(item.prize_type === 'golds' ? 'm_card.broadcast1' : 'm_card.broadcast', item.username, formatterNum(item.prize_amount || 0))"></li>
                     </broadcast>
                 </ul>
             </div>
@@ -56,10 +56,10 @@
         <template v-else>
             <div class="ticket_title"></div>
             <div class="ticket_bonus"></div>
-            <card :class="{'on': isShowCard}" @getPrize="getPrize" @refreshInfo="getUserInfo" ref="card"></card>
+            <card :class="{'on': isShowCard}" @getPrize="getPrize" ref="card"></card>
             <transition enter-active-class="animated bounceIn">
                 <div class="balance" v-show="balance">
-                    <p>{{formateBalance(userInfo.gold_total || 0)}}</p>
+                    <p>{{formatterNum(userInfo.gold_total || 0)}}</p>
                 </div>
             </transition>
         </template>
@@ -74,7 +74,7 @@
             <div class="pop_ticket" v-if="pop_ticket">
                 <div class="pop_ticket_header">
                     <p class="myticket">{{userInfo.total_card || 0}}</p>
-                    <p class="mycoins">{{formateBalance(userInfo.gold_total || 0)}}</p>
+                    <p class="mycoins">{{formatterNum(userInfo.gold_total || 0)}}</p>
                 </div>
                 <a class="btn_close" @click="handlePop('pop_ticket', false)"></a>
                 <p class="title">{{_('m_card.getcard')}}</p>
@@ -153,7 +153,7 @@ import card from "./card.vue"
 import ribbon from "./ribbon.vue"
 import coins from "./coins.vue"
 import {
-    formateBalance, cbetLocal, getURLParams
+    formatterNum, cbetLocal, getURLParams
 } from "@/common/util"
 // 通用播报
 import broadcast from "@/components/broadcast"
@@ -195,20 +195,36 @@ export default {
         }
     },
     methods: {
-        formateBalance,
+        formatterNum,
         href (href) {
             location.href = `${href}${location.search}`
         },
+        wait (time) {
+            return new Promise(resolve => {
+                setTimeout(() => resolve(true), time)
+            })
+        },
+        async addCoinAnimate () {
+            this.balance = true
+            await this.wait(1000)
+            this.userInfo.gold_total = Number(this.userInfo.gold_total) + Number(this.golds_amount)
+        },
         handlePop (pop, show) {
             if ((this.pop_coins || this.pop_amazon)) {
-                this.getUserInfo()
+                Promise.all([
+                    this.getUserInfo(),
+                    this.wait(1800)
+                ])
                     .then(res => {
+                        res = res[0]
                         if (Number(res.data.total_card) > 0) {
                             this.$refs.card && this.$refs.card.init()
                         } else {
                             this.pop_ticket = true
+                            this.inList = false
                         }
                     })
+                this.balance = false
             } else if (this.pop_freeTicket) {
                 this.showAddTicket(2)
             }
@@ -232,7 +248,7 @@ export default {
             }
         },
         getUserInfo () {
-            return this.$get("/scratch/list").then(res => {
+            return this.$get("/api/scratch/list").then(res => {
                 // 获取用户金额
                 this.userInfo = {
                     ...res.data
@@ -241,6 +257,8 @@ export default {
                     this.pop_freeTicket = true
                 }
                 return res
+            }).catch(err => {
+                alert(1)
             })
         },
         handleBack () {
@@ -284,8 +302,9 @@ export default {
             } else {
                 // 获得金币
                 this.pop_coins = true
-                this.golds_amount = formateBalance(card.golds_amount)
             }
+            this.golds_amount = formatterNum(card.golds_amount)
+            this.addCoinAnimate()
         },
         buyCard (amount) {
             if (Number(this.userInfo.gold_total) - (500 * Number(amount)) > 0) {
