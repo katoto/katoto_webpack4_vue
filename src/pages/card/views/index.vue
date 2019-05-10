@@ -186,7 +186,9 @@ export default {
                 this.getUserInfo()
                     .then(res => {
                         if (Number(res.data.total_card) > 0) {
-                            // debugger
+                            this.$refs.card && this.$refs.card.init()
+                        } else {
+                            this.pop_ticket = true
                         }
                     })
             } else if (this.pop_freeTicket) {
