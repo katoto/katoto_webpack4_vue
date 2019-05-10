@@ -142,6 +142,7 @@
                 <a class="btn" @click="handlePop('all', false)">OK</a>
             </div>
         </transition>
+        <load v-if="loading"></load>
     </div>
 </template>
 
@@ -154,6 +155,7 @@ import {
 } from "@/common/util"
 // 通用播报
 import broadcast from "@/components/broadcast"
+import load from "@/components/loading"
 import { setTimeout } from "timers"
 export default {
     data () {
@@ -165,7 +167,7 @@ export default {
             /* 修改明星卡数量 */
             starChange: false,
             pop_ticket: false,
-            pop_coins: true,
+            pop_coins: false,
             pop_celebtity: false,
             pop_amazon: false,
             pop_freeTicket: false,
@@ -174,13 +176,15 @@ export default {
             add_ticket_num: 1,
             userInfo: {},
             // 金币余额
-            balance: false
+            balance: false,
+            loading: true
         }
     },
     components: {
         card,
         ribbon,
-        broadcast
+        broadcast,
+        load
     },
     computed: {
         pop_layer () {
