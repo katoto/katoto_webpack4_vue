@@ -32,8 +32,8 @@ export default {
     components: {
     },
     mounted () {
-        if(getURLParams() && getURLParams().utm_source === 'facebook'){
-            this.contHref = '//www.madcrickets.com/msapk/cbet_release_v1.2.7_fbsns.apk'
+        if (getURLParams() && getURLParams().utm_source === "facebook") {
+            this.contHref = "//www.madcrickets.com/msapk/cbet_release_v1.2.7_fbsns.apk"
         }
         this.$nextTick(() => {
             this.contentSrc = require("@/pages/index/img/contentbody.png")
