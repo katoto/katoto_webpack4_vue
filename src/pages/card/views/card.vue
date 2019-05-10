@@ -127,8 +127,12 @@ export default {
                     this.contextOff.clearRect(0, 0, 620, 620)
                     this.isClear = true
                     // 上报刮刮卡后调用 refreshInfo 刷新金币数量
-                    this.$emit("getPrize", {
-                        ...this.card
+                    this.$post("/scratch/opened", {
+                        card_id: this.card.card_id
+                    }).then(() => {
+                        this.$emit("getPrize", {
+                            ...this.card
+                        })
                     })
                 }
             }, 300)

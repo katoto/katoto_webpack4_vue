@@ -13,7 +13,7 @@
             <a class="btn_ticket" @click="handlePop('pop_ticket',true)" key="btn_ticket">
                 {{userInfo.total_card || 0}}
                 <transition name="ticketChange">
-                    <i class="ticketChange" v-if="ticketChange">+1</i>
+                    <i class="ticketChange" v-if="ticketChange">+{{add_ticket_num}}</i>
                 </transition>
             </a>
         </header>
@@ -21,8 +21,7 @@
             <div class="news">
                 <ul>
                     <broadcast>
-                        <li v-html="_('m_card.broadcast1', 'richole', formateBalance('100000'))"></li>
-                        <li v-html="_('m_card.broadcast1', 'yu', formateBalance('10000'))"></li>
+                        <li v-for="(item, index) in userInfo.broadcast" :key="index" v-html="_(item.prize_type === 'golds' ? 'm_card.broadcast1' : 'm_card.broadcast', item.username, formateBalance(item.prize_amount || 0))"></li>
                     </broadcast>
                 </ul>
             </div>
@@ -50,9 +49,9 @@
         <template v-else>
             <div class="ticket_title"></div>
             <div class="ticket_bonus"></div>
-            <card :class="{'on': isShowCard}" @getPrize="getPrize" @refreshInfo="getUserInfo"></card>
+            <card :class="{'on': isShowCard}" @getPrize="getPrize" @refreshInfo="getUserInfo" ref="card"></card>
             <div class="balance">
-                <p>{{formateBalance(userInfo.total_gold || 0)}}</p>
+                <p>{{formateBalance(userInfo.gold_total || 0)}}</p>
             </div>
         </template>
 
@@ -65,24 +64,24 @@
             <div class="pop_ticket" v-if="pop_ticket">
                 <div class="pop_ticket_header">
                     <p class="myticket">{{userInfo.total_card || 0}}</p>
-                    <p class="mycoins">{{formateBalance(userInfo.total_gold || 0)}}</p>
+                    <p class="mycoins">{{formateBalance(userInfo.gold_total || 0)}}</p>
                 </div>
                 <a class="btn_close" @click="handlePop('pop_ticket', false)"></a>
                 <p class="title">{{_('m_card.getcard')}}</p>
-                <ul class="list">
+                <ul class="list" @click="goAD">
                     <li>
                         <div class="ticket_count">x1</div>
-                        <p class="ticket_msg" @click="goAD">{{_('m_card.watch')}}</p>
+                        <p class="ticket_msg">{{_('m_card.watch')}}</p>
                     </li>
                     <li>
                         <div class="ticket_count">x10</div>
                         <p class="ticket_msg">{{_('m_card.inviting')}}</p>
                     </li>
-                    <li>
+                    <li @click="buyCard('1')">
                         <div class="ticket_count">x1</div>
                         <p class="ticket_msg">{{_('m_card.spending500')}}</p>
                     </li>
-                    <li>
+                    <li @click="buyCard('10')">
                         <div class="ticket_count">x10</div>
                         <p class="ticket_msg">{{_('m_card.spending5000')}}</p>
                     </li>
@@ -91,7 +90,7 @@
         </transition>
         <!-- 获得金币 -->
         <transition name="pop_animate">
-            <div class="pop_coins" v-if="pop_coins" @click="handlePop('all', false)">
+            <div class="pop_coins" v-if="pop_coins" @click="handlePop('coins', false)">
                 <p>{{_('m_card.congratulations')}}</p>
                 <p class="bold">{{golds_amount}} coins</p>
             </div>
@@ -117,7 +116,7 @@
                 <a class="btn btn_get" @click="href('/amazon.html')">
                     Get Now
                 </a>
-                <a class="btn btn_continue" @click="handlePop('all', false)">
+                <a class="btn btn_continue" @click="handlePop('amazon', false)">
                     Continue
                 </a>
             </div>
@@ -146,6 +145,7 @@ import {
 } from "@/common/util"
 // 通用播报
 import broadcast from "@/components/broadcast"
+import { setTimeout } from "timers"
 export default {
     data () {
         return {
@@ -162,6 +162,7 @@ export default {
             pop_freeTicket: false,
             isShowCard: false,
             golds_amount: 0,
+            add_ticket_num: 1,
             userInfo: {}
         }
     },
@@ -182,7 +183,17 @@ export default {
             location.href = href
         },
         handlePop (pop, show) {
-            if (pop === "all") {
+            if ((this.pop_coins || this.pop_amazon)) {
+                this.getUserInfo()
+                    .then(res => {
+                        if (Number(res.data.total_card) > 0) {
+                            // debugger
+                        }
+                    })
+            } else if (this.pop_freeTicket) {
+                this.showAddTicket(2)
+            }
+            if (!show) {
                 this.pop_ticket = false
                 this.pop_coins = false
                 this.pop_celebtity = false
@@ -198,12 +209,12 @@ export default {
             }, 300)
         },
         getUserInfo () {
-            return this.$get("/scratch/detail").then(res => {
+            return this.$get("/scratch/list").then(res => {
                 // 获取用户金额
                 this.userInfo = {
                     ...res.data
                 }
-                if (this.userInfo.is_first) {
+                if (this.userInfo.is_first !== "False") {
                     this.pop_freeTicket = true
                 }
                 return res
@@ -244,6 +255,27 @@ export default {
                 this.pop_coins = true
                 this.golds_amount = formateBalance(card.golds_amount)
             }
+        },
+        buyCard (amount) {
+            return this.$post("/scratch/buy", {
+                amount
+            }).then(() => {
+                this.showAddTicket().then(() => {
+                    this.getUserInfo()
+                })
+            })
+        },
+        showAddTicket (num) {
+            return new Promise(resolve => {
+                this.add_ticket_num = Number(num)
+                this.$nextTick(() => {
+                    this.ticketChange = true
+                    setTimeout(() => {
+                        this.ticketChange = false
+                        resolve(true)
+                    }, 500)
+                })
+            })
         }
     },
     mounted () {

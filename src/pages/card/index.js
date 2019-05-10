@@ -13,7 +13,7 @@ require("@/styles/lib-public.less")
 require("@language").use(Vue, [mallLanguage])
 Vue.prototype.$toast = Toast
 window.$toast = Toast
-cookie.set("appck", "MTAwNTQzOWM3YWIwN2UyOTJhMjZiZmIyZWVjOTc1NmIzMGJmZg==")
+cookie.set("appck", "MTAwNTQzOWM3YWIwN2UyOTJhMjZiZmIyZWVjOTc1NmIzMGJmZg")
 
 let cookies = cookie.getAll()
 cookies.ck = cookies.appck
