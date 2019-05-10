@@ -6,7 +6,7 @@ import Toast from "@/components/toast/toast.js"
 import Language from "@pack/card"
 import commonPlugin from "@plugins/common"
 import {
-    cookie, copy
+    cookie
 } from "@/common/util"
 require("@/styles/lib-reset.css")
 require("@/styles/lib-public.less")
