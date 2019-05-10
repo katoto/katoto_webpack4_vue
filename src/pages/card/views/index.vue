@@ -27,7 +27,7 @@
         <template v-if="inList">
             <div class="news">
                 <ul>
-                    <broadcast>
+                    <broadcast :time="userInfo.broadcast ? userInfo.broadcast.length * 1 : 0">
                         <li v-for="(item, index) in userInfo.broadcast" :key="index" v-html="_(item.prize_type === 'golds' ? 'm_card.broadcast1' : 'm_card.broadcast', item.username, formateBalance(item.prize_amount || 0))"></li>
                     </broadcast>
                 </ul>
@@ -77,12 +77,12 @@
                 </div>
                 <a class="btn_close" @click="handlePop('pop_ticket', false)"></a>
                 <p class="title">{{_('m_card.getcard')}}</p>
-                <ul class="list" @click="goAD">
-                    <li>
+                <ul class="list">
+                    <li @click="goAD">
                         <div class="ticket_count">x1</div>
                         <p class="ticket_msg">{{_('m_card.watch')}}</p>
                     </li>
-                    <li>
+                    <li @click="invite" v-if="canInvite">
                         <div class="ticket_count">x10</div>
                         <p class="ticket_msg">{{_('m_card.inviting')}}</p>
                     </li>
@@ -151,12 +151,11 @@ import event from "@/common/event"
 import card from "./card.vue"
 import ribbon from "./ribbon.vue"
 import {
-    formateBalance, cbetLocal
+    formateBalance, cbetLocal, getURLParams
 } from "@/common/util"
 // 通用播报
 import broadcast from "@/components/broadcast"
 import load from "@/components/loading"
-import { setTimeout } from "timers"
 export default {
     data () {
         return {
@@ -177,7 +176,8 @@ export default {
             userInfo: {},
             // 金币余额
             balance: false,
-            loading: true
+            loading: false,
+            canInvite: false
         }
     },
     components: {
@@ -194,7 +194,7 @@ export default {
     methods: {
         formateBalance,
         href (href) {
-            location.href = href
+            location.href = `${href}${location.search}`
         },
         handlePop (pop, show) {
             if ((this.pop_coins || this.pop_amazon)) {
@@ -220,9 +220,13 @@ export default {
             }
         },
         goView (e) {
-            setTimeout(() => {
-                this.inList = false
-            }, 300)
+            if (this.userInfo && Number(this.userInfo.total_card) > 0) {
+                setTimeout(() => {
+                    this.inList = false
+                }, 300)
+            } else {
+                this.pop_ticket = true
+            }
         },
         getUserInfo () {
             return this.$get("/scratch/list").then(res => {
@@ -249,6 +253,7 @@ export default {
             }
         },
         goAD () {
+            this.loading = true
             // 观看广告
             cbetLocal({
                 func: "jumpToLocal",
@@ -267,6 +272,7 @@ export default {
                     content: _("m_card.adLoading")
                 })
             }
+            this.loading = false
         },
         getPrize (card) {
             if (card.card_result === "H") {
@@ -279,13 +285,19 @@ export default {
             }
         },
         buyCard (amount) {
-            return this.$post("/scratch/buy", {
-                amount
-            }).then(() => {
-                this.showAddTicket().then(() => {
-                    this.getUserInfo()
+            if (Number(this.userInfo.gold_total) - (500 * Number(amount)) > 0) {
+                this.$post("/scratch/buy", {
+                    amount
+                }).then(() => {
+                    this.showAddTicket().then(() => {
+                        this.getUserInfo()
+                    })
                 })
-            })
+            } else {
+                this.$toast({
+                    content: _("m_card.nogold")
+                })
+            }
         },
         showAddTicket (num) {
             return new Promise(resolve => {
@@ -298,11 +310,30 @@ export default {
                     }, 500)
                 })
             })
+        },
+        invite () {
+            cbetLocal({
+                func: "jumpToLocal",
+                params: {
+                    content: "jp://HomeScene?view=invite",
+                    hold: "0"
+                }
+            })
+        },
+        getInvite () {
+            let data = getURLParams()
+            if (data.uid) {
+                this.$post("/invite/info", {
+                    userid: data.uid
+                }).then(res => {
+                    this.canInvite = Number(res.data.config.invite_limit) > Number(res.data.info.invited_num)
+                })
+            }
         }
     },
     mounted () {
-        window._this = this
         this.getUserInfo()
+        this.getInvite()
         event.$on("showAdVideoCallback", this.showAdVideoCallback)
     }
 }

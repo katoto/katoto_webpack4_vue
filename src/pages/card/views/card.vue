@@ -91,7 +91,7 @@ export default {
         },
         touchStartHandler (event) {
             event.preventDefault()
-            if (this.isClear || this.card === null) {
+            if (this.isClear || this.card === null || (this.card && this.card.card_id === undefined)) {
                 return
             }
             event = event || window.event
@@ -104,7 +104,7 @@ export default {
         },
         touchMoveHandler (event) {
             event.preventDefault()
-            if (this.isClear || this.card === null) {
+            if (this.isClear || this.card === null || (this.card && this.card.card_id === undefined)) {
                 return
             }
             event = event || window.event
