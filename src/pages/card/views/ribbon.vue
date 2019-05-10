@@ -8,13 +8,13 @@
 export default {
     data () {
         return {
-            n: 50,
+            n: 30,
             colors: ["#00ff6c","#ff6b2a","#7fa9ff","#febb2b"],
-            width: 20,
-            height: 40,
+            width: 40,
+            height: 20,
             ribbons: [],
             // 重力加速度
-            G: 0.1,
+            G: 0.3,
             isMove: true
 
         }
@@ -30,65 +30,75 @@ export default {
         let ribbon_context = ribbon.getContext("2d")
         let WIDTH = ribbon.width
         let HEIGHT = ribbon.height
-        let img = new Image()
-        img.src = "./staticImg/icon_c.png"
-        img.onload = function () {
-            init()
-        }
         class Ribbon {
-            constructor () {
-                this.color = getColor()
-                this.x = WIDTH / 2
-                this.y = HEIGHT / 2
-                this.a = Math.random()
-                this.vx = ~~getRandom(10,20) * 0.5
-                this.vy = ~~getRandom(10,20) * 1
+            constructor (color = "#ff6b2a",width,height) {
+                this.color = color
+                this.x = width / 2
+                this.y = height / 2
+                this.width = width
+                this.height = height
+                /* +-100 */
+                this.transform_x = ~~(WIDTH / 2 + (Math.random() * 2 - 1) * 100)
+                this.transform_y = HEIGHT / 2
+                /* +-60deg */
+                this.angle = Math.round((Math.random() * 2 - 1) * 90)
+                /* 旋转加速度 */
+                this.angleV = (Math.random() * 2 - 1) * 2
+                /* +- 2 */
+                this.vx =  Math.round((Math.random() * 2 - 1) * 15)
+                /* 8-10 */
+                this.vy = (Math.random() * 2 - 1) * 8 + 10
             }
-            print () {
-                ribbon_context.drawImage(img,0,0,40,41,this.x,this.y,40,41)
+            draw () {
+                ribbon_context.beginPath()
+                ribbon_context.save()
+                ribbon_context.fillStyle = this.color
+                ribbon_context.translate(this.transform_x, this.transform_y)
+                ribbon_context.rotate(Math.PI / 180 * this.angle)
+                ribbon_context.fillRect(-this.width / 2,-this.height / 2,this.width,this.height)
+                ribbon_context.restore()
+                ribbon_context.closePath()
             }
-            move (index) {
-                this.print()
-                this.x += this.vx
-                this.y += this.vy
-                // this.vx *= this.a
-                // this.vy *= this.a
-                if (this.x > WIDTH || this.x < 0 || this.y > HEIGHT || this.y < 0) {
-                    that.ribbons.splice(this,1)
+        }
+        for (let i = 0;i < this.n;i++) {
+            let ribbon = new Ribbon(getColor(),this.width,this.height)
+            ribbon.draw()
+            this.ribbons.push(ribbon)
+        }
+        (function frame () {
+            if (that.isMove) {
+                requestAnimationFrame(frame)
+                ribbon_context.clearRect(0,0,WIDTH,HEIGHT)
+                that.ribbons.forEach((ribbon,index) => {
+                    ribbon.transform_y -= ribbon.vy
+                    ribbon.vy -= that.G
+                    ribbon.angle -= ribbon.angleV
+                    if ( ribbon.vx > 0 ) {
+                        ribbon.transform_x -= ribbon.vx
+                        ribbon.vx -= that.G
+                    }
+                    if ( ribbon.vx < 0 ) {
+                        ribbon.vx += that.G
+                        ribbon.transform_x -= ribbon.vx
+                    }
+                    if (ribbon.transform_y > HEIGHT * 2) {
+                        // 删除的时候会闪烁
+                        that.ribbons.splice(index,1)
+                    }
+                    ribbon.draw()
+                })
+                if (that.ribbons.length == 0) {
+                    that.isMove = false
                 }
             }
-        }
+        })()
 
-        function init () {
-            for (let i = 0; i < that.n; i++) {
-                let ribbon = new Ribbon()
-                that.ribbons.push(ribbon)
-            }
-            update()
-        }
-        function update () {
-            ribbon_context.clearRect(0,0,WIDTH,HEIGHT)
-            for (let i = 0;i < that.ribbons.length;i++) {
-                that.ribbons[i].move()
-            }
-            requestAnimationFrame(update)
-        }
-
-        function getDirection () {
-            let t = Math.random()
-            let direction = 0
-            t > 0.5 ? direction = 1 : direction = -1
-            return direction
-        }
-        function getRandom (a, b) {
-            return (Math.random() * (b - a) + a)
-        }
         function getColor () {
             return that.colors[Math.round(Math.random() * that.colors.length)]
         }
-
     }
 }
+
 </script>
 
 <style lang="less" scoped type="text/less">

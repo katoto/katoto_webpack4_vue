@@ -66,7 +66,8 @@
 
         <!-- pop -->
         <div class="pop_layer" v-if="pop_layer" @click="handlePop('all', false)">
-            <ribbon v-if="pop_coins"></ribbon>
+            <coins v-if="pop_coins"></coins>
+            <ribbon v-if="pop_celebtity || pop_amazon"></ribbon>
         </div>
         <!-- 购买门票 -->
         <transition name="pop_animate">
@@ -150,6 +151,7 @@
 import event from "@/common/event"
 import card from "./card.vue"
 import ribbon from "./ribbon.vue"
+import coins from "./coins.vue"
 import {
     formateBalance, cbetLocal
 } from "@/common/util"
@@ -177,12 +179,13 @@ export default {
             userInfo: {},
             // 金币余额
             balance: false,
-            loading: true
+            loading: false
         }
     },
     components: {
         card,
         ribbon,
+        coins,
         broadcast,
         load
     },
