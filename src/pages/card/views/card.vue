@@ -61,7 +61,7 @@ export default {
                         this.contextOn.drawImage(this.imgon, xmod * 210, ymod * 210, 200, 200, xcanvasmod * 210, ycanvasmod * 210, 200 , 200)
                     }
                 })
-                this.renderGold(this.card.golds_amount, goldIndex % 3 * 210 + 95, Math.floor(goldIndex / 3) * 210 + 152)
+                this.renderGold(this.card.golds_amount, goldIndex % 3 * 210 + 95, Math.floor(goldIndex / 3) * 210 + 125)
             } else {
                 this.$toast({
                     content: _("networkError")
@@ -69,9 +69,9 @@ export default {
             }
         },
         renderGold (number, x, y) {
-            this.contextOn.font = "4.3vw bold Helvetica"
+            this.contextOn.font = "9vw bold Helvetica"
             this.contextOn.textAlign = "center"
-            this.contextOn.textBaseline = "middle"
+            this.contextOn.textBaseline = "top"
             this.contextOn.fillStyle = "#48198e"
             this.contextOn.fillText(formateBalance(number.toString()), x, y)
         },
