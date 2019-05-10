@@ -8,7 +8,14 @@
                 <a class="btn_gift" key="gift" @click="href('/amazon.html')">{{_('m_card.prize')}}</a>
             </template>
             <template v-else>
-                <a class="btn_star" key="Star" v-hidden="true">Star Card 0</a>
+                <!-- todo -->
+                <a class="btn_star" key="Star" v-hidden="true">
+                    Star Card 0
+                    <transition name="starChange">
+                        <i class="starChange" v-if="starChange">+1</i>
+                    </transition>
+                </a>
+
             </template>
             <a class="btn_ticket" @click="handlePop('pop_ticket',true)" key="btn_ticket">
                 {{userInfo.total_card || 0}}
@@ -155,6 +162,8 @@ export default {
             location: {},
             /* 修改头部门票数量 */
             ticketChange: false,
+            /* 修改明星卡数量 */
+            starChange: false,
             pop_ticket: false,
             pop_coins: false,
             pop_celebtity: false,
@@ -381,16 +390,16 @@ export default {
     background: #363a46;
     padding: 0 25 * @vw;
     opacity: 0;
-    animation: fadeIn 0.5s cubic-bezier(0.73,-0.2, 1, 1) both;
-    &::after{
-      content: '';
+    animation: fadeIn 0.5s cubic-bezier(0.73, -0.2, 1, 1) both;
+    &::after {
+      content: "";
       display: block;
       position: absolute;
       left: 0;
       top: -50%;
       width: 100%;
       height: 100%;
-      border-radius: 30*@vw;
+      border-radius: 30 * @vw;
       background: #4c5160;
       z-index: -1;
     }
@@ -402,7 +411,7 @@ export default {
     justify-content: center;
     width: 195 * @vw;
     height: 60 * @vw;
-    overflow: hidden;
+    // overflow: hidden;
     background: url(../img/btn_ticket.png) no-repeat center;
     background-size: cover;
     font-size: 36 * @vw;
@@ -415,6 +424,7 @@ export default {
       transform: translateX(-50%);
       font-size: 12 * @vw;
       opacity: 0.6;
+      color: #fff100;
     }
   }
 }
@@ -650,49 +660,49 @@ export default {
     }
   }
 }
-.pop_freeTicket{
+.pop_freeTicket {
   position: absolute;
   left: 50%;
   top: 50%;
   min-width: 80%;
   transform: translate(-50%, -50%);
   z-index: 99;
-  line-height: 60*@vw;
+  line-height: 60 * @vw;
   text-align: center;
   white-space: nowrap;
-  font-size: 48*@vw;
+  font-size: 48 * @vw;
   color: #fff;
   font-weight: bold;
-  .icon{
+  .icon {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: baseline;
-    margin: 75*@vw 0 66*@vw 0;
-    &::before{
-      content: '';
+    margin: 75 * @vw 0 66 * @vw 0;
+    &::before {
+      content: "";
       display: block;
-      width: 125*@vw;
-      height: 129*@vw;
+      width: 125 * @vw;
+      height: 129 * @vw;
       background: url(../img/icon_ticket.png) no-repeat center;
-      background-size: 125*@vw;
+      background-size: 125 * @vw;
     }
-    .p1{
-      font-size: 64*@vw;
-      margin: 0 20*@vw 0 10*@vw;
+    .p1 {
+      font-size: 64 * @vw;
+      margin: 0 20 * @vw 0 10 * @vw;
     }
-    .p2{
-      font-size: 96*@vw;
+    .p2 {
+      font-size: 96 * @vw;
     }
   }
-  .btn{
-    width:426*@vw;
-    height:88*@vw;
+  .btn {
+    width: 426 * @vw;
+    height: 88 * @vw;
     overflow: hidden;
     margin: 0 auto;
-    line-height: 76*@vw;
-    border:6*@vw solid #fff;
-    border-radius:44*@vw;
+    line-height: 76 * @vw;
+    border: 6 * @vw solid #fff;
+    border-radius: 44 * @vw;
   }
 }
 
@@ -775,14 +785,19 @@ export default {
     & + .actlist {
       margin-top: 20 * @vw;
     }
-    &::after{
+    &::after {
       position: absolute;
       left: -100%;
       top: 0;
       width: 36px;
       height: 100%;
       content: "";
-      background: linear-gradient(90deg,rgba(255,255,255,0) 0,rgba(255,255,255,.3) 50%,rgba(255,255,255,0));
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0)
+      );
       transform: skewX(-20deg);
       animation: moveLight 2s infinite;
       touch-action: none;
@@ -800,17 +815,18 @@ export default {
 }
 
 @keyframes fadeIn {
-  0%{}
-  100%{
+  0% {
+  }
+  100% {
     opacity: 1;
   }
 }
 
 @keyframes moveLight {
   0% {
-    left: 0
+    left: 0;
   }
-  90%{
+  90% {
     opacity: 0;
   }
   100% {

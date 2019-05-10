@@ -142,29 +142,27 @@ export default {
             let imgDataPromise = this.getImgData([
                 "./staticImg/all_off.png",
                 "./staticImg/all.png"
-            ])
-                .then(res => {
-                    this.imgoff = res[0]
-                    this.imgon = res[1]
-                    return res
-                })
+            ]).then(res => {
+                this.imgoff = res[0]
+                this.imgon = res[1]
+                return res
+            })
             Promise.all([
                 this.getList(),
                 imgDataPromise
-            ])
-                .then(data => {
-                    this.isloading = true
-                    this.$nextTick(() => {
-                        this.isClear = false
-                        this.timer = null
-                        this.canvasOff = this.$refs.off
-                        this.contextOff = this.canvasOff.getContext("2d")
-                        this.canvasOn = this.$refs.on
-                        this.contextOn = this.canvasOn.getContext("2d")
-                        this.renderAll()
-                        this.renderAlloff()
-                    })
+            ]).then(data => {
+                this.isloading = true
+                this.$nextTick(() => {
+                    this.isClear = false
+                    this.timer = null
+                    this.canvasOff = this.$refs.off
+                    this.contextOff = this.canvasOff.getContext("2d")
+                    this.canvasOn = this.$refs.on
+                    this.contextOn = this.canvasOn.getContext("2d")
+                    this.renderAll()
+                    this.renderAlloff()
                 })
+            })
         }
     },
     beforeDestroy () {
