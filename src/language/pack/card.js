@@ -6,10 +6,11 @@ export default {
         "m_card.proceed": "Tap here to proceed",
         "m_card.congratulations": "Congratulations! Now you have",
         "m_card.broadcast2": "Congratulations! n claimed a player card of Virat Kohli.",
-        "m_card.broadcast1": "Congratulations! n claimed 4350 coins.",
-        "m_card.broadcast": "Congratulations! n claimed a ₹500 Amazon card.",
+        "m_card.broadcast1": "Congratulations! {0} claimed <i class=red>{1}</i> coins.",
+        "m_card.broadcast": "Congratulations! {0} claimed a ₹500 Amazon card.",
         "m_card.goToUse": "See what's behind",
-        "m_card.getCardSuccess": "Welcome! Here's a gift for you",
+        "m_card.welcome": "Welcome!",
+        "m_card.getCardSuccess": "Here's a gift for you",
         "m_card.spending5000": "Spending 5000coins",
         "m_card.spending500": "Spending 500coins",
         "m_card.inviting": "Inviting friends",
@@ -18,7 +19,8 @@ export default {
         "m_card.tip3": "Tips: Grab valuable opportunities to collect player cards during the Cricket World Cup",
         "m_card.tip2": "Tips: 100% winning opportunities, win up to 10,000 coins",
         "m_card.tip1": "Tips: Scratch the ₹500 Amazon card behind!",
-        "m_card.title": "Fortune Scratch"
+        "m_card.title": "Fortune Scratch",
+        "m_card.prize": "My Prize"
     },
     india: {
     }

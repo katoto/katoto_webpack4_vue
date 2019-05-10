@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { formateBalance } from "@/common/util"
 const hastouch = "ontouchstart" in window ? true : false,
     tapstart = hastouch ? "touchstart" : "mousedown",
     tapmove = hastouch ? "touchmove" : "mousemove",
@@ -72,7 +73,7 @@ export default {
             this.contextOn.textAlign = "center"
             this.contextOn.textBaseline = "middle"
             this.contextOn.fillStyle = "#48198e"
-            this.contextOn.fillText(number.toString(), x, y)
+            this.contextOn.fillText(formateBalance(number.toString()), x, y)
         },
         renderAlloff () {
             this.contextOff.drawImage(this.imgoff, 0, 0)
@@ -141,7 +142,6 @@ export default {
                 .then(res => {
                     this.imgoff = res[0]
                     this.imgon = res[1]
-                    this.renderAlloff()
                     return res
                 })
             Promise.all([
@@ -158,14 +158,17 @@ export default {
                         this.canvasOn = this.$refs.on
                         this.contextOn = this.canvasOn.getContext("2d")
                         this.renderAll()
+                        this.renderAlloff()
                     })
                 })
         }
     },
-    destroyed () {
-        this.canvasOff.removeEventListener(tapstart, this.touchStartHandler)
-        this.canvasOff.removeEventListener(tapmove, this.touchMoveHandler)
-        this.canvasOff.removeEventListener(tapend, this.touchEndHandler)
+    beforeDestroy () {
+        if (this.canvasOff) {
+            this.canvasOff.removeEventListener(tapstart, this.touchStartHandler)
+            this.canvasOff.removeEventListener(tapmove, this.touchMoveHandler)
+            this.canvasOff.removeEventListener(tapend, this.touchEndHandler)
+        }
     },
     mounted () {
         this.init()
