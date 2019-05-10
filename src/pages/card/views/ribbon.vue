@@ -8,7 +8,7 @@
 export default {
     data () {
         return {
-            n: 30,
+            n: 50,
             colors: ["#00ff6c","#ff6b2a","#7fa9ff","#febb2b"],
             width: 20,
             height: 40,
@@ -36,13 +36,13 @@ export default {
             init()
         }
         class Ribbon {
-            constructor (x,y) {
+            constructor () {
                 this.color = getColor()
-                this.x = x
-                this.y = y
-                this.a = 0.99
-                this.vx = ~~getRandom(10,20) * getDirection()
-                this.vy = ~~getRandom(10,20) * getDirection()
+                this.x = WIDTH / 2
+                this.y = HEIGHT / 2
+                this.a = Math.random()
+                this.vx = ~~getRandom(10,20) * 0.5
+                this.vy = ~~getRandom(10,20) * 1
             }
             print () {
                 ribbon_context.drawImage(img,0,0,40,41,this.x,this.y,40,41)
@@ -51,18 +51,17 @@ export default {
                 this.print()
                 this.x += this.vx
                 this.y += this.vy
-                this.vx *= this.a
-                this.vy *= this.a
+                // this.vx *= this.a
+                // this.vy *= this.a
                 if (this.x > WIDTH || this.x < 0 || this.y > HEIGHT || this.y < 0) {
-                    this.x = WIDTH / 2
-                    this.y = HEIGHT / 2
+                    that.ribbons.splice(this,1)
                 }
             }
         }
 
         function init () {
             for (let i = 0; i < that.n; i++) {
-                let ribbon = new Ribbon(WIDTH / 2,HEIGHT / 2)
+                let ribbon = new Ribbon()
                 that.ribbons.push(ribbon)
             }
             update()

@@ -57,14 +57,16 @@
             <div class="ticket_title"></div>
             <div class="ticket_bonus"></div>
             <card :class="{'on': isShowCard}" @getPrize="getPrize" @refreshInfo="getUserInfo" ref="card"></card>
-            <div class="balance">
-                <p>{{formateBalance(userInfo.gold_total || 0)}}</p>
-            </div>
+            <transition enter-active-class="animated bounceIn">
+                <div class="balance" v-show="balance">
+                    <p>{{formateBalance(userInfo.gold_total || 0)}}</p>
+                </div>
+            </transition>
         </template>
 
         <!-- pop -->
         <div class="pop_layer" v-if="pop_layer" @click="handlePop('all', false)">
-            <ribbon v-if="pop_celebtity || pop_amazon"></ribbon>
+            <ribbon v-if="pop_coins"></ribbon>
         </div>
         <!-- 购买门票 -->
         <transition name="pop_animate">
@@ -158,21 +160,21 @@ export default {
         return {
             /* 在列表页？ */
             inList: true,
-            /* 图片位置 */
-            location: {},
             /* 修改头部门票数量 */
             ticketChange: false,
             /* 修改明星卡数量 */
             starChange: false,
             pop_ticket: false,
-            pop_coins: false,
+            pop_coins: true,
             pop_celebtity: false,
             pop_amazon: false,
             pop_freeTicket: false,
             isShowCard: false,
             golds_amount: 0,
             add_ticket_num: 1,
-            userInfo: {}
+            userInfo: {},
+            // 金币余额
+            balance: false
         }
     },
     components: {
@@ -287,6 +289,7 @@ export default {
         }
     },
     mounted () {
+        window._this = this
         this.getUserInfo()
         event.$on("showAdVideoCallback", this.showAdVideoCallback)
     }
