@@ -279,6 +279,7 @@ export default {
         }
     },
     mounted () {
+        window._this = this
         this.getUserInfo()
         event.$on("showAdVideoCallback", this.showAdVideoCallback)
     }

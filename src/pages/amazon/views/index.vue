@@ -4,42 +4,25 @@
             <a class="btn_back" @click="href('card.html')"> </a>
             <h1>My Prize</h1>
         </header>
-        <div class="check" if="!checkId" @click="topup">
+        <div class="check" if="!need_recharge" @click="topup">
             <p class="msg">The authentication</p>
             <p class="view">Before collecting the prize, we need to verify that you are a natural person</p>
         </div>
         <ul>
-            <!-- <li class="list">
+            <li class="list" v-for="item in gifts" :key="item.card_no">
                 <div class="card_description">
                     <p class="card_count">₹500</p>
                     <p class="card_msg">Amazon.com Gift Card</p>
                 </div>
                 <div class="card_key">
                     <i>NO.</i>
-                    <p>283847297384948</p>
-                    <a class="btn_copy" @click="handleCopy">Copy</a>
+                    <p>{{item.card_no}}</p>
+                    <a class="btn_copy" @click="handleCopy(item.card_no)">Copy</a>
                 </div>
                 <div class="card_val">
                     <i>KEY.</i>
-                    <p>2379472047583xx373</p>
-                    <a class="btn_copy">Copy</a>
-                </div>
-            </li> -->
-
-            <li class="list" v-for="item in lists" :key="item.id">
-                <div class="card_description">
-                    <p class="card_count">₹500</p>
-                    <p class="card_msg">Amazon.com Gift Card</p>
-                </div>
-                <div class="card_key">
-                    <i>NO.</i>
-                    <p>{{item.key}}</p>
-                    <a class="btn_copy" @click="handleCopy(item.key)">Copy</a>
-                </div>
-                <div class="card_val">
-                    <i>KEY.</i>
-                    <p>{{item.val}}</p>
-                    <a class="btn_copy" @click="handleCopy(item.val)">Copy</a>
+                    <p>{{item.password}}</p>
+                    <a class="btn_copy" @click="handleCopy(item.password)">Copy</a>
                 </div>
             </li>
         </ul>
@@ -68,20 +51,9 @@ export default {
     data () {
         return {
             // 是否是已验证用户
-            checkId: false,
+            need_recharge: false,
             pop_topup: false,
-            lists: [
-                {
-                    id: 1,
-                    key: "283847297384948",
-                    val: "2379472047583xx373"
-                },
-                {
-                    id: 1,
-                    key: "283847297384948",
-                    val: "2379472047583xx373"
-                }
-            ]
+            gifts: []
         }
     },
     methods: {
@@ -91,8 +63,8 @@ export default {
         topup () {
             this.pop_topup = true
         },
-        handleCopy (e) {
-            copy(e)
+        handleCopy (text) {
+            copy(text)
         },
         gotoshop () {
             cbetLocal({
@@ -102,6 +74,13 @@ export default {
                 }
             })
         }
+    },
+    mounted () {
+        this.$post("/scratch/gifts").then(res => {
+            let data = res.data
+            this.need_recharge = data.need_recharge === "True"
+            this.gifts = [...data.gifts]
+        })
     }
 }
 </script>

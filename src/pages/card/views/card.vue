@@ -1,7 +1,7 @@
 <template>
     <div class="ticket_img" id="ticket_img" ref="ticket_img" v-if="isloading">
-        <canvas id="canvas_off" ref="off" class="canvas_off" width="620" height="620"></canvas>
-        <canvas id="canvas_on" ref="on" class="canvas_on" width="620" height="620"></canvas>
+        <canvas id="canvas_off" ref="off" class="canvas_off" :width="width" :height="height"></canvas>
+        <canvas id="canvas_on" ref="on" class="canvas_on" :width="width" :height="height"></canvas>
     </div>
 </template>
 
@@ -17,7 +17,9 @@ export default {
             card: null,
             isClear: false,
             timer: null,
-            isloading: false
+            isloading: false,
+            width: 620,
+            height: 620
         }
     },
     methods: {
@@ -116,43 +118,56 @@ export default {
             this.getClearArea()
         },
         getClearArea () {
+            // 做个缓冲，不用每次触发move事件都计算有没有刮到80%
             if (this.timer) {
                 clearTimeout(this.timer)
                 this.timer = null
             }
             this.timer = setTimeout(() => {
-                let data = this.contextOff.getImageData(0, 0, 620, 620).data
-                let area = data.filter((item, index) => item === 0 && (index % 4 === 3)).length / (620 * 620)
+                let data = this.contextOff.getImageData(0, 0, this.width, this.height).data
+                let area = data.filter((item, index) => item === 0 && (index % 4 === 3)).length / (this.width * this.height)
+
+                // 如果刮到的部分超过80%则开奖
                 if (area >= 0.8) {
-                    this.contextOff.clearRect(0, 0, 620, 620)
+                    this.contextOff.clearRect(0, 0, this.width, this.height)
                     this.isClear = true
-                    // 上报刮刮卡后调用 refreshInfo 刷新金币数量
+                    // 触发开奖动画
+                    this.$emit("getPrize", {
+                        ...this.card
+                    })
+                    // 上报刮刮卡, 上报失败的话再上报一次, 成功的话更新余额
                     this.$post("/scratch/opened", {
                         card_id: this.card.card_id
-                    }).then(() => {
-                        this.$emit("getPrize", {
-                            ...this.card
-                        })
-                    })
+                    }).catch(() => {
+                        this.$post("/scratch/opened", {
+                            card_id: this.card.card_id
+                        }).then(() => this.$emit("refreshInfo"))
+                    }).then(() => this.$emit("refreshInfo"))
                 }
             }, 300)
         },
         init () {
+            // 如果有多张票 开完奖后会再次调用这个函数
+            // 未加载完数据先不展示刮刮卡
             this.isloading = false
-            let imgDataPromise = this.getImgData([
-                "./staticImg/all_off.png",
-                "./staticImg/all.png"
-            ])
-                .then(res => {
-                    this.imgoff = res[0]
-                    this.imgon = res[1]
-                    return res
-                })
+            if (!this.imgDataPromise) {
+                // 重新开始刮卡不用再次下载图片
+                this.imgDataPromise = this.getImgData([
+                    "./staticImg/all_off.png",
+                    "./staticImg/all.png"
+                ])
+                    .then(res => {
+                        this.imgoff = res[0]
+                        this.imgon = res[1]
+                        return res
+                    })
+            }
             Promise.all([
                 this.getList(),
-                imgDataPromise
+                this.imgDataPromise
             ])
                 .then(data => {
+                    // 展示刮刮卡
                     this.isloading = true
                     this.$nextTick(() => {
                         this.isClear = false
@@ -161,6 +176,7 @@ export default {
                         this.contextOff = this.canvasOff.getContext("2d")
                         this.canvasOn = this.$refs.on
                         this.contextOn = this.canvasOn.getContext("2d")
+                        // 渲染刮刮卡
                         this.renderAll()
                         this.renderAlloff()
                     })
