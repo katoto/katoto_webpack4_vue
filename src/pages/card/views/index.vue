@@ -19,15 +19,15 @@
             </template>
             <a class="btn_ticket" @click="handlePop('pop_ticket',true)" key="btn_ticket">
                 {{userInfo.total_card || 0}}
-                <transition name="ticketChange">
-                    <i class="ticketChange" v-if="ticketChange">+{{add_ticket_num}}</i>
+                <transition name="modify">
+                    <i class="modify" v-show="ticketChange">{{add_ticket_num}}</i>
                 </transition>
             </a>
         </header>
         <template v-if="inList">
             <div class="news">
                 <ul>
-                    <broadcast :time="userInfo.broadcast ? userInfo.broadcast.length * 1 : 0">
+                    <broadcast :time="userInfo.broadcast ? userInfo.broadcast.length * 5 : 0">
                         <li v-for="(item, index) in userInfo.broadcast" :key="index" v-html="_(item.prize_type === 'golds' ? 'm_card.broadcast1' : 'm_card.broadcast', item.username, formatterNum(item.prize_amount || 0))"></li>
                     </broadcast>
                 </ul>
@@ -56,7 +56,7 @@
         <template v-else>
             <div class="ticket_title"></div>
             <div class="ticket_bonus"></div>
-            <card :class="{'on': isShowCard}" @getPrize="getPrize" ref="card"></card>
+            <card :class="{'on': isShowCard}" ref="card" @getPrize="getPrize" @delete_ticket="delete_ticket"></card>
             <transition enter-active-class="animated bounceIn">
                 <div class="balance" v-show="balance">
                     <p>{{formatterNum(userInfo.gold_total || 0)}}</p>
@@ -73,8 +73,23 @@
         <transition name="pop_animate">
             <div class="pop_ticket" v-if="pop_ticket">
                 <div class="pop_ticket_header">
-                    <p class="myticket">{{userInfo.total_card || 0}}</p>
-                    <p class="mycoins">{{formatterNum(userInfo.gold_total || 0)}}</p>
+                    <p class="myticket">
+                        {{userInfo.total_card || 0}}
+                        <transition name="modify" >
+                            <i v-show="pop_ticket_modify" class="modify">
+                                <!-- +1 -->
+                                {{count}}
+                            </i>
+                        </transition>
+                    </p>
+                    <p class="mycoins">
+                        {{formatterNum(userInfo.gold_total || 0)}}
+                        <!-- <transition name="modify">
+                            <i v-show="pop_coins_modify"  class="modify">
+                                +1
+                            </i>
+                        </transition> -->
+                    </p>
                 </div>
                 <a class="btn_close" @click="handlePop('pop_ticket', false)"></a>
                 <p class="title">{{_('m_card.getcard')}}</p>
@@ -143,6 +158,7 @@
                 <a class="btn" @click="handlePop('all', false)">{{_('m_card.m_freeticket_btn')}}</a>
             </div>
         </transition>
+
         <load v-if="loading"></load>
     </div>
 </template>
@@ -180,8 +196,15 @@ export default {
             balance: false,
             loading: false,
             canInvite: false,
-            isReady: false
+            isReady: false,
+            // 门票数据是否有变化
+            pop_ticket_modify: false,
+            count: 0,
+            pop_coins_modify: false
         }
+    },
+    watch: {
+
     },
     components: {
         card,
@@ -291,6 +314,12 @@ export default {
             // todo 需增加一个看完广告 得到奖励的告知
             if (isSuccess) {
                 this.getUserInfo()
+                setTimeout(() => {
+                    this.getUserInfo()
+                    setTimeout(() => {
+                        this.getUserInfo()
+                    }, 1000)
+                }, 1000)
             } else {
                 this.$toast({
                     content: _("m_card.adLoading")
@@ -316,9 +345,14 @@ export default {
                     amount
                 }).then(() => {
                     this.loading = false
+                    this.count = "+" + amount
+                    this.pop_ticket_modify = true
                     this.userInfo.gold_total = Number(this.userInfo.gold_total) - (500 * Number(amount))
                     this.userInfo.total_card = Number(this.userInfo.total_card) + Number(amount)
                     this.getUserInfo()
+                    setTimeout(() => {
+                        this.pop_ticket_modify = false
+                    }, 500)
                     // this.showAddTicket()
                 }).catch(err => {
                     this.loading = false
@@ -355,6 +389,14 @@ export default {
                     this.canInvite = Number(res.data.config.invite_limit) > Number(res.data.info.invited_num)
                 })
             }
+        },
+        delete_ticket () {
+            this.ticketChange = true
+            this.add_ticket_num = "-1"
+            this.userInfo.total_card -= 1
+            setTimeout(() => {
+                this.ticketChange = false
+            }, 500)
         }
     },
     mounted () {
@@ -489,14 +531,6 @@ export default {
     font-size: 36 * @vw;
     font-weight: bold;
     margin-left: auto;
-    i {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 12 * @vw;
-      color: #fff100;
-    }
   }
 }
 .ticket_title {
@@ -537,13 +571,16 @@ export default {
   }
 }
 
-.ticketChange-enter-active {
+.modify-enter-active {
   animation: enter 0.5s both;
 }
 @keyframes enter {
   0% {
     transform: translate(-50%, 20%);
     opacity: 1;
+  }
+  80%{
+    opacity: 0.8;
   }
   100% {
     transform: translate(-50%, -100%);
@@ -598,6 +635,7 @@ export default {
     font-weight: bold;
   }
   .myticket {
+    position: relative;
     display: flex;
     align-items: center;
     height: 80 * @vw;
@@ -608,6 +646,7 @@ export default {
     padding-left: 50 * @vw;
   }
   .mycoins {
+    position: relative;
     display: flex;
     align-items: center;
     height: 80 * @vw;
@@ -615,6 +654,7 @@ export default {
     background-size: 40 * @vw;
     padding-left: 50 * @vw;
   }
+
   .btn_close {
     position: absolute;
     top: 20 * @vw;
@@ -905,5 +945,15 @@ export default {
     opacity: 0;
     left: 100%;
   }
+}
+.modify {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12 * @vw;
+  line-height: 1;
+  color: #31aa6c;
+  opacity: 0;
 }
 </style>

@@ -2,11 +2,16 @@
     <div class="ticket_img" id="ticket_img" ref="ticket_img" v-if="isloading">
         <canvas id="canvas_off" ref="off" class="canvas_off" :width="width" :height="height"></canvas>
         <canvas id="canvas_on" ref="on" class="canvas_on" :width="width" :height="height"></canvas>
+        <!-- 手势 -->
+        <div class="touch" v-if="touch" @touchmove="touch = false" @click="touch = false">
+            <img src="../img/touch.png" alt="">
+        </div>
     </div>
 </template>
 
 <script>
 import { formatterNum } from "@/common/util"
+import { setTimeout } from "timers"
 const hastouch = "ontouchstart" in window ? true : false,
     tapstart = hastouch ? "touchstart" : "mousedown",
     tapmove = hastouch ? "touchmove" : "mousemove",
@@ -19,7 +24,11 @@ export default {
             timer: null,
             isloading: false,
             width: 620,
-            height: 620
+            height: 620,
+            /* 是否刮了刮刮卡 */
+            isTouch: false,
+            /* 是否显示触摸教学 */
+            touch: false
         }
     },
     methods: {
@@ -35,7 +44,7 @@ export default {
                 img.src = imgpath
             })
         },
-        getList () {
+        getDetail () {
             return this.$get("/api/scratch/detail").then(res => {
                 this.card = res.data.card
             })
@@ -101,6 +110,15 @@ export default {
             this.contextOff.fill()
             this.currentTouch = touch
 
+            // 触摸了就算使用了这张刮刮卡
+            if (!this.isTouch) {
+                this.isTouch = true
+                this.$post("/api/scratch/opened", {
+                    card_id: this.card.card_id
+                })
+                this.$emit("delete_ticket")
+            }
+
         },
         touchMoveHandler (event) {
             event.preventDefault()
@@ -116,6 +134,7 @@ export default {
             this.contextOff.stroke()
             this.currentTouch = touch
             this.getClearArea()
+
         },
         getClearArea () {
             // 做个缓冲，不用每次触发move事件都计算有没有刮到80%
@@ -131,20 +150,29 @@ export default {
                 if (area >= 0.5) {
                     this.contextOff.clearRect(0, 0, this.width, this.height)
                     this.isClear = true
+                    this.isTouch = false
                     // 触发开奖动画
                     this.$emit("getPrize", {
                         ...this.card
                     })
-                    // 上报刮刮卡, 上报失败的话再上报一次, 成功的话更新余额
-                    this.$post("/api/scratch/opened", {
-                        card_id: this.card.card_id
-                    }).catch(() => {
-                        this.$post("/api/scratch/opened", {
-                            card_id: this.card.card_id
-                        })
-                    })
+                    // // 上报刮刮卡, 上报失败的话再上报一次, 成功的话更新余额
+                    // this.$post("/api/scratch/opened", {
+                    //     card_id: this.card.card_id
+                    // }).catch(() => {
+                    //     this.$post("/api/scratch/opened", {
+                    //         card_id: this.card.card_id
+                    //     })
+                    // })
+                    // 重新开始
                 }
             }, 300)
+        },
+        checkIsTouch () {
+            let data = this.contextOff.getImageData(0, 0, this.width, this.height).data
+            let area = data.filter((item, index) => item === 0 && (index % 4 === 3)).length / (this.width * this.height)
+            if (area < 0.1) {
+                this.touch = true
+            }
         },
         init () {
             // 如果有多张票 开完奖后会再次调用这个函数
@@ -163,7 +191,7 @@ export default {
                     })
             }
             Promise.all([
-                this.getList(),
+                this.getDetail(),
                 this.imgDataPromise
             ]).then(data => {
                 // 展示刮刮卡
@@ -191,6 +219,10 @@ export default {
     },
     mounted () {
         this.init()
+        /* 3秒后检测是否有开始刮 */
+        setTimeout(() => {
+            this.checkIsTouch()
+        }, 5000)
     }
 }
 </script>
@@ -202,9 +234,9 @@ export default {
   width: 560 * @vw;
   overflow: hidden;
   margin: 146 * @vw auto 0;
-  border-radius: 16*@vw;
+  border-radius: 16 * @vw;
   opacity: 0;
-  animation: fadeIn 0.5s 0.4s cubic-bezier(0.73,-0.2, 1, 1) both;
+  animation: fadeIn 0.5s 0.4s cubic-bezier(0.73, -0.2, 1, 1) both;
   canvas {
     display: block;
     width: 100%;
@@ -219,11 +251,35 @@ export default {
     left: 0;
     top: 0;
   }
+  .touch {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    img{
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 10vw;
+        animation: touch 2s infinite;
+    }
+  }
 }
 @keyframes fadeIn {
-  0%{}
-  100%{
+  0% {
+  }
+  100% {
     opacity: 1;
+  }
+}
+@keyframes touch {
+  0% {
+    left: 60%;
+  }
+  100% {
+    left: 30%;
   }
 }
 </style>
