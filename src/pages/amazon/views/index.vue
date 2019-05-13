@@ -74,7 +74,7 @@ export default {
     },
     methods: {
         href (href) {
-            location.href = href
+            location.href = `${href}${location.search}`
         },
         topup () {
             this.pop_topup = true

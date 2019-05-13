@@ -13,9 +13,9 @@ if (process.env.NODE_ENV === "production") {
     // BASEURL = "http://10.0.1.41:8001"
     // BASEURL = "http://10.0.0.171:8001"
     // BASEURL = "http://149.129.138.180"
-    BASEURL = "http://147.139.3.102"
-    BASEURL = "http://10.0.0.175:8001"
-    // BASEURL = "https://prewww.madcrickets.com"
+    // BASEURL = "http://147.139.3.102"
+    // BASEURL = "http://10.0.0.175:8001"
+    BASEURL = window.location.protocol + "//prewww.madcrickets.com"
 }
 export const URL = BASEURL
 BASEURL = `${BASEURL}/api`

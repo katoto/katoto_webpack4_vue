@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { formateBalance } from "@/common/util"
+import { formatterNum } from "@/common/util"
 const hastouch = "ontouchstart" in window ? true : false,
     tapstart = hastouch ? "touchstart" : "mousedown",
     tapmove = hastouch ? "touchmove" : "mousemove",
@@ -36,7 +36,7 @@ export default {
             })
         },
         getList () {
-            return this.$get("/scratch/detail").then(res => {
+            return this.$get("/api/scratch/detail").then(res => {
                 this.card = res.data.card
             })
         },
@@ -75,7 +75,7 @@ export default {
             this.contextOn.textAlign = "center"
             this.contextOn.textBaseline = "top"
             this.contextOn.fillStyle = "#48198e"
-            this.contextOn.fillText(formateBalance(number.toString()), x, y)
+            this.contextOn.fillText(formatterNum(number.toString()), x, y)
         },
         renderAlloff () {
             this.contextOff.drawImage(this.imgoff, 0, 0)
@@ -91,7 +91,7 @@ export default {
         },
         touchStartHandler (event) {
             event.preventDefault()
-            if (this.isClear || this.card === null) {
+            if (this.isClear || this.card === null || (this.card && this.card.card_id === undefined)) {
                 return
             }
             event = event || window.event
@@ -104,7 +104,7 @@ export default {
         },
         touchMoveHandler (event) {
             event.preventDefault()
-            if (this.isClear || this.card === null) {
+            if (this.isClear || this.card === null || (this.card && this.card.card_id === undefined)) {
                 return
             }
             event = event || window.event
@@ -136,13 +136,13 @@ export default {
                         ...this.card
                     })
                     // 上报刮刮卡, 上报失败的话再上报一次, 成功的话更新余额
-                    this.$post("/scratch/opened", {
+                    this.$post("/api/scratch/opened", {
                         card_id: this.card.card_id
                     }).catch(() => {
-                        this.$post("/scratch/opened", {
+                        this.$post("/api/scratch/opened", {
                             card_id: this.card.card_id
-                        }).then(() => this.$emit("refreshInfo"))
-                    }).then(() => this.$emit("refreshInfo"))
+                        })
+                    })
                 }
             }, 300)
         },
@@ -199,7 +199,7 @@ export default {
 @vw: 100/750vw;
 .ticket_img {
   position: relative;
-  width: 620 * @vw;
+  width: 560 * @vw;
   overflow: hidden;
   margin: 146 * @vw auto 0;
   border-radius: 16*@vw;
