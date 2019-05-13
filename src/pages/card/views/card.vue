@@ -204,7 +204,7 @@ export default {
   margin: 146 * @vw auto 0;
   border-radius: 16*@vw;
   opacity: 0;
-  animation: fadeIn 0.5s 0.4s cubic-bezier(0.73,-0.2, 1, 1) both;
+  animation: fadeIn 0.2s cubic-bezier(0.73,-0.2, 1, 1) both;
   canvas {
     display: block;
     width: 100%;
