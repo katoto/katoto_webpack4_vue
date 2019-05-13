@@ -25,22 +25,6 @@
                     <a class="btn_copy" @click="handleCopy(item.password)">Copy</a>
                 </div>
             </li>
-            <li class="list">
-                <div class="card_description">
-                    <p class="card_count">₹500</p>
-                    <p class="card_msg">Amazon.com Gift Card</p>
-                </div>
-                <div class="card_key">
-                    <i>NO.</i>
-                    <p>123123</p>
-                    <a class="btn_copy" >Copy</a>
-                </div>
-                <div class="card_val">
-                    <i>KEY.</i>
-                    <p>123123</p>
-                    <a class="btn_copy">Copy</a>
-                </div>
-            </li>
         </ul>
         <div class="pop_layer" v-if="pop_topup">
         </div>
@@ -52,7 +36,7 @@
                 <div class="count">
                     79,000
                 </div>
-                <a class="btn" @click="gotoshop">卢比79 Charge verification</a>
+                <a class="btn" @click="gotoshop">₹79 Charge verification</a>
                 <p class="tips">After successful recharge display card</p>
             </div>
         </transition>
