@@ -27,7 +27,7 @@
         <template v-if="inList">
             <div class="news">
                 <ul>
-                    <broadcast :time="userInfo.broadcast ? userInfo.broadcast.length * 1 : 0">
+                    <broadcast :time="userInfo.broadcast ? userInfo.broadcast.length * 10 : 0">
                         <li v-for="(item, index) in userInfo.broadcast" :key="index" v-html="_(item.prize_type === 'golds' ? 'm_card.broadcast1' : 'm_card.broadcast', item.username, formatterNum(item.prize_amount || 0))"></li>
                     </broadcast>
                 </ul>
@@ -291,6 +291,12 @@ export default {
             // todo 需增加一个看完广告 得到奖励的告知
             if (isSuccess) {
                 this.getUserInfo()
+                setTimeout(()=>{
+                    this.getUserInfo()
+                    setTimeout(()=>{
+                        this.getUserInfo()
+                    }, 1000)
+                }, 1000)
             } else {
                 this.$toast({
                     content: _("m_card.adLoading")

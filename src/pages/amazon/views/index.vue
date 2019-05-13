@@ -76,7 +76,7 @@ export default {
         }
     },
     mounted () {
-        this.$post("/scratch/gifts").then(res => {
+        this.$post("/api/scratch/gifts").then(res => {
             let data = res.data
             this.need_recharge = data.need_recharge === "True"
             this.gifts = [...data.gifts]
