@@ -1,6 +1,6 @@
 <template>
     <div class="broadcast">
-        <div class="broadcast-box" v-if="list.length > 0" :style="{animationDuration: `${time}s`}">
+        <div class="broadcast-box" v-if="list.length > 0" :style="{animationDuration: `${time}s`}" ref="lists">
             <p class="broadcast-item" v-for="(item, index) in list" :key="index">{{item}}</p>
         </div>
         <div class="broadcast-box" :style="{animationDuration: `${time}s`}" v-else>
@@ -24,6 +24,14 @@ export default {
                 return 10
             }
         }
+    },
+    data () {
+        return {
+
+        }
+    },
+    mounted () {
+
     }
 }
 </script>
@@ -34,7 +42,9 @@ export default {
   width: 100%;
   margin: 0 auto;
   .broadcast-box /deep/ {
-    animation: go 10s linear infinite;
+    animation-name: go;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
     min-width: 100%;
     text-indent: 0;
     float: left;
