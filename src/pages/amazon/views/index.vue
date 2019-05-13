@@ -4,7 +4,7 @@
             <a class="btn_back" @click="href('card.html')"> </a>
             <h1>My Prize</h1>
         </header>
-        <div class="check" if="!need_recharge" @click="topup">
+        <div class="check" v-if="need_recharge" @click="topup">
             <p class="msg">The authentication</p>
             <p class="view">Before collecting the prize, we need to verify that you are a natural person</p>
         </div>
