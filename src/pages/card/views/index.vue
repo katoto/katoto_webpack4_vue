@@ -140,7 +140,7 @@
                     <p class="p1">x</p>
                     <p class="p2">2</p>
                 </div>
-                <a class="btn" @click="handlePop('all', false)">OK</a>
+                <a class="btn" @click="handlePop('all', false)">{{_('m_card.m_freeticket_btn')}}</a>
             </div>
         </transition>
         <load v-if="loading"></load>
@@ -659,7 +659,6 @@ export default {
     width: 426 * @vw;
     height: 88 * @vw;
     text-align: center;
-    line-height: 88 * @vw;
     overflow: hidden;
     margin: 0 auto;
     border-radius: 44 * @vw;
@@ -668,10 +667,12 @@ export default {
       margin-top: 70 * @vw;
       background: #febb2b;
       color: #1c1c1c;
+      line-height: 88 * @vw;
     }
     &.btn_continue {
       margin-top: 40 * @vw;
       border: 6 * @vw solid #fff;
+      line-height: 72 * @vw;
     }
     &:active {
       transform: scale(0.8);

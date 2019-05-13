@@ -11,6 +11,7 @@ export default {
         "m_card.goToUse": "See what's behind",
         "m_card.welcome": "Welcome!",
         "m_card.getCardSuccess": "Here's a gift for you",
+        "m_card.m_freeticket_btn": "See what's behind",
         "m_card.spending5000": "Spending 5000coins",
         "m_card.spending500": "Spending 500coins",
         "m_card.inviting": "Inviting friends",
