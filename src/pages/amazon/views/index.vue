@@ -36,7 +36,7 @@
                 <div class="count">
                     79,000
                 </div>
-                <a class="btn" @click="gotoshop">卢比79 Charge verification</a>
+                <a class="btn" @click="gotoshop">₹79 Charge verification</a>
                 <p class="tips">After successful recharge display card</p>
             </div>
         </transition>
