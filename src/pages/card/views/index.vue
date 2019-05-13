@@ -495,7 +495,6 @@ export default {
       left: 50%;
       transform: translateX(-50%);
       font-size: 12 * @vw;
-      opacity: 0.6;
       color: #fff100;
     }
   }
@@ -539,7 +538,7 @@ export default {
 }
 
 .ticketChange-enter-active {
-  animation: enter 0.5s infinite backwards;
+  animation: enter 0.5s both;
 }
 @keyframes enter {
   0% {
