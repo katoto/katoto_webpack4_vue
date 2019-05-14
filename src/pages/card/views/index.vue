@@ -78,7 +78,7 @@
                         <transition name="modify" >
                             <i v-show="pop_ticket_modify" class="modify">
                                 <!-- +1 -->
-                                {{count}}
+                                +{{count}}
                             </i>
                         </transition>
                     </p>
@@ -243,7 +243,7 @@ export default {
                         this.$refs.card && this.$refs.card.init()
                     } else {
                         this.pop_ticket = true
-                        this.inList = false
+                        this.inList = true
                     }
                 })
                 this.balance = false
@@ -271,6 +271,7 @@ export default {
             }
         },
         getUserInfo () {
+            console.log("user_info")
             return this.$get("/api/scratch/list").then(res => {
                 let isFirst = (res.data.is_first === "True")
                 let total_card = Number(res.data.total_card)
@@ -310,16 +311,20 @@ export default {
                 }
             })
         },
-        showAdVideoCallback (isSuccess) {
+        async showAdVideoCallback (isSuccess) {
             // todo 需增加一个看完广告 得到奖励的告知
             if (isSuccess) {
-                this.getUserInfo()
-                setTimeout(() => {
-                    this.getUserInfo()
-                    setTimeout(() => {
-                        this.getUserInfo()
-                    }, 1000)
-                }, 1000)
+                let _total_card = Number(this.userInfo.total_card)
+                await this.getUserInfo()
+                if (Number(this._total_card) === _total_card) {
+                    await this.wait(1000)
+                    await this.getUserInfo()
+                    if (Number(this._total_card) === _total_card) {
+                        await this.wait(1000)
+                        await this.getUserInfo()
+                    }
+                }
+                this.showAddTicket1(1)
             } else {
                 this.$toast({
                     content: _("m_card.adLoading")
@@ -345,8 +350,7 @@ export default {
                     amount
                 }).then(() => {
                     this.loading = false
-                    this.count = "+" + amount
-                    this.pop_ticket_modify = true
+                    this.showAddTicket1(amount)
                     this.userInfo.gold_total = Number(this.userInfo.gold_total) - (500 * Number(amount))
                     this.userInfo.total_card = Number(this.userInfo.total_card) + Number(amount)
                     this.getUserInfo().then(() => {
@@ -354,10 +358,6 @@ export default {
                             this.$refs.card && this.$refs.card.init()
                         }
                     })
-                    setTimeout(() => {
-                        this.pop_ticket_modify = false
-                    }, 500)
-                    // this.showAddTicket()
                 }).catch(err => {
                     this.loading = false
                 })
@@ -375,7 +375,12 @@ export default {
                 this.ticketChange = false
             })
         },
-
+        async showAddTicket1 (amount) {
+            this.count = amount
+            this.pop_ticket_modify = true
+            this.wait(500)
+            this.pop_ticket_modify = false
+        },
         invite () {
             cbetLocal({
                 func: "jumpToLocal",
