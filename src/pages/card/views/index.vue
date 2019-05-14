@@ -12,16 +12,15 @@
                 <a class="btn_star" key="Star" v-hidden="true">
                     Star Card 0
                     <transition name="starChange">
-                        <i class="starChange" v-if="starChange">+1</i>
+                        <i class="starChange " v-if="starChange">+1</i>
                     </transition>
                 </a>
-
             </template>
             <a class="btn_ticket" @click="pop_ticket = true" key="btn_ticket">
                 {{userInfo.total_card || 0}}
-                <transition name="modify">
-                    <i class="modify" v-show="ticketChange">{{add_ticket_num}}</i>
-                </transition>
+                <!-- <transition name="modify">
+                    <i class="modify hide" v-show="ticketChange">{{add_ticket_num}}</i>
+                </transition> -->
             </a>
         </header>
         <template v-if="inList">
@@ -358,7 +357,7 @@ export default {
                     })
                     setTimeout(() => {
                         this.pop_ticket_modify = false
-                    }, 500)
+                    }, 2000)
                     // this.showAddTicket()
                 }).catch(err => {
                     this.loading = false
@@ -581,18 +580,19 @@ export default {
 }
 
 .modify-enter-active {
-  animation: enter 0.5s both;
+  animation: enter 2s;
 }
 @keyframes enter {
   0% {
-    transform: translate(-50%, 20%);
+    transform: translate(0, 230%);
     opacity: 1;
   }
-  80%{
-    opacity: 0.8;
+  50%{
+    opacity: 1;
+    transform: translate(0, 150%);
   }
   100% {
-    transform: translate(-50%, -100%);
+    transform: translate(0, 150%);
     opacity: 0;
   }
 }
@@ -632,7 +632,7 @@ export default {
   transform: translate(-50%, -50%);
   background: #fff;
   border-radius: 15 * @vw;
-  overflow: hidden;
+//   overflow: hidden;
   font-weight: bold;
   white-space: nowrap;
   .pop_ticket_header {
@@ -916,7 +916,7 @@ export default {
       left: -100%;
       top: 0;
       width: 36px;
-      height: 100%;
+      height: 91%;
       content: "";
       background: linear-gradient(
         90deg,
@@ -963,12 +963,11 @@ export default {
 .modify {
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 40%;
   font-size: 40 * @vw;
   line-height: 1;
-  color: #31aa6c;
-  opacity: 0;
+  transform: translate(0, 150%);
+   opacity: 0;
 }
 .flex1{
     display: flex;

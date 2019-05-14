@@ -9,7 +9,7 @@
             <p class="view">Before collecting the prize, we need to verify that you are a natural person</p>
         </div>
         <ul>
-            <li class="list" v-for="item in gifts" :key="item.card_no">
+            <li class="list" v-for="item in gifts" :key="item.card_no" @click="hangdleClick">
                 <div class="card_description">
                     <p class="card_count">₹500</p>
                     <p class="card_msg">Amazon.com Gift Card</p>
@@ -66,6 +66,12 @@ export default {
         },
         handleCopy (text) {
             copy(text)
+        },
+        hangdleClick () {
+            if (this.need_recharge) {
+                this.pop_topup = true
+            }
+            return
         },
         gotoshop () {
             cbetLocal({
