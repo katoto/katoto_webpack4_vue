@@ -18,6 +18,7 @@ window.$toast = Toast
 
 let cookies = cookie.getAll()
 cookies.ck = cookies.appck
+
 // 初始化与公共样式
 Vue.use(simpleAjax, {
     commonParams: {

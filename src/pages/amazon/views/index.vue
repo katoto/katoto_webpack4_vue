@@ -17,12 +17,12 @@
                 <div class="card_key">
                     <i>NO.</i>
                     <p>{{item.card_no}}</p>
-                    <a class="btn_copy" @click="handleCopy(item.card_no)" v-if="need_recharge">Copy</a>
+                    <a class="btn_copy" @click="handleCopy(item.card_no)" v-if="!need_recharge">Copy</a>
                 </div>
                 <div class="card_val">
                     <i>KEY.</i>
                     <p>{{item.password}}</p>
-                    <a class="btn_copy" @click="handleCopy(item.password)" v-if="need_recharge">Copy</a>
+                    <a class="btn_copy" @click="handleCopy(item.password)" v-if="!need_recharge">Copy</a>
                 </div>
             </li>
         </ul>
@@ -34,9 +34,9 @@
                 <h2 class="title">Authenticate</h2>
                 <p class="msg">Please recharge for verification Get the same number of tokens</p>
                 <div class="count">
-                    79,000
+                    {{`${platform === 'android' ? '90,000' : '79,000'}`}}
                 </div>
-                <a class="btn" @click="gotoshop">₹79 Charge verification</a>
+                <a class="btn" @click="gotoshop">₹{{`${platform === 'android' ? '90' : '79'}`}} Charge verification</a>
                 <p class="tips">After successful recharge display card</p>
             </div>
         </transition>
@@ -45,7 +45,7 @@
 
 <script>
 import {
-    copy, cbetLocal
+    copy, cbetLocal, getURLParams
 } from "@common/util"
 export default {
     data () {
@@ -53,7 +53,8 @@ export default {
             // 是否是已验证用户
             need_recharge: false,
             pop_topup: false,
-            gifts: []
+            gifts: [],
+            platform: "android"
         }
     },
     methods: {
@@ -76,6 +77,7 @@ export default {
         }
     },
     mounted () {
+        this.platform = getURLParams().platform || "android"
         this.$post("/api/scratch/gifts").then(res => {
             let data = res.data
             this.need_recharge = data.need_recharge === "True"

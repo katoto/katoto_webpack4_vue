@@ -11,7 +11,6 @@
 
 <script>
 import { formatterNum } from "@/common/util"
-import { setTimeout } from "timers"
 const hastouch = "ontouchstart" in window ? true : false,
     tapstart = hastouch ? "touchstart" : "mousedown",
     tapmove = hastouch ? "touchmove" : "mousemove",
@@ -44,10 +43,11 @@ export default {
                 img.src = imgpath
             })
         },
+        preGetDetail () {
+            this._preGetDetailPromise = this.getDetail()
+        },
         getDetail () {
-            return this.$get("/api/scratch/detail").then(res => {
-                this.card = res.data.card
-            })
+            return this.$get("/api/scratch/detail")
         },
         renderAll () {
             if (this.card.items && this.card.items.length === 9) {
@@ -113,19 +113,29 @@ export default {
             // 触摸了就算使用了这张刮刮卡
             if (!this.isTouch) {
                 this.isTouch = true
-                this.$post("/api/scratch/opened", {
-                    card_id: this.card.card_id
+                this.openCard().then(() => {
+                    // 上报开卡后 预加载下一次刮刮卡
+                    this.preGetDetail()
                 })
                 this.$emit("delete_ticket")
             }
 
         },
+        openCard () {
+            return this.$post("/api/scratch/opened", {
+                card_id: this.card.card_id
+            }).catch(() => {
+                return this.$post("/api/scratch/opened", {
+                    card_id: this.card.card_id
+                })
+            })
+        },
         touchMoveHandler (event) {
+            event = event || window.event
             event.preventDefault()
             if (this.isClear || this.card === null || (this.card && this.card.card_id === undefined)) {
                 return
             }
-            event = event || window.event
             let touch = hastouch ? event.changedTouches[0] : event
             this.contextOff.beginPath()
             this.contextOff.moveTo((this.currentTouch.pageX - this.offsetLeft) * this.scale, (this.currentTouch.pageY - this.offsetTop) * this.scale)
@@ -134,7 +144,11 @@ export default {
             this.contextOff.stroke()
             this.currentTouch = touch
             this.getClearArea()
-
+        },
+        getArea () {
+            let data = this.contextOff.getImageData(0, 0, this.width, this.height).data
+            let area = data.filter((item, index) => item === 0 && (index % 4 === 3)).length / (this.width * this.height)
+            return area
         },
         getClearArea () {
             // 做个缓冲，不用每次触发move事件都计算有没有刮到80%
@@ -143,34 +157,23 @@ export default {
                 this.timer = null
             }
             this.timer = setTimeout(() => {
-                let data = this.contextOff.getImageData(0, 0, this.width, this.height).data
-                let area = data.filter((item, index) => item === 0 && (index % 4 === 3)).length / (this.width * this.height)
-
+                if (this.isClear) {
+                    return
+                }
+                console.log(this.card.golds_amount, "开奖")
                 // 如果刮到的部分超过80%则开奖
-                if (area >= 0.5) {
+                if (this.getArea() >= 0.5) {
                     this.contextOff.clearRect(0, 0, this.width, this.height)
                     this.isClear = true
-                    this.isTouch = false
                     // 触发开奖动画
                     this.$emit("getPrize", {
                         ...this.card
                     })
-                    // // 上报刮刮卡, 上报失败的话再上报一次, 成功的话更新余额
-                    // this.$post("/api/scratch/opened", {
-                    //     card_id: this.card.card_id
-                    // }).catch(() => {
-                    //     this.$post("/api/scratch/opened", {
-                    //         card_id: this.card.card_id
-                    //     })
-                    // })
-                    // 重新开始
                 }
             }, 300)
         },
         checkIsTouch () {
-            let data = this.contextOff.getImageData(0, 0, this.width, this.height).data
-            let area = data.filter((item, index) => item === 0 && (index % 4 === 3)).length / (this.width * this.height)
-            if (area < 0.1) {
+            if (this.getArea() < 0.1) {
                 this.touch = true
             }
         },
@@ -191,13 +194,20 @@ export default {
                     })
             }
             Promise.all([
-                this.getDetail(),
+                // 如果有预加载刮刮卡，使用预加载刮刮卡
+                this._preGetDetailPromise ? this._preGetDetailPromise : this.getDetail(),
                 this.imgDataPromise
             ]).then(data => {
+                this.card = data[0].data.card
                 // 展示刮刮卡
+                // 展示刮刮卡后 把预加载刮刮卡状态清空
+                if (this._preGetDetailPromise) {
+                    this._preGetDetailPromise = false
+                }
                 this.isloading = true
                 this.$nextTick(() => {
                     this.isClear = false
+                    this.isTouch = false
                     this.timer = null
                     this.canvasOff = this.$refs.off
                     this.contextOff = this.canvasOff.getContext("2d")
@@ -259,11 +269,11 @@ export default {
     left: 0;
     z-index: 99;
     img{
-        position: absolute;
-        top: 50%;
-        left: 0;
-        width: 10vw;
-        animation: touch 2s infinite;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 10vw;
+      animation: touch 2s infinite;
     }
   }
 }
