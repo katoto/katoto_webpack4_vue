@@ -276,7 +276,7 @@ export default {
         getUserInfo () {
             return this.$get("/api/scratch/list").then(res => {
                 this.isReady = true
-                if (this.userInfo.is_first !== "False") {
+                if (this.userInfo.is_first === "True") {
                     this.pop_freeTicket = true
                 }
                 // 获取用户金额
