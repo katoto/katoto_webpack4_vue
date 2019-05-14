@@ -8,7 +8,7 @@
 export default {
     data () {
         return {
-            n: 50,
+            n: 10,
             colors: ["#00ff6c","#ff6b2a","#7fa9ff","#febb2b"],
             width: 20,
             height: 40,
@@ -41,7 +41,7 @@ export default {
                 this.x = WIDTH / 2
                 this.y = HEIGHT / 2
                 this.a = Math.random()
-                this.vx = ~~getRandom(10,20) * 0.5
+                this.vx = 4
                 this.vy = ~~getRandom(10,20) * 1
             }
             print () {
@@ -54,7 +54,9 @@ export default {
                 // this.vx *= this.a
                 // this.vy *= this.a
                 if (this.x > WIDTH || this.x < 0 || this.y > HEIGHT || this.y < 0) {
-                    that.ribbons.splice(this,1)
+                    // that.ribbons.splice(this,1)
+                    this.x = WIDTH / 2
+                    this.y = HEIGHT / 2
                 }
             }
         }

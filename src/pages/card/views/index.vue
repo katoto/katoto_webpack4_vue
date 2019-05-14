@@ -56,7 +56,9 @@
         <template v-else>
             <div class="ticket_title"></div>
             <div class="ticket_bonus"></div>
-            <card :class="{'on': isShowCard}" ref="card" @getPrize="getPrize" @getUserInfo="getUserInfo" @delete_ticket="delete_ticket" key="card"></card>
+            <div class="flex1">
+                <card :class="{'on': isShowCard}" ref="card" @getPrize="getPrize" @getUserInfo="getUserInfo" @delete_ticket="delete_ticket" key="card"></card>
+            </div>
             <transition enter-active-class="animated bounceIn">
                 <div class="balance" v-show="balance">
                     <p>{{formatterNum(userInfo.gold_total || 0)}}</p>
@@ -416,6 +418,8 @@ export default {
 @vw: 100/750vw;
 .page_card {
   position: relative;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   overflow: hidden;
   &.lists {
@@ -540,7 +544,7 @@ export default {
 }
 .ticket_title {
   width: 444 * @vw;
-  height: 181 * @vw;
+  height: 160 * @vw;
   overflow: hidden;
   //   background: url(../img/ticket_title.png) no-repeat center;
   //   background-size: cover;
@@ -606,7 +610,7 @@ export default {
 }
 .pop_coins {
   position: absolute;
-  top: 50%;
+  top: 41%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 99;
@@ -961,9 +965,15 @@ export default {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 16 * @vw;
+  font-size: 40 * @vw;
   line-height: 1;
   color: #31aa6c;
   opacity: 0;
+}
+.flex1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
 }
 </style>
