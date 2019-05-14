@@ -97,6 +97,7 @@ export default {
             this.scale = this.canvasOff.width / this.ticket_img.clientWidth
             this.canvasOff.addEventListener(tapstart, this.touchStartHandler)
             this.canvasOff.addEventListener(tapmove, this.touchMoveHandler)
+            this.canvasOff.addEventListener(tapend, this.getClearArea)
         },
         touchStartHandler (event) {
             event.preventDefault()
@@ -143,7 +144,7 @@ export default {
             this.contextOff.closePath()
             this.contextOff.stroke()
             this.currentTouch = touch
-            this.getClearArea()
+
         },
         getArea () {
             let data = this.contextOff.getImageData(0, 0, this.width, this.height).data
@@ -244,6 +245,7 @@ export default {
   width: 560 * @vw;
   overflow: hidden;
   margin: 146 * @vw auto 0;
+  margin: 0 auto 0;
   border-radius: 16 * @vw;
   opacity: 0;
   animation: fadeIn 0.2s cubic-bezier(0.73,-0.2, 1, 1) both;
