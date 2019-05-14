@@ -127,12 +127,12 @@ export default {
         },
         showDetail (item) {
             this.activeItem = item
-            if (!this.isLog) {
-                this.$toast({
-                    content: _("please_login")
-                })
-                return
-            }
+            // if (!this.isLog) {
+            //     this.$toast({
+            //         content: _("please_login")
+            //     })
+            //     return
+            // }
             if (item.islock === "1") {
                 this.$toast({ content: _("m_payment.unlock_tip") })
                 return
