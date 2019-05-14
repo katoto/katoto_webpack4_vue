@@ -233,7 +233,10 @@ export default {
             this.balance = true
             await this.wait(1000)
             this.userInfo.gold_total = Number(this.userInfo.gold_total) + Number(this.golds_amount)
-            console.log(`end ${this.userInfo.gold_total}`)
+            await this.wait(1500)
+            if (this.pop_coins) {
+                this.handlePop()
+            }
         },
         handlePop () {
             if ((this.pop_coins || this.pop_amazon)) {
@@ -241,10 +244,11 @@ export default {
                 this.pop_amazon = false
                 this.getUserInfo().then(() => {
                     if (Number(this.userInfo.total_card) > 0) {
-                        this.$refs.card && this.$refs.card.init()
+                        this.reloadCard()
                     } else {
-                        this.pop_ticket = true
-                        this.inList = false
+                        this.goAD()
+                        // this.pop_ticket = true
+                        // this.inList = true
                     }
                 })
                 this.balance = false
@@ -268,10 +272,11 @@ export default {
                     this.inList = false
                 }, 300)
             } else {
-                this.pop_ticket = true
+                this.goAD()
             }
         },
         getUserInfo () {
+            console.log("user_info")
             return this.$get("/api/scratch/list").then(res => {
                 let isFirst = (res.data.is_first === "True")
                 let total_card = Number(res.data.total_card)
@@ -311,22 +316,33 @@ export default {
                 }
             })
         },
-        showAdVideoCallback (isSuccess) {
+        async showAdVideoCallback (isSuccess) {
             // todo 需增加一个看完广告 得到奖励的告知
+            this.loading = false
             if (isSuccess) {
-                this.getUserInfo()
-                setTimeout(() => {
-                    this.getUserInfo()
-                    setTimeout(() => {
-                        this.getUserInfo()
-                    }, 1000)
-                }, 1000)
+                let _total_card = Number(this.userInfo.total_card)
+                await this.getUserInfo()
+                if (Number(this._total_card) === _total_card) {
+                    await this.wait(1000)
+                    await this.getUserInfo()
+                    if (Number(this._total_card) === _total_card) {
+                        await this.wait(1000)
+                        await this.getUserInfo()
+                    }
+                }
+                this.showAddTicket(1)
+                await this.wait(500)
+                if (!this.inList) {
+                    this.pop_ticket = false
+                    this.reloadCard()
+                } else {
+                    this.inList = false
+                }
             } else {
                 this.$toast({
                     content: _("m_card.adLoading")
                 })
             }
-            this.loading = false
         },
         getPrize (card) {
             if (card.card_result === "H") {
@@ -339,6 +355,9 @@ export default {
             this.golds_amount = Number(card.golds_amount)
             this.addCoinAnimate()
         },
+        reloadCard () {
+            this.$refs.card && this.$refs.card.init()
+        },
         buyCard (amount) {
             if (Number(this.userInfo.gold_total) - (500 * Number(amount)) > 0) {
                 this.loading = true
@@ -346,19 +365,17 @@ export default {
                     amount
                 }).then(() => {
                     this.loading = false
-                    this.count = "+" + amount
-                    this.pop_ticket_modify = true
+                    this.showAddTicket(amount)
                     this.userInfo.gold_total = Number(this.userInfo.gold_total) - (500 * Number(amount))
                     this.userInfo.total_card = Number(this.userInfo.total_card) + Number(amount)
                     this.getUserInfo().then(() => {
                         if (!this.inList && this.$refs.card.isClear) {
-                            this.$refs.card && this.$refs.card.init()
+                            this.reloadCard()
+                        }
+                        if (!this.inList) {
+                            this.pop_ticket = false
                         }
                     })
-                    setTimeout(() => {
-                        this.pop_ticket_modify = false
-                    }, 2000)
-                    // this.showAddTicket()
                 }).catch(err => {
                     this.loading = false
                 })
@@ -368,15 +385,16 @@ export default {
                 })
             }
         },
-        async showAddTicket (num) {
-            this.add_ticket_num = Number(num)
-            this.$nextTick(async () => {
-                this.ticketChange = true
-                await this.wait(500)
-                this.ticketChange = false
-            })
+        async showAddTicket (amount) {
+            amount = Number(amount)
+            this.count = amount > 0 ? `+${amount}` : `${amount}`
+            this.add_ticket_num = amount > 0 ? `+${amount}` : `${amount}`
+            this.ticketChange = true
+            this.pop_ticket_modify = true
+            await this.wait(2000)
+            this.pop_ticket_modify = false
+            this.ticketChange = false
         },
-
         invite () {
             cbetLocal({
                 func: "jumpToLocal",
@@ -397,12 +415,8 @@ export default {
             }
         },
         delete_ticket () {
-            this.ticketChange = true
-            this.add_ticket_num = "-1"
+            this.showAddTicket(-1)
             this.userInfo.total_card = Number(this.userInfo.total_card) - 1
-            setTimeout(() => {
-                this.ticketChange = false
-            }, 500)
         }
     },
     mounted () {
@@ -970,9 +984,9 @@ export default {
    opacity: 0;
 }
 .flex1{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
 }
 </style>
