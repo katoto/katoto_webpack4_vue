@@ -17,7 +17,7 @@
                 </a>
 
             </template>
-            <a class="btn_ticket" @click="handlePop('pop_ticket',true)" key="btn_ticket">
+            <a class="btn_ticket" @click="pop_ticket = true" key="btn_ticket">
                 {{userInfo.total_card || 0}}
                 <transition name="modify">
                     <i class="modify" v-show="ticketChange">{{add_ticket_num}}</i>
@@ -56,7 +56,7 @@
         <template v-else>
             <div class="ticket_title"></div>
             <div class="ticket_bonus"></div>
-            <card :class="{'on': isShowCard}" ref="card" @getPrize="getPrize" @delete_ticket="delete_ticket"></card>
+            <card :class="{'on': isShowCard}" ref="card" @getPrize="getPrize" @getUserInfo="getUserInfo" @delete_ticket="delete_ticket" key="card"></card>
             <transition enter-active-class="animated bounceIn">
                 <div class="balance" v-show="balance">
                     <p>{{formatterNum(userInfo.gold_total || 0)}}</p>
@@ -65,7 +65,7 @@
         </template>
 
         <!-- pop -->
-        <div class="pop_layer" v-if="pop_layer" @click="handlePop('all', false)">
+        <div class="pop_layer" v-if="pop_layer" @click="handlePop">
             <coins v-if="pop_coins"></coins>
             <ribbon v-if="pop_celebtity || pop_amazon"></ribbon>
         </div>
@@ -91,7 +91,7 @@
                         </transition> -->
                     </p>
                 </div>
-                <a class="btn_close" @click="handlePop('pop_ticket', false)"></a>
+                <a class="btn_close" @click="handlePop"></a>
                 <p class="title">{{_('m_card.getcard')}}</p>
                 <ul class="list">
                     <li @click="goAD">
@@ -115,7 +115,7 @@
         </transition>
         <!-- 获得金币 -->
         <transition name="pop_animate">
-            <div class="pop_coins" v-if="pop_coins" @click="handlePop('coins', false)">
+            <div class="pop_coins" v-if="pop_coins" @click="handlePop">
                 <p>{{_('m_card.congratulations')}}</p>
                 <p class="bold">{{formatterNum(golds_amount)}} coins</p>
             </div>
@@ -141,7 +141,7 @@
                 <a class="btn btn_get" @click="href('/amazon.html')">
                     Get Now
                 </a>
-                <a class="btn btn_continue" @click="handlePop('amazon', false)">
+                <a class="btn btn_continue" @click="handlePop">
                     Continue
                 </a>
             </div>
@@ -155,7 +155,7 @@
                     <p class="p p1">x</p>
                     <p class="p p2">2</p>
                 </div>
-                <a class="btn" @click="handlePop('all', false)">{{_('m_card.m_freeticket_btn')}}</a>
+                <a class="btn" @click="handlePop">{{_('m_card.m_freeticket_btn')}}</a>
             </div>
         </transition>
         <load v-if="loading"></load>
@@ -228,38 +228,35 @@ export default {
             })
         },
         async addCoinAnimate () {
+            console.log(`now ${this.userInfo.gold_total}`)
             this.balance = true
             await this.wait(1000)
             this.userInfo.gold_total = Number(this.userInfo.gold_total) + Number(this.golds_amount)
+            console.log(`end ${this.userInfo.gold_total}`)
         },
-        handlePop (pop, show) {
+        handlePop () {
             if ((this.pop_coins || this.pop_amazon)) {
-                Promise.all([
-                    this.getUserInfo(),
-                    this.wait(1800)
-                ])
-                    .then(res => {
-                        res = res[0]
-                        if (Number(res.data.total_card) > 0) {
-                            this.$refs.card && this.$refs.card.init()
-                        } else {
-                            this.pop_ticket = true
-                            this.inList = false
-                        }
-                    })
+                this.pop_coins = false
+                this.pop_amazon = false
+                this.getUserInfo().then(() => {
+                    if (Number(this.userInfo.total_card) > 0) {
+                        this.$refs.card && this.$refs.card.init()
+                    } else {
+                        this.pop_ticket = true
+                        this.inList = false
+                    }
+                })
                 this.balance = false
+                return
             } else if (this.pop_freeTicket) {
                 this.showAddTicket(2)
+                this.userInfo.total_card = this._total_card
             }
-            if (!show) {
-                this.pop_ticket = false
-                this.pop_coins = false
-                this.pop_celebtity = false
-                this.pop_amazon = false
-                this.pop_freeTicket = false
-            } else {
-                this[pop] = show
-            }
+            this.pop_ticket = false
+            this.pop_coins = false
+            this.pop_celebtity = false
+            this.pop_amazon = false
+            this.pop_freeTicket = false
         },
         goView (e) {
             if (!this.isReady) {
@@ -275,13 +272,17 @@ export default {
         },
         getUserInfo () {
             return this.$get("/api/scratch/list").then(res => {
+                let isFirst = (res.data.is_first !== "False")
+                let total_card = Number(res.data.total_card)
+                this._total_card = total_card
                 this.isReady = true
-                if (this.userInfo.is_first !== "False") {
-                    this.pop_freeTicket = true
-                }
                 // 获取用户金额
                 this.userInfo = {
-                    ...res.data
+                    ...res.data,
+                    total_card: isFirst ? (total_card - 2 >= 0 ? total_card - 2 : 0) : total_card
+                }
+                if (isFirst) {
+                    this.pop_freeTicket = true
                 }
                 return res
             })
@@ -348,7 +349,11 @@ export default {
                     this.pop_ticket_modify = true
                     this.userInfo.gold_total = Number(this.userInfo.gold_total) - (500 * Number(amount))
                     this.userInfo.total_card = Number(this.userInfo.total_card) + Number(amount)
-                    this.getUserInfo()
+                    this.getUserInfo().then(() => {
+                        if (!this.inList && this.$refs.card.isClear) {
+                            this.$refs.card && this.$refs.card.init()
+                        }
+                    })
                     setTimeout(() => {
                         this.pop_ticket_modify = false
                     }, 500)
@@ -370,6 +375,7 @@ export default {
                 this.ticketChange = false
             })
         },
+
         invite () {
             cbetLocal({
                 func: "jumpToLocal",
@@ -392,7 +398,7 @@ export default {
         delete_ticket () {
             this.ticketChange = true
             this.add_ticket_num = "-1"
-            this.userInfo.total_card -= 1
+            this.userInfo.total_card = Number(this.userInfo.total_card) - 1
             setTimeout(() => {
                 this.ticketChange = false
             }, 500)
@@ -800,8 +806,8 @@ export default {
       background-size: 125 * @vw;
     }
     .p{
-        position: relative;
-        top: -15*@vw;
+      position: relative;
+      top: -15*@vw;
     }
     .p1 {
       font-size: 64 * @vw;
