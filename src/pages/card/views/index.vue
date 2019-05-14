@@ -152,13 +152,12 @@
                 <p>{{_('m_card.welcome')}}</p>
                 <p>{{_('m_card.getCardSuccess')}}</p>
                 <div class="icon">
-                    <p class="p1">x</p>
-                    <p class="p2">2</p>
+                    <p class="p p1">x</p>
+                    <p class="p p2">2</p>
                 </div>
                 <a class="btn" @click="handlePop('all', false)">{{_('m_card.m_freeticket_btn')}}</a>
             </div>
         </transition>
-
         <load v-if="loading"></load>
     </div>
 </template>
@@ -277,12 +276,12 @@ export default {
         getUserInfo () {
             return this.$get("/api/scratch/list").then(res => {
                 this.isReady = true
+                if (this.userInfo.is_first !== "False") {
+                    this.pop_freeTicket = true
+                }
                 // 获取用户金额
                 this.userInfo = {
                     ...res.data
-                }
-                if (this.userInfo.is_first !== "False") {
-                    this.pop_freeTicket = true
                 }
                 return res
             })
@@ -783,6 +782,7 @@ export default {
   text-align: center;
   white-space: nowrap;
   font-size: 48 * @vw;
+  font-size: 36 * @vw;
   color: #fff;
   font-weight: bold;
   .icon {
@@ -798,6 +798,10 @@ export default {
       height: 129 * @vw;
       background: url(../img/icon_ticket.png) no-repeat center;
       background-size: 125 * @vw;
+    }
+    .p{
+        position: relative;
+        top: -15*@vw;
     }
     .p1 {
       font-size: 64 * @vw;
@@ -951,7 +955,7 @@ export default {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 12 * @vw;
+  font-size: 16 * @vw;
   line-height: 1;
   color: #31aa6c;
   opacity: 0;

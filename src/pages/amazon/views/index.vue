@@ -17,12 +17,12 @@
                 <div class="card_key">
                     <i>NO.</i>
                     <p>{{item.card_no}}</p>
-                    <a class="btn_copy" @click="handleCopy(item.card_no)">Copy</a>
+                    <a class="btn_copy" @click="handleCopy(item.card_no)" v-if="need_recharge">Copy</a>
                 </div>
                 <div class="card_val">
                     <i>KEY.</i>
                     <p>{{item.password}}</p>
-                    <a class="btn_copy" @click="handleCopy(item.password)">Copy</a>
+                    <a class="btn_copy" @click="handleCopy(item.password)" v-if="need_recharge">Copy</a>
                 </div>
             </li>
         </ul>
