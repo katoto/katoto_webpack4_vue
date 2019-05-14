@@ -129,6 +129,9 @@ export default {
     }
   }
   &.pop_rule {
+      .pop_main{
+          min-height: 300/75rem;
+      }
     .pop_rule_main {
       width: 616/75rem;
       max-height: 500/75rem;
