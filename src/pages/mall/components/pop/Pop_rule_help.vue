@@ -44,6 +44,7 @@
 </template>
 <script>
 import Pop from "./Pop.vue"
+import { type } from "os"
 export default {
     inject: ["app"],
     computed: {
@@ -83,13 +84,18 @@ export default {
             } else {
                 window.localStorage.removeItem("no_deliver_tip")
             }
+        },
+        show (val) {
+            if (val) {
+                this.hangdleIp()
+            }
         }
     },
     components: {
         Pop
     },
     mounted () {
-        this.hangdleIp()
+
     }
 }
 </script>
