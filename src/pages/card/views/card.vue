@@ -1,5 +1,6 @@
 <template>
     <div class="ticket_img" id="ticket_img" ref="ticket_img" v-if="isloading">
+        <audio :src="music" ref="music"></audio>
         <canvas id="canvas_off" ref="off" class="canvas_off" :width="width" :height="height"></canvas>
         <canvas id="canvas_on" ref="on" class="canvas_on" :width="width" :height="height"></canvas>
         <!-- 手势 -->
@@ -11,6 +12,7 @@
 
 <script>
 import { formatterNum } from "@/common/util"
+import music from "../win.base64"
 const hastouch = "ontouchstart" in window ? true : false,
     tapstart = hastouch ? "touchstart" : "mousedown",
     tapmove = hastouch ? "touchmove" : "mousemove",
@@ -18,6 +20,7 @@ const hastouch = "ontouchstart" in window ? true : false,
 export default {
     data () {
         return {
+            music,
             card: null,
             isClear: false,
             timer: null,
@@ -164,6 +167,7 @@ export default {
                 console.log(this.card.golds_amount, "开奖")
                 // 如果刮到的部分超过80%则开奖
                 if (this.getArea() >= 0.5) {
+                    this.$refs.music.play()
                     this.contextOff.clearRect(0, 0, this.width, this.height)
                     this.isClear = true
                     // 触发开奖动画
