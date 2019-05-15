@@ -40,7 +40,7 @@ export default {
             this.news1 = this.news
             let that = this
             this.timer = setInterval(() => {
-                if (this.activeIndex < that.news.length) {
+                if (this.activeIndex < that.news1.length) {
                     this.duration = 0.2
                     this.activeIndex ++
                 } else {
