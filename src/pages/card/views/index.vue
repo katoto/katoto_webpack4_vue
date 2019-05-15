@@ -337,7 +337,7 @@ export default {
                 await this.wait(500)
                 if (!this.inList) {
                     this.pop_ticket = false
-                    this.reloadCard()
+                    this.reloadCard(true)
                 } else {
                     this.inList = false
                 }
@@ -358,8 +358,8 @@ export default {
             this.golds_amount = Number(card.golds_amount)
             this.addCoinAnimate()
         },
-        reloadCard () {
-            this.$refs.card && this.$refs.card.init()
+        reloadCard (needreload = false) {
+            this.$refs.card && this.$refs.card.init(needreload)
         },
         buyCard (amount) {
             if (Number(this.userInfo.gold_total) - (500 * Number(amount)) > 0) {
