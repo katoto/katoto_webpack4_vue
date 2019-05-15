@@ -1,13 +1,6 @@
 <template>
     <ul class="list_news" :style="{transform:'translateY('+transform+')', transitionDuration: duration+'s'}">
-        <li v-for="item in news1" :key="item.id">
-            {{_('m_card.con')}}
-            {{item.username}}
-            {{_('m_card.claimed')}}
-            <i class="red bold">
-                {{formatterNum(item.prize_amount)}}
-                {{item.prize_type}}
-            </i>
+        <li v-for="item in news1" :key="item.id" v-html="_(item.prize_type === 'golds' ? 'm_card.broadcast1' : 'm_card.broadcast', item.username, formatterNum(item.prize_amount || 0))">
         </li>
     </ul>
 </template>
@@ -82,12 +75,12 @@ export default {
 
 <style lang="less" scoped>
 .list_news{
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: all 0.2s;
-    display: flex;
-    flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 </style>
 

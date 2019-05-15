@@ -25,7 +25,7 @@
         </header>
         <template v-if="inList">
             <div class="news">
-                <broadcast :news="userInfo.broadcast" :lineHeight="7.2"></broadcast>
+                <broadcast :news="userInfo.broadcast" :lineHeight="7.2" />
                 <!-- <ul>
                     <broadcast :time="userInfo.broadcast ? userInfo.broadcast.length * 5 : 0">
                         <li v-for="(item, index) in userInfo.broadcast" :key="index" v-html="_(item.prize_type === 'golds' ? 'm_card.broadcast1' : 'm_card.broadcast', item.username, formatterNum(item.prize_amount || 0))"></li>
@@ -46,9 +46,7 @@
             </div>
             <div class="more">
                 <p>
-                    More scratch CARDS are in the works
-                    <br>
-                    Please coming soon
+                    {{_('m_card.bottom_tip')}}
                 </p>
             </div>
         </template>
@@ -119,7 +117,7 @@
         <transition name="pop_animate">
             <div class="pop_coins" v-if="pop_coins" @click="handlePop">
                 <p>{{_('m_card.congratulations')}}</p>
-                <p class="bold">{{formatterNum(golds_amount)}} coins</p>
+                <p class="bold">{{formatterNum(golds_amount)}} {{_('m_card.coins')}}</p>
             </div>
         </transition>
         <!-- 获得球星卡 -->
@@ -864,9 +862,9 @@ export default {
   background: #fff url(../img/icon_news.png) no-repeat 20 * @vw center;
   background-size: 28 * @vw;
   text-indent: 65 * @vw;
-    li{
-            height: 7.2vw;
-    }
+  li{
+    height: 7.2vw;
+  }
   .red {
     color: #e83340;
   }

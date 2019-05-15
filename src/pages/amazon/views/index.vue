@@ -2,27 +2,27 @@
     <div class="page_amazon">
         <header>
             <a class="btn_back" @click="href('card.html')"> </a>
-            <h1>My Prize</h1>
+            <h1>{{_('m_card.prize')}}</h1>
         </header>
         <div class="check" v-if="need_recharge" @click="topup">
-            <p class="msg">The authentication</p>
-            <p class="view">Before collecting the prize, we need to verify that you are a natural person</p>
+            <p class="msg">{{_('m_card.verification')}}</p>
+            <p class="view">{{_('m_card.verification_tip')}}</p>
         </div>
         <ul>
             <li class="list" v-for="item in gifts" :key="item.card_no" @click="hangdleClick">
                 <div class="card_description">
                     <p class="card_count">₹500</p>
-                    <p class="card_msg">Amazon.com Gift Card</p>
+                    <p class="card_msg">{{_('m_card.cardname')}}</p>
                 </div>
                 <div class="card_key">
                     <i>NO.</i>
                     <p>{{item.card_no}}</p>
-                    <a class="btn_copy" @click="handleCopy(item.card_no)" v-if="!need_recharge">Copy</a>
+                    <a class="btn_copy" @click="handleCopy(item.card_no)" v-if="!need_recharge">{{_('m_card.copy')}}</a>
                 </div>
                 <div class="card_val">
                     <i>KEY.</i>
                     <p>{{item.password}}</p>
-                    <a class="btn_copy" @click="handleCopy(item.password)" v-if="!need_recharge">Copy</a>
+                    <a class="btn_copy" @click="handleCopy(item.password)" v-if="!need_recharge">{{_('m_card.copy')}}</a>
                 </div>
             </li>
         </ul>
@@ -31,13 +31,13 @@
         <transition name="pop_animate">
             <div class="pop_topup" v-if="pop_topup">
                 <a class="btn_close" @click="pop_topup = false"></a>
-                <h2 class="title">Authenticate</h2>
-                <p class="msg">Please recharge for verification Get the same number of tokens</p>
+                <h2 class="title">{{_('m_card.verify_title')}}</h2>
+                <p class="msg">{{_('m_card.verify_desc')}}</p>
                 <div class="count">
                     {{`${platform === 'android' ? '90,000' : '79,000'}`}}
                 </div>
-                <a class="btn" @click="gotoshop">₹{{`${platform === 'android' ? '90' : '79'}`}} Charge verification</a>
-                <p class="tips">After successful recharge display card</p>
+                <a class="btn" @click="gotoshop">₹{{`${platform === 'android' ? '90' : '79'}`}} {{_('m_card.verify_btn')}}</a>
+                <p class="tips">{{_('m_card.verify_btn_desc')}}</p>
             </div>
         </transition>
     </div>
