@@ -15,18 +15,23 @@
 export default {
     data () {
         return {
-            message: {}
+            message: {},
+            timer: false
         }
     },
     methods: {
         addNotice (notice) {
             this.message = notice
-            setTimeout(() => {
+            if (this.timer) {
+                clearTimeout(this.timer)
+            }
+            this.timer = setTimeout(() => {
                 this.remove()
             }, Number(notice.duration))
         },
         remove () {
             this.message = {}
+            this.timer = false
         }
     }
 }
