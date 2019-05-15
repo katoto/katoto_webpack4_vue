@@ -22,7 +22,10 @@ export default {
         "m_card.tip1": "Tips: Scratch the ₹500 Amazon card behind!",
         "m_card.title": "Fortune Scratch",
         "m_card.prize": "My Prize",
-        "m_card.adLoading": "Ad loading failed, please retry after 10s"
+        "m_card.adLoading": "Ad loading failed, please retry after 10s",
+        "m_card.playerCard": "player card of Virat Kohli.",
+        "m_card.claimed": "claimed",
+        "m_card.con": "Congratulations"
     },
     india: {
     }
