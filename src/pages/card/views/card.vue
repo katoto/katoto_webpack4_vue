@@ -182,7 +182,7 @@ export default {
                 this.touch = true
             }
         },
-        init () {
+        init (needReload) {
             // 如果有多张票 开完奖后会再次调用这个函数
             // 未加载完数据先不展示刮刮卡
             this.isloading = false
@@ -197,6 +197,9 @@ export default {
                         this.imgon = res[1]
                         return res
                     })
+            }
+            if (needReload) {
+                this._preGetDetailPromise = false
             }
             Promise.all([
                 // 如果有预加载刮刮卡，使用预加载刮刮卡

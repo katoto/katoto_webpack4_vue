@@ -54,9 +54,9 @@ export default {
                 // this.vx *= this.a
                 // this.vy *= this.a
                 if (this.x > WIDTH || this.x < 0 || this.y > HEIGHT || this.y < 0) {
-                    // that.ribbons.splice(this,1)
-                    this.x = WIDTH / 2
-                    this.y = HEIGHT / 2
+                    that.ribbons.splice(this,1)
+                    // this.x = WIDTH / 2
+                    // this.y = HEIGHT / 2
                 }
             }
         }
