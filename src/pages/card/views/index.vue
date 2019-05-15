@@ -236,7 +236,7 @@ export default {
             this.balance = true
             await this.wait(1000)
             this.userInfo.gold_total = Number(this.userInfo.gold_total) + Number(this.golds_amount)
-            await this.wait(1500)
+            await this.wait(3000)
             if (this.pop_coins) {
                 this.handlePop()
             }
@@ -649,7 +649,7 @@ export default {
   transform: translate(-50%, -50%);
   background: #fff;
   border-radius: 15 * @vw;
-//   overflow: hidden;
+  //   overflow: hidden;
   font-weight: bold;
   white-space: nowrap;
   .pop_ticket_header {
@@ -985,7 +985,7 @@ export default {
   font-size: 40 * @vw;
   line-height: 1;
   transform: translate(0, 150%);
-   opacity: 0;
+  opacity: 0;
 }
 .flex1{
   display: flex;
