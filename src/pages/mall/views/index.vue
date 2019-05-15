@@ -75,7 +75,7 @@ import {
     formateBalance, cbetLocal
 } from "@/common/util"
 // 通用播报
-import broadcast from "@/components/broadcast"
+import broadcast from "../components/broadcast"
 // 弹窗
 import popList from "../components/Pop_list"
 // 弹窗data

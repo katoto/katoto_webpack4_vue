@@ -1,9 +1,9 @@
 <template>
-    <div v-if="messageArr && messageArr.length > 0">
+    <div v-if="message && message.content">
         <transition name="toast">
             <div class="toast">
                 <div class="toast_main">
-                    <span v-for="item in messageArr" :key="item.name">{{ item.content }}</span>
+                    <span>{{ message.content }}</span>
                 </div>
             </div>
         </transition>
@@ -11,37 +11,22 @@
 </template>
 
 <script>
-let seed = 0
-function getuid () {
-    return "toast_" + (seed ++)
-}
 
 export default {
     data () {
         return {
-            messageArr: []
+            message: {}
         }
     },
     methods: {
         addNotice (notice) {
-            const name = getuid()
-            notice = {
-                ...notice,
-                name
-            }
-            this.messageArr.push(notice)
+            this.message = notice
             setTimeout(() => {
-                this.remove(name)
+                this.remove()
             }, Number(notice.duration))
         },
-        remove (name) {
-            const messageArr = this.messageArr
-            for (let i = 0; i < messageArr.length; i++) {
-                if (messageArr[i].name === name) {
-                    this.messageArr.splice(i, 1)
-                    break
-                }
-            }
+        remove () {
+            this.message = {}
         }
     }
 }
