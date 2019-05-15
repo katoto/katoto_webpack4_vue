@@ -1,69 +1,96 @@
 <template>
-    <div class="broadcast">
-        <div class="broadcast-box" v-if="list.length > 0" :style="{animationDuration: `${time}s`}" ref="lists">
-            <p class="broadcast-item" v-for="(item, index) in list" :key="index">{{item}}</p>
-        </div>
-        <div class="broadcast-box" :style="{animationDuration: `${time}s`}" v-else>
-            <slot></slot>
-        </div>
-    </div>
+    <ul class="list_news" :style="{transform:'translateY('+transform+')', transitionDuration: duration+'s'}">
+        <li v-for="item in news1" :key="item.id">
+            {{_('m_card.con')}}
+            {{item.username}}
+            {{_('m_card.claimed')}}
+            <i class="red bold">
+                {{formatterNum(item.prize_amount)}}
+                {{item.prize_type}}
+            </i>
+        </li>
+    </ul>
 </template>
 
 <script>
+import {
+    formatterNum
+} from "@/common/util"
 export default {
     props: {
-        list: {
-            type: Array,
-            default: () => {
-                return []
-            }
+        news: {
+            type: Array
         },
-        time: {
+        lineHeight: {
             type: Number,
-            default: () => {
-                return 10
-            }
+            default: 0
         }
     },
     data () {
         return {
+            activeIndex: 0,
+            timer: "",
+            await: 2000,
+            duration: 0.2,
+            news1: []
 
         }
     },
-    mounted () {
+    computed: {
+        transform () {
+            return -this.activeIndex * this.lineHeight + "vw"
+        }
+    },
+    methods: {
+        formatterNum,
+        scroll () {
+            this.news1 = this.news
+            let that = this
+            this.timer = setInterval(() => {
+                if (this.activeIndex < that.news.length) {
+                    this.duration = 0.2
+                    this.activeIndex ++
+                } else {
+                    this.duration = 0
+                    this.activeIndex = 0
+                }
+            }, this.await)
+        },
+        format () {
+            this.news1 = JSON.parse(JSON.stringify(this.news))
+            this.news.length >= 1 && this.news1.push({
+                ...this.news1[0]
+            })
 
+            this.news1 = this.news1.map(item => {
+                item.id = Math.random()
+                return item
+            })
+        }
+    },
+    watch: {
+        news () {
+            this.format()
+        }
+    },
+    mounted () {
+        this.scroll()
+        this.format()
     }
 }
 </script>
 
 <style lang="less" scoped>
-.broadcast {
-  overflow: hidden;
-  width: 100%;
-  margin: 0 auto;
-  .broadcast-box /deep/ {
-    animation-name: go;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    min-width: 100%;
-    text-indent: 0;
-    float: left;
-    .broadcast-item, p, li {
-      white-space: nowrap;
-      display: inline-block;
-      padding-left: 20px;
+.list_news{
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    li{
+      height: 7.2vw;
     }
-  }
-}
-
-@keyframes go {
-  0% {
-    transform: translateX(100%);
-  }
-
-  100% {
-    transform: translateX(-100%);
-  }
 }
 </style>
 

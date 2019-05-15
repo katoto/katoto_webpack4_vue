@@ -25,11 +25,12 @@
         </header>
         <template v-if="inList">
             <div class="news">
-                <ul>
+                <broadcast :news="userInfo.broadcast" :lineHeight="7.2"></broadcast>
+                <!-- <ul>
                     <broadcast :time="userInfo.broadcast ? userInfo.broadcast.length * 5 : 0">
                         <li v-for="(item, index) in userInfo.broadcast" :key="index" v-html="_(item.prize_type === 'golds' ? 'm_card.broadcast1' : 'm_card.broadcast', item.username, formatterNum(item.prize_amount || 0))"></li>
                     </broadcast>
-                </ul>
+                </ul> -->
             </div>
             <div class="actlists">
                 <div class="act">
@@ -191,7 +192,9 @@ export default {
             isShowCard: false,
             golds_amount: 0,
             add_ticket_num: 1,
-            userInfo: {},
+            userInfo: {
+                broadcast: []
+            },
             // 金币余额
             balance: false,
             loading: false,
@@ -848,6 +851,7 @@ export default {
 
 /* lists */
 .news {
+  position: relative;
   width: 706 * @vw;
   height: 54 * @vw;
   overflow: hidden;
@@ -860,9 +864,9 @@ export default {
   background: #fff url(../img/icon_news.png) no-repeat 20 * @vw center;
   background-size: 28 * @vw;
   text-indent: 65 * @vw;
-  ul {
-    margin: 0 30px;
-  }
+//   ul {
+//     margin: 0 30px;
+//   }
   /deep/ .red {
     color: #e83340;
   }
