@@ -85,6 +85,13 @@ module.exports = {
 
             },
             {
+                test: /\.(base64)(\?.*)?$/,
+                use: [{
+                    loader: path.resolve(__dirname, "../loader/file-loader")
+                }]
+
+            },
+            {
                 test: /\.html$/,
                 use: ["html-withimg-loader"]
             }

@@ -100,11 +100,11 @@ export default {
             this.canvasOff.addEventListener(tapend, this.getClearArea)
         },
         touchStartHandler (event) {
+            event = event || window.event
             event.preventDefault()
             if (this.isClear || this.card === null || (this.card && this.card.card_id === undefined)) {
                 return
             }
-            event = event || window.event
             let touch = hastouch ? event.changedTouches[0] : event
             this.contextOff.beginPath()
             this.contextOff.arc((touch.pageX - this.offsetLeft) * this.scale, (touch.pageY - this.offsetTop) * this.scale, 40, 0, 2 * Math.PI, false)
