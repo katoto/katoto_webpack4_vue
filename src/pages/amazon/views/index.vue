@@ -9,7 +9,7 @@
             <p class="view">{{_('m_card.verification_tip')}}</p>
         </div>
         <ul>
-            <li class="list" v-for="item in gifts" :key="item.card_no" @click="hangdleClick">
+            <li class="list" v-for="item in gifts" :key="item.card_no">
                 <div class="card_description">
                     <p class="card_count">₹500</p>
                     <p class="card_msg">{{_('m_card.cardname')}}</p>

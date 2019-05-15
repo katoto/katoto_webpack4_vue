@@ -5,7 +5,7 @@ export default {
         "m_card.nogold": "You don't have enough coins, please top up",
         "m_card.proceed": "Tap here to proceed",
         "m_card.congratulations": "Congratulations! Now you have",
-        "m_card.broadcast2": "Congratulations! n claimed a player card of Virat Kohli.",
+        "m_card.broadcast2": "congratulation! n has claimed N's player card.",
         "m_card.broadcast1": "Congratulations! {0} claimed <i class=red bold>{1}</i> coins.",
         "m_card.broadcast": "Congratulations! {0} claimed a ₹500 Amazon card.",
         "m_card.goToUse": "See what's behind",

@@ -85,6 +85,17 @@ module.exports = {
 
             },
             {
+                test: /\.(mp3)(\?.*)?$/,
+                use: [{
+                    loader: "url-loader",
+                    options: {
+                        limit: 100,
+                        name: utils.assetsPath("mp3/[name].[ext]")
+                    }
+                }]
+
+            },
+            {
                 test: /\.(base64)(\?.*)?$/,
                 use: [{
                     loader: path.resolve(__dirname, "../loader/file-loader")

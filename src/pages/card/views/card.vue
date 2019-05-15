@@ -1,18 +1,21 @@
 <template>
-    <div class="ticket_img" id="ticket_img" ref="ticket_img" v-if="isloading">
-        <audio :src="music" ref="music"></audio>
-        <canvas id="canvas_off" ref="off" class="canvas_off" :width="width" :height="height"></canvas>
-        <canvas id="canvas_on" ref="on" class="canvas_on" :width="width" :height="height"></canvas>
-        <!-- 手势 -->
-        <div class="touch" v-if="touch" @touchmove="touch = false" @click="touch = false">
-            <img src="../img/touch.png" alt="">
+    <div>
+        <audio :src="goldMusic" ref="goldMusic"></audio>
+        <audio :src="cardMusic" ref="cardMusic"></audio>
+        <div class="ticket_img" id="ticket_img" ref="ticket_img" v-if="!isloading">
+            <canvas id="canvas_off" ref="off" class="canvas_off" :width="width" :height="height"></canvas>
+            <canvas id="canvas_on" ref="on" class="canvas_on" :width="width" :height="height"></canvas>
+            <!-- 手势 -->
+            <img class="touch" src="../img/touch.png" alt="" v-if="touch" @touchmove="closeTouch" @click="closeTouch">
         </div>
     </div>
+
 </template>
 
 <script>
 import { formatterNum } from "@/common/util"
-import music from "../win.base64"
+const goldMusicPro = import("../win.base64")
+const cardMusicPro = import("../gift.base64")
 const hastouch = "ontouchstart" in window ? true : false,
     tapstart = hastouch ? "touchstart" : "mousedown",
     tapmove = hastouch ? "touchmove" : "mousemove",
@@ -20,17 +23,21 @@ const hastouch = "ontouchstart" in window ? true : false,
 export default {
     data () {
         return {
-            music,
+            goldMusicPro,
+            cardMusicPro,
+            goldMusic: "",
+            cardMusic: "",
             card: null,
             isClear: false,
             timer: null,
-            isloading: false,
+            isloading: true,
             width: 620,
             height: 620,
             /* 是否刮了刮刮卡 */
             isTouch: false,
             /* 是否显示触摸教学 */
-            touch: false
+            touch: false,
+            currentTouchTime: Date.now()
         }
     },
     methods: {
@@ -113,7 +120,7 @@ export default {
             this.contextOff.arc((touch.pageX - this.offsetLeft) * this.scale, (touch.pageY - this.offsetTop) * this.scale, 40, 0, 2 * Math.PI, false)
             this.contextOff.fill()
             this.currentTouch = touch
-
+            this.closeTouch()
             // 触摸了就算使用了这张刮刮卡
             if (!this.isTouch) {
                 this.isTouch = true
@@ -147,7 +154,7 @@ export default {
             this.contextOff.closePath()
             this.contextOff.stroke()
             this.currentTouch = touch
-
+            this.closeTouch()
         },
         getArea () {
             let data = this.contextOff.getImageData(0, 0, this.width, this.height).data
@@ -167,10 +174,19 @@ export default {
                 console.log(this.card.golds_amount, "开奖")
                 // 如果刮到的部分超过80%则开奖
                 if (this.getArea() >= 0.5) {
-                    this.$refs.music.play()
+                    // this.$refs.music.play()
                     this.contextOff.clearRect(0, 0, this.width, this.height)
                     this.isClear = true
                     // 触发开奖动画
+
+                    if (this.card.card_result === "H") {
+                        // 获得亚马逊卡
+                        this.cardMusic && this.$refs.cardMusic.play()
+                    } else {
+                        // 获得金币
+                        this.goldMusic && this.$refs.goldMusic.play()
+                    }
+
                     this.$emit("getPrize", {
                         ...this.card
                     })
@@ -178,14 +194,18 @@ export default {
             }, 300)
         },
         checkIsTouch () {
-            if (this.getArea() < 0.1) {
+            if (!this.isClear && !this.isloading && Date.now() - this.currentTouchTime > 3000) {
                 this.touch = true
             }
+        },
+        closeTouch () {
+            this.touch = false
+            this.currentTouchTime = Date.now()
         },
         init (needReload) {
             // 如果有多张票 开完奖后会再次调用这个函数
             // 未加载完数据先不展示刮刮卡
-            this.isloading = false
+            this.isloading = true
             if (!this.imgDataPromise) {
                 // 重新开始刮卡不用再次下载图片
                 this.imgDataPromise = this.getImgData([
@@ -212,10 +232,10 @@ export default {
                 if (this._preGetDetailPromise) {
                     this._preGetDetailPromise = false
                 }
-                this.isloading = true
+                this.isloading = false
                 this.$nextTick(() => {
+                    this.closeTouch()
                     this.isClear = false
-                    this.isTouch = false
                     this.timer = null
                     this.canvasOff = this.$refs.off
                     this.contextOff = this.canvasOff.getContext("2d")
@@ -236,11 +256,17 @@ export default {
         }
     },
     mounted () {
+        this.goldMusicPro.then(res => {
+            this.goldMusic = res["default"]
+        })
+        this.cardMusicPro.then(res => {
+            this.cardMusic = res["default"]
+        })
         this.init()
         /* 3秒后检测是否有开始刮 */
-        setTimeout(() => {
+        setInterval(() => {
             this.checkIsTouch()
-        }, 5000)
+        }, 2000)
     }
 }
 </script>
@@ -272,18 +298,11 @@ export default {
   }
   .touch {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
     z-index: 99;
-    img{
-      position: absolute;
-      top: 50%;
-      left: 0;
-      width: 10vw;
-      animation: touch 2s infinite;
-    }
+    top: 50%;
+    left: 0;
+    width: 10vw;
+    animation: touch 2s infinite;
   }
 }
 @keyframes fadeIn {

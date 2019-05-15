@@ -1,5 +1,7 @@
 <template>
     <div class="page_card" :class="[inList?'lists':'card']">
+        <audio :src="openMusic" ref="openMusic"></audio>
+        <audio :src="closeMusic" ref="closeMusic"></audio>
         <div class="bg_card" v-show="!inList" ref="bg_card"></div>
         <header class="card_header">
             <a class="btn_back" @click="handleBack" key="btn_back"></a>
@@ -173,9 +175,17 @@ import {
 // 通用播报
 import broadcast from "@/components/broadcast"
 import load from "@/components/loading"
+
+const openMusicPro = import("../open.base64")
+const closeMusicPro = import("../close.base64")
+
 export default {
     data () {
         return {
+            openMusic: "",
+            closeMusic: "",
+            openMusicPro,
+            closeMusicPro,
             /* 在列表页？ */
             inList: true,
             /* 修改头部门票数量 */
@@ -205,7 +215,13 @@ export default {
         }
     },
     watch: {
-
+        inList (val) {
+            val ? (
+                this.openMusic && this.$refs.openMusic.play()
+            ) : (
+                this.closeMusic && this.$refs.closeMusic.play()
+            )
+        }
     },
     components: {
         card,
@@ -421,6 +437,12 @@ export default {
         }
     },
     mounted () {
+        this.openMusicPro.then(res => {
+            this.openMusic = res["default"]
+        })
+        this.closeMusicPro.then(res => {
+            this.closeMusic = res["default"]
+        })
         this.getUserInfo()
         this.getInvite()
         event.$on("showAdVideoCallback", this.showAdVideoCallback)
