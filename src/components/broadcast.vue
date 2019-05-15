@@ -88,9 +88,6 @@ export default {
     transition: all 0.2s;
     display: flex;
     flex-direction: column;
-    li{
-      height: 7.2vw;
-    }
 }
 </style>
 

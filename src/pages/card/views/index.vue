@@ -850,7 +850,7 @@ export default {
 }
 
 /* lists */
-.news {
+/deep/ .news {
   position: relative;
   width: 706 * @vw;
   height: 54 * @vw;
@@ -864,10 +864,10 @@ export default {
   background: #fff url(../img/icon_news.png) no-repeat 20 * @vw center;
   background-size: 28 * @vw;
   text-indent: 65 * @vw;
-//   ul {
-//     margin: 0 30px;
-//   }
-  /deep/ .red {
+    li{
+            height: 7.2vw;
+    }
+  .red {
     color: #e83340;
   }
 }
