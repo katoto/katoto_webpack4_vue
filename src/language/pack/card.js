@@ -35,7 +35,9 @@ export default {
         "m_card.verify_btn": "Top-up Verification",
         "m_card.verify_btn_desc": "Card info will be displayed after successful top-up",
         "m_card.copy": "Copy",
-        "m_card.coins": "Coins"
+        "m_card.coins": "Coins",
+        "m_card.getnow": "Get Now",
+        "m_card.continue": "Continue Playing"
     },
     india: {
         "m_card.card": "Scratch",
@@ -73,6 +75,8 @@ export default {
         "m_card.verify_btn": "टॉप-अप सत्यापन",
         "m_card.verify_btn_desc": "कार्ड की जानकारी सफल टॉप-अप के बाद प्रदर्शित की जाएगी",
         "m_card.copy": "प्रतिलिपि",
-        "m_card.coins": "सिक्कों"
+        "m_card.coins": "सिक्कों",
+        "m_card.getnow": "Get Now",
+        "m_card.continue": "Continue Playing"
     }
 }

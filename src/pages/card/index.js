@@ -14,7 +14,7 @@ require("@/styles/animate.css")
 require("@language").use(Vue, [Language])
 Vue.prototype.$toast = Toast
 window.$toast = Toast
-cookie.set("appck", "MTAwNTQ4YTBlYzA5ZjlkMjc4Y2ZlNGMyOGZhMDljYWRjNWM4OQ%3D%3D")
+// cookie.set("appck", "MTAwNTQ4YTBlYzA5ZjlkMjc4Y2ZlNGMyOGZhMDljYWRjNWM4OQ%3D%3D")
 
 let cookies = cookie.getAll()
 cookies.ck = cookies.appck

@@ -141,10 +141,10 @@
                 </p>
                 <img src="../img/img_amazon.png" alt="">
                 <a class="btn btn_get" @click="href('/amazon.html')">
-                    Get Now
+                    {{_('m_card.getnow')}}
                 </a>
                 <a class="btn btn_continue" @click="handlePop">
-                    Continue
+                    {{_('m_card.continue')}}
                 </a>
             </div>
         </transition>

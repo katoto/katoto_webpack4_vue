@@ -235,6 +235,7 @@ export default {
                 this.isloading = false
                 this.$nextTick(() => {
                     this.closeTouch()
+                    this.isTouch = false
                     this.isClear = false
                     this.timer = null
                     this.canvasOff = this.$refs.off
